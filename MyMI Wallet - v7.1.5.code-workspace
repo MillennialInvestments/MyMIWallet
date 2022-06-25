@@ -1,0 +1,13 @@
+{
+	"folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "../../../Dashlite"
+        }
+    ],
+    "settings": {
+        "git.ignoreLimitWarning": true
+    }
+}

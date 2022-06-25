@@ -1,0 +1,62 @@
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined index: walletAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/public/themes/admin/sidebar.php 14
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined index: walletAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/public/themes/admin/navbar.php 6
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined index: walletFunds /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 16
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined index: walletInitialAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 17
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined index: walletAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 18
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined index: walletPercentChange /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 19
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined index: depositAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 21
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined index: withdrawAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 22
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined index: walletData /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 29
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined index: getWallets /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 30
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined variable: lastTradeActivity /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 54
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined index: $DX /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/US_Market_Overview.php 52
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Trying to access array offset on value of type null /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/US_Market_Overview.php 52
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Undefined index: $DX /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/US_Market_Overview.php 53
+ERROR - 2022-03-01 19:08:04 --> Severity: Notice --> Trying to access array offset on value of type null /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/US_Market_Overview.php 53
+ERROR - 2022-03-01 19:08:05 --> Severity: Notice --> Undefined index: changeInDouble /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/International_Market_Overview.php 39
+ERROR - 2022-03-01 19:08:05 --> Severity: Notice --> Undefined index: changeInDouble /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/International_Market_Overview.php 42
+ERROR - 2022-03-01 19:08:05 --> Severity: Notice --> Undefined index: changeInDouble /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/International_Market_Overview.php 45
+ERROR - 2022-03-01 19:08:05 --> Severity: error --> Exception: Class 'Codenixsv\BittrexApi\BittrexClient' not found /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/Crypto_Market_Overview.php 12
+ERROR - 2022-03-01 19:13:13 --> Severity: Notice --> Undefined variable: walletInitialAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 167
+ERROR - 2022-03-01 19:13:13 --> Severity: Notice --> Undefined variable: walletAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 168
+ERROR - 2022-03-01 19:13:13 --> Severity: Notice --> Undefined variable: walletPercentChange /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 169
+ERROR - 2022-03-01 19:13:13 --> Severity: Notice --> Undefined variable: walletFunds /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 171
+ERROR - 2022-03-01 19:13:13 --> Severity: Notice --> Undefined variable: depositAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 172
+ERROR - 2022-03-01 19:13:13 --> Severity: Notice --> Undefined variable: withdrawAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 173
+ERROR - 2022-03-01 19:13:15 --> Severity: Notice --> Undefined variable: walletInitialAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 167
+ERROR - 2022-03-01 19:13:15 --> Severity: Notice --> Undefined variable: walletAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 168
+ERROR - 2022-03-01 19:13:15 --> Severity: Notice --> Undefined variable: walletPercentChange /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 169
+ERROR - 2022-03-01 19:13:15 --> Severity: Notice --> Undefined variable: walletFunds /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 171
+ERROR - 2022-03-01 19:13:15 --> Severity: Notice --> Undefined variable: depositAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 172
+ERROR - 2022-03-01 19:13:15 --> Severity: Notice --> Undefined variable: withdrawAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 173
+ERROR - 2022-03-01 19:13:16 --> Severity: Notice --> Undefined variable: walletInitialAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 167
+ERROR - 2022-03-01 19:13:16 --> Severity: Notice --> Undefined variable: walletAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 168
+ERROR - 2022-03-01 19:13:16 --> Severity: Notice --> Undefined variable: walletPercentChange /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 169
+ERROR - 2022-03-01 19:13:16 --> Severity: Notice --> Undefined variable: walletFunds /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 171
+ERROR - 2022-03-01 19:13:16 --> Severity: Notice --> Undefined variable: depositAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 172
+ERROR - 2022-03-01 19:13:16 --> Severity: Notice --> Undefined variable: withdrawAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 173
+ERROR - 2022-03-01 19:13:17 --> Severity: Notice --> Undefined variable: walletInitialAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 167
+ERROR - 2022-03-01 19:13:17 --> Severity: Notice --> Undefined variable: walletAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 168
+ERROR - 2022-03-01 19:13:17 --> Severity: Notice --> Undefined variable: walletPercentChange /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 169
+ERROR - 2022-03-01 19:13:17 --> Severity: Notice --> Undefined variable: walletFunds /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 171
+ERROR - 2022-03-01 19:13:17 --> Severity: Notice --> Undefined variable: depositAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 172
+ERROR - 2022-03-01 19:13:17 --> Severity: Notice --> Undefined variable: withdrawAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/libraries/MyMIWallet.php 173
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: walletAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/public/themes/admin/sidebar.php 14
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: walletAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/public/themes/admin/navbar.php 6
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: walletFunds /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 16
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: walletInitialAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 17
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: walletAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 18
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: walletPercentChange /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 19
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: depositAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 21
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: withdrawAmount /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 22
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: walletData /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 29
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: getWallets /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 30
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined variable: lastTradeActivity /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index.php 54
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: $DX /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/US_Market_Overview.php 52
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Trying to access array offset on value of type null /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/US_Market_Overview.php 52
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: $DX /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/US_Market_Overview.php 53
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Trying to access array offset on value of type null /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/US_Market_Overview.php 53
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: changeInDouble /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/International_Market_Overview.php 39
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: changeInDouble /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/International_Market_Overview.php 42
+ERROR - 2022-03-01 19:13:18 --> Severity: Notice --> Undefined index: changeInDouble /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/International_Market_Overview.php 45
+ERROR - 2022-03-01 19:13:18 --> Severity: error --> Exception: Class 'Codenixsv\BittrexApi\BittrexClient' not found /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Dashboard/index/Crypto_Market_Overview.php 12

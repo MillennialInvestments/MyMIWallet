@@ -1,0 +1,2 @@
+ERROR - 2022-05-30 14:56:27 --> Severity: Notice --> Undefined variable: purchase_id /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Wallets/Feature_Manager.php 87
+ERROR - 2022-05-30 14:56:27 --> Severity: Notice --> Undefined variable: purchase_id /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.4/application/modules/User/views/Wallets/Feature_Manager.php 105
