@@ -169,4 +169,38 @@ class Support_model extends BF_Model
         $this->db->where('id', $id);
         return $this->db->update('bf_support_requests', $request);
     }
+
+    public function get_pending_support($department) {
+        if (!empty($department)) {
+            $this->db->from('bf_support_requests');
+            // $this->db->where('date', $today); 
+            $this->db->where('status', 'Pending');
+            // $this->db->where('topic', $department);
+            $getPendingSupport                  = $this->db->get(); 
+        } else {
+            $this->db->from('bf_support_requests');
+            // $this->db->where('date', $today); 
+            $this->db->where('status', 'Pending');
+            $this->db->where('topic', $department);
+            $getPendingSupport                  = $this->db->get();         
+        }
+        return $getPendingSupport;    
+    }
+
+    public function get_complete_support($department) {
+        if (!empty($department)) {
+            $this->db->from('bf_support_requests');
+            // $this->db->where('date', $today); 
+            $this->db->where('status', 'Complete');
+            // $this->db->where('topic', $department); 
+            $getCompleteSupport                 = $this->db->get(); 
+        } else {
+            $this->db->from('bf_support_requests');
+            // $this->db->where('date', $today); 
+            $this->db->where('status', 'Complete');
+            $this->db->where('topic', $department); 
+            $getCompleteSupport                 = $this->db->get(); 
+        }
+        return $getCompleteSupport;
+    }
 }

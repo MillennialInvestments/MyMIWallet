@@ -227,84 +227,93 @@ class Users extends Front_Controller
             Template::set_message(lang('us_register_disabled'), 'error');
             Template::redirect('/');
         }
-        $id	 				= $this->input->post('id');
-        $beta               = $this->input->post('beta'); 
-        $type	 			= $this->input->post('type');
-        $partner 			= $this->input->post('partner');
-        $investor 			= $this->input->post('investor');
-        $organization		= $this->input->post('organization');
-        $signup_date		= $this->input->post('signup_date');
-        $account_type       = $this->input->post('account_type');
-        $email	 			= $this->input->post('email');
-        $username			= $this->input->post('username');
-        $user_email	 		= $email;
-        $register_url 		= $this->input->post('register_url') ?: REGISTER_URL;
-        $login_url    		= $this->input->post('login_url') ?: LOGIN_URL;
-        
-        $phone				= $this->input->post('phone');
-        $address			= $this->input->post('address');
-        $city				= $this->input->post('city');
-        $state				= $this->input->post('state');
-        $country			= $this->input->post('country');
-        $zipcode			= $this->input->post('zipcode');
-        
-        // Default Wallet Information
-        $default_wallet		= 'Yes';
-        $exchange_wallet	= 'Yes';
-        $active				= 'Yes';
-        $market_pair		= 'USD';
-        $market				= 'MYMI';
-        $broker				= 'Default';
-        $nickname			= 'MyMI Funds';
-        $wallet_type		= 'Fiat';
-        $amount				= '0.00';
-        
-        $this->load->model('roles/role_model');
-        $this->load->helper('date');
 
-        $this->load->config('address');
-        $this->load->helper('address');
-        $pageType		    = 'register';
-        // $this->load->config('user_meta');
-        // $meta_fields = config_item('user_meta_fields');
-        // Template::set('meta_fields', $meta_fields);
-        Template::set('pageType', $pageType);
+        $score = get_recapture_score($_POST['g-recaptcha-response']);
+  
+        if ($score > RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
+            // return an error of your choosing
+            $id	 				= $this->input->post('id');
+            $beta               = $this->input->post('beta');
+            $type	 			= $this->input->post('type');
+            $partner 			= $this->input->post('partner');
+            $investor 			= $this->input->post('investor');
+            $organization		= $this->input->post('organization');
+            $signup_date		= $this->input->post('signup_date');
+            $account_type       = $this->input->post('account_type');
+            $email	 			= $this->input->post('email');
+            $username			= $this->input->post('username');
+            $user_email	 		= $email;
+            $register_url 		= $this->input->post('register_url') ?: REGISTER_URL;
+            $login_url    		= $this->input->post('login_url') ?: LOGIN_URL;
+                    
+            $phone				= $this->input->post('phone');
+            $address			= $this->input->post('address');
+            $city				= $this->input->post('city');
+            $state				= $this->input->post('state');
+            $country			= $this->input->post('country');
+            $zipcode			= $this->input->post('zipcode');
+                    
+            // Default Wallet Information
+            $default_wallet		= 'Yes';
+            $exchange_wallet	= 'Yes';
+            $active				= 'Yes';
+            $market_pair		= 'USD';
+            $market				= 'MYMI';
+            $broker				= 'Default';
+            $nickname			= 'MyMI Funds';
+            $wallet_type		= 'Fiat';
+            $amount				= '0.00';
+                    
+            $this->load->model('roles/role_model');
+            $this->load->helper('date');
 
-        if (isset($_POST['register'])) {
-            if ($userId = $this->saveUser('insert', 0)) {
-                if ($this->user_model->add_social_networks($id, $email, $username)) {
-                    if ($this->user_model->add_default_wallet($id, $active, $beta, $default_wallet, $exchange_wallet, $market_pair, $market, $username, $email, $broker, $wallet_type, $amount, $nickname)) {
-                        // User Activation
-                        $activation = $this->user_model->set_activation($userId);
-                        $message = $activation['message'];
-                        $error   = $activation['error'];
+            $this->load->config('address');
+            $this->load->helper('address');
+            $pageType		    = 'register';
+            // $this->load->config('user_meta');
+            // $meta_fields = config_item('user_meta_fields');
+            // Template::set('meta_fields', $meta_fields);
+            Template::set('pageType', $pageType);
 
-                        Template::set_message($message, $error ? 'error' : 'success');
+            if (isset($_POST['register'])) {
+                if ($userId = $this->saveUser('insert', 0)) {
+                    if ($this->user_model->add_social_networks($id, $email, $username)) {
+                        if ($this->user_model->add_default_wallet($id, $active, $beta, $default_wallet, $exchange_wallet, $market_pair, $market, $username, $email, $broker, $wallet_type, $amount, $nickname)) {
+                            // User Activation
+                            $activation = $this->user_model->set_activation($userId);
+                            $message = $activation['message'];
+                            $error   = $activation['error'];
 
-                        log_activity($userId, lang('us_log_register'), 'users');
-                        Template::redirect('Verify-Email/' . $userId);
+                            Template::set_message($message, $error ? 'error' : 'success');
+
+                            log_activity($userId, 'User registered account', 'users');
+                            Template::redirect('Verify-Email/' . $userId);
+                        }
                     }
                 }
+
+                Template::set_message(lang('us_registration_fail'), 'error');
+                // Don't redirect because validation errors will be lost.
             }
 
-            Template::set_message(lang('us_registration_fail'), 'error');
-            // Don't redirect because validation errors will be lost.
+            if ($this->siteSettings['auth.password_show_labels'] == 1) {
+                Assets::add_js(
+                    $this->load->view('users_js', array('settings' => $this->siteSettings), true),
+                    'inline'
+                );
+            }
+
+            // Generate password hint messages.
+            $this->user_model->password_hints();
+
+            Template::set_view('users/register');
+            Template::set('languages', unserialize($this->settings_lib->item('site.languages')));
+            Template::set('page_title', 'Register');
+            Template::render();
+        } else {
+            Template::set_message('Potential Spam! Please verify you are not a robot.', 'error'); 
+            Template::redirect($this->url->uri_string()); 
         }
-
-        if ($this->siteSettings['auth.password_show_labels'] == 1) {
-            Assets::add_js(
-                $this->load->view('users_js', array('settings' => $this->siteSettings), true),
-                'inline'
-            );
-        }
-
-        // Generate password hint messages.
-        $this->user_model->password_hints();
-
-        Template::set_view('users/register');
-        Template::set('languages', unserialize($this->settings_lib->item('site.languages')));
-        Template::set('page_title', 'Register');
-        Template::render();
     }
 
     // -------------------------------------------------------------------------
@@ -362,6 +371,7 @@ class Users extends Front_Controller
                      );
 
                     if ($this->emailer->send($data)) {
+                        log_activity($userId, 'User forgot password', 'users');
                         Template::set_message(lang('us_reset_pass_message'), 'success');
                     } else {
                         Template::set_message(lang('us_reset_pass_error') . $this->emailer->error, 'error');
@@ -426,7 +436,7 @@ class Users extends Front_Controller
                 );
 
                 if ($this->user_model->update($this->input->post('user_id'), $data)) {
-                    log_activity($this->input->post('user_id'), lang('us_log_reset'), 'users');
+                    log_activity($this->input->post('user_id'), 'User Reset Password', 'users');
 
                     Template::set_message(lang('us_reset_password_success'), 'success');
                     Template::redirect(LOGIN_URL);

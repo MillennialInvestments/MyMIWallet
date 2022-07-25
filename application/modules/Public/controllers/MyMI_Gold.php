@@ -58,7 +58,7 @@ class MyMI_Gold extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);

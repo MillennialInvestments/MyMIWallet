@@ -4,36 +4,22 @@ $month                              = date("n");
 $day                                = date("d");
 $year                               = date("Y"); 
 $last_month                         = strtotime($month . ' - 1 month');
-$this->db->from('bf_users');
-$this->db->where('active', 0); 
-$getPendingUsers                    = $this->db->get(); 
-$totalPendingUsers                  = $getPendingUsers->num_rows(); 
-$this->db->from('bf_users');
-$this->db->where('active', 1); 
-$getActiveUsers                     = $this->db->get(); 
-$totalActiveUsers                   = $getActiveUsers->num_rows(); 
-$this->db->from('bf_users');
-$this->db->where('active', 0); 
-$this->db->where('partner', 1); 
-$getPendingPartners                 = $this->db->get(); 
-$totalPendingPartners               = $getPendingPartners->num_rows(); 
-$this->db->from('bf_users');
-$this->db->where('active', 1); 
-$this->db->where('partner', 1); 
-$getActivePartners                  = $this->db->get(); 
-$totalActivePartners                = $getActivePartners->num_rows(); 
-$this->db->from('bf_support_requests');
-$this->db->where('date', $today); 
-$this->db->where('status', 'Pending');
-$this->db->where('topic', $pageURIB); 
-$getPendingSupport                  = $this->db->get(); 
-$totalPendingSupport                = $getPendingSupport->num_rows(); 
-$this->db->from('bf_support_requests');
-$this->db->where('date', $today); 
-$this->db->where('status', 'Complete');
-$this->db->where('topic', $pageURIB); 
-$getCompleteSupport                 = $this->db->get(); 
-$totalCompleteSupport               = $getCompleteSupport->num_rows(); 
+$reporting                          = $this->mymianalytics->reporting(); 
+$getPendingUsers                    = $reporting['getPendingUsers'];
+$totalPendingUsers                  = $reporting['totalPendingUsers']; 
+$getActiveUsers                     = $reporting['getActiveUsers']; 
+$totalActiveUsers                   = $reporting['totalActiveUsers']; 
+$getPendingPartners                 = $reporting['getPendingPartners']; 
+$totalPendingPartners               = $reporting['totalPendingPartners']; 
+$getActivePartners                  = $reporting['getActivePartners']; 
+$totalActivePartners                = $reporting['totalActivePartners']; 
+$getPendingSupport                  = $reporting['getPendingSupport']; 
+$totalPendingSupport                = $reporting['totalPendingSupport']; 
+$getCompleteSupport                 = $reporting['getCompleteSupport']; 
+$totalCompleteSupport               = $reporting['totalCompleteSupport']; 
+$viewFileData                       = array(
+    'getActiveUsers'                => $getActiveUsers,
+);
 ?>
 <div class="nk-block">
 	<div class="row gy-gs">
@@ -156,10 +142,45 @@ $totalCompleteSupport               = $getCompleteSupport->num_rows();
                         </div><!-- .card -->
                     </div>
                 </div>
-                
-				<?php
-                ?>
 			</div>
+            <div class="nk-block">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-bordered h-100">
+                            <div class="card-inner-group">
+                                <div class="card-inner card-inner-md">
+                                    <div class="card-title-group">
+                                        <div class="card-title">
+                                            <h6 class="title">Active Users</h6>
+                                        </div>
+                                        <div class="card-tools me-n1">
+                                            <div class="row">
+                                                <span class="col">
+                                                    <a class="link py-3" href="<?php echo site_url('Management/Assets/Create'); ?>"><i class="icon ni ni-plus-circle"></i> Add Asset</a>
+                                                </span>
+                                                <span class="col">
+                                                    <div class="drodown">
+                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <ul class="link-list-opt no-bdr">
+                                                                <li><a href="#"><em class="icon ni ni-setting"></em><span>Action Settings</span></a></li>
+                                                                <li><a href="#"><em class="icon ni ni-notify"></em><span>Push Notification</span></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-inner">
+                                    <?php $this->load->view('Management/Users/Listing-Table', $viewFileData); ?>
+                                </div><!-- .card-inner -->
+                            </div><!-- .card-inner-group -->
+                        </div><!-- .card -->
+                    </div>
+                </div>
+            </div>
 		</div>
 	</div>
 </div>

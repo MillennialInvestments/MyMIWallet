@@ -58,7 +58,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -70,7 +70,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -82,7 +82,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -94,7 +94,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('Exchange/Order_Buy_Manager');
@@ -104,7 +104,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('User/Trade_Tracker/Trade_Manager');
@@ -114,7 +114,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('User/Trade_Tracker/Trade_Tracker_Editor');
@@ -124,7 +124,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Search';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         //~ $this->output->cache(1440);
         
@@ -161,7 +161,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Add';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         // create the data object
@@ -260,7 +260,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Quick_Trade';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         // create the data object
@@ -328,7 +328,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Sell';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         // create the data object
@@ -448,7 +448,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Trade_Tracker_Update';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         // create the data object
@@ -524,7 +524,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Close';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         // create the data object
@@ -656,7 +656,7 @@ class Trade_Tracker extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Add_Stock';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         // create the data object

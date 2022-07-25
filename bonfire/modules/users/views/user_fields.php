@@ -127,5 +127,8 @@ endif;
     </div>
 </div>
 <small class="text-muted">
-We are committed to complying with all U.S. regulations that help prevent, detect and remediate unlawful behavior by customers and virtual currency developers when using the Millennial Investments trading platform or any of the company’s other services. Millennial Investments is not a regulated exchange under U.S. securities laws. More information here.
+We are committed to complying with all U.S. regulations that help prevent, detect and remediate unlawful behavior by customers and virtual currency developers when using the Millennial Investment's MyMI Wallet trading platform or any of the company’s other services. 
+MyMI Wallet is also not a regulated exchange under U.S. securities laws. 
+By registering an account, you are agreeing our <a href="<?php echo base_url('assets/documents/User/Terms-And-Conditions.pdf'); ?>">Terms &amp; Conditions</a>.
 </small>
+<input type="hidden" class="g-recaptcha-response" name="g-recaptcha-response">

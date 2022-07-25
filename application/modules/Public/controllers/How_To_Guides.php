@@ -58,7 +58,7 @@ class How_To_Guides extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -70,7 +70,7 @@ class How_To_Guides extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'How_To_Guides_Due_Diligence';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -82,7 +82,7 @@ class How_To_Guides extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'How_To_Guides_Trade_Tracker';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -94,7 +94,7 @@ class How_To_Guides extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'How_To_Guides_Wallets';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);

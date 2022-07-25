@@ -166,6 +166,7 @@ class Tracker_model extends BF_Model
 
     public function get_user_trades($cuID)
     {
+        $this->db->select('id, order_id, trading_account_id, trading_account, trading_account_tag, order_status, category, trade_type, closed, symbol_id, symbol, symbol_tag, current_price, entry_price, close_price, net_gains, open_date, open_time, close_date, close_time, price_target, stop_loss, total_trade_cost, expiration, shares, remaining_shares, number_of_contracts, strike, wallet, details, premium, leverage, variation_perc, variation, closed_perc, closed_ref, closed_list, on_open_fees, on_close_fees, total_fees, json_user_fields'); 
         $this->db->from('bf_users_trades');
         $this->db->where('user_id', $cuID);
         $getUserTrades 						= $this->db->get()->result_array();

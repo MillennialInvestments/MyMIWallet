@@ -58,7 +58,7 @@ class Registration extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -70,7 +70,7 @@ class Registration extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Account_Information';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         // create the data object
         $data = new stdClass();

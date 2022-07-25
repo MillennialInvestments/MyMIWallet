@@ -9,7 +9,7 @@ $pageType 						= Template::get('pageType');
 $pageName 						= Template::get('pageName');
 
 // Default Values
-$defaultImage 	= 'https://www.mymiwallet.com/assets/images/Millennial-Investments-The-Best-In-Investments-Logo.png';
+$defaultImage 	= 'https://www.mymiwallet.com/assets/images/Millennial-Investments.png';
 
 // Get Marketing Page SEO from Database
 $getPageInfo 					= $this->public_model->get_marketing_seo($pageName);
@@ -39,7 +39,7 @@ if ($pageType === 'Standard') {
 		';
     };
 } elseif ($pageType === 'Search') {
-    $page_title 				= 'Search ' . $pageURIC . ' | Millennial Investments';
+    $page_title 				= 'Search ' . $pageURIC . ' | MyMI Wallet';
     $page_description 			= 'Search for ' . $pageURIC . ' and discover technical analysis and fundamental information to discover your next potential investment';
     $page_url 					= 'https://www.mymiwallet.com/Tools/Search/' . $pageURIC;
     $page_sitemap_url 			= 'https://www.mymiwallet.com/Tools/Search/' . $pageURIC;
@@ -60,7 +60,7 @@ if ($pageType === 'Standard') {
 	<meta property="og:description" content="' . $page_description . '">
 	<meta name="twitter:description" content="' . $page_description . '">   ';
 } elseif ($pageType === 'Screener') {
-    $page_title 				= $pageURIC . ' Screener | Millennial Investments';
+    $page_title 				= $pageURIC . ' Screener | MyMI Wallet';
     $page_description 			= $pageURIC . ' Screener | Search for stocks and discover technical analysis and fundamental information to discover your next potential investment';
     $page_url 					= 'https://www.mymiwallet.com/Tools/Screener/' . $pageURIC;
     $page_sitemap_url 			= 'https://www.mymiwallet.com/Tools/Screener/' . $pageURIC;
@@ -83,8 +83,8 @@ if ($pageType === 'Standard') {
 } elseif ($pageType === 'Purchase_Memberships') {
     $ftSegmentB = $this->uri->segment(1);
     if ($ftSegmentB === 'Memberships') {
-        $page_title 			= 'Premium Memberships | $69/Month | Millennial Investments';
-        $page_description 		= 'Discover the investing resources and tools we can provide to improve your daily investment profits at Millennial Investments';
+        $page_title 			= 'Premium Memberships | $69/Month | MyMI Wallet';
+        $page_description 		= 'Discover the investing resources and tools we can provide to improve your daily investment profits at MyMI Wallet';
         $page_url 	= 'https://www.mymiwallet.com/Memberships/Premium';
           
         $page_image 			= $defaultImage;
@@ -108,8 +108,8 @@ if ($pageType === 'Standard') {
     }
     $ftSegmentB = $this->uri->segment(2);
     if ($ftSegmentB === 'Premium') {
-        $page_title 			= 'Premium Memberships | $69/Month | Millennial Investments';
-        $page_description 		= 'Discover the investing resources and tools we can provide to improve your daily investment profits at Millennial Investments';
+        $page_title 			= 'Premium Memberships | $69/Month | MyMI Wallet';
+        $page_description 		= 'Discover the investing resources and tools we can provide to improve your daily investment profits at MyMI Wallet';
         $page_url 	= 'https://www.mymiwallet.com/Memberships/Premium';
           
         $page_image 			= $defaultImage;
@@ -132,10 +132,10 @@ if ($pageType === 'Standard') {
 		';
     }
 } elseif ($pageType === 'Memberships') {
-    $page_title 			= 'Investor Memberships | Millennial Investments';
-    $page_description 		= 'Investor Memberships | Discover the investing resources and tools we can provide to improve your daily investment profits at Millennial Investments';
+    $page_title 			= 'Investor Memberships | MyMI Wallet';
+    $page_description 		= 'Investor Memberships | Discover the investing resources and tools we can provide to improve your daily investment profits at MyMI Wallet';
     $page_url 				= 'https://www.mymiwallet.com/Memberships';
-    $page_image				= 'https://www.mymiwallet.com/assets/images/Millennial-Investments-The-Best-In-Investments-Logo.png';
+    $page_image				= 'https://www.mymiwallet.com/assets/images/Millennial-Investments.png';
         
     echo
     '<title>' . $page_title . '</title>
@@ -154,10 +154,10 @@ if ($pageType === 'Standard') {
 			
 		';
 } elseif ($pageType === 'Customer_Support') {
-    $page_title 			= 'Customer Support Center | Millennial Investments';
+    $page_title 			= 'Customer Support Center | MyMI Wallet';
     $page_description 		= 'Customer Support Center | Get assistance and support to better utilize our trading alert system and optimize your return on investments.';
-    $page_url 				= 'https://www.mymiwallet.com/Basic-Membership/Upgrade';
-    $page_image				= 'https://www.mymiwallet.com/assets/images/Millennial-Investments-The-Best-In-Investments-Logo.png';
+    $page_url 				= 'https://www.mymiwallet.com/Customer-Support';
+    $page_image				= 'https://www.mymiwallet.com/assets/images/Millennial-Investments.png';
     
     echo
     '<title>' . $page_title . '</title>
@@ -186,7 +186,7 @@ if ($pageType === 'Standard') {
         $page_description 		= 'Discover ' . $company . ' (' . $symbol . ') real-time trading data, historical charts, latest news, and trends from the newest community of investors and traders.';
         $page_url				= 'https://www.mymiwallet.com/Stock/' . $market . '/' . $symbol;
         $page_sitemap_url		= $page_url;
-        $page_image				= 'https://www.mymiwallet.com/assets/images/Millennial-Investments-The-Best-In-Investments-Logo.png';
+        $page_image				= 'https://www.mymiwallet.com/assets/images/Millennial-Investments.png';
         
         
         echo
@@ -222,7 +222,7 @@ if ($pageType === 'Standard') {
         $page_description 		= 'Discover ' . $company . ' (' . $symbol . ') real-time trading data, historical charts, latest news, and trends from the newest community of investors and traders.';
         $page_url				= 'https://www.mymiwallet.com/Stock/' . $market . '/' . $symbol;
         $page_sitemap_url		= $page_url;
-        $page_image				= 'https://www.mymiwallet.com/assets/images/Millennial-Investments-The-Best-In-Investments-Logo.png';
+        $page_image				= 'https://www.mymiwallet.com/assets/images/Millennial-Investments.png';
         
         
         echo
@@ -293,33 +293,33 @@ if ($pageType === 'Standard') {
 }
 if ($pageType === 'register') {
     if ($pageURIA === 'Free' or $pageURIA === 'free' and $pageURIB === 'register') {
-        $page_title				= 'Free Membership Registration | Millennial Investments';
+        $page_title				= 'Free Membership Registration | MyMI Wallet';
         $page_description 		= 'Our Free Memberships allow our members to access Investment Accounting & Analytical Tools to optimize their trading strategies in Financial Markets and more!';
-        $page_image 			= 'https://www.mymiwallet.com/assets/images/Millennial-Investments-The-Best-In-Investments-Logo.png';
+        $page_image 			= 'https://www.mymiwallet.com/assets/images/Millennial-Investments.png';
         $page_url 				= 'https://www.mymiwallet.com/Free/register';
         $page_sitemap_url 		= 'https://www.mymiwallet.com/Free/register';
     } elseif ($pageURIA === 'Beta' or $pageURIA === 'beta' and $pageURIB === 'register') {
-        $page_title				= 'Beta Membership Registration | Millennial Investments';
+        $page_title				= 'Beta Membership Registration | MyMI Wallet';
         $page_description 		= 'Our Beta Memberships allow our members to access Investment Accounting & Analytical Tools to optimize their trading strategies in Financial Markets and more!';
-        $page_image 			= 'https://www.mymiwallet.com/assets/images/Millennial-Investments-The-Best-In-Investments-Logo.png';
+        $page_image 			= 'https://www.mymiwallet.com/assets/images/Millennial-Investments.png';
         $page_url 				= 'https://www.mymiwallet.com/Beta/register';
         $page_sitemap_url 		= 'https://www.mymiwallet.com/Beta/register';
     } elseif ($pageURIA === 'Partner' or $pageURIA === 'partner' and $pageURIB === 'register') {
-        $page_title				= 'MyMI Partnership Registration | Millennial Investments';
+        $page_title				= 'MyMI Partnership Registration | MyMI Wallet';
         $page_description 		= 'Register your MyMI Partnership Account to access our community of investment & trading leaders and collaborators to assist each other in growing together!';
-        $page_image 			= 'https://www.mymiwallet.com/assets/images/Millennial-Investments-The-Best-In-Investments-Logo.png';
+        $page_image 			= 'https://www.mymiwallet.com/assets/images/Millennial-Investments.png';
         $page_url 				= 'https://www.mymiwallet.com/Premium/register';
         $page_sitemap_url 		= 'https://www.mymiwallet.com/Premium/register';
     } elseif ($pageURIA === 'Investor' and $pageURIB === 'register') {
-        $page_title				= 'MyMI Investor Registration | Millennial Investments';
+        $page_title				= 'MyMI Investor Registration | MyMI Wallet';
         $page_description 		= 'Register your MyMI Investor Account to access our community of investors and news regarding upcoming events in the MyMI Investment Platforms!';
-        $page_image 			= 'https://www.mymiwallet.com/assets/images/Millennial-Investments-The-Best-In-Investments-Logo.png';
+        $page_image 			= 'https://www.mymiwallet.com/assets/images/Millennial-Investments.png';
         $page_url 				= 'https://www.mymiwallet.com/Investor/register';
         $page_sitemap_url 		= 'https://www.mymiwallet.com/Investor/register';
     } else {
-        $page_title				= 'Investor Membership Registration | Millennial Investments';
+        $page_title				= 'Investor Membership Registration | MyMI Wallet';
         $page_description 		= 'Our Investor Memberships allow our members to access Investment Accounting & Analytical Tools to optimize their trading strategies in Financial Markets and more!';
-        $page_image 			= 'https://www.mymiwallet.com/assets/images/Millennial-Investments-The-Best-In-Investments-Logo.png';
+        $page_image 			= 'https://www.mymiwallet.com/assets/images/Millennial-Investments.png';
         $page_url 				= 'https://www.mymiwallet.com/Free/register';
         $page_sitemap_url 		= 'https://www.mymiwallet.com/Free/register';
     };

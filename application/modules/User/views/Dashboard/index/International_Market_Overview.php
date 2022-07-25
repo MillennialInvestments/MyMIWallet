@@ -55,39 +55,39 @@
     // Calculate INT Equity Score
     if ($nik_perChange >= 0) {
         $nikScore				= 1;
-        $nikScoreCard			= '<span class="statusGreen statusGreenBg">+' . $nikScore . ' </span> <span class="pl-3 statusGreen">Bullish</span>';
+        $nikScoreCard			= '<span class="statusGreen statusGreenBg">+' . $nikScore . ' </span> <span class="pl-1 statusGreen">Bullish</span>';
     } elseif ($nik_perChange <= 0) {
         $nikScore				= -1;
-        $nikScoreCard 			= '<span class="statusRed statusRedBg">' . $nikScore . ' </span> <span class="pl-3 statusRed">Bearish</span>';
+        $nikScoreCard 			= '<span class="statusRed statusRedBg">' . $nikScore . ' </span> <span class="pl-1 statusRed">Bearish</span>';
     }
     if ($euro_perChange >= 0) {
         $euroScore				= 1;
-        $euroScoreCard 			= '<span class="statusGreen statusGreenBg">+' . $euroScore . ' </span> <span class="pl-3 statusGreen">Bullish</span>';
+        $euroScoreCard 			= '<span class="statusGreen statusGreenBg">+' . $euroScore . ' </span> <span class="pl-1 statusGreen">Bullish</span>';
     } elseif ($euro_perChange <= 0) {
         $euroScore				= -1;
-        $euroScoreCard 			= '<span class="statusRed statusRedBg">' . $euroScore . ' </span> <span class="pl-3 statusRed">Bearish</span>';
+        $euroScoreCard 			= '<span class="statusRed statusRedBg">' . $euroScore . ' </span> <span class="pl-1 statusRed">Bearish</span>';
     }
     if ($hsi_perChange >= 0) {
         $hsiScore				= 1;
-        $hsiScoreCard 			= '<span class="statusGreen statusGreenBg">+' . $hsiScore . ' </span> <span class="pl-3 statusGreen">Bullish</span>';
+        $hsiScoreCard 			= '<span class="statusGreen statusGreenBg">+' . $hsiScore . ' </span> <span class="pl-1 statusGreen">Bullish</span>';
     } elseif ($hsi_perChange <= 0) {
         $hsiScore				= -1;
-        $hsiScoreCard 			= '<span class="statusRed statusRedBg">' . $hsiScore . ' </span> <span class="pl-3 statusRed">Bearish</span>';
+        $hsiScoreCard 			= '<span class="statusRed statusRedBg">' . $hsiScore . ' </span> <span class="pl-1 statusRed">Bearish</span>';
     }
     if ($dax_perChange >= 0) {
         $daxScore				= 1;
-        $daxScoreCard 			= '<span class="statusGreen statusGreenBg">+' . $daxScore . ' </span> <span class="pl-3 statusGreen">Bullish</span>';
+        $daxScoreCard 			= '<span class="statusGreen statusGreenBg">+' . $daxScore . ' </span> <span class="pl-1 statusGreen">Bullish</span>';
     } elseif ($dax_perChange <= 0) {
         $daxScore				= -1;
-        $daxScoreCard 			= '<span class="statusRed statusRedBg">' . $daxScore . ' </span> <span class="pl-3 statusRed">Bearish</span>';
+        $daxScoreCard 			= '<span class="statusRed statusRedBg">' . $daxScore . ' </span> <span class="pl-1 statusRed">Bearish</span>';
     }
     $intScore 					= $nikScore + $euroScore + $hsiScore + $daxScore;
     $int_mark					= round(($nik_netChange + $euro_netChange + $hsi_netChange + $dax_netChange)/4, 2);
     $intScoreCard 				= $nikScore + $euroScore + $hsiScore + $daxScore;
     if ($intScoreCard >= 0) {
-        $intScoreCard 			= '<span class="statusGreen statusGreenBg">+' . $intScoreCard . ' </span> <span class="pl-3 statusGreen">Bullish</span>';
+        $intScoreCard 			= '<span class="statusGreen statusGreenBg">+' . $intScoreCard . ' </span> <span class="pl-1 statusGreen">Bullish</span>';
     } elseif ($intScoreCard <= 0) {
-        $intScoreCard			= '<span class="statusRed statusRedBg">' . $intScoreCard . ' </span> <span class="pl-3 statusRed">Bearish</span>';
+        $intScoreCard			= '<span class="statusRed statusRedBg">' . $intScoreCard . ' </span> <span class="pl-1 statusRed">Bearish</span>';
     }
     //~ $overallScore 				= $usScore + $intScore + $vixScore + $crudeScore;
     ?>
@@ -102,7 +102,7 @@
 		<div class="tranx-col">
 			<div class="tranx-info">
 				<div class="tranx-data">
-					<div class="tranx-label"><a href="">International Overall Markets</a></div>
+					<div class="tranx-label">International Markets</div>
 					<div class="tranx-date">Score: <?php echo $intScoreCard; ?></div>
 				</div>
 			</div>
@@ -118,7 +118,7 @@
 		<div class="tranx-col">
 			<div class="tranx-info">
 				<div class="tranx-data">
-					<div class="tranx-label"><a href="">Euro Stoxx 100</a></div>
+					<div class="tranx-label">Euro Stoxx 100</div>
 					<div class="tranx-date">Score: <?php echo $euroScoreCard; ?></div>
 				</div>
 			</div>
@@ -126,7 +126,7 @@
 		<div class="tranx-col">
 			<div class="tranx-amount">
 				<div class="number"><?php echo $euro_mark; ?></div>
-				<div class="number-sm"><?php echo $euro_perChange; ?>%</div>
+				<div class="number-sm"><?php echo round($euro_perChange,2); ?>%</div>
 			</div>
 		</div>
 	</div>
@@ -134,15 +134,15 @@
 		<div class="tranx-col">
 			<div class="tranx-info">
 				<div class="tranx-data">
-					<div class="tranx-label"><a href="">DAX</a></div>
+					<div class="tranx-label">DAX</div>
 					<div class="tranx-date">Score: <?php echo $daxScoreCard; ?></div>
 				</div>
 			</div>
 		</div>
 		<div class="tranx-col">
 			<div class="tranx-amount">
-				<div class="number"><?php echo $dax_mark; ?></div>
-				<div class="number-sm"><?php echo $dax_perChange; ?>%</div>
+				<div class="number"><?php echo round($dax_mark,2); ?></div>
+				<div class="number-sm"><?php echo round($dax_perChange,2); ?>%</div>
 			</div>
 		</div>
 	</div>
@@ -150,15 +150,15 @@
 		<div class="tranx-col">
 			<div class="tranx-info">
 				<div class="tranx-data">
-					<div class="tranx-label"><a href="">Hang Seng Index</a></div>
+					<div class="tranx-label">Hang Seng</div>
 					<div class="tranx-date">Score: <?php echo $hsiScoreCard; ?></div>
 				</div>
 			</div>
 		</div>
 		<div class="tranx-col">
 			<div class="tranx-amount">
-				<div class="number"><?php echo $hsi_mark; ?></div>
-				<div class="number-sm"><?php echo $hsi_perChange; ?>%</div>
+				<div class="number"><?php echo round($hsi_mark,2); ?></div>
+				<div class="number-sm"><?php echo round($hsi_perChange,2); ?>%</div>
 			</div>
 		</div>
 	</div>
@@ -166,16 +166,32 @@
 		<div class="tranx-col">
 			<div class="tranx-info">
 				<div class="tranx-data">
-					<div class="tranx-label"><a href="">Nikkei 225</a></div>
+					<div class="tranx-label">Nikkei 225</div>
 					<div class="tranx-date">Score: <?php echo $nikScoreCard; ?></div>
 				</div>
 			</div>
 		</div>
 		<div class="tranx-col">
 			<div class="tranx-amount">
-				<div class="number"><?php echo $nik_mark; ?></div>
-				<div class="number-sm"><?php echo $nik_perChange; ?>%</div>
+				<div class="number"><?php echo round($nik_mark,2); ?></div>
+				<div class="number-sm"><?php echo round($nik_perChange,2); ?>%</div>
 			</div>
 		</div>
 	</div>
+	<?php
+    if ($this->uri->segment(1) === 'Dashboard') {
+        $marketURL                              = 'Markets/International-Markets';
+        echo '
+	<div class="tranx-item">
+		<div class="tranx-col col">
+			<div class="tranx-info text-center">
+				<div class="tranx-data">
+					<div class="tranx-label"><a class="btn btn-primary btn-md" href="' . site_url($marketURL) . '">View Markets</a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+        ';
+    } 
+    ?>
 </div>

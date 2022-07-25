@@ -71,6 +71,18 @@ class Home extends MX_Controller
         Template::render();
     }//end index()
 
+    public function Support()
+    {
+        $pageType = 'Standard';
+        $pageName = 'Home';
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::set_view('User/Support/index');
+        Template::render();
+    }//end index()
+
     //--------------------------------------------------------------------
 
     /**

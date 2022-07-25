@@ -1,7 +1,7 @@
 <?php
 // Plaid Integration
-// $plaid                                  = 0;
-$plaid                                  = 1;
+$plaid                                  = 0;
+// $plaid                                  = 1;
 $cuID									= $_SESSION['allSessionData']['userAccount']['cuID'];
 $cuRole									= $_SESSION['allSessionData']['userAccount']['cuRole'];
 $cuEmail								= $_SESSION['allSessionData']['userAccount']['cuEmail'];

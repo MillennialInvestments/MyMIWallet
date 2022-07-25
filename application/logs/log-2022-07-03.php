@@ -1,0 +1,31 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2022-07-03 03:27:27 --> Severity: Notice --> Undefined index: coin_value /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 110
+ERROR - 2022-07-03 03:27:27 --> Severity: Notice --> Undefined index: quantity /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 111
+ERROR - 2022-07-03 03:32:10 --> Severity: Notice --> Undefined index: quantity /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 111
+ERROR - 2022-07-03 13:55:24 --> Severity: Notice --> Undefined variable: coinCreationDate /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 129
+ERROR - 2022-07-03 13:55:24 --> Severity: Notice --> Undefined variable: coinCreationTime /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 129
+ERROR - 2022-07-03 14:41:44 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 119
+ERROR - 2022-07-03 14:51:22 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 119
+ERROR - 2022-07-03 14:53:27 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 119
+ERROR - 2022-07-03 14:55:43 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 119
+ERROR - 2022-07-03 14:57:05 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 119
+ERROR - 2022-07-03 14:58:10 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 119
+ERROR - 2022-07-03 14:59:10 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 119
+ERROR - 2022-07-03 15:00:17 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 119
+ERROR - 2022-07-03 15:05:28 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 119
+ERROR - 2022-07-03 15:05:28 --> Severity: Notice --> Undefined variable: coin_file /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 178
+ERROR - 2022-07-03 15:05:28 --> Severity: Notice --> Undefined variable: coin_file /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 178
+ERROR - 2022-07-03 15:06:33 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 120
+ERROR - 2022-07-03 15:09:44 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 124
+ERROR - 2022-07-03 15:10:14 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 124
+ERROR - 2022-07-03 15:11:29 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 124
+ERROR - 2022-07-03 15:15:09 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 124
+ERROR - 2022-07-03 15:15:58 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 124
+ERROR - 2022-07-03 15:17:26 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 124
+ERROR - 2022-07-03 15:23:24 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 129
+ERROR - 2022-07-03 15:28:39 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 129
+ERROR - 2022-07-03 15:29:32 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 129
+ERROR - 2022-07-03 15:32:45 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 129
+ERROR - 2022-07-03 15:39:40 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 127
+ERROR - 2022-07-03 15:39:40 --> Severity: Notice --> Undefined variable: cuRole /Library/WebServer/Documents/MillennialInvest/Site-v7/v1.5/application/modules/Management/views/Assets/Applications/Details.php 165

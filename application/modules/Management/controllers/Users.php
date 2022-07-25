@@ -63,7 +63,19 @@ class Users extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Dashboard';
-        $this->load->library('users/auth');
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+
+    public function Assets()
+    {
+        $pageType = 'Standard';
+        $pageName = 'Web_Design_Dashboard';
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -83,7 +95,7 @@ class Users extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -103,7 +115,6 @@ class Users extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Dashboard';
-        $this->load->library(array('users/auth', 'MyMIManage'));
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -111,11 +122,11 @@ class Users extends Admin_Controller
         Template::render();
     }
 
-    public function Profile($userID)
+    public function Profile()
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Dashboard';
-        $this->load->library(array('users/auth', 'MyMIManage'));
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);

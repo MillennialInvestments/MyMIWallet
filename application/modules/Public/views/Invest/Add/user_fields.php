@@ -97,6 +97,7 @@ if ($cuUserType === 'Beta') {
     </label>
 </div>
 <input class="<?php e($controlInput); ?>" type="hidden" id="referral_id" name="referral_id" value="<?php echo set_value('referral_id', isset($user) ? $user->referral_id : $referralID); ?>" />
+<input type="hidden" class="g-recaptcha-response" name="g-recaptcha-response">
 <div class="control-group">
 	<div class="controls ml-3">
 		<input class="btn btn-primary" type="submit" name="register" id="submit" value="Buy Now!" />

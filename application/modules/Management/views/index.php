@@ -1,75 +1,61 @@
 <?php
+// Management Configurations
+$managementActionItems              = $this->config->item('managementActionItems');
 $today                              = date("m/d/Y"); 
 $month                              = date("n"); 
 $day                                = date("d");
 $year                               = date("Y"); 
 $last_month                         = strtotime($month . ' - 1 month');
-$this->db->from('bf_exchanges_listing_request');
-$this->db->where('date', $today); 
-$this->db->where('status !=', 'Viewed');
-$getPendingAssets                   = $this->db->get(); 
-$totalPendingAssets                 = $getPendingAssets->num_rows(); 
-$this->db->from('bf_exchanges_assets');
-$this->db->where('date', $today); 
-$this->db->where('status', 'Approved');
-$getApprovedAssets                  = $this->db->get(); 
-$totalApprovedAssets                = $getApprovedAssets->num_rows(); 
-$this->db->from('bf_support_requests');
-$this->db->where('date', $today); 
-$this->db->where('status', 'Pending');
-$getPendingSupport                  = $this->db->get(); 
-$totalPendingSupport                = $getPendingSupport->num_rows(); 
-$this->db->from('bf_support_requests');
-$this->db->where('date', $today); 
-$this->db->where('status', 'Complete');
-$getCompleteSupport                  = $this->db->get(); 
-$totalCompleteSupport                = $getCompleteSupport->num_rows(); 
-$this->db->from('bf_exchanges_orders');
-// $this->db->where('month', $month); 
-// $this->db->where('day', $day); 
-// $this->db->where('year', $year); 
-$this->db->where('status', 'Closed');
-$getTotalTrans                      = $this->db->get(); 
-$totalTransactions                  = $getTotalTrans->num_rows(); 
-$this->db->select_sum('amount');
-$this->db->select_sum('fees');
-$this->db->from('bf_exchanges_orders');
-// $this->db->where('month', $month); 
-// $this->db->where('day', $day); 
-// $this->db->where('year', $year); 
-$this->db->where('status', 'Closed');
-$getTotalAmounts                    = $this->db->get(); 
-foreach($getTotalAmounts->result_array() as $totalAmounts) {
-    if ($totalAmounts['fees'] > 0) {
-        $totalTransFees             = '<strong>$' . number_format($totalAmounts['fees'],2) . '</strong>';
-    } elseif ($totalAmounts['fees'] < 0) {
-        $totalTransFees             = '<strong class="statusRed">-$' . number_format($totalAmounts['fees'],2) . '</strong>';
-    }
-    if ($totalAmounts['amount'] > 0) {
-        $totalTransTotals           = '<strong>$' . number_format($totalAmounts['amount'],2) . '</strong>';
-    } elseif ($totalAmounts['amount'] < 0) {
-        $totalTransTotals           = '<strong class="statusRed">-$' . number_format($totalAmounts['amount'],2) . '</strong>';
-    }
-}
-$this->db->select_sum('amount');
-$this->db->select_sum('fees');
-$this->db->from('bf_exchanges_orders');
-// $this->db->where('month', $last_month); 
-// $this->db->where('year', $year); 
-$this->db->where('status', 'Closed');
-$getLastTotalAmounts                = $this->db->get(); 
-foreach($getLastTotalAmounts->result_array() as $lastTotalAmounts) {
-    if ($lastTotalAmounts['fees'] > 0) {
-        $totalLastTransFees         = '<strong>$' . number_format($lastTotalAmounts['fees'],2) . '</strong>';
-    } elseif ($lastTotalAmounts['fees'] < 0) {
-        $totalLastTransFees         = '<strong class="statusRed">-$' . number_format($lastTotalAmounts['fees'],2) . '</strong>';
-    }
-    if ($lastTotalAmounts['amount'] > 0) {
-        $totalLastTransTotals       = '<strong>$' . number_format($lastTotalAmounts['amount'],2) . '</strong>';
-    } elseif ($lastTotalAmounts['amount'] < 0) {
-        $totalLastTransTotals       = '<strong class="statusRed">-$' . number_format($lastTotalAmounts['amount'],2) . '</strong>';
-    }
-}
+$department                         = $this->uri->segment(2);
+$reporting                          = $this->mymianalytics->reporting($department); 
+// print_r($_SESSION['allSessionData']); 
+// echo '<br><br>'; 
+// print_r($reporting); 
+// Get Approved Reports
+$getApprovedAssets                  = $reporting['getApprovedAssets']; 
+$totalApprovedAssets                = $reporting['totalApprovedAssets']; 
+$getPendingSupport                  = $reporting['getPendingSupport'];
+$totalPendingSupport                = $reporting['totalPendingSupport']; 
+$totalPendingUsers                  = $reporting['totalPendingUsers'];
+$totalPendingPartners               = $reporting['totalPendingPartners'];
+// Get Pending Reports 
+$getPendingAssets                   = $reporting['getPendingAssets']; 
+$totalPendingAssets                 = $reporting['totalPendingAssets']; 
+$getCompleteSupport                 = $reporting['getCompleteSupport'];
+$totalCompleteSupport               = $reporting['totalCompleteSupport'];
+// Get Percentage Reports
+$assetPercentage                    = $reporting['assetPercentage'];
+$transactionPercentage              = $reporting['transactionPercentage'];
+$tradesPercentage                   = $reporting['tradesPercentage'];
+$partnerPercentage                  = $reporting['partnerPercentage'];
+$usersPercentage                    = $reporting['usersPercentage'];
+$walletsPercentage                  = $reporting['walletsPercentage'];
+// $transAmountPercentage              = $reporting['transAmountPercentage'];
+// $transFeesPercentage                = $reporting['transFeesPercentage'];
+// Get Targets
+$targetAssets                       = $reporting['targetAssets'];
+$targetTransactions                 = $reporting['targetTransactions'];
+$targetTransAmount                  = $reporting['targetTransAmount'];
+$targetTransFees                    = $reporting['targetTransFees'];
+$targetTrades                       = $reporting['targetTrades'];
+$targetWallets                      = $reporting['targetWallets'];
+$targetUsers                        = $reporting['targetUsers'];
+$targetPartners                     = $reporting['targetPartners'];
+// Get Totals Reports
+$getTotalTrans                      = $reporting['getTotalTrans'];
+$totalTransactions                  = $reporting['totalTransactions'];
+$getTotalAmounts                    = $reporting['getTotalAmounts'];
+$totalTransFees                     = $reporting['totalTransFees'];
+$totalTransFeesPlain                = $reporting['totalTransFeesPlain'];
+$totalTransTotalsPlain              = $reporting['totalTransTotalsPlain'];
+$totalTransTotals                   = $reporting['totalTransTotals'];
+$getLastTotalAmounts                = $reporting['getLastTotalAmounts'];
+$totalLastTransFees                 = $reporting['totalLastTransFees'];
+$totalLastTransTotals               = $reporting['totalLastTransTotals'];
+$totalTradesTracked                 = $reporting['totalTradesTracked'];
+$totalWalletsCreated                = $reporting['totalWalletsCreated']; 
+$totalActiveUsers                   = $reporting['totalActiveUsers'];
+$totalActivePartners                = $reporting['totalActivePartners'];
 ?>
 <div class="nk-block">
 	<div class="row gy-gs">
@@ -80,7 +66,7 @@ foreach($getLastTotalAmounts->result_array() as $lastTotalAmounts) {
 						<h1 class="nk-block-title title">MyMI Management</h1>
 						<p id="private_key"></p>
 						<p id="address"></p>
-						<a href="<?php echo site_url('/Trade-Tracker'); ?>">Back to Dashboard</a>							
+						<a href="<?php echo site_url('/Trade-Tracker'); ?>">Back to Dashboard</a>						
 					</div>
 				</div>
 			</div>
@@ -192,10 +178,399 @@ foreach($getLastTotalAmounts->result_array() as $lastTotalAmounts) {
                         </div><!-- .card -->
                     </div>
                 </div>
-                
-				<?php
-                ?>
 			</div>
+            <div class="nk-block">
+                <div class="row">
+                    <div class="<?php echo $managementActionItems; ?>">
+                        <div class="card card-bordered h-100">
+                            <div class="card-inner-group">
+                                <div class="card-inner card-inner-md">
+                                    <div class="card-title-group">
+                                        <div class="card-title">
+                                            <h6 class="title">Assets Created</h6>
+                                        </div>
+                                        <div class="card-tools me-n1">
+                                            <div class="drodown">
+                                                <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <ul class="link-list-opt no-bdr">
+                                                        <li><a href="#"><em class="icon ni ni-setting"></em><span>Action Settings</span></a></li>
+                                                        <li><a href="#"><em class="icon ni ni-notify"></em><span>Push Notification</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-inner">
+                                    <div class="d-flex pb-md-4">
+                                        <div class="align-self-center pr-2">
+                                        <i class="icon icon-md ni ni-coins"></i>
+                                        </div>
+                                        <div class="align-self-center text-end">
+                                        <h6>
+                                            <small class="fs-14px"><?php echo number_format($totalApprovedAssets,0); ?> / <?php echo $targetAssets . ' (' . $assetPercentage . ')'; ?></small>
+                                            <br>
+                                            <small class="fs-14px">Total Assets</small>
+                                        </h6>
+                                        <!-- <p class="mb-0">Total Assets</p> -->
+                                        </div>
+                                    </div>
+                                    <a href="#" class="btn btn-primary btn-block"><i class="fa fa-eye"></i> Watch Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<?php echo $managementActionItems; ?>">
+                        <div class="card card-bordered h-100">
+                            <div class="card-inner-group">
+                                <div class="card-inner card-inner-md">
+                                    <div class="card-title-group">
+                                        <div class="card-title">
+                                            <h6 class="title">Exchange Orders</h6>
+                                        </div>
+                                        <div class="card-tools me-n1">
+                                            <div class="drodown">
+                                                <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <ul class="link-list-opt no-bdr">
+                                                        <li><a href="#"><em class="icon ni ni-setting"></em><span>Action Settings</span></a></li>
+                                                        <li><a href="#"><em class="icon ni ni-notify"></em><span>Push Notification</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-inner">
+                                    <div class="d-flex pb-md-4">
+                                        <div class="align-self-center pr-2">
+                                            <i class="icon icon-md ni ni-tranx"></i>
+                                        </div>
+                                        <div class="align-self-center text-end">
+                                            <h6>
+                                                <small class="fs-14px"><?php echo number_format($totalTransactions,0); ?> / <?php echo $targetTransactions . ' (' . $transactionPercentage . ')'; ?></small>
+                                                <br>
+                                                <small class="fs-14px">Total Orders</small>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="btn btn-primary btn-block"><i class="fa fa-eye"></i> Watch Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<?php echo $managementActionItems; ?>">
+                        <div class="card card-bordered h-100">
+                            <div class="card-inner-group">
+                                <div class="card-inner card-inner-md">
+                                    <div class="card-title-group">
+                                        <div class="card-title">
+                                            <h6 class="title">Trades Tracked</h6>
+                                        </div>
+                                        <div class="card-tools me-n1">
+                                            <div class="drodown">
+                                                <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <ul class="link-list-opt no-bdr">
+                                                        <li><a href="#"><em class="icon ni ni-setting"></em><span>Action Settings</span></a></li>
+                                                        <li><a href="#"><em class="icon ni ni-notify"></em><span>Push Notification</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-inner">
+                                    <div class="d-flex pb-md-4">
+                                        <div class="align-self-center pr-2">
+                                            <i class="icon icon-md ni ni-reports"></i>
+                                        </div>
+                                        <div class="align-self-center text-end">
+                                            <h6>
+                                                <small class="fs-14px"><?php echo number_format($totalTradesTracked,0); ?> / <?php echo $targetTrades . ' (' . $tradesPercentage . ')'; ?></small>
+                                                <br>
+                                                <small class="fs-14px">Total Trades</small>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="btn btn-primary btn-block"><i class="fa fa-eye"></i> Watch Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<?php echo $managementActionItems; ?>">
+                        <div class="card card-bordered h-100">
+                            <div class="card-inner-group">
+                                <div class="card-inner card-inner-md">
+                                    <div class="card-title-group">
+                                        <div class="card-title">
+                                            <h6 class="title">Partner Accounts</h6>
+                                        </div>
+                                        <div class="card-tools me-n1">
+                                            <div class="drodown">
+                                                <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <ul class="link-list-opt no-bdr">
+                                                        <li><a href="#"><em class="icon ni ni-setting"></em><span>Action Settings</span></a></li>
+                                                        <li><a href="#"><em class="icon ni ni-notify"></em><span>Push Notification</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-inner">
+                                    <div class="d-flex pb-md-4">
+                                        <div class="align-self-center pr-2">
+                                            <i class="icon icon-md ni ni-users"></i>
+                                        </div>
+                                        <div class="align-self-center text-end">
+                                            <h6>
+                                                <small class="fs-14px"><?php echo number_format($totalActivePartners,0); ?> / <?php echo $targetPartners . ' (' . $partnerPercentage . ')'; ?></small>
+                                                <br>
+                                                <small class="fs-14px">Total Partners</small>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="btn btn-primary btn-block"><i class="fa fa-eye"></i> Watch Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<?php echo $managementActionItems; ?>">
+                        <div class="card card-bordered h-100">
+                            <div class="card-inner-group">
+                                <div class="card-inner card-inner-md">
+                                    <div class="card-title-group">
+                                        <div class="card-title">
+                                            <h6 class="title">User Accounts</h6>
+                                        </div>
+                                        <div class="card-tools me-n1">
+                                            <div class="drodown">
+                                                <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <ul class="link-list-opt no-bdr">
+                                                        <li><a href="#"><em class="icon ni ni-setting"></em><span>Action Settings</span></a></li>
+                                                        <li><a href="#"><em class="icon ni ni-notify"></em><span>Push Notification</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-inner">
+                                    <div class="d-flex pb-md-4">
+                                        <div class="align-self-center pr-2">
+                                            <i class="icon icon-md ni ni-users"></i>
+                                        </div>
+                                        <div class="align-self-center text-end">
+                                            <h6>
+                                                <small class="fs-14px"><?php echo number_format($totalActiveUsers,0); ?> / <?php echo $targetUsers . ' (' . $usersPercentage . ')'; ?></small>
+                                                <br>
+                                                <small class="fs-14px">Total Users</small>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="btn btn-primary btn-block"><i class="fa fa-eye"></i> Watch Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="<?php echo $managementActionItems; ?>">
+                        <div class="card card-bordered h-100">
+                            <div class="card-inner-group">
+                                <div class="card-inner card-inner-md">
+                                    <div class="card-title-group">
+                                        <div class="card-title">
+                                            <h6 class="title">Wallets Created</h6>
+                                        </div>
+                                        <div class="card-tools me-n1">
+                                            <div class="drodown">
+                                                <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <ul class="link-list-opt no-bdr">
+                                                        <li><a href="<?php echo site_url('Management/Assets'); ?>"><em class="icon ni ni-setting"></em><span>View Existing Assets</span></a></li>
+                                                        <li><a href="#"><em class="icon ni ni-notify"></em><span>View Pending Assets</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-inner">
+                                    <div class="d-flex pb-md-4">
+                                        <div class="align-self-center pr-2">
+                                            <i class="icon icon-md ni ni-wallet"></i>
+                                        </div>
+                                        <div class="align-self-center text-end">
+                                            <h6>
+                                                <small class="fs-14px"><?php echo number_format($totalWalletsCreated,0); ?> / <?php echo $targetWallets . ' (' . $walletsPercentage . ')'; ?></small>
+                                                <br
+                                                ><small class="fs-14px">Total Wallets</small>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <a href="<?php echo site_url('Management/Assets'); ?>" class="btn btn-primary btn-block"><i class="fa fa-eye"></i> Manage Assets</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nk-block">
+                <div class="row g-gs">
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="card card-bordered h-100">
+                            <div class="card-inner">
+                                <div class="project">
+                                    <div class="project-head">
+                                        <a href="<?php echo site_url('Management/Assets/Create'); ?>" class="project-title">
+                                            <div class="user-avatar sq bg-purple"><span>CA</span></div>
+                                            <div class="project-info">
+                                                <h6 class="title">Create Asset</h6>
+                                                <!-- <span class="sub-text">Softnio</span> -->
+                                            </div>
+                                        </a>
+                                        <div class="drodown">
+                                            <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <ul class="link-list-opt no-bdr">
+                                                    <li><a href="html/apps-kanban.html"><em class="icon ni ni-eye"></em><span>View Project</span></a></li>
+                                                    <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit Project</span></a></li>
+                                                    <li><a href="#"><em class="icon ni ni-check-round-cut"></em><span>Mark As Done</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="project-details">
+                                        <p>Design and develop the DashLite template for Envato Marketplace.</p>
+                                    </div>
+                                    <div class="project-progress">
+                                        <div class="project-progress-details">
+                                            <div class="project-progress-task"><em class="icon ni ni-check-round-cut"></em><span>3 Tasks</span></div>
+                                            <div class="project-progress-percent">93.5%</div>
+                                        </div>
+                                        <div class="progress progress-pill progress-md bg-light">
+                                            <div class="progress-bar" data-progress="93.5"></div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="project-meta">
+                                        <ul class="project-users g-1">
+                                            <li>
+                                                <div class="user-avatar sm bg-primary"><span>A</span></div>
+                                            </li>
+                                            <li>
+                                                <div class="user-avatar sm bg-blue"><img src="./images/avatar/b-sm.jpg" alt=""></div>
+                                            </li>
+                                            <li>
+                                                <div class="user-avatar bg-light sm"><span>+12</span></div>
+                                            </li>
+                                        </ul>
+                                        <span class="badge badge-dim bg-warning"><em class="icon ni ni-clock"></em><span>5 Days Left</span></span>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="card card-bordered h-100">
+                            <div class="card-inner">
+                                <div class="project">
+                                    <div class="project-head">
+                                        <a href="<?php echo site_url('Management/Assets/Distribute'); ?>" class="project-title">
+                                            <div class="user-avatar sq bg-warning"><span>DA</span></div>
+                                            <div class="project-info">
+                                                <h6 class="title">Distribute Assets</h6>
+                                                <!-- <span class="sub-text">Runnergy</span> -->
+                                            </div>
+                                        </a>
+                                        <div class="drodown">
+                                            <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <ul class="link-list-opt no-bdr">
+                                                    <li><a href="html/apps-kanban.html"><em class="icon ni ni-eye"></em><span>View Project</span></a></li>
+                                                    <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit Project</span></a></li>
+                                                    <li><a href="#"><em class="icon ni ni-check-round-cut"></em><span>Mark As Done</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="project-details">
+                                        <p>Design the website for Runnergy main website including their user dashboard.</p>
+                                    </div>
+                                    <div class="project-progress">
+                                        <div class="project-progress-details">
+                                            <div class="project-progress-task"><em class="icon ni ni-check-round-cut"></em><span>25 Tasks</span></div>
+                                            <div class="project-progress-percent">23%</div>
+                                        </div>
+                                        <div class="progress progress-pill progress-md bg-light">
+                                            <div class="progress-bar" data-progress="23"></div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="project-meta">
+                                        <ul class="project-users g-1">
+                                            <li>
+                                                <div class="user-avatar sm bg-primary"><img src="./images/avatar/c-sm.jpg" alt=""></div>
+                                            </li>
+                                            <li>
+                                                <div class="user-avatar sm bg-blue"><span>N</span></div>
+                                            </li>
+                                        </ul>
+                                        <span class="badge badge-dim bg-light text-gray"><em class="icon ni ni-clock"></em><span>21 Days Left</span></span>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="card card-bordered h-100">
+                            <div class="card-inner">
+                                <div class="project">
+                                    <div class="project-head">
+                                        <a href="html/apps-kanban.html" class="project-title">
+                                            <div class="user-avatar sq bg-info"><span>ME</span></div>
+                                            <div class="project-info">
+                                                <h6 class="title">MyMI Exchange</h6>
+                                                <!-- <span class="sub-text">Techyspec</span> -->
+                                            </div>
+                                        </a>
+                                        <div class="drodown">
+                                            <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 me-n1" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <ul class="link-list-opt no-bdr">
+                                                    <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit Project</span></a></li>
+                                                    <li><a href="#"><em class="icon ni ni-check-round-cut"></em><span>Mark As Done</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="project-details">
+                                        <p>Improve SEO keyword research, A/B testing, Local market improvement.</p>
+                                    </div>
+                                    <div class="project-progress">
+                                        <div class="project-progress-details">
+                                            <div class="project-progress-task"><em class="icon ni ni-check-round-cut"></em><span>2 Tasks</span></div>
+                                            <div class="project-progress-percent">52.5%</div>
+                                        </div>
+                                        <div class="progress progress-pill progress-md bg-light">
+                                            <div class="progress-bar" data-progress="52.5"></div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="project-meta">
+                                        <ul class="project-users g-1">
+                                            <li>
+                                                <div class="user-avatar sm bg-primary"><img src="./images/avatar/a-sm.jpg" alt=""></div>
+                                            </li>
+                                        </ul>
+                                        <span class="badge badge-dim bg-danger"><em class="icon ni ni-clock"></em><span>Due Tomorrow</span></span>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 		</div>
 	</div>
 </div>

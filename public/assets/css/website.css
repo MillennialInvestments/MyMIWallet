@@ -51,9 +51,11 @@ background-color: transparent !important;
 .form-horizontal .form-actions {
 	padding-left: 20rem;
 }
+.grecaptcha-badge{visibility: hidden}
 .dataTable {
 	padding-top: 1rem !important;
 }
+.data-item .icon{color: white;}
 .no-font-weight{font-weight: normal !important;}
 .custom-select {   
 	padding-right: 1rem !important;
@@ -132,7 +134,7 @@ strong{font-weight: bolder !important;}
 } 
 @media (min-width: 768px) {
 	#login {max-width: 350px !important;}
-	.form-label{margin-top: 1rem !important; font-size: 1rem !important; padding-left: 1rem !important;}
+	.form-label{margin-top: 1rem !important; font-size: 0.9rem !important; padding-left: 1rem !important;}
 }
 @media (min-width: 1440px) {
 	div.dataTables_wrapper div.dataTables_paginate ul.pagination{justify-content:flex-end !important}
@@ -148,6 +150,9 @@ strong{font-weight: bolder !important;}
 }
 .statusGreen{color:#1ee0ac !important;font-weight:bold;}
 .statusRed{color:#e85347 !important;font-weight:bold;}
+.statusSuccess{color:#1ee0ac !important;font-weight:bold;}
+.statusWarning{color:#f4bd0e  !important;font-weight:bold;}
+.statusDanger{color:#e85347 !important;font-weight:bold;}
 .text-green{color:#1ee0ac;}
 .text-red{color:#e85347;}
 .statusGreenBg {
@@ -887,9 +892,13 @@ a.badge-primary:hover, a.badge-primary:focus {
  * ALERT ELEMENTS 
  */
 .alert-error{
-	background-color: red;
+	background-color: #e85347;
+	border-color: #e85347;
 	color: black;
-	margin-top: 20px !important;
+    margin: 1rem!important;
+}
+.alert-error div {
+    margin-right: 1rem;
 }
 .alert-info{
 	color: black;

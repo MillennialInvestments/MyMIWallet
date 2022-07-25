@@ -8,7 +8,10 @@ $pageURIA                           = $this->uri->segment(1);
 $pageURIB                           = $this->uri->segment(2);
 $pageURIC                           = $this->uri->segment(3);
 $this->db->from('bf_support_requests');
-$this->db->where('topic', $pageURIB); 
+if ($pageURIB !== 'Support') {
+    $this->db->where('topic', $pageURIB); 
+}
+$this->db->where('topic !=', NULL); 
 $getSupportRequests                 = $this->db->get()->result_array(); 
 // print_r($getSupportRequests); 
 $totalPendingSupport                = 0;  
@@ -40,6 +43,9 @@ if ($pageURIB === 'Assets') {
     $dashboardTitle                 = 'Support /';
     $dashboardSubtitle              = 'Management Dashboard'; 
 }
+$viewFileData                       = array(
+    'getSupportRequests'            => $getSupportRequests,
+);
 // $highSeverity                       = 0;
 $lastHighSeverity                   = 0; 
 // $highSeverityResolved               = 0; 
@@ -198,11 +204,7 @@ $lastHighSeverity                   = 0;
                                     </div>
                                 </div>
                                 <div class="card-inner">
-                                    <div class="nk-wg-action">
-                                        <div class="nk-wg-action-content">
-                                            
-                                        </div>
-                                    </div>
+                                    <?php $this->load->view('Management/Support/Requests/Listing-Table', $viewFileData); ?>
                                 </div><!-- .card-inner -->
                             </div><!-- .card-inner-group -->
                         </div><!-- .card -->

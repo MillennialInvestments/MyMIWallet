@@ -58,7 +58,7 @@ class Premium_Features extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Premium_Features';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -70,7 +70,7 @@ class Premium_Features extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Premium_Brokerage_API_Integrations';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -82,7 +82,7 @@ class Premium_Features extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Premium_Advanced_Charting';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -94,7 +94,7 @@ class Premium_Features extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Premium_Due_Diligence_Database';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -106,7 +106,7 @@ class Premium_Features extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Premium_Advanced_Trade_Tracker';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -118,7 +118,7 @@ class Premium_Features extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Premium_Wallets';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);

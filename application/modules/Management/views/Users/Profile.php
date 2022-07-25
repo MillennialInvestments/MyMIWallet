@@ -1,11 +1,15 @@
 <?php
-$pageURIA           = $this->uri->segment(1); 
-$pageURIB           = $this->uri->segment(2); 
-$pageURIC           = $this->uri->segment(3); 
-$pageURID           = $this->uri->segment(4); 
-$pageURIE           = $this->uri->segment(5); 
-$userID             = $pageURID; 
-$userAccount        = $this->mymiuser->user_account_info($userID); 
+$pageURIA               = $this->uri->segment(1); 
+$pageURIB               = $this->uri->segment(2); 
+$pageURIC               = $this->uri->segment(3); 
+$pageURID               = $this->uri->segment(4); 
+$pageURIE               = $this->uri->segment(5);  
+if ($pageURIA === 'Investor-Profile') {
+    $userAccount        = $_SESSION['allSessionData']['userAccount']; 
+} elseif ($pageURIA === 'Management' AND $pageURIB === 'Users' AND $pageURIC === 'Profile') {
+    $userID             = $pageURID; 
+    $userAccount        = $this->mymiuser->user_account_info($userID); 
+}
 // print_r($userAccount);
 ?>
 <div class="nk-block-head nk-block-head-sm">
@@ -190,7 +194,7 @@ $userAccount        = $this->mymiuser->user_account_info($userID);
                     </div><!-- .card-inner -->
                     <div class="card-inner card-inner-sm">
                         <ul class="btn-toolbar justify-center gx-1">
-                            <li><a href="<?php echo site_url('Management/Users/Distribute/' . $userAccount['cuID']); ?>" class="btn btn-trigger btn-icon"><em class="icon ni ni-coins"></em></a></li>
+                            <li><a href="<?php echo site_url('Management/Users/Distribute/' . $userAccount['cuID'] . '/Distribute'); ?>" class="btn btn-trigger btn-icon"><em class="icon ni ni-coins"></em></a></li>
                             <li><a class="btn btn-trigger btn-icon" href="mailto:<?php echo $userAccount['cuEmail']; ?>" target="_blank"><em class="icon ni ni-mail"></em></a></li>
                             <li><a href="#" class="btn btn-trigger btn-icon"><em class="icon ni ni-download-cloud"></em></a></li>
                             <li><a href="#" class="btn btn-trigger btn-icon"><em class="icon ni ni-bookmark"></em></a></li>

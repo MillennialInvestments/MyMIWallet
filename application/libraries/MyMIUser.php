@@ -3,15 +3,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class MyMIUser
 {
     private $cuID;
-    private $ci;
+    private $CI;
     public function __construct()
     {
-        $this->ci =& get_instance();
-        $this->ci->load->library(array('Auth', 'MyMICoin', 'MyMIGold', 'MyMIWallet', 'session', 'settings/settings_lib', 'Template'));
-        $this->ci->load->model(array('User/exchange_model', 'User/investor_model', 'User/tracker_model', 'User/wallet_model'));
-        $this->ci->load->library('users/auth');
-        $cuID 								= $this->ci->auth->user_id();
-        //~ $this->ci->load->library(array('Auth', 'MyMIWallets'));
+        $this->CI =& get_instance();
+        $this->CI->load->library(array('Auth', 'MyMICoin', 'MyMIGold', 'MyMIWallet', 'session', 'settings/settings_lib', 'Template'));
+        $this->CI->load->model(array('User/exchange_model', 'User/investor_model', 'User/tracker_model', 'User/wallet_model'));
+        $this->CI->load->library('users/auth');
+        $cuID 								= $this->CI->auth->user_id();
+        //~ $this->CI->load->library(array('Auth', 'MyMIWallets'));
     }
     /**
      * User Default Information.
@@ -25,12 +25,16 @@ class MyMIUser
     public function user_account_info($cuID)
     {
         $userInfo                           = $this->get_user_information($cuID);
+        $cuEmail                            = $userInfo['cuEmail'];
         $userExchangeInfo					= $this->get_user_exchange_info($cuID);
         $userDefaultWallet                  = $this->get_user_default_wallet($cuID);
         $userAssetSummary                   = $this->get_user_asset_summary($cuID);
+        $userSocialInfo                     = $this->get_user_social_info($cuEmail);
         $userAccount	                    = array(
             'cuID'                       	=> $cuID,
             'cuRole'                        => $userInfo['cuRole'],
+            'cuPartner'                     => $userInfo['cuPartner'],
+            'cuReferrer'                    => $userInfo['cuReferrer'],
             'cuUserType'                    => $userInfo['cuUserType'],
             'cuEmail'                       => $userInfo['cuEmail'],
             'cuUsername'                    => $userInfo['cuUsername'],
@@ -90,6 +94,16 @@ class MyMIUser
             'assetNetValue'                 => $userAssetSummary['assetNetValue'],
             'assetTotalGains'               => $userAssetSummary['assetTotalGains'],
             'open_listing_app'				=> $userExchangeInfo['open_listing_app'],
+            'cuCoverart'                    => $userSocialInfo['cuCoverart'],
+            'cuProfilePic'                  => $userSocialInfo['cuProfilePic'],
+            'cuFollowers'                   => $userSocialInfo['cuFollowers'],
+            'cuViews'                       => $userSocialInfo['cuViews'],
+            'cuWebsite'                     => $userSocialInfo['cuWebsite'],
+            'cuFacebook'                    => $userSocialInfo['cuFacebook'],
+            'cuTwitter'                     => $userSocialInfo['cuTwitter'],
+            'cuStocktwits'                  => $userSocialInfo['cuStocktwits'],
+            'cuYoutube'                     => $userSocialInfo['cuYoutube'],
+            'cuDiscord'                     => $userSocialInfo['cuDiscord'],
         );
         
         return $userAccount;
@@ -98,7 +112,7 @@ class MyMIUser
         
     public function get_user_information($cuID)
     {
-        $getUserData                        = $this->ci->investor_model->get_user_data($cuID);
+        $getUserData                        = $this->CI->investor_model->get_user_data($cuID);
         foreach ($getUserData->result_array() as $userData) {
             $cuRole                         = $userData['role_id'];
             $cuEmail                        = $userData['email'];
@@ -108,6 +122,8 @@ class MyMIUser
             $cuMiddleName					= $userData['middle_name'];
             $cuLastName						= $userData['last_name'];
             $cuNameSuffix					= $userData['name_suffix'];
+            $cuPartner  					= $userData['partner'];
+            $cuReferrer  					= $userData['referrer'];
             $cuKYC							= $userData['kyc'];
             $cuKYCVerified					= $userData['kyc_verified'];
             $cuPhone						= $userData['phone'];
@@ -125,7 +141,7 @@ class MyMIUser
             $cuAdvertisement                = $userData['advertisement']; 
             $cuReferrerCode                 = $userData['referrer_code'];
         };
-        $getDefaultWallet                   = $this->ci->investor_model->get_user_default_wallet_id($cuID);
+        $getDefaultWallet                   = $this->CI->investor_model->get_user_default_wallet_id($cuID);
         foreach ($getDefaultWallet->result_array() as $defaultWallet) {
             $walletID                     = $defaultWallet['id'];
         }
@@ -138,6 +154,8 @@ class MyMIUser
             'cuMiddleName'                 	=> $cuMiddleName,
             'cuLastName'                 	=> $cuLastName,
             'cuNameSuffix'                	=> $cuNameSuffix,
+            'cuPartner'            			=> $cuPartner,
+            'cuReferrer'                    => $cuReferrer,
             'cuKYC'                			=> $cuKYC,
             'cuKYCVerified'                	=> $cuKYCVerified,
             'cuPhone'                 		=> $cuPhone,
@@ -158,11 +176,47 @@ class MyMIUser
         );
         return $userInfo;
     }
+
+    public function get_user_social_info($cuEmail) 
+    {
+        $getSocialInfo						= $this->CI->investor_model->get_user_social_media($cuEmail);
+        foreach($getSocialInfo->result_array() as $socialInfo) {
+            if ($socialInfo['coverart'] === 'N/A') {
+                $userData['coverart'] 		= 'Blue-Stock-Charts5.jpg';
+            } else {
+                $cuCoverart			        = $socialInfo['coverart'];
+            }
+            $cuProfilePic                   = $socialInfo['profile_pic'];
+            $cuFollowers                    = $socialInfo['followers'];
+            $cuViews                        = $socialInfo['views'];
+            $cuWebsite                      = $socialInfo['website'];
+            $cuFacebook                     = $socialInfo['facebook'];
+            $cuTwitter                      = $socialInfo['twitter'];
+            $cuStocktwits                   = $socialInfo['stocktwits'];
+            $cuYoutube                      = $socialInfo['youtube'];
+            $cuDiscord                      = $socialInfo['discord'];
+        }
+        
+        $userSocialInfo                     = array(
+            'cuCoverart'                    => $cuCoverart,
+            'cuProfilePic'                  => $cuProfilePic,
+            'cuFollowers'                   => $cuFollowers,
+            'cuViews'                       => $cuViews,
+            'cuWebsite'                     => $cuWebsite,
+            'cuFacebook'                    => $cuFacebook,
+            'cuTwitter'                     => $cuTwitter,
+            'cuStocktwits'                  => $cuStocktwits,
+            'cuYoutube'                     => $cuYoutube,
+            'cuDiscord'                     => $cuDiscord,
+        );
+        
+        return $userSocialInfo;         
+    }
     
     public function get_user_default_wallet($cuID)
     {
         $getUserData                        = $this->get_user_information($cuID);
-        $userDefaultWalletInfo              = $this->ci->mymiwallet->get_default_wallet_info($cuID);
+        $userDefaultWalletInfo              = $this->CI->mymiwallet->get_default_wallet_info($cuID);
         $walletID	                        = $userDefaultWalletInfo['walletID'];
         $walletTitle                        = $userDefaultWalletInfo['walletTitle'];
         $walletBroker                       = $userDefaultWalletInfo['walletBroker'];
@@ -188,8 +242,8 @@ class MyMIUser
         $MyMIGCurrentValue					= $userDefaultWalletInfo['MyMIGCurrentValue'];
         $MyMIGCoinSum						= $userDefaultWalletInfo['MyMIGCoinSum'];
         $getWallets							= $userDefaultWalletInfo['getWallets'];
-        $getWalletCount 					= $this->ci->wallet_model->get_nondefault_wallet_count($cuID);
-        $getWalletCount                     = $this->ci->wallet_model->get_wallet_count($cuID);
+        $getWalletCount 					= $this->CI->wallet_model->get_nondefault_wallet_count($cuID);
+        $getWalletCount                     = $this->CI->wallet_model->get_wallet_count($cuID);
         if ($MyMICCoinSum > 0) {
             $cuTotalWalletCount             = $getWalletCount + 2;
         } elseif ($MyMIGCoinSum > 0) {
@@ -201,7 +255,7 @@ class MyMIUser
         }
         
         // User Last Activity
-        $userLastActivity					= $this->ci->mymiwallet->get_last_activity($cuID, $walletID);
+        $userLastActivity					= $this->CI->mymiwallet->get_last_activity($cuID, $walletID);
         // $lastTradeActivity				 	= $userLastActivity['$lastTradeActivity'];
         // $depositActivity				 	= $userLastActivity['$depositActivity'];
         // $withdrawActivity				 	= $userLastActivity['$withdrawActivity'];
@@ -255,7 +309,7 @@ class MyMIUser
     public function user_default_wallet($cuID)
     {
         $getUserData                        = $this->get_user_information($cuID);
-        $userDefaultWalletInfo              = $this->ci->mymiwallet->get_default_wallet_info($cuID);
+        $userDefaultWalletInfo              = $this->CI->mymiwallet->get_default_wallet_info($cuID);
         $walletID	                        = $userDefaultWalletInfo['walletID'];
         $walletTitle                        = $userDefaultWalletInfo['walletTitle'];
         $walletBroker                       = $userDefaultWalletInfo['walletBroker'];
@@ -280,8 +334,8 @@ class MyMIUser
         $MyMIGoldValue						= $userDefaultWalletInfo['MyMIGoldValue'];
         $MyMIGCurrentValue					= $userDefaultWalletInfo['MyMIGCurrentValue'];
         $MyMIGCoinSum						= $userDefaultWalletInfo['MyMIGCoinSum'];
-        $getWalletCount 					= $this->ci->wallet_model->get_nondefault_wallet_count($cuID);
-        //~ $getWalletCount                     = $this->ci->wallet_model->get_wallet_count($cuID);
+        $getWalletCount 					= $this->CI->wallet_model->get_nondefault_wallet_count($cuID);
+        //~ $getWalletCount                     = $this->CI->wallet_model->get_wallet_count($cuID);
         if ($MyMICCoinSum > 0) {
             $cuWalletCount                  = $getWalletCount + 2;
         } elseif ($MyMIGCoinSum > 0) {
@@ -293,7 +347,7 @@ class MyMIUser
         }
         
         // User Last Activity
-        $userLastActivity					= $this->ci->mymiwallet->get_last_activity($cuID, $walletID);
+        $userLastActivity					= $this->CI->mymiwallet->get_last_activity($cuID, $walletID);
         $lastTradeActivity				 	= $userLastActivity['$lastTradeActivity'];
         $depositActivity				 	= $userLastActivity['$depositActivity'];
         $withdrawActivity				 	= $userLastActivity['$withdrawActivity'];
@@ -341,9 +395,9 @@ class MyMIUser
 
     public function get_user_exchange_info($cuID)
     {
-        $this->ci->db->from('bf_exchanges_listing_request');
-        $this->ci->db->where('user_id', $cuID);
-        $getAppInfo                             = $this->ci->db->get()->result_array();
+        $this->CI->db->from('bf_exchanges_listing_request');
+        $this->CI->db->where('user_id', $cuID);
+        $getAppInfo                             = $this->CI->db->get()->result_array();
         if (empty($getAppInfo[0]['id'])) {
             $open_listing_app                   = 0;
         } else {
@@ -357,7 +411,7 @@ class MyMIUser
 
     public function get_user_asset_summary($cuID)
     {
-        $getUserAssetCount                  = $this->ci->exchange_model->get_user_asset_count($cuID);
+        $getUserAssetCount                  = $this->CI->exchange_model->get_user_asset_count($cuID);
         if (!isset($getUserAssetCount)) {
             $userAssetSummary               = array(
                 'assetTotalCount'           => 0,
@@ -367,13 +421,13 @@ class MyMIUser
             return $userAssetSummary;
         } else {
             $assetTotalCount                = $getUserAssetCount->num_rows();
-            $getUserAssetNetWorth           = $this->ci->exchange_model->get_user_asset_net_worth($cuID)->result_array();
+            $getUserAssetNetWorth           = $this->CI->exchange_model->get_user_asset_net_worth($cuID)->result_array();
             if (empty($getUserAssetNetWorth)) {
                 $assetNetValue              = 0;
             } else {
                 $assetNetValue              = $getUserAssetNetWorth[0]['current_value'];
             }
-            $getUserAssetInfo               = $this->ci->exchange_model->get_user_asset_info($cuID)->result_array();
+            $getUserAssetInfo               = $this->CI->exchange_model->get_user_asset_info($cuID)->result_array();
             if (empty($getUserAssetInfo)) {
                 $assetTotalGains            = 0;
             } else {

@@ -67,6 +67,11 @@ $dashboardData							= array(
     'assetTotalGains'                   => $assetTotalGains,
 );
 ?>   
+<style>
+.tranx-amount .number {
+    font-size:0.87em; 
+}
+</style>
 <div class="nk-block">
 	<div class="row gy-gs">
 		<div class="col-md-12 mb-3">  
@@ -95,13 +100,13 @@ $dashboardData							= array(
 			<?php $this->load->view('User/Dashboard/index/US_Market_Overview'); ?>
 		</div>	
 		<div class="col-12 col-md-3">
+			<?php $this->load->view('User/Dashboard/index/US_Additional_Overview'); ?>
+		</div>
+		<div class="col-12 col-md-3">
 			<?php $this->load->view('User/Dashboard/index/International_Market_Overview'); ?>
 		</div>
 		<div class="col-12 col-md-3">
 			<?php $this->load->view('User/Dashboard/index/Crypto_Market_Overview'); ?>
-		</div>
-		<div class="col-12 col-md-3">
-			<?php $this->load->view('User/Dashboard/index/MyMI_Market_Overview'); ?>
 		</div>
 	</div>
 </div>

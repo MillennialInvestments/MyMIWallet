@@ -26,7 +26,21 @@ $testInfo						= array(
                     </div>
                 </div>
 			</div>     -->
-            <?php $this->load->view('Exchange/Coin_Listing_Request'); ?> 
+            <?php 
+            // use MichaelDrennen\TDAmeritradeAPI\TDAmeritradeAPI;
+            // $tdaClient              = new TDAmeritradeAPI(); 
+            // // $tdaClient->login();
+			// print_r($tdaClient);   
+            use MichaelDrennen\TDAmeritradeAPI\Authenticator;
+            $callbackURL                = 'https%3A%2F%2Fwww.mymiwallet.com%2Fpublic%2Findex.php%2FWallets%2FLink-Account%2F1';
+            $oauthConsumerKey           = 'XGCE3NA1BXIGQG2NHDTLHZ6OUSIZTITF%40AMER.OAUTHAP';
+            $tdaAuthenticator           = new Authenticator($callbackURL, $oauthConsumerKey); 
+            $tdaAuthenticate            = $tdaAuthenticator->authenticate($callbackURL, $oauthConsumerKey); 
+            // $tdaAuthenticator->authenticate($callbackURL,$oauthConsumerKey,$debug = FALSE);
+			print_r($tdaAuthenticator); 
+            echo '<br><br>';
+			print_r($tdaAuthenticate); 
+            ?>
 		</div>
 	</div>
 </div>

@@ -58,7 +58,7 @@ class How_It_Works extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -70,7 +70,7 @@ class How_It_Works extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'How_It_Works_MyMI_Gold';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);

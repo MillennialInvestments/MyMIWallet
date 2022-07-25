@@ -15,6 +15,7 @@ if ($stage === 'Contact') {
     $date 							= date("m/d/Y");
     $time 							= date("h:i:s A");
     $cuKYC							= $applicationForm['kyc'];
+    $cuPartner  					= $applicationForm['partner'];
     $user_id						= $cuID;
     $user_email						= $userEmail;
     $first_name						= $applicationForm['first_name'];
@@ -52,6 +53,7 @@ if ($stage === 'Contact') {
             'unix_timestamp'			=> $unix_timestamp,
             'date'						=> $date,
             'time'						=> $time,
+            'partner'                   => $cuPartner,
             'user_id'					=> $user_id,
             'user_email'				=> $user_email,
             'first_name'				=> $first_name,
@@ -74,6 +76,7 @@ if ($stage === 'Contact') {
             'unix_timestamp'			=> $unix_timestamp,
             'date'						=> $date,
             'time'						=> $time,
+            'partner'					=> $cuPartner,
             'user_id'					=> $user_id,
             'user_email'				=> $user_email,
             'first_name'				=> $first_name,
@@ -93,56 +96,110 @@ if ($stage === 'Contact') {
     }
     
 } elseif ($stage === 'Asset') {
-    $application_id					= $applicationForm['application_id'];
-    $status							= 'Pending';
-    $blockchain						= $applicationForm['blockchain'];
-    $this->db->from('bf_exchanges_blockchains');
-    $this->db->where('id', $blockchain);
-    $getBlockchain					= $this->db->get();
-    foreach ($getBlockchain->result_array() as $blockchainInfo) {
-        $blockchain_name			= $blockchainInfo['name'];
+    if ($applicationForm['redirect_url'] === 'Management/Assets') {
+        $status							= 'Approved';
+        $unix_timestamp					= time();
+        $date 							= date("m/d/Y");
+        $time 							= date("h:i:s A");
+        $user_id						= $cuID;
+        $user_email						= $userEmail;
+        $first_name						= $applicationForm['first_name'];
+        $middle_name					= $applicationForm['middle_name'];
+        $last_name						= $applicationForm['last_name'];
+        $name_suffix					= $applicationForm['name_suffix'];
+        $phone							= $applicationForm['phone'];
+        $company_name					= $applicationForm['company_name'];
+        $address						= $applicationForm['address'];
+        $city							= $applicationForm['city'];
+        $state							= $applicationForm['state'];
+        $country						= $applicationForm['country'];
+        $zipcode						= $applicationForm['zipcode'];
+        $listing_type   				= 'New';
+        $blockchain						= $applicationForm['blockchain'];
+        $this->db->from('bf_exchanges_blockchains');
+        $this->db->where('id', $blockchain);
+        $getBlockchain					= $this->db->get();
+        foreach ($getBlockchain->result_array() as $blockchainInfo) {
+            $blockchain_id  			= $blockchainInfo['id'];
+            $blockchain_symbol			= $blockchainInfo['symbol'];
+            $blockchain_name			= $blockchainInfo['name'];
+        }
+        $coin_name						= $applicationForm['coin_name'];
+        $symbol							= $applicationForm['symbol'];
+        $coin_quantity					= $applicationForm['coin_quantity'];
+        $purpose						= $applicationForm['purpose'];
+        $description					= $applicationForm['description'];
+        $assetData						= array(
+            'status'					=> $status,
+            'blockchain_id' 			=> $blockchain_id,
+            'blockchain'				=> $blockchain_symbol,
+            'blockchain_name'			=> $blockchain_name,
+            'coin_name'					=> $coin_name,
+            'symbol'					=> $symbol,
+            'coin_quantity'				=> $coin_quantity,
+            'purpose'					=> $purpose,
+            'description'				=> $description,
+            'coin_file'				    => $coin_file,
+            'coin_logo'					=> $coin_logo,
+        );
+
+        $this->db->where('id', $application_id);
+        return $this->db->update('bf_exchanges_assets', $assetData);
+        
+    } else {
+        $application_id					= $applicationForm['application_id'];
+        $status							= 'Pending';
+        $blockchain						= $applicationForm['blockchain'];
+        $this->db->from('bf_exchanges_blockchains');
+        $this->db->where('id', $blockchain);
+        $getBlockchain					= $this->db->get();
+        foreach ($getBlockchain->result_array() as $blockchainInfo) {
+            $blockchain_id  			= $blockchainInfo['id'];
+            $blockchain_symbol			= $blockchainInfo['symbol'];
+            $blockchain_name			= $blockchainInfo['name'];
+        }
+        $coin_name						= $applicationForm['coin_name'];
+        $symbol							= $applicationForm['symbol'];
+        $coin_quantity					= $applicationForm['coin_quantity'];
+        $purpose						= $applicationForm['purpose'];
+        $description					= $applicationForm['description'];
+        
+        // $this->load->library('upload');
+        // $config['upload_path'] 			= './assets/documents/Exchange/Assets/';
+        // $config['allowed_types']		= '*';
+        // $config['encrypt_name']			= false;
+        // $config['overwrite']			= true;
+        
+        // $this->upload->initialize($config);
+
+        // $fileUploadData                 = $this->upload->data();
+        // $coin_file 						= $fileUploadData['file_name'];
+        
+        // $config['upload_path'] 			= './assets/images/Exchange/Asset_Logos/';
+        // $config['allowed_types']		= '*';
+        // $config['encrypt_name']			= false;
+        // $config['overwrite']			= true;
+        
+        // $this->upload->initialize($config);
+
+        // $logoUploadData                 = $this->upload->data();
+        // $coin_logo 						= $logoUploadData['file_name'];
+
+        $assetData						= array(
+            'status'					=> $status,
+            'blockchain_id' 			=> $blockchain_id,
+            'blockchain'				=> $blockchain_symbol,
+            'blockchain_name'			=> $blockchain_name,
+            'coin_name'					=> $coin_name,
+            'symbol'					=> $symbol,
+            'coin_quantity'				=> $coin_quantity,
+            'purpose'					=> $purpose,
+            'description'				=> $description,
+            'coin_file'				    => $coin_file,
+            'coin_logo'					=> $coin_logo,
+        );
+
+        $this->db->where('id', $application_id);
+        return $this->db->update('bf_exchanges_listing_request', $assetData);
     }
-    $coin_name						= $applicationForm['coin_name'];
-    $symbol							= $applicationForm['symbol'];
-    $coin_quantity					= $applicationForm['coin_quantity'];
-    $purpose						= $applicationForm['purpose'];
-    $description					= $applicationForm['description'];
-    
-    $this->load->library('upload');
-    $config['upload_path'] 			= './assets/documents/Exchange/Assets/';
-    $config['allowed_types']		= '*';
-    $config['encrypt_name']			= false;
-    $config['overwrite']			= true;
-    
-    $this->upload->initialize($config);
-
-    $fileUploadData                 = $this->upload->data();
-    $coin_file 						= $fileUploadData['file_name'];
-    
-    $config['upload_path'] 			= './assets/images/Exchange/Asset_Logos/';
-    $config['allowed_types']		= '*';
-    $config['encrypt_name']			= false;
-    $config['overwrite']			= true;
-    
-    $this->upload->initialize($config);
-
-    $logoUploadData                 = $this->upload->data();
-    $coin_logo 						= $logoUploadData['file_name'];
-
-
-    $assetData						= array(
-        'status'					=> $status,
-        'blockchain'				=> $blockchain,
-        'blockchain_name'			=> $blockchain_name,
-        'coin_name'					=> $coin_name,
-        'symbol'					=> $symbol,
-        'coin_quantity'				=> $coin_quantity,
-        'purpose'					=> $purpose,
-        'description'				=> $description,
-        'coin_file'				    => $coin_file,
-        'coin_logo'					=> $coin_logo,
-    );
-
-    $this->db->where('id', $application_id);
-    return $this->db->update('bf_exchanges_listing_request', $assetData);
 }

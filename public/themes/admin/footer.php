@@ -43,8 +43,7 @@ $walletCost					= $this->config->item('wallet_cost');
 <?php
 $this->load->view('User/Dashboard/index/transaction-modal');
 // $this->load->view('User/Dashboard/index/transaction-purchase-modal');
-$this->load->view('User/Dashboard/index/trade-tracker-modal');
-$this->load->view('User/Trade_Tracker/Search');
+//$this->load->view('User/Trade_Tracker/Search');
 
 if ($cuRole === '1') {
 $this->load->view('User/Dashboard/index/user-information-modal'); 
@@ -52,6 +51,7 @@ $this->load->view('User/Dashboard/index/user-information-modal');
 ?>           
 <div id="debug"><!-- Stores the Profiler Results --></div>
 <?php
+echo theme_view('custom-js/modals');
 echo theme_view('js-links');
 echo theme_view('custom-js');
 echo theme_view('page_views');

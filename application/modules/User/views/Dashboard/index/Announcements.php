@@ -19,7 +19,7 @@
             echo '
 <div class="tranx-list card card-bordered mt-2">
 	<div class="tranx-item mb-1">
-		<div class="tranx-col col-10">
+		<div class="tranx-col col-12 col-sm-9">
 			<div class="tranx-info">
 				<div class="tranx-data row">
 					<div class="tranx-label col-12"><a href="' . $announce_link . '">' . $announce['topic'] . ' </a><small class="text-muted ml-1">' . $announce['submitted_date'] . '</small></div>
@@ -27,9 +27,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="tranx-col col-2">
+		<div class="tranx-col col-12 col-sm-3">
 			<div class="tranx-amount">
-				<div class="number"><a class="btn btn-primary" href="' . $announce_link . '">Read More</a></div>
+				<div class="number"><a class="btn btn-primary" href="' . $announce_link . '" target="_blank">Read More</a></div>
 			</div>
 		</div>
 	</div>

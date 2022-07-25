@@ -61,7 +61,7 @@ $autoload['packages'] = array(
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('users/Auth', 'calendar', 'database', 'email', 'emailer/emailer', 'form_validation', 'MyMIExchange', 'MyMICoin', 'MyMIGold', 'MyMIWallet', 'MyMIUser', 'pagination', 'table', 'upload', 'user_agent', 'zip');
+$autoload['libraries'] = array('users/Auth', 'database', 'email', 'emailer/emailer', 'form_validation', 'MyMIAnalytics', 'MyMIExchange', 'MyMICoin', 'MyMIGold', 'MyMIWallet', 'MyMIUser', 'user_agent');
 
 
 /*
@@ -93,7 +93,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'language');
+$autoload['helper'] = array('recaptcha', 'url', 'language');
 
 /*
 | -------------------------------------------------------------------

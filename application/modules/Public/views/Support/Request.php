@@ -32,7 +32,7 @@ $cuID 						= isset($current_user->id) && ! empty($current_user->id) ? $current_
 									<h1 class="text-center">Submit a Support Request</h1>
 								</div>
 								<br>
-								<?php echo form_open('Support/Request', array('class' => "form-horizontal", 'id' => "ask-question-form", 'autocomplete' => 'off')); ?>
+                                <form class="form-horizontal" id="support-request-form">
 									<fieldset>
 										<?php Template::block('Request/user_fields', 'Request/user_fields', $fieldData); ?>
 									</fieldset>
@@ -53,7 +53,7 @@ $cuID 						= isset($current_user->id) && ! empty($current_user->id) ? $current_
 											</div>
 										</div>
 									</fieldset>
-								<?php echo form_close(); ?>	
+                                </form>
 								<?php if (validation_errors()) : ?>
 									<div class="alert alert-error fade in">
 										<?php echo validation_errors(); ?>

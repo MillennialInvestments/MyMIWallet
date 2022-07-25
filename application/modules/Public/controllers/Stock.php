@@ -61,7 +61,7 @@ class Stock extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -73,7 +73,7 @@ class Stock extends Front_Controller
     {
         $pageType = 'Stock';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         //~ $this->output->cache(1);
         
@@ -86,7 +86,7 @@ class Stock extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Stock_Search';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -98,7 +98,7 @@ class Stock extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Weekly_Performance_Report';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -110,7 +110,7 @@ class Stock extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Front_Page_Template';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -122,7 +122,7 @@ class Stock extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Back_Page_Template';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);

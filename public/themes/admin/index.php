@@ -232,8 +232,8 @@ select {width:100%;}
 			<div class="nk-wrap">
 				<?php echo theme_view('navbar', $uriSegmentInfo); ?>
 				<div class="content-wrapper p-0">
-					<div class="row">
-						<div class="col-12 grid-margin stretch-card pt-5 mb-0">
+					<div class="row justify-content-center">
+						<div class="col-11 grid-margin stretch-card pt-5 mb-0">
 							<div class="card" style="background-color:transparent;">
 								<div class="card-body pt-0">
 									<div class="row justify-content-center">

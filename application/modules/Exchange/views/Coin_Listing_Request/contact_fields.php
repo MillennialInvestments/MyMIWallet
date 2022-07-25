@@ -19,6 +19,7 @@ $formSelect						= $this->config->item('form_select');
 $formSelectPicker				= $this->config->item('form_selectpicker');
 $formText						= $this->config->item('form_text');
 $formCustomText					= $this->config->item('form_custom_text');
+$cuPartner                      = $_SESSION['allSessionData']['userAccount']['cuPartner'];
 $cuKYC                          = $_SESSION['allSessionData']['userAccount']['cuKYC'];
 $cuFirstName                    = $_SESSION['allSessionData']['userAccount']['cuFirstName'];
 $cuMiddleName                   = $_SESSION['allSessionData']['userAccount']['cuMiddleName'];
@@ -43,6 +44,7 @@ $cuZipCode                      = $_SESSION['allSessionData']['userAccount']['cu
 <hr>
 <input type="hidden" class="form-control" name="kyc" id="kyc" value="<?php echo set_value('kyc', isset($user) ? $user->kyc : $cuKYC); ?>">		
 <input type="hidden" class="form-control" name="stage" id="stage" value="<?php echo set_value('stage', isset($user) ? $user->stage : 'Contact'); ?>">		
+<input type="hidden" class="form-control" name="partner" id="partner" value="<?php echo set_value('partner', isset($user) ? $user->partner : $cuPartner); ?>">		
 <div class="<?php echo $formGroup; ?>">    
 	<label class="<?php echo $formLabel; ?>" for="default-01">First Name</label>    
 	<div class="<?php echo $formConCol; ?>">        

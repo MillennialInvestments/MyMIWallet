@@ -51,7 +51,7 @@ defined('BASEPATH') || exit('No direct script access allowed');
 */
 
 $route['default_controller'] = 'home';
-$route['404_override'] = '';
+$route['404_override'] = 'Custom404';
 $route['translate_uri_dashes'] = false;
 
 // Authentication
@@ -78,6 +78,16 @@ Route::any('resend-activation/(:any)', 'users/resend_activation/$1');
 Route::any('forgot-password', 'users/forgot_password');
 Route::any('reset_password/(:any)/(:any)', 'users/reset_password/$1/$2');
 
+// Public Pages - Customer Support
+Route::any('Customer-Support', 'Public/Support/index');
+Route::any('Customer-Support/Contact-Us', 'Public/Support/Request');
+Route::any('Customer-Support/FAQ', 'Public/Support/FAQ');
+Route::any('Customer-Support/Requests', 'Support_Management/Request_Overview');
+Route::any('Customer-Support/Response/(:any)', 'Public/Support/Response');
+Route::any('Customer-Support/Close-Request/(:any)/(:any)', 'Public/Support/Close_Request/$1/$2');
+Route::any('Customer-Support/Member-Request/(:any)', 'User/Support/Member_Customer_Support_Request');
+Route::any('Customer-Support/Manager/(:any)', 'User/Support/Customer_Support_Manager');
+
 // Public Pages - Investment
 Route::any('Invest', 'Public/Invest');
 Route::any('Invest/(:any)', 'Public/Invest');
@@ -89,15 +99,10 @@ Route::any('Investor/Verify-Email/(:any)', 'users/Verify_Email/$1');
 Route::any('Investor/register/(:any)', 'users/investor_register');
 Route::any('Investor/Activate/(:any)', 'Public/Invest/Activate');
 
-// Public Pages - Customer Support
-Route::any('Customer-Support', 'Public/Support/index');
-Route::any('Customer-Support/Contact-Us', 'Public/Support/Request');
-Route::any('Customer-Support/FAQ', 'Public/Support/FAQ');
-Route::any('Customer-Support/Requests', 'Support_Management/Request_Overview');
-Route::any('Customer-Support/Response/(:any)', 'Public/Support/Response');
-Route::any('Customer-Support/Close-Request/(:any)/(:any)', 'Public/Support/Close_Request/$1/$2');
-Route::any('Customer-Support/Member-Request/(:any)', 'User/Support/Member_Customer_Support_Request');
-Route::any('Customer-Support/Manager/(:any)', 'User/Support/Customer_Support_Manager');
+// Public Pages - Search
+Route::any('ETF/(:any)/(:any)', 'User/ETF/Template');
+Route::any('Stock/(:any)/(:any)', 'User/Stock/Template');
+Route::any('Indexes/(:any)/(:any)', 'User/Indexes/Template');
 
 // User - Announcements
 Route::any('Announcements', 'Management/Announcements');
@@ -105,6 +110,11 @@ Route::any('Announcements/Post', 'Management/Announcements/Post');
 
 // User - Dashboard
 Route::any('Dashboard', 'User/Dashboard/index');
+Route::any('Markets/(:any)', 'User/Dashboard/Markets');
+
+// User - Accounts
+Route::any('Investor-Profile', 'User/Dashboard/Investor_Profile'); 
+Route::any('Profile-Manager', 'User/Dashboard/Profile_Manager');
 
 // User - Assets
 Route::any('Assets', 'User/Asset_Management/index');
@@ -127,6 +137,17 @@ Route::any('Exchange/Coin-Listing/Request-Complete', 'Exchange/Coin_Listing_Requ
 Route::any('Exchange/Account-Information/(:any)', 'Exchange/Account_Information');
 Route::any('Exchange/KYC-Registration-Reward/(:any)', 'Exchange/KYC_Reward/$1');
 
+// User - Referral Program
+Route::any('Referral-Program', 'User/Referral_Program/index');
+Route::any('Referral-Program/Apply', 'User/Referral_Program/Apply');
+Route::any('Referral-Program/Apply/(:any)', 'User/Referral_Program/Apply');
+Route::any('Referral-Program/Application/Success', 'User/Referral_Program/Success');
+Route::any('Referral-Program/Applications', 'User/Referral_Program/Users');
+Route::any('Referral-Program/New-Affiliate-Information/(:any)', 'User/Referral_Program/New_Affiliate_Information/$1');
+Route::any('Referral-Program/Activate-Affiliate/(:any)', 'User/Referral_Program/Activate_Affiliate/$1');
+Route::any('Referral-Program/Affiliates', 'User/Referral_Program/Users');
+Route::any('Referral-Program/Marketing-Affiliate-Program-Agreement', 'User/Referral_Program/Marketing_Affiliate_Program_Agreement');
+Route::any('My-Referrals', 'User/Referral_Program/My_Referrals'); 
 // User - Trade Tracker
 Route::any('Trade-Tracker', 'User/Trade_Tracker/Overview');
 Route::any('Trade-Tracker/Trade-Manager', 'User/Trade_Tracker/Trade_Manager');
@@ -134,6 +155,7 @@ Route::any('Trade-Tracker/Trade-Manager', 'User/Trade_Tracker/Trade_Manager');
 // User - Wallets
 Route::any('Wallets', 'User/Wallets/index');
 Route::any('MyMI-Wallet', 'User/Wallets/MyMI_Wallet');
+Route::any('Link-Account/TD-Ameritrade/(:any)', 'User/Brokerages/TD_Ameritrade/$1');
 Route::any('Wallets/Link-Account', 'User/Wallets/Link_Account');
 Route::any('Wallets/Link-Account/(:any)', 'User/Wallets/Link_Account/$1');
 Route::any('Wallets/Link-Account/(:any)/(:any)', 'User/Wallets/Link_Account/$1');
@@ -176,6 +198,33 @@ Route::any('MyMI-Gold/Purchase-Complete', 'User/Wallets/Purchase_Complete');
 Route::any('MyMI-Gold/Purchase-Complete/(:any)', 'User/Wallets/Purchase_Complete/$1');
 Route::any('Wallets/Purchase-Coins-Transaction', 'User/Wallets/Purchase_Coins_Transaction');
 
+// User - Support
+Route::any('Support', 'Home/Support'); 
+Route::any('Support', 'User/Support'); 
+Route::any('Support/Communication-Manager', 'User/Support/Communication_Manager');
+Route::any('Support/My-Requests', 'User/Support/My_Requests');
+
+// User - Support Knowledgebase
+Route::any('Knowledge-Base', 'User/Knowledgebase/index'); 
+Route::any('Knowledge-Base/Account-And-Billing', 'User/Knowledgebase/Account_Billing');
+Route::any('Knowledge-Base/Assets', 'User/Knowledgebase/Assets');
+Route::any('Knowledge-Base/Getting-Started', 'User/Knowledgebase/Getting_Started');
+Route::any('Knowledge-Base/Integrating-Wallets', 'User/Knowledgebase/Integrating_Wallets');
+Route::any('Knowledge-Base/Investor-Profile', 'User/Knowledgebase/Investor_Profile');
+Route::any('Knowledge-Base/KYC-Verification', 'User/Knowledgebase/KYC_Verification');
+Route::any('Knowledge-Base/MyMI-Partnerships', 'User/Knowledgebase/Partnerships');
+Route::any('Knowledge-Base/Technical-Support', 'User/Knowledgebase/Technical_Support');
+Route::any('Knowledge-Base/Trade-Tracker', 'User/Knowledgebase/Trade_Tracker');
+Route::any('Knowledge-Base/Types-Of-Accounts', 'User/Knowledgebase/Types_Of_Accounts');
+
+// Management - Assets
+Route::any('Management/Assets/Application', 'Management/Assets/Applications'); 
+Route::any('Management/Assets/Application/Approve/(:any)', 'Management/Assets/Approval/$1');
+Route::any('Management/Assets/Application/Deny/(:any)', 'Management/Assets/Approval/$1');
+Route::any('Management/Assets/Application/Details/(:any)', 'Management/Assets/Application_Details'); 
+Route::any('Management/Assets/Application/Details/(:any)/(:any)', 'Management/Assets/Application_Details'); 
+Route::any('Management/Assets/Distribute', 'Management/Assets/Distribute'); 
+
 // Management - Support 
 Route::any('Management/Support', 'Management/Support/Reporting'); 
 Route::any('Management/(:any)/Support', 'Management/Support/Reporting'); 
@@ -183,10 +232,12 @@ Route::any('Management/(:any)/Support/Requests', 'Management/Support/Requests');
 Route::any('Management/(:any)/Support/Requests/(:any)', 'Management/Support/Requests'); 
 
 // Management - User
+Route::any('Management/Users/Assets/(:any)', 'Management/Users/Assets'); 
 Route::any('Management/Users/Block/(:any)', 'Management/Users/Block'); 
-Route::any('Management/Users/Distribute/(:any)', 'Management/Users/Distribute'); 
+Route::any('Management/Users/Distribute/(:any)', 'Management/Assets/Distribute'); 
 Route::any('Management/Users/Force-Reset/(:any)', 'Management/Users/Force_Reset'); 
 Route::any('Management/Users/Orders/(:any)', 'Management/Users/Orders'); 
+
 // Management - Web Design
 Route::any('Admin/Add-External-Site', 'Management/Admin/Add_External_Site');
 Route::any('Content-Creator', 'Management/Web_Design/Content_Creator');

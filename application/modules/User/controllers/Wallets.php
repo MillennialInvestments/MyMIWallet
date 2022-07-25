@@ -51,7 +51,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -63,7 +63,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -75,7 +75,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -87,7 +87,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('User/Wallets/Wallet_Generator');
@@ -97,7 +97,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('User/Wallets/Wallet_Manager');
@@ -107,7 +107,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('User/Wallets/Wallet_Selection');
@@ -117,7 +117,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         if ($this->uri->segment(2)) {
             $wallet_id  = $this->uri->segment(2); 
@@ -165,7 +165,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -177,7 +177,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Purchase_Wallet';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         //~ $this->output->cache(1440);
         
@@ -269,7 +269,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Investment_Confirmation';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -281,7 +281,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Investment_Confirmation';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -293,7 +293,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Investment_Complete';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         if ($this->mymigold_model->complete_purchase($trans_id)) {
             if ($this->mymigold_model->complete_overview($trans_id)) {
@@ -303,11 +303,12 @@ class Wallets extends Admin_Controller
             }
         }
     }
+    
     public function Feature_Manager()
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('User/Wallets/Feature_Manager');
@@ -317,7 +318,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('Exchange/Purchase_Manager');
@@ -327,7 +328,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('User/Wallets/Purchase_Coins_Transaction');
@@ -337,7 +338,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Add_Wallet';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         //~ $this->output->cache(1440);
         
@@ -385,7 +386,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Investment_Confirmation';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -397,7 +398,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Investment_Confirmation';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -409,7 +410,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Edit_Wallet';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         //~ $this->output->cache(1440);
         
@@ -456,7 +457,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Deposit_Funds';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         //~ $this->output->cache(1440);
         
@@ -517,7 +518,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -545,7 +546,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Withdraw_Funds';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         //~ $this->output->cache(1440);
         
@@ -618,7 +619,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Create_Bank_Account';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         //~ $this->output->cache(1440);
         
@@ -671,7 +672,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -683,7 +684,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('User/Wallets/Wallet_Transaction');
@@ -693,7 +694,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('User/Wallets/Add_Deposit_Fetch');
@@ -703,7 +704,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('User/Wallets/Add_Withdraw_Fetch');
@@ -713,7 +714,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('User/Wallets/Purchase_Gold');
@@ -723,7 +724,7 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Wallet_Details';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);

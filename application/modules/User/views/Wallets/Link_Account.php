@@ -25,6 +25,8 @@ $fieldData = array(
 $this->load->view('User/Wallets/Link_Account/header', $fieldData);
 if ($pageURIC === 'Brokerage') {
     $this->load->view('User/Wallets/Link_Account/Brokerage', $fieldData);
+} elseif ($pageURIC === '1') {
+    $this->load->view('User/Wallets/Link_Account/TD-Ameritrade', $fieldData);
 } elseif ($pageURIC === 'Details') {
     $this->load->view('User/Wallets/Link_Account/Details', $fieldData);
 } elseif ($pageURIC === 'Confirm') {

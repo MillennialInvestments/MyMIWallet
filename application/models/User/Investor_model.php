@@ -368,10 +368,54 @@ class Investor_model extends BF_Model
         $this->db->where('wallet_id', $walletID);
         $this->db->order_by('id', 'DESC');
         $this->db->limit(1);
-        $getLastWithdraw = $this->db->get();
+        $getLastWithdraw                    = $this->db->get();
         return $getLastWithdraw;
     }
     
+    public function get_user_coin_purchases($cuID) {
+        $this->db->from('bf_users_coin_purchases'); 
+        $this->db->where('user_id', $cuID); 
+        $getUserCoinPurchases               = $this->db->get();
+        return $getUserCoinPurchases;
+    }
+    
+    public function get_user_bank_accounts($cuID) {
+        $this->db->from('bf_users_bank_accounts'); 
+        $this->db->where('user_id', $cuID); 
+        $getUserBankAccounts                = $this->db->get();
+        return $getUserBankAccounts;
+    }
+    
+    public function get_user_exchange_orders($cuID) {
+        $this->db->from('bf_exchanges_orders'); 
+        $this->db->where('user_id', $cuID); 
+        $getUserExchangeOrders               = $this->db->get();
+        return $getUserExchangeOrders;
+    }
+    
+    public function get_user_purchases($cuID) {
+        $this->db->from('bf_users_purchases'); 
+        $this->db->where('user_id', $cuID); 
+        $getUserPurchases               = $this->db->get();
+        return $getUserPurchases;
+    }
+    
+    public function get_user_activity($cuID) {
+        $this->db->from('bf_activities'); 
+        $this->db->where('user_id', $cuID); 
+        $this->db->order_by('activity_id', 'DESC'); 
+        $this->db->limit(20); 
+        $getUserActivities               = $this->db->get();
+        return $getUserActivities;
+    }
+
+    public function get_user_assets($cuID) {
+        $this->db->from('bf_exchanges_assets'); 
+        $this->db->where('user_id', $cuID); 
+        $getUserAssets                  = $this->db->get(); 
+        return $getUserAssets;
+    }
+
     // All Listed Stocks (including Crypto)
     public function get_all_symbols()
     {

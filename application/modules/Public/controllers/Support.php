@@ -59,7 +59,7 @@ class Support extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Customer_Support';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -71,7 +71,7 @@ class Support extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Customer_Support';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -83,7 +83,7 @@ class Support extends Front_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Customer_Support_FAQ';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -95,7 +95,7 @@ class Support extends Front_Controller
     {
         $pageType = 'Customer_Support';
         $pageName = 'Customer_Support_Request';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         $this->output->cache(1);
         // create the data object
@@ -158,7 +158,7 @@ class Support extends Front_Controller
     {
         $pageType = 'Customer_Support';
         $pageName = 'Customer_Support_Response';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         // create the data object
         $data = new stdClass();

@@ -194,7 +194,7 @@ $config['allow_get_array']      = true;
 $config['enable_query_strings'] = false;
 $config['controller_trigger']	= 'c';
 $config['function_trigger']		= 'm';
-$config['directory_trigger'] = 'd';
+$config['directory_trigger']    = 'd';
 
 /*
 |--------------------------------------------------------------------------

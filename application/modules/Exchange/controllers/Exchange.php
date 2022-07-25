@@ -59,7 +59,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -71,7 +71,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -83,7 +83,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('Exchange/Application_Manager');
@@ -93,7 +93,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -105,7 +105,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -117,7 +117,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -129,7 +129,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -141,7 +141,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('Exchange/Order_Event_Manager');
@@ -151,7 +151,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('Exchange/Order_Buy_Manager');
@@ -161,7 +161,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         $this->load->view('Exchange/Order_Sell_Manager');
@@ -178,7 +178,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -188,7 +188,7 @@ class Exchange extends Admin_Controller
     
     public function Order_Fetch()
     {
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         // create the data object
         $data = new stdClass();
@@ -275,7 +275,7 @@ class Exchange extends Admin_Controller
     {
         //~ $pageType = 'Standard';
         //~ $pageName = 'Investment_Request_Coins';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         // create the data object
         $data = new stdClass();
@@ -367,7 +367,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Investment_Request_Coins';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         // create the data object
         $data = new stdClass();
@@ -434,7 +434,7 @@ class Exchange extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Account_Information';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         // create the data object
         $data = new stdClass();

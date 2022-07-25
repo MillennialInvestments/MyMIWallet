@@ -3,14 +3,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class MyMIWallet
 {
     private $cuID;
-    private $ci;
+    private $CI;
     public function __construct()
     {
-        $this->ci =& get_instance();
-        $this->ci->load->library(array('users/Auth', 'MyMICoin', 'MyMIGold'));
-        $this->ci->load->model(array('User/Investor_model', 'User/Tracker_model', 'User/Wallet_model'));
-        //~ $this->ci->load->library(array('Auth', 'MyMIWallets'));
-        $cuID 								                        = $this->ci->auth->user_id();
+        $this->CI =& get_instance();
+        $this->CI->load->library(array('users/Auth', 'MyMICoin', 'MyMIGold'));
+        $this->CI->load->model(array('User/Investor_model', 'User/Tracker_model', 'User/Wallet_model'));
+        //~ $this->CI->load->library(array('Auth', 'MyMIWallets'));
+        $cuID 								                        = $this->CI->auth->user_id();
     }
     /**
      * User Default Information.
@@ -23,7 +23,7 @@ class MyMIWallet
     {
 
         // User Default Wallet Information (Model)
-        $getUserDefaultWallet                   		                = $this->ci->wallet_model->get_user_default_wallet($cuID);
+        $getUserDefaultWallet                   		                = $this->CI->wallet_model->get_user_default_wallet($cuID);
         if (!empty($getUserDefaultWallet)) {
             foreach($getUserDefaultWallet->result_array() as $defaultWallet) {
                 $walletID                               		            = $defaultWallet['id'];
@@ -40,8 +40,8 @@ class MyMIWallet
                 };
 
                 // MyMI Coin Information
-                $userCoinData                            		            = $this->ci->mymicoin->get_user_coin_total($cuID);
-                $MyMICoinValue                          		            = $this->ci->mymicoin->get_coin_value();
+                $userCoinData                            		            = $this->CI->mymicoin->get_user_coin_total($cuID);
+                $MyMICoinValue                          		            = $this->CI->mymicoin->get_coin_value();
                 $MyMICCoinSum                           		            = $userCoinData['coinSum'];
                 $MyMICCurrentValue                      		            = $MyMICoinValue * $MyMICCoinSum;
                 if (!empty($userCoinData['myMICPerChange'])) {
@@ -52,9 +52,9 @@ class MyMIWallet
                 $coinsExchanged                         		            = $userCoinData['coinsExchanged'];
 
                 // MyMI Gold Information
-                $userGoldData                            		            = $this->ci->mymigold->get_user_coin_total($cuID);
+                $userGoldData                            		            = $this->CI->mymigold->get_user_coin_total($cuID);
                 $MyMIGCoinSum                           		            = $userGoldData['coinSum'];
-                $getMyMIGoldValue                          		            = $this->ci->mymigold->get_coin_value();
+                $getMyMIGoldValue                          		            = $this->CI->mymigold->get_coin_value();
                 if (!empty($getMyMIGoldValue)) {
                     $MyMIGoldValue					                        = $getMyMIGoldValue[0]['amount'];
                     $MyMIGCurrentValue                      	            = $MyMIGCoinSum;
@@ -69,11 +69,11 @@ class MyMIWallet
                 }
                 
                 // Get All User Wallets
-                $getWallets						                            = $this->ci->wallet_model->get_all_wallets($cuID);
+                $getWallets						                            = $this->CI->wallet_model->get_all_wallets($cuID);
                 $walletDepositAmount                    		            = 0;
                 $walletWithdrawAmount                   		            = 0;
                 if (!empty($getWallets)) {
-                    $getWalletTrans                                         = $this->ci->wallet_model->get_all_transactions($cuID);
+                    $getWalletTrans                                         = $this->CI->wallet_model->get_all_transactions($cuID);
                     if (!empty($getWalletTrans)) {
                         foreach ($getWalletTrans->result_array() as $walletTrans) {
                             $transWalletID                                  = $walletTrans['wallet_id'];
@@ -93,7 +93,7 @@ class MyMIWallet
                             }
                         }
                     }
-                    $getWalletDeposits                                      = $this->ci->wallet_model->get_wallet_deposits($cuID, $walletID);
+                    $getWalletDeposits                                      = $this->CI->wallet_model->get_wallet_deposits($cuID, $walletID);
                     if (!empty($getWalletDeposits)) {
                         foreach ($getWalletDeposits->result_array() as $walletDeposits) {
                             $depositAmount                                  = $walletDeposits['amount'];
@@ -101,7 +101,7 @@ class MyMIWallet
                     } else {
                         $depositAmount                                      = '0.00';
                     }
-                    $getWalletWithdrawals                                   = $this->ci->wallet_model->get_wallet_withdrawals($cuID, $walletID);
+                    $getWalletWithdrawals                                   = $this->CI->wallet_model->get_wallet_withdrawals($cuID, $walletID);
                     if (!empty($getWalletWithdrawals)) {
                         foreach ($getWalletWithdrawals->result_array() as $walletWithdrawals) {
                             $withdrawAmount                                 = $walletWithdrawals['amount'];
@@ -110,7 +110,7 @@ class MyMIWallet
                         $withdrawAmount                                     = '0.00';
                     }
                     $walletFunds                                            = $depositAmount - $withdrawAmount;
-                    $getWalletTrades                                        = $this->ci->tracker_model->get_wallet_trades_net_gains($walletID);
+                    $getWalletTrades                                        = $this->CI->tracker_model->get_wallet_trades_net_gains($walletID);
                     if (!empty($getWalletTrades)) {
                         foreach ($getWalletTrades->result_array() as $walletTrades) {
                             if (!empty($walletTrades['net_gains'])) {
@@ -167,7 +167,7 @@ class MyMIWallet
 
     public function get_total_wallet_value($cuID)
     {
-        $defWalletInfo				    	                        = $this->ci->mymiwallet->get_default_wallet_info($cuID);
+        $defWalletInfo				    	                        = $this->CI->mymiwallet->get_default_wallet_info($cuID);
         $defWalletID				    	                        = $defWalletInfo['walletID'];
         // $defWalletAmount			    	= $defWalletInfo['walletFunds'];
         // $defWalletDepositAmount			    = $defWalletInfo['depositAmount'];
@@ -175,55 +175,15 @@ class MyMIWallet
         // $defWalletPercentChange			    = $defWalletInfo['walletPercentChange'];
     }
 
-//     public function get_total_wallet_value_old($cuID) {
-//             $defWalletInfo					= $this->ci->mymiwallet->get_default_wallet_info($cuID);
-//             $defWalletAmount					= $defWalletInfo['walletAmountND'];
-//             $defWalletDepositAmount				= $defWalletInfo['depositAmount'];
-//             $defWalletWithdrawAmount				= $defWalletInfo['withdrawAmount'];
-//             $defWalletPercentChange				= $defWalletInfo['walletPercentChange'];
-//             $userWalletOpenSummary       	    		= $this->ci->mymiwallet->get_total_open_value($cuID);
-//             $userCoinData		         	 	= $this->ci->mymigold->get_user_coin_total($cuID);
-//             $walletInitialAmount				= $userWalletOpenSummary['walletInitialAmount'];
-//             $walletTotalAmount					= $userWalletOpenSummary['walletAmount'];
-//             $depositAmount					= $userWalletOpenSummary['depositAmount'] + $defWalletDepositAmount;
-//             $withdrawAmount					= $userWalletOpenSummary['withdrawAmount'] + $defWalletWithdrawAmount;
-//             $walletGains					= $userWalletOpenSummary['walletGains'] + $userCoinData['myMIGDifferential'];
-//             $walletPerChange					= $userWalletOpenSummary['walletPercentChange'];
-//             if (!empty($walletGains) AND !empty($walletInitialAmount)) {
-    // 		$walletPercentChange				= round(($walletGains / $walletInitialAmount) * 100 + $myMIGPerChange, 2);
-    // 		if ($walletPercentChange >= 0) {
-    // 			$walletPercentChangeOutput		= '<span class="text-success">' . $walletPercentChange . '%</span>';
-    // 		} else {
-    // 			$walletPercentChangeOutput		= '<span class="text-danger">' . $walletPercentChange . '%</span>';
-    // 		}
-//             } else {
-//                 $walletPercentChange				= $myMIGPerChangeOutput;
-//             }
-//             $walletSum 						= $walletTotalAmount + $tradeSum + $depositAmount - $withdrawAmount + $myMIGCurrentValue + $defWalletAmount;
-//             $walletSumOutput					= '$' . number_format($walletSum, 2);
-//             $userWalletTotalSummary 				= array(
-//                     'walletSum'					=> $walletSum,
-//                     'walletSumOutput'				=> $walletSumOutput,
-//                     'walletTotalAmount'				=> $walletTotalAmount,
-//                     'walletGains'				=> $walletGains,
-//                     'walletPercentChange'			=> $walletPercentChange,
-//                     'depositAmount'				=> $depositAmount,
-//                     'withdrawAmount'				=> $withdrawAmount,
-//                     'myMIGCurrentValue'				=> $myMIGCurrentValue,
-//             );
-
-//             return $userWalletTotalSummary;
-//     }
-
     public function get_wallet_totals($cuID)
     {
-        $this->ci->load->library('MyMIGold');
-        // $getUserCoinTotal					    = $this->ci->mymigold->get_user_coin_total($cuID);
-        $getUserCoinTotal                                           = $this->ci->mymiuser->user_account_info($cuID);
+        $this->CI->load->library('MyMIGold');
+        // $getUserCoinTotal					    = $this->CI->mymigold->get_user_coin_total($cuID);
+        $getUserCoinTotal                                           = $this->CI->mymiuser->user_account_info($cuID);
         $totalValue						                            = $getUserCoinTotal['MyMIGoldValue'];
         $myMICCurrentValue					                        = $getUserCoinTotal['MyMICCurrentValue'];
         $myMIGCurrentValue					                        = $getUserCoinTotal['MyMIGCurrentValue'];
-        $walletTotals 					                            = $this->ci->wallet_model->get_wallet_totals($cuID);
+        $walletTotals 					                            = $this->CI->wallet_model->get_wallet_totals($cuID);
         if (empty($walletTotals)) {
             $walletSum 					                            = '$0.00';
             echo $walletSum;
@@ -243,7 +203,7 @@ class MyMIWallet
 
     public function get_total_open_value($cuID)
     {
-        $getNDWalletsTotals					                        = $this->ci->wallet_model->get_non_default_wallet_totals($cuID);
+        $getNDWalletsTotals					                        = $this->CI->wallet_model->get_non_default_wallet_totals($cuID);
         if (!empty($getNDWalletsTotals)) {
             foreach ($getNDWalletsTotals->result_array() as $walletInfo) {
                 if (!empty($walletInfo['id'])) {
@@ -256,15 +216,15 @@ class MyMIWallet
                     } else {
                         $walletPercentChange	                    = 0.00;
                     }
-                    $getWalletDeposits			                    = $this->ci->wallet_model->get_wallet_deposits($cuID, $walletID);
+                    $getWalletDeposits			                    = $this->CI->wallet_model->get_wallet_deposits($cuID, $walletID);
                     foreach ($getWalletDeposits->result_array() as $depositInfo) {
                         $depositAmount			                    = $depositInfo['amount'];
                     }
-                    $getWalletWithdrawals		                    = $this->ci->wallet_model->get_wallet_withdrawals($cuID, $walletID);
+                    $getWalletWithdrawals		                    = $this->CI->wallet_model->get_wallet_withdrawals($cuID, $walletID);
                     foreach ($getWalletWithdrawals->result_array() as $withdrawInfo) {
                         $withdrawAmount			                    = $withdrawInfo['amount'];
                     }
-                    $getWalletTrades			                    = $this->ci->tracker_model->get_wallet_trades_net_gains($walletID);
+                    $getWalletTrades			                    = $this->CI->tracker_model->get_wallet_trades_net_gains($walletID);
                     foreach ($getWalletTrades->result_array() as $walletTrades) {
                         //~ $walletGains				                = number_format($walletTrades['net_gains'], 2, '.', '');
                         $walletGains			                    = $walletTrades['net_gains'];
@@ -293,25 +253,25 @@ class MyMIWallet
 
     public function get_wallet_info($cuID, $walletID)
     {
-        $getWalletDeposits					    = $this->ci->wallet_model->get_wallet_deposits($cuID, $walletID);
+        $getWalletDeposits					    = $this->CI->wallet_model->get_wallet_deposits($cuID, $walletID);
         foreach ($getWalletDeposits->result_array() as $depositInfo) {
             $depositAmount				        = $depositInfo['amount'];
         }
-        $getWalletWithdrawals				    = $this->ci->wallet_model->get_wallet_withdrawals($cuID, $walletID);
+        $getWalletWithdrawals				    = $this->CI->wallet_model->get_wallet_withdrawals($cuID, $walletID);
         foreach ($getWalletWithdrawals->result_array() as $withdrawInfo) {
             $withdrawAmount				        = $withdrawInfo['amount'];
         }
-        $getWalletTrades					    = $this->ci->tracker_model->get_wallet_trades_net_gains($walletID);
+        $getWalletTrades					    = $this->CI->tracker_model->get_wallet_trades_net_gains($walletID);
         foreach ($getWalletTrades->result_array() as $walletTrades) {
             //~ $walletGains				= number_format($walletTrades['net_gains'], 2, '.', '');
             $walletGains				        = $walletTrades['net_gains'];
         }
-        $getWalletsTotals					    = $this->ci->wallet_model->get_wallet_totals($cuID);
+        $getWalletsTotals					    = $this->CI->wallet_model->get_wallet_totals($cuID);
         foreach ($getWalletsTotals->result_array() as $walletTotals) {
             $walletInitialAmount		        = $walletTotals['amount'] + $depositAmount - $withdrawAmount;
             $walletTotalAmount			        = $walletTotals['amount'] + $depositAmount - $withdrawAmount + $walletGains;
         }
-        $getWalletInfo						    = $this->ci->investor_model->get_wallet_info($walletID);
+        $getWalletInfo						    = $this->CI->investor_model->get_wallet_info($walletID);
         foreach ($getWalletInfo->result_array() as $walletInfo) {
             $walletBroker				        = $walletInfo['broker'];
             $walletAccountID    		        = $walletInfo['account_id'];
@@ -353,22 +313,21 @@ class MyMIWallet
 
     public function get_total_wallet_percentage($cuID)
     {
-        $getAllWalletAmounts					        = $this->ci->wallet_model->get_all_wallet_amounts($cuID);
-        $getAllWalletTransactions				        = $this->ci->wallet_model->get_all_wallet_transactions($cuID);
-        $getAllExchangeTransactions				        = $this->ci->wallet_model->get_all_exchanges_transactions($cuID);
+        $getAllWalletAmounts					        = $this->CI->wallet_model->get_all_wallet_amounts($cuID);
+        $getAllWalletTransactions				        = $this->CI->wallet_model->get_all_wallet_transactions($cuID);
+        $getAllExchangeTransactions				        = $this->CI->wallet_model->get_all_exchanges_transactions($cuID);
     }
-
    
     public function get_last_activity($cuID, $walletID)
     {
-        $getLastTradeActivity					    = $this->ci->tracker_model->get_last_trade_info_by_user($cuID)->result_array();
+        $getLastTradeActivity					    = $this->CI->tracker_model->get_last_trade_info_by_user($cuID)->result_array();
         if (!empty($getLastTradeActivity)) {
             $lastTradeActivity				    	= $getLastTradeActivity[0]['open_date'] . ' - ' . $getLastTradeActivity[0]['open_time'];
         } else {
             $lastTradeActivity				    	= 'N/A';
         }
         // Get Last Deposit Activity
-        $getLastDepositActivity					    = $this->ci->wallet_model->get_last_wallet_deposit($cuID, $walletID)->result_array();
+        $getLastDepositActivity					    = $this->CI->wallet_model->get_last_wallet_deposit($cuID, $walletID)->result_array();
         if (!empty($getLastDepositActivity)) {
             $depositDate							= $getLastDepositActivity[0]['submitted_date'];
             $convertedDepositDate					= strtotime($depositDate);
@@ -382,7 +341,7 @@ class MyMIWallet
             $depositActivity					    = 'N/A';
         }
         // Get Last Withdraw Activity
-        $getLastWithdrawActivity				    = $this->ci->wallet_model->get_last_wallet_withdraw($cuID, $walletID)->result_array();
+        $getLastWithdrawActivity				    = $this->CI->wallet_model->get_last_wallet_withdraw($cuID, $walletID)->result_array();
         if (!empty($getLastWithdrawActivity)) {
             $withdrawDate							= $getLastWithdrawActivity[0]['open_date'];
             $convertedWithdrawDate					= strtotime($withdrawDate);
@@ -407,7 +366,7 @@ class MyMIWallet
     
     public function get_wallet_information($walletID)
     {
-        $getWalletInformation              	 	= $this->ci->wallet_model->get_wallet_info($walletID);
+        $getWalletInformation              	 	= $this->CI->wallet_model->get_wallet_info($walletID);
         foreach ($getWalletInformation->result_array() as $walletInfo) {
             $walletData                     	= array(
                 'type'                     		=> $walletInfo['type'],
@@ -418,5 +377,24 @@ class MyMIWallet
             
             return $walletData;
         }
+    }
+
+    public function get_wallets_by_user($userID) {
+        $getUserWallets                         = $this->CI->analytical_model->get_total_active_wallets_by_user($userID); 
+        return $getUserWallets;
+    }
+
+    public function get_trades_by_user($userID) {
+        $getTradesByUser                        = $this->CI->analytical_model->get_trades_by_user($userID);
+        return $getTradesByUser;
+    }
+
+    public function update_asset_approval_status($appID, $assetStatus) {
+        $userData                               = array(
+            'status'                            => $assetStatus,
+        ); 
+        $this->db->where('id', $appID); 
+        $this->db->update('bf_exchanges_assets'); 
+        
     }
 }

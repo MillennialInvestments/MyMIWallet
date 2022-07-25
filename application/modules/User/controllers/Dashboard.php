@@ -49,12 +49,34 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
         Template::render();
+    }
+
+    public function Investor_Profile()
+    {
+        $pageType = 'Standard';
+        $pageName = 'User_Dashboard';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+
+    public function Profile_Manager()
+    {
+        $pageType = 'Standard';
+        $pageName = 'User_Dashboard';
+        
+        $this->set_current_user();
+        
+        $this->load->view('User/Wallets/Feature_Manager');
     }
 
     // -------------------------------------------------------------------------
@@ -65,7 +87,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Add_Investor_Profile';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         // create the data object
         $data = new stdClass();
@@ -121,7 +143,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->load->model('Management/announcements_model');
         $this->set_current_user();
         
@@ -134,7 +156,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Edit_Profile';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
 
         $this->load->helper('date');
@@ -195,7 +217,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Edit_Investor_Profile';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         // create the data object
         $data = new stdClass();
@@ -250,7 +272,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Edit_Social_Media';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         // create the data object
         $data = new stdClass();
@@ -297,7 +319,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -309,7 +331,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Profile';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
 
         $this->load->helper('date');
@@ -364,7 +386,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Investment_Confirmation';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -376,7 +398,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Purchase_Coins';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -388,7 +410,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Investment_Request_Coins';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         $coin									= 'MYMIG';
         $gas_fee								= $this->config->item('gas_fee');
@@ -473,7 +495,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Investment_Complete';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         if ($this->mymigold_model->complete_purchase($trans_id)) {
             if ($this->mymigold_model->complete_overview($trans_id)) {
@@ -483,12 +505,24 @@ class Dashboard extends Admin_Controller
             }
         }
     }
-    
+           
+    public function Markets()
+    {
+        $pageType = 'Standard';
+        $pageName = 'User_Dashboard';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+
     public function Search()
     {
         $pageType = 'Standard';
         $pageName = 'Search';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         //~ $this->output->cache(1440);
         
@@ -518,7 +552,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -530,7 +564,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -542,7 +576,7 @@ class Dashboard extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'User_Profile';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
 
         $this->load->helper('date');

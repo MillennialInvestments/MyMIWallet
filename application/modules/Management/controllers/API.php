@@ -63,7 +63,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -75,7 +75,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -87,7 +87,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -99,7 +99,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Pages';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -111,7 +111,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Page_Template';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -123,7 +123,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Test_Page';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         $this->auth->restrict();
         
@@ -136,7 +136,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Test_Page_Email';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -148,7 +148,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Test_Page_CB';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -160,7 +160,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Sitemap_Generator';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -174,7 +174,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Basic_UI';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -186,7 +186,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Icons';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -198,7 +198,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Forms';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -210,7 +210,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Charts';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -222,7 +222,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Tables';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -234,7 +234,7 @@ class API extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'UI_Elements';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);

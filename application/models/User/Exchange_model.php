@@ -78,6 +78,7 @@ class Exchange_model extends BF_Model
     {
         parent::__construct();
         $this->gallery_path = realpath(APPPATH . '../images/');
+        $today                              = date("m/d/Y"); 
     }
         
     public function prep_data($post_data)
@@ -442,7 +443,7 @@ class Exchange_model extends BF_Model
         $this->db->select_sum('total_volume');
         $this->db->from('bf_exchanges');
         $this->db->where('creator', $cuID);
-        $getUserAssetVolume				= $this->db->get();
+        $getUserAssetVolume				    = $this->db->get();
         return $getUserAssetVolume;
     }
 }

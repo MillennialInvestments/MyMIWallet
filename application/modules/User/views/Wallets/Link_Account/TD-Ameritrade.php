@@ -7,7 +7,7 @@ $refresh_code                                   = '';
 $decode                                         = urldecode($code);
 $newcode                                        = urlencode($code);
 $client_id                                      = urlencode('XGCE3NA1BXIGQG2NHDTLHZ6OUSIZTITF@AMER.OAUTHAP');
-$redirect_uri                                   = urlencode('https://www.mymiwallet.com/public/index.php/Wallets/Link-Account/1');
+$redirect_uri                                   = urlencode('https://www.mymiwallet.com/index.php/Link-Account/TD-Ameritrade/1');
 $post_fields                                    = 'grant_type=' . $grant_type . '&refresh=&access_type=' . $access_type . '&code=' . $newcode . '&client_id=' . $client_id . '&redirect_uri=' . $redirect_uri;
 $headers                                        = array();
 $headers[]                                      = 'Content-Type: application/x-www-form-urlencoded';
@@ -63,6 +63,8 @@ $err 						                    = curl_error($account_curl);
 curl_close($account_curl);
 $account_response   		                    = json_decode($account_response, true); //because of true, it's in an array
 // $account_response               = json_encode($account_response);
+foreach ($account_response as $id=>$account) {
+    foreach ($account as $key=>$value) {
  
         $accountId                              = $value['accountId'];
         // $accountId                      = '866973162';
@@ -351,7 +353,7 @@ $account_response   		                    = json_decode($account_response, true)
                     $this->db->insert('bf_users_trades', $order_data);
                 }
             }
-        };
+        }
     }
-}
+};
 $this->load->view('User/Wallets/Link_Account/Success'); 

@@ -190,6 +190,32 @@ $(document).ready(function() {
 </script>
 <?php
 }
+if ($pageURIA === 'Investor-Profile') {
+?>
+<script>
+$(document).ready(function() {
+	$('#userActivityDatatable').DataTable( {  
+		"order": [[ 0, "desc" ]],     
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],    
+			
+	});
+});
+</script>
+<?php
+}
+if ($pageURIA === 'My-Referrals') {
+?>
+<script>
+$(document).ready(function() {
+	$('#myReferralsDatatable').DataTable( {  
+		"order": [[ 0, "desc" ]],     
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],    
+			
+	});
+});
+</script>
+<?php
+}
 if ($pageURIA === 'Exchange' && $pageURIB === 'Market') {
     ?>
 	<script>

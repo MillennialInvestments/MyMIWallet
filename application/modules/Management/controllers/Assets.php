@@ -39,9 +39,7 @@ class Assets extends Admin_Controller
         parent::__construct();
         $this->load->helper(array('directory', 'form', 'file', 'url'));
         $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'user_agent', 'Users/auth'));
-        $this->load->model('Management/announcements_model');
-        $this->load->model('Management/design_model');
-        $this->load->model(array('API/api_model', 'User/exchange_model', 'User/mymigold_model', 'User/tracker_model'));
+        $this->load->model(array('API/api_model', 'User/exchange_model', 'User/mymigold_model', 'User/tracker_model', 'Management/announcements_model', 'Management/design_model'));
         $this->load->module('Announcements');
         $this->load->module('Exchange');
         //~ $testModule		= $this->config->item['test_module'];
@@ -63,7 +61,7 @@ class Assets extends Admin_Controller
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -71,11 +69,11 @@ class Assets extends Admin_Controller
         Template::render();
     }
 
-    public function Content_Creator()
+    public function Applications()
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -83,11 +81,55 @@ class Assets extends Admin_Controller
         Template::render();
     }
 
-    public function Curl_Generator()
+    public function Application_Details()
+    {
+        $pageType = 'Standard';
+        $pageName = 'Web_Design_Dashboard';        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::set_view('Management/Assets/Applications/Details');
+        Template::render();
+    }
+
+    public function Approval($appID)
+    {
+        $pageType = 'Standard';
+        $pageName = 'Web_Design_Dashboard';        
+        $this->set_current_user();
+        $pageURID                                               = $this->uri->segment(4);
+        if ($pageURID === 'Approve') {
+            $assetStatus                                        = 'Approved';
+        } elseif ($pageURID === 'Deny') {
+            $assetStatus                                        = 'Denied';
+        }
+        if ($assetStatus === 'Approved') {
+            if($this->mymianalytics->migrate_asset_request_info($appID)) {
+                $assetAppData                                   = $this->analytical_model->get_approved_asset_by_id($appID);
+                Template::set_message('Asset Application has been Approved!', 'success');
+                Template::set('pageType', $pageType);
+                Template::set('pageName', $pageName);
+                Template::set_view('Management/Assets/Applications/Approval', $assetAppData);
+                Template::render();
+            }
+        } elseif ($assetStatus === 'Denied') {
+            if ($this->analytical_model->update_pending_asset_status($appID, $assetStatus)) {
+                $assetAppData                                   = $this->analytical_model->get_approved_asset_by_id($appID);
+                Template::set_message('Asset Application has been Denied!', 'error');
+                Template::set('pageType', $pageType);
+                Template::set('pageName', $pageName);
+                Template::set_view('Management/Assets/Applications/Approval', $assetAppData);
+                Template::render();
+            }
+        }
+    }
+
+    public function Create()
     {
         $pageType = 'Standard';
         $pageName = 'Web_Design_Dashboard';
-        $this->load->library('users/auth');
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -95,11 +137,11 @@ class Assets extends Admin_Controller
         Template::render();
     }
 
-    public function Pages()
+    public function Distribute()
     {
         $pageType = 'Standard';
-        $pageName = 'Web_Design_Pages';
-        $this->load->library('users/auth');
+        $pageName = 'Web_Design_Dashboard';
+        
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -107,159 +149,6 @@ class Assets extends Admin_Controller
         Template::render();
     }
 
-    public function Page_Template()
-    {
-        $pageType = 'Standard';
-        $pageName = 'Page_Template';
-        $this->load->library('users/auth');
-        $this->set_current_user();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-
-    public function Test_Page()
-    {
-        $pageType = 'Standard';
-        $pageName = 'Web_Design_Test_Page';
-        $this->load->library('users/auth');
-        $this->set_current_user();
-        $this->auth->restrict();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-
-    public function Test_Page_Email()
-    {
-        $pageType = 'Standard';
-        $pageName = 'Web_Design_Test_Page_Email';
-        $this->load->library('users/auth');
-        $this->set_current_user();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-
-    public function Test_Page_CB()
-    {
-        $pageType = 'Standard';
-        $pageName = 'Web_Design_Test_Page_CB';
-        $this->load->library('users/auth');
-        $this->set_current_user();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-
-    public function Sitemap_Generator()
-    {
-        $pageType = 'Standard';
-        $pageName = 'Sitemap_Generator';
-        $this->load->library('users/auth');
-        $this->set_current_user();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-            
-    //--------------------------------------------------------------------
-
-    public function Basic_UI()
-    {
-        $pageType = 'Standard';
-        $pageName = 'Basic_UI';
-        $this->load->library('users/auth');
-        $this->set_current_user();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-    
-    public function Icons()
-    {
-        $pageType = 'Standard';
-        $pageName = 'Icons';
-        $this->load->library('users/auth');
-        $this->set_current_user();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-    
-    public function Forms()
-    {
-        $pageType = 'Standard';
-        $pageName = 'Forms';
-        $this->load->library('users/auth');
-        $this->set_current_user();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-    
-    public function Charts()
-    {
-        $pageType = 'Standard';
-        $pageName = 'Charts';
-        $this->load->library('users/auth');
-        $this->set_current_user();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-    
-    public function Tables()
-    {
-        $pageType = 'Standard';
-        $pageName = 'Tables';
-        $this->load->library('users/auth');
-        $this->set_current_user();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-    
-    public function UI_Elements()
-    {
-        $pageType = 'Standard';
-        $pageName = 'UI_Elements';
-        $this->load->library('users/auth');
-        $this->set_current_user();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-    
-    public function Email_Test()
-    {
-        $data = new stdClass();
-        $emailLink 			= $this->input->post($emailLink);
-        $userEmail 			= 'tburks2392@gmail.com';
-        $displayName 		= 'Tim';
-        $alert = array(
-            'from'		=> 'support@mymillennialinvestments.com',
-            'to'		=> $userEmail,
-            'subject'	=> 'Test Email | Millennial Investments',
-            'message'	=> $this->load->view($emailLink),
-        );
-
-        $this->emailer->send($alert);
-        
-        Template::set_message('Updated Successfully', 'success');
-        Template::redirect('/Web-Design/Test-Page-Email');
-    }
     /**
      * If the Auth lib is loaded, it will set the current user, since users
      * will never be needed if the Auth library is not loaded. By not requiring

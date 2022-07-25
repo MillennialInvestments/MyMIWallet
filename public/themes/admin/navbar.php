@@ -22,8 +22,8 @@ $myMIGPerChange			= $_SESSION['allSessionData']['userGoldData']['myMIGPerChange'
 					<?php
                     if ($this->agent->is_mobile()) {
                         echo '
-						<img class="logo-light logo-img d-lg-block" src="' . base_url('assets/images/Millennial-Investments-120x36.png') . '" srcset="' . base_url('assets/images/Millennial-Investments-120x36.png') . '" alt="logo" />
-						<img class="logo-dark logo-img d-lg-block" src="' . base_url('assets/images/Millennial-Investments-120x36.png') . '" srcset="' . base_url('assets/images/Millennial-Investments-120x36.png') . '" alt="logo" />
+						<img class="logo-light logo-img d-lg-block" src="' . base_url('assets/images/Millennial-Investments-The-Best-In-Investments-Logo-Only-White-BG.png') . '" srcset="' . base_url('assets/images/Millennial-Investments-The-Best-In-Investments-Logo-Only-White-BG.png') . '" alt="logo" />
+						<img class="logo-dark logo-img d-lg-block" src="' . base_url('assets/images/Millennial-Investments-The-Best-In-Investments-Logo-Only-White-BG.png') . '" srcset="' . base_url('assets/images/Millennial-Investments-The-Best-In-Investments-Logo-Only-White-BG.png') . '" alt="logo" />
 						';
                     } else {
                         echo '
@@ -47,7 +47,7 @@ $myMIGPerChange			= $_SESSION['allSessionData']['userGoldData']['myMIGPerChange'
 			</div>
 			<div class="nk-header-tools">
 				<ul class="nk-quick-nav">
-                    <li>
+                    <li class="d-none d-sm-block">
                         <a class="btn btn-primary text-white" data-toggle="modal" data-target="#userInfoModal">User Data</a>
                     </li>
 					<li class="dropdown user-dropdown">

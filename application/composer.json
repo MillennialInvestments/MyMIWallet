@@ -15,10 +15,10 @@
     },
     "authors": [
         {
-            "name": "Lonnie Ezell",
-            "email": "lonnieje@gmail.com",
-            "homepage": "http://lonnieezell.com",
-            "role": "Project Starter and Lead"
+            "name": "Timothy Burks",
+            "email": "admin@timothyburks.com",
+            "homepage": "http://timothyburks.com",
+            "role": "Founder | Programmer/Develop"
         }
     ],
     "support": {
@@ -27,8 +27,9 @@
         "source": "https://github.com/ci-bonfire/Bonfire"
     },
     "require": {
-        "php": "^7.4",
+        "php": ">=7.1",
         "guzzlehttp/guzzle": ">=7.4",
-        "codenix-sv/bittrex-api": "^1.0"
+        "codenix-sv/bittrex-api": "^1.0",
+        "michaeldrennen/td-ameritrade-api": "^0.1.13"
     }
 }
