@@ -55,7 +55,7 @@ if (empty($currentUserID)) {
                     </li>
                 </ul>
                 <div class="intro-action">
-                    <a href="<?php echo site_url($btnURL); ?>" class="btn btn-primary" target="_blank">
+                    <a href="<?php echo $btnURL; ?>" class="btn btn-primary" target="_blank">
                         <span class="d-none d-md-block"><?php echo $btnText; ?></span>
                     </a>
                 </div>

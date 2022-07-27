@@ -161,11 +161,6 @@ if ($this->agent->is_mobile()) {
 						// </li>';
                         // } 
                         ?>
-						<li class="nk-menu-item">
-							<a href="<?php echo site_url('/Customer-Support'); ?>" class="nk-menu-link">
-								<span class="nk-menu-icon"><i class="icon ni ni-help-alt"></i></span><span class="nk-menu-text">Support</span>
-							</a>
-						</li> 
                         <li class="nk-menu-item has-sub active">
                             <a href="#" class="nk-menu-link nk-menu-toggle" data-bs-original-title="" title="">
                                 <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb"></em></span>
@@ -173,10 +168,10 @@ if ($this->agent->is_mobile()) {
                             </a>
                             <ul class="nk-menu-sub" style="display: block;">
                                 <li class="nk-menu-item">
-                                    <a href="<?php echo site_url('/Customer-Support'); ?>" class="nk-menu-link" data-bs-original-title="" title=""><span class="nk-menu-text">Contact Support</span></a>
+                                    <a href="<?php echo site_url('/Support'); ?>" class="nk-menu-link" data-bs-original-title="" title=""><span class="nk-menu-text">Contact Support</span></a>
                                 </li>
                                 <li class="nk-menu-item">
-                                    <a href="<?php echo site_url('/Knowledge-Base'); ?>" class="nk-menu-link" data-bs-original-title="" title=""><span class="nk-menu-text">Project List</span></a>
+                                    <a href="<?php echo site_url('/Knowledge-Base'); ?>" class="nk-menu-link" data-bs-original-title="" title=""><span class="nk-menu-text">Knowledge Base</span></a>
                                 </li>
                             </ul><!-- .nk-menu-sub -->
                         </li>
@@ -291,12 +286,12 @@ if ($this->agent->is_mobile()) {
 						<?php
                         } ?>
 						<li class="nk-menu-item">
-							<a href="<?php echo site_url('Exchange-Management'); ?>" class="nk-menu-link">
+							<a href="<?php echo site_url('Management/Exchange'); ?>" class="nk-menu-link">
 							<span class="nk-menu-icon"><em class="icon ni ni-sign-usd"></em></span><span class="nk-menu-text">Exchange</span>
 							</a>
 						</li>
 						<li class="nk-menu-item">
-							<a href="' . site_url('/My-Referrals') . '" class="nk-menu-link">
+							<a href="<?php echo site_url('/My-Referrals'); ?>" class="nk-menu-link">
 								<span class="nk-menu-icon"><em class="icon ni ni-share-alt"></em></span><span class="nk-menu-text">My Referrals</span>
 							</a>
 						</li>

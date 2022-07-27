@@ -60,20 +60,20 @@ if ($pageURIA === 'Trade-Tracker') {
 	<script>
 	$(document).ready(function() {
 		$('#tradeTrackerDatatable').DataTable( {
-			"order": [[ 5, "desc" ]],     
+			// "order": [[ 5, "desc" ]],     
 			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
 		}	
 		);
 	} );
 	</script>
 	<script>
-	$(document).ready(function() {
-		$('#tradeHistoryDatatable').DataTable( {
-			"order": [[ 0, "desc" ]],     
-			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-		}	
-		);
-	} );
+	// $(document).ready(function() {
+	// 	$('#tradeHistoryDatatable').DataTable( {
+	// 		"order": [[ 0, "desc" ]],     
+	// 		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+	// 	}	
+	// 	);
+	// } );
 	</script>    
 <?php
 }

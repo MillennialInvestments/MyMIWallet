@@ -1224,10 +1224,9 @@ var Table = /** @class */ (function () {
     };
     Table.prototype.renderTable = function () {
         //STYLEME
-        var table = document.createElement("table");
+        var table = document.createElement("div");
         table.agd(["tradeTable"]);
-        table.classList.add("datatable-init-export", "nowrap", "table", "no-footer", "dtr-inline");
-        table.setAttribute('id', "tradeTrackerDatatable");
+        table.classList.add("datatable-init-export", "nowrap", "table", "dataTable", "no-footer", "dtr-inline");
         this.parent.append(table);
         this.target = table;
         this.renderController();
@@ -2262,15 +2261,9 @@ var Row2 = /** @class */ (function () {
      * @returns {domElement} Returns the container object
      */
     Row2.prototype.createContainer = function () {
-        var container = document.createElement("tr");
+        var container = document.createElement("tbody");
         this.state.container = container;
         container.classList.add("trade-container");
-        return container;
-    };
-    Row2.prototype.theadContainer = function () {
-        var container = document.createElement("tr");
-        this.state.container = container;
-        container.classList.add("thead-container");
         return container;
     };
     /**
@@ -2782,7 +2775,7 @@ var Row2 = /** @class */ (function () {
         var layout = this.getLayout();
         //Main row;
         //USE: "MULTIPLE ROWS" in a single trade or expanded views
-        var mainRow = document.createElement("tr");
+        var mainRow = document.createElement("div");
         this.state.mainRow = mainRow;
         //If it's an historical trade, do this
         // Container
@@ -2819,17 +2812,10 @@ var Row2 = /** @class */ (function () {
             //If the trade is not closed, then either build a new container
             //THE CONTAINER IS "ABOVE" THE MAIN ROW
             if (fresh) {
-                if (this.state.isLegend) {
-                    //Create the trade box
-                    //USE: Row and expansion container
-                    container = this.theadContainer();
-                    container.append(mainRow);
-                } else {
-                    //Create the trade box
-                    //USE: Row and expansion container
-                    container = this.createContainer();
-                    container.append(mainRow);
-                }
+                //Create the trade box
+                //USE: Row and expansion container
+                container = this.createContainer();
+                container.append(mainRow);
             }
             else {
                 if (this.state.container == "") {
@@ -2882,7 +2868,7 @@ var Row2 = /** @class */ (function () {
             else {
                 section.style.width = block.size;
                 section.style.overflowX = 'scroll';
-                section.classList.add("scrollable-section", "col-4", "d-flex");
+                section.classList.add("scrollable-section", "col-7", "d-flex");
                 //Sync Scrolling
                 if (_this.state.table != "" && _this.state.table.target != "") {
                     //Create an hashed event for sections with the same properties
@@ -3039,7 +3025,7 @@ controllerBox.append(newRowButton);
 // Edit User preferences
 var editPrefsBtn = document.createElement("button");
 controllerBox.append(editPrefsBtn);
-editPrefsBtn.classList.add("new-btn", "btn", "btn-sm", "btn-primary", "h-100");
+editPrefsBtn.classList.add("new-btn", "btn", "btn-block", "btn-primary", "h-100");
 editPrefsBtn.innerHTML = "Settings";
 var mainEditPrefsWindow = document.querySelector(".tt-edit-user-preferences");
 if (mainEditPrefsWindow != null) {

@@ -9,7 +9,7 @@ $pageType 						= Template::get('pageType');
 $pageName 						= Template::get('pageName');
 
 // Default Values
-$defaultImage 	= 'https://www.mymiwallet.com/assets/images/Millennial-Investments.png';
+$defaultImage 	= 'https://www.mymiwallet.com/assets/images/MyMI-Wallet-Logo-1024x1024.png';
 
 // Get Marketing Page SEO from Database
 $getPageInfo 					= $this->public_model->get_marketing_seo($pageName);

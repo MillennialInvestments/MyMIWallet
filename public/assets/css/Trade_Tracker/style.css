@@ -128,6 +128,7 @@
       width: 19px;
       height: 19px;
       border-radius: 50%;
+      background: var(--active-inner);
       opacity: 0;
       transform: scale(var(--s, 0.7));
     }
@@ -138,6 +139,7 @@
   .tt-trade-window {
     display: flex;
     flex-direction: column;
+    background: #f0f0f0;
     padding: 1rem;
   }
   .tt-trade-window .trade-table {
@@ -154,6 +156,9 @@
     flex-direction: column;
     position: relative;
   }
+  .tt-trade-window .trade-table .trade-container.legendary {
+    order: -1;
+  }
   .tt-trade-window .trade-table .trade-container .main-row {
     display: flex;
     flex-direction: row;
@@ -161,11 +166,12 @@
     border-bottom: gray 1px solid;
     order: 0;
   }
+  .hidden{ display: none !important;}
   .tt-trade-window .trade-table .trade-container .main-row.hidden {
-    display: none;
+    display: none !important;
   }
   .tt-trade-window .trade-table .trade-container .main-row.visible {
-    display: flex;
+    display: flex !important;
   }
   .tt-trade-window .trade-table .trade-container .main-row .scrollable-section {
     display: flex;
@@ -289,10 +295,10 @@
     margin-left: 1rem;
   }
   .tt-trade-window .trade-table .trade-container .closed-row.hidden {
-    display: none;
+    display: none !important;
   }
   .tt-trade-window .trade-table .trade-container .closed-row.visible {
-    display: flex;
+    display: flex !important;
   }
   .tt-trade-window .trade-table .trade-container .closed-row .scrollable-section {
     display: flex;
@@ -413,10 +419,10 @@
     border-bottom: gray 1px solid;
   }
   .tt-trade-window .trade-table .trade-container .legend-row.hidden {
-    display: none;
+    display: none !important;
   }
   .tt-trade-window .trade-table .trade-container .legend-row.visible {
-    display: flex;
+    display: flex !important;
   }
   .tt-trade-window .trade-table .trade-container .legend-row .scrollable-section {
     display: flex;
@@ -589,10 +595,10 @@
     grid-column: 2/3;
   }
   .tt-edit-user-preferences .page-section .page.hidden {
-    display: none;
+    display: none !important;
   }
   .tt-edit-user-preferences .page-section .page.visible {
-    display: flex;
+    display: flex !important;
   }
   
   .tt-darkener {

@@ -29,21 +29,20 @@ HUGE
 - Save + delete button
 - Fix ts-ignores
 - Working on block designing
-- Autosave
 ? - Structure more stuff with events
 SMALLER
 - Do something about the "plain" main new-row button
 - deletePrompt
+- Styling ability
 - Give the ability to enter images
 - Give the ability for "tag" blocks and use expandeers to do so. Notion like
 - Re-create the sort feature
 - Finish the compute functions
-- Manual/Field/Db Tracked sorting
 ACTIVE
-! Closed rows on different pages get pushed to first page and last order
-- Saveall
-- Styling ability
 
+
+- default pseudo ID
+- Legend Row
 */
 
 
@@ -164,9 +163,9 @@ class TradeObj {
 	//b3
 	delete: string;
 	constructor(row: Partial<TradeObj>) {
-		this.legend = row.legend || "false";
+		this.legend = row.legend || "";
 		this.id = row.id || "0";
-		this.pseudo_id = row.pseudo_id || row.id || "0n1";
+		this.pseudo_id = row.pseudo_id || "0n1";
 		this.order_id = row.order_id || "0";
 		this.closed = row.closed || "false";
 		this.symbol = row.symbol || "";
@@ -211,27 +210,7 @@ class TradeObj {
 
 }
 
-type GraphicsDirective = Array<string>
-const graphicsLibrary: { [key: string]: GraphicsDirective } = {
-	darkener: ["tt-darkener"],
-	tradeTable: ["trade-table"],
-	tableBottomController: ["table-bottom-controller"],
-	pageMoverHolder: ["page-mover-holder"]
-}
-//Merged interfacte
-interface HTMLElement {
-	/**
-	  * htmlElement specific function that Adds a Graphical Directive to an html element
-	  */
-	agd(classSet: Array<keyof typeof graphicsLibrary>): void
-}
 
-
-HTMLElement.prototype.agd = function (classSet: Array<keyof typeof graphicsLibrary>) {
-	classSet.forEach(index => {
-		this.classList.add(...graphicsLibrary[index]);
-	})
-}
 
 //Html extended Input element
 interface HeIe extends HTMLInputElement {
@@ -325,7 +304,7 @@ interface usableEvent extends Partial<Event> {
 
 interface refSortingTag {
 	tag: string;
-	logical: "equal";
+	logical: string;
 	trades: Array<Row2>
 }
 
@@ -456,7 +435,7 @@ function zDarkner(index: string, remove: boolean = false) {
 		if (darkenedScreenElement == null) {
 			const darkener = document.createElement("div");
 			document.body.append(darkener);
-			darkener.agd(["darkener"]);
+			darkener.classList.add("tt-darkener");
 			darkenedScreenElement = darkener;
 			//Style it
 			darkener.style.opacity = "0.35";
@@ -525,73 +504,12 @@ function changeVisible(element: HTMLElement, visible: boolean, stateProperties: 
 	})
 }
 
-interface UserPreferences {
-	//selectedSorting: keyof UserPreferences["sortings"]
-	selectedSorting: string,
-	sortings: {
-		[key: string]: {
-			targets: keyof TradeObj,
-			blocks: {
-				[key: string]: {
-					name: string,
-					tag: string,
-					tagLogical: "equal",
-					variations: {
-						text: string, value: string
-					}[]
-
-					//selected: keyof UserPreferences["sortings"][UserPreferences["selectedSorting"]]["blocks"]["layouts"],
-					selected: string,
-					layouts: {
-						[key: string]: Array<{
-							fixed: boolean,
-							size: string,
-							//elements: Array<keyof typeof defaultFields | keyof typeof userPrefs.customFields>,
-							//nElements: Array<keyof typeof defaultFields | keyof typeof userPrefs.customFields>
-							elements: Array<string>,
-							nElements: Array<string>
-						}>
-					}
-				}
-
-			}
-		}
-	},
-	rowsPerPage: number,
-	customFields: {
-		[key: string]: fieldDirective,
-	},
-	promptDefaults: {
-		[key: string]: { [key: string]: promptTemplate }
-	},
-	promptDefaultsDirectives: {
-		[key: string]: {
-			//templateName: keyof UserPreferences["promptDefaults"],
-			//selected: keyof UserPreferences["promptDefaultsDirectives"]["variations"],
-			templateName: string,
-			selected: string,
-			variations: {
-				[key: string]: Array<string>
-			}
-		}
-	},
-	formulas: {
-		fields: {
-			[key: string]: (row: Row2, directive: fieldDirective) => void
-		}
-	},
-	walletList: Array<listerObj>,
-	symbolList: Array<listerObj>,
-
-}
-
-
 //USER PREFERENCES
 
 //The user can add trades (logs) of that type. Every tipe has specific features
 //Then the user can define views using the available fields inside the available types
 //The user can add a new type, and he can
-const userPrefs: UserPreferences = {
+const userPrefs = {
 	//Sortings are based on one database column
 	selectedSorting: "categories",
 	sortings: {
@@ -611,6 +529,7 @@ const userPrefs: UserPreferences = {
 						{ text: "Long", value: "long" },
 						{ text: "Short", value: "short" },
 					],
+					spawners: {},
 					selected: "default",
 					layouts: {
 						//If an element is not fixed, then it will be able to scroll
@@ -823,7 +742,7 @@ const userPrefs: UserPreferences = {
 	},
 	formulas: {
 		fields: {
-			totalCost: (row: Row2, directive: fieldDirective) => {
+			totalCost(row: Row2, directive: fieldDirective) {
 
 			}
 		},
@@ -985,7 +904,7 @@ const defaultFields: { [key: string]: fieldDirective } = {
 		render: "true",
 		default: "buy",
 		type: "choice",
-		subtype: "select",
+		subtype: "list",
 		//* Function - Here we are not allowing users to change category of trade from the trade itself. We can implement re-creation later
 		options: getTradeTypeVars(),
 		modifiers: [] as string[],
@@ -1490,7 +1409,6 @@ class Table {
 	target: HTMLElement | "";
 	tradeWindowRef: TradeWindow;
 	sortedChildren: Array<Row2>;
-	activeLegend: Row2 | "";
 	children: { [key: string]: Row2 };
 	// visibleRows: Array<Row2>;
 	currentPage: number;
@@ -1520,7 +1438,6 @@ class Table {
 		const tableProps = this.c_sortChildren(originalChildrenArray);
 		//Increasing order by id
 		this.sortedChildren = tableProps[0];
-		this.activeLegend = "";
 		this.children = tableProps[1];
 		// this.visibleRows = [];
 		this.currentPage = 1;
@@ -1558,7 +1475,6 @@ class Table {
 	renderTable() {
 		//STYLEME
 		const table = document.createElement("table");
-		table.agd(["tradeTable"]);
         table.classList.add("datatable-init-export", "nowrap", "table", "dataTable", "no-footer", "dtr-inline");
 		this.parent.append(table);
 		this.target = table;
@@ -1570,13 +1486,13 @@ class Table {
 	renderController() {
 		const controllerBox = document.createElement("div");
 		this.controllerBox.box = controllerBox;
-		controllerBox.agd(["tableBottomController"]);
+		controllerBox.classList.add("table-bottom-controller");
 		if (this.target != "") {
 			////////////
 			//PAGE MOVER
 			const holder = document.createElement("div");
 			this.target.append(controllerBox);
-			holder.agd(["pageMoverHolder"])
+			holder.classList.add("page-mover-holder");
 
 			const moveForward = document.createElement("button");
 			moveForward.innerHTML = "&rarr;";
@@ -1612,37 +1528,13 @@ class Table {
 		this.sortedChildren.forEach((row) => {
 			row.renderRow(!refreshLayout);
 		});
-		if (refreshLayout) {
-			if (this.activeLegend != "") {
-				this.activeLegend.renderRow(false);
-			} else {
-				console.error("Trying to refresh layout of a table without having rendered the legend")
-			}
-		}
 		this.refreshPages();
-	}
-	renderLegend(information: refSortingTag) {
-		if (this.activeLegend != "") {
-			this.activeLegend.d_delete();
-			this.activeLegend = "";
-		}
-		//Create a legend with properties that satisfy the refSortingTag
-		const selectedSortingTarget = userPrefs.sortings[userPrefs.selectedSorting as keyof typeof userPrefs.sortings].targets;
-		const freshLegendObj = new TradeObj({ legend: "true" })
-		switch (information.logical) {
-			case "equal":
-				freshLegendObj[selectedSortingTarget] = information.tag;
-				break;
-		}
-		const newLegend = new Row2(freshLegendObj, true);
-		newLegend.changeTableReference(this);
-		newLegend.renderRow();
-
-		this.activeLegend = newLegend;
 	}
 	hideTable() {
 		if (!!this.target) {
-			this.target.style.display = "none";
+			// this.target.style.display = "none";
+            // this.setAttribute('id', 'hideThis'); 
+            this.classList.add("hideThis");
 		}
 	}
 	/**
@@ -1855,7 +1747,6 @@ class Table {
 }
 
 class TradeWindow {
-	//!FUTUREBUG Currently when rebuilding tables because the sorting has changed the old ones don't get deleted.
 	holder: HTMLElement;
 	tables: { [key: string]: Table };
 	allRows: Array<Row2>;
@@ -1923,7 +1814,6 @@ class TradeWindow {
 			this.tables[tagObj.tag] = newTable;
 			newTable.renderTable();
 			newTable.renderRows();
-			newTable.renderLegend(tagObj);
 		});
 	}
 	/**
@@ -2359,11 +2249,7 @@ class Row2 {
 		const d_saveChanges = async () => {
 			try {
 				// Put user field changes into the json_user_fields field
-				const dbObject = { ...this.current };
-
-				//DB
-				// PseudoId implementation: when a trade with a pseaudoid is saved, get him a real id. Then this id gets changed in the frontend both in the actual row and in all of the linearObjs in tables and tradewindows referring to it (including closed_ref and other)
-				// Closed_list: when a trade with a closed reference is saved, update the closed list of the parent trade in the frontend and backend.
+				// PseudoId implementation: when a trade with a pseaudoid is saved, get him a real id. Then this id gets changed in the frontend both in the actual row and in all of the linearObjs in tables and tradewindows referring to it
 				//Async save changes
 				//Edit the pseudoid and other db fields (like the id)
 				//Refresh the origin object to mirror the (just modified) current one
@@ -2630,28 +2516,18 @@ class Row2 {
 		}
 	};
 	deletePrompt = () => {
-		//TODO: Actually prompt
-		return true;
-	}
-	d_delete = (definitive: boolean = this.state.isLegend) => {
-		if (definitive == false) {
-			if (this.deletePrompt() == true) {
-				//TODO - COMPLETE
-				//Database stuff
-				const fetch = true;
-				//...
+		//TODO - COMPLETE
+		//Database stuff
+		const fetch = true;
+		//...
 
-				//Drop from every list, then remove
-				if (fetch) {
-					//SAY THAT IF IT HAS CLOSED FIELDS ALSO THOSE WILL BE DELETED
-					if (JSON.parse(this.current[gin("31")]))
-						tradeWindow.allRowsObj//Continue
-				} else {
-					newAlert({ status: "error", message: "Deleting the trade was unsuccessfull" })
-				}
-			}
+		//Drop from every list, then remove
+		if (fetch) {
+			//SAY THAT IF IT HAS CLOSED FIELDS ALSO THOSE WILL BE DELETED
+			if (JSON.parse(this.current.closed_list))
+				tradeWindow.allRowsObj//Continue
 		} else {
-			//Wipe it out of existence
+			newAlert({ status: "error", message: "Deleting the trade was unsuccessfull" })
 		}
 	}
 	/**
@@ -2744,21 +2620,8 @@ class Row2 {
 				}
 				percentedNewTrade[gin("00p")] = newPseudoId;
 				//00i is the id
-				//Closed Ref
-				//* Here we decide that if you close a sub trade you are still closing a part of the main trade and not of the sub trade
-				if (this.current[gin("29")] != "-1") {
-					percentedNewTrade[gin("29")] = this.current[gin("29")];
-					//DONE IN THE BACKEND - affecting directly the origin of the parent
-					//  const parentTrade = this.state.table.tradeWindowRef.allRowsObj[this.current[gin("29")]];
-					//	parentTrade.current[gin("30")] = JSON.stringify(JSON.parse(parentTrade.current[gin("30")]).push(newPseudoId))
-				} else {
-					percentedNewTrade[gin("29")] = this.current[gin("00p")];
-					//DONE IN THE BACKEND
-					//	this.current[gin("30")] = JSON.stringify(JSON.parse(this.current[gin("30")]).push(newPseudoId))
-
-				}
-				//Closed
-				percentedNewTrade[gin("1")] = "true";
+				percentedNewTrade.closed_ref = this.current[gin("00p")];
+				percentedNewTrade.closed = "true";
 				//Change the values of the current trade and of the percented one following the modifiers directions
 				//Add editing to all of these properties
 				//- We create the new row here, to give the attributes which remove from the main row the 0 value on the origin, so that people are prompted to save them.
@@ -2791,8 +2654,7 @@ class Row2 {
 						this.changeValue(field.name, this.structure[field.name].target);
 					}
 				});
-
-
+				//
 			}
 			return true;
 		}
@@ -2801,6 +2663,8 @@ class Row2 {
 	 * Function to open the trade and change the style of the button
 	 */
 	open = () => {
+		//!fixme - looks like the button changes form but the events are not changed from the close button. The name stays the same
+		//TODO
 		//STYLEME
 		this.updateCurrent("false", "closed");
 		this.addEditingOnStdInput({ target: { name: "closed" } } as usableEvent);
@@ -3007,7 +2871,6 @@ class Row2 {
 		};
 		//Used to hold "excess" elements around the input itself.
 		const fieldHolder = spawnDiv() as fieldHolder;
-		fieldHolder.classList.add("field-holder");
 		fieldHolder.classList.add("field-holder", "form-group", "custom-group-width", "mb-0");
 		//Declaration of used fields in the process
 		let field!: inputField | selectField | buttonField; //* The ! serves to tell typescript that I WILL define it
@@ -3183,6 +3046,10 @@ class Row2 {
 				console.error("renderRow went wrong, table has not been assigned yet (renderRow) (closed-row)", this)
 			} else {
 				//TODO: Make the ref to the pseudoId and not the Id
+				console.log(gin("28"));
+				console.log(gin("29"));
+				console.log(gin("30"));
+				console.log(this.origin[gin("29")], this.state.table.tradeWindowRef.allRowsObj);
 				container =
 					this.state.table.tradeWindowRef.allRowsObj[this.origin[gin("29")]].state
 						.container;
@@ -3200,6 +3067,11 @@ class Row2 {
 		} else {
 			//STYLEME
 			//If the trade is not closed, then either build a new container
+			if (this.state.isLegend) {
+				mainRow.classList.add("legend-row", "row");
+			} else {
+				mainRow.classList.add("main-row", "row");
+			}
 			//THE CONTAINER IS "ABOVE" THE MAIN ROW
 			if (fresh) {
 				//Create the trade box
@@ -3223,13 +3095,6 @@ class Row2 {
 					console.error("Prepending undefined element (renderRow)", container, this)
 				}
 			}
-			if (this.state.isLegend) {
-				mainRow.classList.add("legend-row", "row");
-				if (this.state.container != "")
-					this.state.container.classList.add("legendary");
-			} else {
-				mainRow.classList.add("main-row", "row");
-			}
 		}
 		//Visible fields
 		layout.forEach((block) => {
@@ -3249,10 +3114,8 @@ class Row2 {
 			//scrollable
 			if (block.fixed) {
 				//? DOUBTFUL about how to handle the width property
-				section.style.minWidth = block.size;
 				section.classList.add("fixed-section", "col-2", "d-flex");
 			} else {
-				section.style.width = block.size;
                 section.style.overflowX = 'scroll';
 				section.classList.add("scrollable-section", "col-7", "d-flex");
 
@@ -3340,55 +3203,34 @@ class Row2 {
 
 ////////////
 // RUNTIME
-function createNewRow(startingObj: Partial<TradeObj> = new TradeObj({}), options: { separator: string, forcedProperties: Partial<TradeObj>, repeat: number } = { separator: "n", forcedProperties: {}, repeat: 1 }) {
-	const tradeArray: Array<Row2> = [];
-	for (let index = 0; index < options.repeat; index++) {
-		const tradeObj = new TradeObj(startingObj)
+function createNewRow(startingObj: Partial<TradeObj> = new TradeObj({}), separator: string = "n", forcedProperties: Partial<TradeObj> = {}) {
+	const tradeObj = new TradeObj(startingObj)
 
-		if (tradeWindow.allRows.length != 0) {
+	if (tradeWindow.allRows.length != 0) {
 
-			//Set the new id to be the same as the one of the last trade, then create a pseudoId that has format IDnINDEX where the index depends on the amount of just built trades. When they get created, they also get saved and the database sends back to them a new id
-			const currentLatest = tradeWindow.allRows[tradeWindow.allRows.length - 1];
-			const copiedId = currentLatest.origin[gin("00i")];
-			let index = 1;
-			let newPseudoId = `${copiedId}${options.separator}${index}`;
-			while (tradeWindow.allRowsObj.hasOwnProperty(newPseudoId)) {
-				index++;
-				newPseudoId = `${copiedId}${options.separator}${index}`;
-			}
-
-
-			tradeObj[gin("00p")] = newPseudoId;
-			tradeObj[gin("00i")] = copiedId;
-			console.log("EEEEE: ", newPseudoId, copiedId)
+		//Set the new id to be the same as the one of the last trade, then create a pseudoId that has format IDnINDEX where the index depends on the amount of just built trades. When they get created, they also get saved and the database sends back to them a new id
+		const currentLatest = tradeWindow.allRows[tradeWindow.allRows.length - 1];
+		const copiedId = currentLatest.origin[gin("00i")];
+		let index = 1;
+		let newPseudoId = `${copiedId}${separator}${index}`;
+		while (tradeWindow.allRowsObj.hasOwnProperty(newPseudoId)) {
+			index++;
+			newPseudoId = `${copiedId}${separator}${index}`;
 		}
 
-		for (const [key, value] of Object.entries(options.forcedProperties)) {
-			tradeObj[key as keyof TradeObj] = value;
-		}
-		//If it's not the first one, then the default "0n1" value will work fine
-		//As soon as the thing is sent, then the pseudoId will be changed to match the ID - unless another row has been gathered before it.
-		const newRow = new Row2(tradeObj);
-		tradeArray.push(newRow);
+
+		tradeObj[gin("00p")] = newPseudoId;
+		tradeObj[gin("00i")] = copiedId;
+		console.log("EEEEE: ", newPseudoId, copiedId)
 	}
 
-	tradeWindow.sortAndTableTrades(tradeArray);
-}
-
-/**
- * Builds a legend row to be sorted with the 
- * @param startingObj 
- */
-function createLegend(startingObj: Partial<TradeObj>) {
-
-
-
-	//LOGIC:
-	/*
-		Create a legend row and table it in each table. When tabled, do not add it to the all rows thingy and just have it in a separate property called "legend" or "legends".
-		Create one for each sorting and in a table have the table just mindlessly delete the legend if it already has one and receives one more. 
-		Also make the hidden feature of pagination not hide the legend itself when shit happens
-	*/
+	for (const [key, value] of Object.entries(forcedProperties)) {
+		tradeObj[key as keyof TradeObj] = value;
+	}
+	//If it's not the first one, then the default "0n1" value will work fine
+	//As soon as the thing is sent, then the pseudoId will be changed to match the ID - unless another row has been gathered before it.
+	const newRow = new Row2(tradeObj);
+	tradeWindow.sortAndTableTrades([newRow]);
 }
 
 
@@ -3475,7 +3317,7 @@ controllerBox.append(newRowButton);
 
 const editPrefsBtn = document.createElement("button");
 controllerBox.append(editPrefsBtn);
-editPrefsBtn.classList.add("new-btn", "btn", "btn-sm", "btn-primary", "h-100");
+editPrefsBtn.classList.add("new-btn", "btn", "btn-block", "btn-primary", "h-100");
 editPrefsBtn.innerHTML = "Settings";
 
 const mainEditPrefsWindow = document.querySelector(".tt-edit-user-preferences") as HTMLElement;
