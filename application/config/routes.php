@@ -76,7 +76,8 @@ Route::any('activate/(:any)/(:any)', 'users/activate/$1/$2');
 Route::any('resend-activation', 'users/resend_activation');
 Route::any('resend-activation/(:any)', 'users/resend_activation/$1');
 Route::any('forgot-password', 'users/forgot_password');
-Route::any('reset_password/(:any)/(:any)', 'users/reset_password/$1/$2');
+Route::any('reset-password', 'users/reset_password');
+Route::any('reset-password/(:any)/(:any)', 'users/reset_password/$1/$2');
 
 // Public Pages - Customer Support
 Route::any('Customer-Support', 'Public/Support/index');
@@ -123,7 +124,7 @@ Route::any('Assets', 'User/Asset_Management/index');
 Route::any('Exchange', 'Exchange/index');
 Route::any('Exchange/Market/(:any)/(:any)', 'Exchange/Overview');
 Route::any('Exchange/Market/(:any)/(:any)', 'Exchange/Overview/$1/$2');
-Route::any('Exchange-Dashboard', 'Exchange/Dashboard');
+Route::any('Management/Exchange', 'Exchange/Dashboard');
 Route::any('Exchange/Application-Manager/(:any)', 'Exchange/Application_Manager');
 Route::any('Exchange/Coin-Listing/Request', 'Exchange/Coin_Listing_Request');
 Route::any('Exchange/Coin-Listing/Asset-Information', 'Exchange/Coin_Listing_Asset_Information');
@@ -199,7 +200,6 @@ Route::any('MyMI-Gold/Purchase-Complete/(:any)', 'User/Wallets/Purchase_Complete
 Route::any('Wallets/Purchase-Coins-Transaction', 'User/Wallets/Purchase_Coins_Transaction');
 
 // User - Support
-Route::any('Support', 'Home/Support'); 
 Route::any('Support', 'User/Support'); 
 Route::any('Support/Communication-Manager', 'User/Support/Communication_Manager');
 Route::any('Support/My-Requests', 'User/Support/My_Requests');
@@ -220,7 +220,7 @@ Route::any('Knowledge-Base/Types-Of-Accounts', 'User/Knowledgebase/Types_Of_Acco
 // Management - Assets
 Route::any('Management/Assets/Application', 'Management/Assets/Applications'); 
 Route::any('Management/Assets/Application/Approve/(:any)', 'Management/Assets/Approval/$1');
-Route::any('Management/Assets/Application/Deny/(:any)', 'Management/Assets/Approval/$1');
+Route::any('Management/Assets/Application/Deny/(:any)', 'Management/Assets/Deny/$1');
 Route::any('Management/Assets/Application/Details/(:any)', 'Management/Assets/Application_Details'); 
 Route::any('Management/Assets/Application/Details/(:any)/(:any)', 'Management/Assets/Application_Details'); 
 Route::any('Management/Assets/Distribute', 'Management/Assets/Distribute'); 
@@ -242,15 +242,15 @@ Route::any('Management/Users/Orders/(:any)', 'Management/Users/Orders');
 Route::any('Admin/Add-External-Site', 'Management/Admin/Add_External_Site');
 Route::any('Content-Creator', 'Management/Web_Design/Content_Creator');
 Route::any('Test-Page', 'Management/Web_Design/Test_Page');
-Route::any('Web-Design', 'Management/Web_Design/index');
-Route::any('Web-Design/Charts', 'Management/Web_Design/Charts');
-Route::any('Web-Design/Forms', 'Management/Web_Design/Forms');
-Route::any('Web-Design/Icons', 'Management/Web_Design/Icons');
-Route::any('Web-Design/Tables', 'Management/Web_Design/Tables');
-Route::any('Web-Design/Test-Page', 'Management/Web_Design/Test_Page');
-Route::any('Web-Design/Test-Page-CB', 'Management/Web_Design/Test_Page_CB');
-Route::any('Web-Design/Test-Page-Email', 'Management/Web_Design/Test_Page_Email');
-Route::any('Web-Design/UI-Elements', 'Management/Web_Design/UI_Elements');
+Route::any('Management/Web-Design', 'Management/Web_Design/index');
+Route::any('Management/Web-Design/Charts', 'Management/Web_Design/Charts');
+Route::any('Management/Web-Design/Forms', 'Management/Web_Design/Forms');
+Route::any('Management/Web-Design/Icons', 'Management/Web_Design/Icons');
+Route::any('Management/Web-Design/Tables', 'Management/Web_Design/Tables');
+Route::any('Management/Web-Design/Test-Page', 'Management/Web_Design/Test_Page');
+Route::any('Management/Web-Design/Test-Page-CB', 'Management/Web_Design/Test_Page_CB');
+Route::any('Management/Web-Design/Test-Page-Email', 'Management/Web_Design/Test_Page_Email');
+Route::any('Management/Web-Design/UI-Elements', 'Management/Web_Design/UI_Elements');
 
 // Contexts
 Route::prefix(SITE_AREA, function () {

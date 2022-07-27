@@ -14,6 +14,9 @@ $cuID			= $_SESSION['allSessionData']['userAccount']['cuID'];
     .scrollable-section .custom-group-width {
         min-width: 100px;
     }
+    .datatable-wrap {
+        border: none !important;    
+    }
 </style>
 <?php
 //~ print_r($getOrdersJSON);

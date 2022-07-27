@@ -128,7 +128,7 @@ $formCustomText			= $this->config->item('form_custom_text');
                     </div>  
                     <?php
                         if ($this->uri->segment(1) === 'Customer-Support') {
-                            echo '<input type="hidden" class="g-recaptcha-response" name="g-recaptcha-response">'
+                            echo '<input type="hidden" class="g-recaptcha-response" name="g-recaptcha-response">';
                         }
                     ?>
                     <div class="control-group">
