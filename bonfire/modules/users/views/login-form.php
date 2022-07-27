@@ -1,3 +1,6 @@
+<?php
+$beta               = $this->config->item('beta'); 
+?>                   
 <h1 class="mbr-section-title mbr-bold pt-3 mb-3 pb-3 mbr-fonts-style card-title align-center display-5">LOGIN</h1>
 
 <?php echo Template::message(); ?>
@@ -56,7 +59,7 @@
 			<?php echo lang('bf_login_activate_title'); ?><br />
 			<?php
             $activate_str = str_replace('[ACCOUNT_ACTIVATE_URL]', anchor('/activate', lang('bf_activate')), lang('bf_login_activate_email'));
-            $activate_str = str_replace('[ACTIVATE_RESEND_URL]', anchor('/resend_activation', lang('bf_activate_resend')), $activate_str);
+            $activate_str = str_replace('[ACTIVATE_RESEND_URL]', anchor('/resend-activation', lang('bf_activate_resend')), $activate_str);
             echo $activate_str; ?>
 		</p>
 <?php endif; ?>
@@ -65,7 +68,13 @@
 	<?php // if ( $site_open ) :?>
 		<?php //echo anchor(REGISTER_URL, lang('us_sign_up'));?>
 	<?php //endif;?>
-	<?php echo anchor('/Memberships', lang('us_sign_up')); ?>
+	<?php
+    if ($beta === 0) { 
+        echo anchor('/Free/register', lang('us_sign_up')); 
+    } else {
+        echo anchor('/Beta/register', lang('us_sign_up')); 
+    }
+    ?>
 
 	<br/><?php echo anchor('/forgot-password', lang('us_forgot_your_password')); ?>
 </p>
