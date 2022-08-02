@@ -63,6 +63,8 @@ Route::any('Free/register', 'users/register'); // Completed
 Route::any('free/register', 'users/register'); // Completed
 Route::any('Beta/register', 'users/register'); // Completed
 Route::any('beta/register', 'users/register'); // Completed
+Route::any('Partner/register', 'users/register'); // Completed
+Route::any('partner/register', 'users/register'); // Completed
 Route::any('Verify-Email/(:any)', 'users/Verify_Email/$1'); // Completed
 Route::any('Account-Information/(:any)', 'users/Account_Information'); // Completed
 Route::any('Registration-Successful', 'users/Successful_Registration');
@@ -99,6 +101,9 @@ Route::any('Investor/register', 'users/register');
 Route::any('Investor/Verify-Email/(:any)', 'users/Verify_Email/$1');
 Route::any('Investor/register/(:any)', 'users/investor_register');
 Route::any('Investor/Activate/(:any)', 'Public/Invest/Activate');
+
+// Public Pages - Rel
+Route::any('Releases/(:any)/(:any)', 'Public/Releases/Version_Template');
 
 // Public Pages - Search
 Route::any('ETF/(:any)/(:any)', 'User/ETF/Template');
@@ -180,6 +185,7 @@ Route::any('Deposit-Funds', 'User/Wallets/Deposit_Funds');
 Route::any('Deposit-Funds/(:any)', 'User/Wallets/Deposit_Funds');
 Route::any('Wallets/Confirm-Deposit/(:any)', 'User/Wallets/Confirm_Deposit');
 Route::any('Wallets/Deposit-Complete/(:any)', 'User/Wallets/Deposit_Complete/$1');
+Route::any('Wallets/Track-Deposit/(:any)', 'User/Wallets/Track_Deposit'); 
 Route::any('Add-Wallet-Deposit-Fetch/(:any)', 'User/Wallets/Add_Deposit_Fetch');
 Route::any('Withdraw-Funds', 'User/Wallets/Withdraw_Funds');
 Route::any('Withdraw-Funds/(:any)', 'User/Wallets/Withdraw_Funds');

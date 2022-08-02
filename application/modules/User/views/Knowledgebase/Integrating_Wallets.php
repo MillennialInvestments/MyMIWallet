@@ -33,7 +33,7 @@
                                         <h5 class="nk-block-title fw-normal">Overview</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
-                                                This article will introduce you to our Wallet Integration How-To's &amp; Extended Guidance.<br> 
+                                                This article will introduce you to our Wallet Integration How-To &amp; Extended Guidance.<br> 
                                                 This article will cover a majority of what our Wallet Integrations include, but may need to provide more in-depth information regarding certain subject matters.
                                             </p>
                                         </div>
@@ -72,9 +72,9 @@
                                         <h5 class="nk-block-title fw-normal pb-3">What are Crypto Wallets?</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
-                                                To most, a <strong>Crypto Wallet</strong> allows the user to store private keys in order to keep your crypto safe and accessible while allowing the user to send, receive, and even spend crypto. 
+                                                To most, a <strong>Crypto Wallet</strong> allows the user to store private keys to keep your crypto safe and accessible while allowing the user to send, receive, and even spend crypto. 
                                                 <a href="#">MyMI Wallets</a> provide that same capability, but are essentially extended further than your typical "crypto wallet". 
-                                                MyMI Wallets give you the ability to also Create/Sell your Crypto Assets, include Investment Accounting & Analytical Resources, and more!                                       
+                                                MyMI Wallets give you the ability to also Create/Sell your Crypto Assets, including Investment Accounting & Analytical Resources, and more!                                       
                                             </p>
                                         </div>
                                     </div>
@@ -93,9 +93,9 @@
                                         <h5 class="nk-block-title fw-normal pb-3">How Do MyMI Wallets Work?</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
-                                                MyMI Wallets were designed to be a flexible wallet that accepts both Fiat & Cryptocurrency, while giving you more control of how you utilize MyMI Wallet and what you do with your wallet. 
+                                                MyMI Wallets were designed to be a flexible wallet that accepts both Fiat & Cryptocurrency while giving you more control of how you utilize MyMI Wallet and what you do with your wallet. 
                                                 When you purchase Assets on our MyMI Exchange, these Assets will be secured in your MyMI Wallet. 
-                                                Whenever you create Assets to be placed on the Exchange, you will be giving a designated wallet to secure those assets in a dedicated wallet for protection in case you ever lose your Private/Public Keys to one of your MyMI Wallets. 
+                                                Whenever you create Assets to be placed on the Exchange, you will be given a designated wallet to secure those assets in a dedicated wallet for protection in case you ever lose your Private/Public Keys to one of your MyMI Wallets. 
                                             </p>
                                         </div>
                                     </div>
@@ -139,11 +139,11 @@
                                         <h5 class="nk-block-title fw-normal pb-3">Premium Brokerage Integrations</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
-                                                MyMI Wallets also come with a <a href="">Premium Brokerage Integration Feature</a> that allows our Investors to connect their financial investment accounts to. 
+                                                MyMI Wallets also come with a <a href="">Premium Brokerage Integration Feature</a> that allows our Investors to connect their financial investment accounts. 
                                                 This is where the magic happens! 
                                             </p>
                                             <p class="lead fs-14px">
-                                                With our Premium Brokerage Integration, you gain the ability to access our Deep Analytical Resources &amp; Tools to apply Backtesting/Forecasting to your current porfolio and historic data. 
+                                                With our Premium Brokerage Integration, you gain the ability to access our Deep Analytical Resources &amp; Tools to apply Backtesting/Forecasting to your current portfolio and historic data. 
                                                 To read more on our Premium Brokerage Integration, simply click the link below: 
                                                 <ul class="list-group list-group-flush">
                                                     <li class="list-group-item"><a href="<?php // echo site_url('Support/Check-KYC-Verification'); ?>">Premium Brokerage Integration</a></li>

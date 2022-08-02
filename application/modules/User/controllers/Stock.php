@@ -60,7 +60,7 @@ class Stock extends Admin_Controller
     public function index()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         $this->load->library('users/auth');
         $this->set_current_user();
         
@@ -72,7 +72,7 @@ class Stock extends Admin_Controller
     public function Template()
     {
         $pageType = 'Stock';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         $this->load->library('users/auth');
         $this->set_current_user();
         //~ $this->output->cache(1);

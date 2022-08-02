@@ -33,6 +33,12 @@ if ($this->uri->uri_string() === 'Wallet-Selection/Fiat') {
 } elseif ($this->uri->uri_string() === 'Wallet-Selection/Digital') {
     $feature                                = 'Premium Crypto Wallet';
     $redirect_url                           = 'Purchase-Wallet/Digital';
+} elseif ($this->uri->uri_string() === 'Wallets/Link-Account/Brokerage/Fiat') {
+    $feature                                = 'Premium Fiat Wallet';
+    $redirect_url                           = 'Purchase-Wallet/Fiat';
+} elseif ($this->uri->uri_string() === 'Wallets/Link-Account/Brokerage/Digital ') {
+    $feature                                = 'Premium Fiat Wallet';
+    $redirect_url                           = 'Purchase-Wallet/Fiat';
 }
 ?>  
 <input class="<?php e($controlInput); ?>" type="hidden" id="redirect_url" name="redirect_url" value="<?php echo set_value('redirect_url', isset($user) ? $user->redirect_url : $redirect_url); ?>" /> 

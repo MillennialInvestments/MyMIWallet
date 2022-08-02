@@ -31,6 +31,6 @@ $pageURID	= $this->uri->segment(4);
 <link id="skin-default" rel="stylesheet" href="<?php //echo base_url('assets/css/theme.css?ver=3.0.2'); ?>"> -->
 <?php
 if ($pageURIA === 'Trade-Tracker') {
-    // echo '<link rel="stylesheet" href="' . base_url('assets/css/Trade_Tracker/style.css') . '">';
+    echo '<link rel="stylesheet" href="' . base_url('assets/css/Trade_Tracker/style.css') . '">';
 }
 ?>

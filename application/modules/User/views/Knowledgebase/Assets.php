@@ -33,8 +33,8 @@
                                         <h5 class="nk-block-title fw-normal">Overview</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
-                                                This article will introduce you to our Account & Billing Polica.<br> 
-                                                This article will cover a majority of what our Trade Tracker is designed to do by default, but we provide links to more in-depth information regarding certain functionality and tools.
+                                                This article will introduce you to our MyMI Assets.<br> 
+                                                This article will cover a majority of what our MyMI Assets are designed to do by default, but we provide links to more in-depth information regarding certain functionality and tools.
                                             </p>
                                         </div>
                                     </div>
@@ -73,12 +73,12 @@
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">    
                                                 By definition, a <strong>Digital Asset</strong> is classified as anything that is stored digitally and is uniquely identifiable that organizations can use to realize value. 
-                                                Examples of digital assets include documents, audio, videos, logos, slide presentations, spreadsheets and websites. 
+                                                Examples of digital assets include documents, audio, videos, logos, slide presentations, spreadsheets, and websites. 
                                                 While becoming more popular throughout the financial markets due to having the ability to disperse ownership of those digital assets.                              
                                             </p>
                                             <p class="lead fs-14px">    
-                                                Perfect example would be <strong>NFTs</strong> for instance. Cryptographic assets have been stored on a blockchain with unique ID Codes and metadata compiled with them that distinguisable between one another. 
-                                                NFTs cannot be traded or exchanged at equivalency, differing from Fungible Tokens like cryptocurrencies which has the ability to be identical and serve as a medium for commercial transactions.
+                                                A perfect example would be <strong>NFTs</strong> for instance. Cryptographic assets have been stored on a blockchain with unique ID Codes and metadata compiled with them that are distinguishable from one another. 
+                                                NFTs cannot be traded or exchanged at equivalency, differing from Fungible Tokens like cryptocurrencies which can be identical and serve as a medium for commercial transactions.
                                             </p>
                                         </div>
                                     </div>
@@ -117,9 +117,9 @@
                                         <h5 class="nk-block-title fw-normal pb-3">How Do You Own MyMI Assets</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
-                                                In order to own assets, you can purchase MyMI Assets from the MyMI Exchange and Marketplace when offered by MyMI Creators. 
+                                                To own/purchase assets, you can purchase MyMI Assets from the MyMI Exchange and Marketplace when offered by MyMI Creators. 
                                                 You can simply visit the MyMI Marketplace to outright purchase the Assets as long as those Assets are still available for purchase. 
-                                                If there are no longer any available assets to be purchased because the initial release of coins were limited to purchase and that purchase limit has been reached, 
+                                                If there are no longer any available assets to be purchased because the initial release of coins was limited to purchase and that purchase limit has been reached, 
                                                 you can alternatively purchase those Assets on the MyMI Exchange from other Asset Holders.
                                             </p>
                                         </div>

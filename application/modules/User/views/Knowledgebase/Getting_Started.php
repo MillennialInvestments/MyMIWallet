@@ -348,12 +348,12 @@ if ($beta === 0) {
                                             <p class="lead fs-14px">
                                                 Backtesting allows you to simulate trading strategies using historical trade data to generate results. 
                                                 With these results, you can analyze risk and profitability before risking any actual capital. 
-                                                Well-conducted test that are yielding positive results indicates that the tested strategy is logial and has a higher chance of profitability when utilized with real money.
+                                                Well-conducted test that are yielding positive results indicates that the tested strategy is logical and has a higher chance of profitability when utilized with real money.
                                             </p>
                                             <p class="lead fs-14px">
                                                 Trend Analysis & Forecasting can be utilized to provide additional confirmations and indications that a potential trade fits a potential investment strategy. 
                                                 Our Trade Tracker allows Retail Investments and Fund Managers alike to track <a href="#"><strong>Customizable Indicators</strong></a> in the form of a Spreadsheet that can be built to track everything you need. 
-                                                Add that with some trend analysis and fundamentals, and you can have all the accessible information at your finger-tips to invest like a professional!
+                                                Add that with some trend analysis and fundamentals, and you can have all the accessible information at your fingertips to invest like a professional!
                                             </p>
                                             <!-- <p class="lead fs-14px">
                                                 <ul class="list-group list-group-flush">

@@ -28,7 +28,7 @@
             <div class="hover-bg-primary text-center position-relative px-4 py-5 rounded-lg shadow"> 
                 <i class="icon icon-lg ni ni-wallet img-fluid"></i>
                 <h5 class="pt-5 pb-3 text-capitalize card-title">Billing / Payments</h5>
-                <p class="mb-4">Assistance on managing your Account Billing & Payment Scheduling. Add Bank Accounts, and schedule your monthly payments.</p> 
+                <p class="mb-4">Assistance on managing your Account Billing & Payment Scheduling. Add Bank Accounts, and schedule your monthly payments.</p><br> 
                 <a class="btn btn-outline-primary" href="<?php echo site_url('Knowledge-Base/Account-And-Billing#how-is-mymi-gold-valued'); ?>" data-abc="true">Read More</a>
             </div>
         </div>
@@ -36,7 +36,7 @@
             <div class="hover-bg-primary text-center position-relative px-4 py-5 rounded-lg shadow"> 
                 <i class="icon icon-lg ni ni-reports-alt img-fluid"></i>
                 <h5 class="pt-5 pb-3 text-capitalize card-title">Payment History</h5>
-                <p class="mb-4">View your payment history and handle any disputes. View/export your transaction data and history.</p> 
+                <p class="mb-4">View your payment history and handle any disputes. View/export your transaction data and history.</p><br><br>
                 <a class="btn btn-outline-primary" href="<?php echo site_url('Knowledge-Base/Account-And-Billing#how-is-mymi-gold-valued'); ?>" data-abc="true">Read More</a>
             </div>
         </div>

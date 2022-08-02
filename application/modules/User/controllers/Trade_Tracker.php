@@ -57,7 +57,7 @@ class Trade_Tracker extends Admin_Controller
     public function index()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -69,7 +69,7 @@ class Trade_Tracker extends Admin_Controller
     public function Log()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -81,7 +81,7 @@ class Trade_Tracker extends Admin_Controller
     public function Overview()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -93,7 +93,7 @@ class Trade_Tracker extends Admin_Controller
     public function Holdings_Manager()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -103,7 +103,7 @@ class Trade_Tracker extends Admin_Controller
     public function Trade_Manager()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -113,7 +113,7 @@ class Trade_Tracker extends Admin_Controller
     public function Trade_Tracker_Editor()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         

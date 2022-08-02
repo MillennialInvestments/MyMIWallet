@@ -58,7 +58,7 @@ class Exchange extends CI_Controller
     public function Order_Event_Manager($market_pair, $market, $lastOrderID)
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         $this->load->view('Public/Exchange/Order_Event_Manager');
     }
     /* end ./application/controllers/home.php */

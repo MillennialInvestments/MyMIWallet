@@ -81,6 +81,8 @@ interface fieldDirective {
 class TradeObj {
 	//0
 	legend: string;
+	//s
+	saved_sorting: string;
 	//00i
 	id: string;
 	//00p
@@ -165,6 +167,7 @@ class TradeObj {
 	delete: string;
 	constructor(row: Partial<TradeObj>) {
 		this.legend = row.legend || "false";
+		this.saved_sorting = row.saved_sorting || "0";
 		this.id = row.id || "0";
 		this.pseudo_id = row.pseudo_id || row.id || "0n1";
 		this.order_id = row.order_id || "0";
@@ -213,23 +216,60 @@ class TradeObj {
 
 type GraphicsDirective = Array<string>
 const graphicsLibrary: { [key: string]: GraphicsDirective } = {
+	h3: [],
+	description: [],
+	input: ["form-control"],
+	select: ["form-control"],
+	div: [],
+	button: ["btn", "btn-sm", "h-100", "btn"],
+	openedBtn: ["btn", "btn-light", "h-100"],
+	closedBtn: ["btn", "btn-warning", "h-100"],
+	cancelBtn: ["btn-primary"],
+	saveBtn: ["btn-secondary"],
+	deleteBtn: ["btn-danger"],
 	darkener: ["tt-darkener"],
 	tradeTable: ["trade-table"],
 	tableBottomController: ["table-bottom-controller"],
-	pageMoverHolder: ["page-mover-holder"]
+	pageMoverHolder: ["page-mover-holder"],
+	tradeWindow: ["tt-trade-window"],
+	expander: ["tt-expander", "hidden"],
+	expanderEmptyBlock: ["empty-block"],
+	expanderTagSeparator: ["tag-separator"],
+	expanderClickableValue: ["clickable-value"],
+	mainBtn: ["btn-primary", "mr-3"],
+	spawnerButton: ["spawner-new-button", "btn-primary", "mr-3"],
+	tradeContainer: ["trade-container"],
+	disabledRowButton: ["disabled-btn"],
+	promptBox: ["tt-prompt-box"],
+	fieldHolder: ["field-holder", "form-group", "custom-group-width", "mb-0"],
+	holderEditing: ["editing"],
+	legendContainer: ["legendary"],
+	closedRow: ["closed-row"],
+	legendRow: ["legend-row"],
+	mainRow: ["main-row"],
+	fixedSection: ["fixed-section"],
+	scrollableSection: ["scrollable-section"],
+	controllerBox: ["tt-controller-box"],
+	alert: ["tt-alert"]
 }
 //Merged interfacte
 interface HTMLElement {
 	/**
 	  * htmlElement specific function that Adds a Graphical Directive to an html element
 	  */
-	agd(classSet: Array<keyof typeof graphicsLibrary>): void
+	agd(...classSet: Array<keyof typeof graphicsLibrary>): void,
+	rgd(...classSet: Array<keyof typeof graphicsLibrary>): void,
 }
 
 
-HTMLElement.prototype.agd = function (classSet: Array<keyof typeof graphicsLibrary>) {
+HTMLElement.prototype.agd = function (...classSet: Array<keyof typeof graphicsLibrary>) {
 	classSet.forEach(index => {
 		this.classList.add(...graphicsLibrary[index]);
+	})
+}
+HTMLElement.prototype.rgd = function (...classSet: Array<keyof typeof graphicsLibrary>) {
+	classSet.forEach(index => {
+		this.classList.remove(...graphicsLibrary[index]);
 	})
 }
 
@@ -362,7 +402,7 @@ if (walletElement === null || walletElement.textContent === null) {
  */
 function spawnInput() {
 	const res: HeIe = document.createElement("input");
-    res.classList.add("form-control");
+	res.agd("input");
 	res.memory = {};
 	return res;
 }
@@ -372,12 +412,13 @@ function spawnInput() {
  */
 function spawnSelect() {
 	const res: HeSe = document.createElement("select");
-    res.classList.add("form-control");
+	res.agd("select");
 	res.memory = {};
 	return res;
 }
 function spawnDiv() {
 	const res: HeDe = document.createElement("div");
+	res.agd("div");
 	res.memory = {} as { field: any, fieldHolder: any };
 	return res;
 }
@@ -387,7 +428,7 @@ function spawnDiv() {
  */
 function spawnBtn() {
 	const res: HeBe = document.createElement("button");
-    res.classList.add("btn", "btn-block", "h-100"); 
+	res.agd("button");
 	res.memory = {};
 	return res;
 }
@@ -456,7 +497,7 @@ function zDarkner(index: string, remove: boolean = false) {
 		if (darkenedScreenElement == null) {
 			const darkener = document.createElement("div");
 			document.body.append(darkener);
-			darkener.agd(["darkener"]);
+			darkener.agd("darkener");
 			darkenedScreenElement = darkener;
 			//Style it
 			darkener.style.opacity = "0.35";
@@ -1557,9 +1598,8 @@ class Table {
 
 	renderTable() {
 		//STYLEME
-		const table = document.createElement("table");
-		table.agd(["tradeTable"]);
-        table.classList.add("datatable-init-export", "nowrap", "table", "dataTable", "no-footer", "dtr-inline");
+		const table = document.createElement("div");
+		table.agd("tradeTable");
 		this.parent.append(table);
 		this.target = table;
 		this.renderController();
@@ -1570,19 +1610,19 @@ class Table {
 	renderController() {
 		const controllerBox = document.createElement("div");
 		this.controllerBox.box = controllerBox;
-		controllerBox.agd(["tableBottomController"]);
+		controllerBox.agd("tableBottomController");
 		if (this.target != "") {
 			////////////
 			//PAGE MOVER
 			const holder = document.createElement("div");
 			this.target.append(controllerBox);
-			holder.agd(["pageMoverHolder"])
+			holder.agd("pageMoverHolder")
 
-			const moveForward = document.createElement("button");
+			const moveForward = spawnBtn();
 			moveForward.innerHTML = "&rarr;";
-			const moveBackward = document.createElement("button");
+			const moveBackward = spawnBtn();
 			moveBackward.innerHTML = "&larr;";
-			const currentPage = document.createElement("input");
+			const currentPage = spawnInput();
 			currentPage.value = this.currentPage.toLocaleString();
 			holder.append(moveBackward, currentPage, moveForward);
 
@@ -1642,6 +1682,7 @@ class Table {
 	}
 	hideTable() {
 		if (!!this.target) {
+			//??? this.classList.add("hideThis");
 			this.target.style.display = "none";
 		}
 	}
@@ -1880,7 +1921,7 @@ class TradeWindow {
 		// {tag: "equity", logical: "equal"}
 		this.refSortingTags = [];
 		//Parent styling
-		holder.classList.add("tt-trade-window");
+		holder.agd("tradeWindow");
 	}
 	/**
 	 * Fractions the tradelist into tables based on the selected sorting
@@ -1979,8 +2020,8 @@ class Expander {
 		this.currentDomTarget = newDomTarget;
 		this.activeRow = activeRow;
 		this.element = document.createElement("div");
-		this.element.classList.add("tt-expander");
-		this.element.classList.add("hidden");
+		//Also hiding it at spawn
+		this.element.agd("expander");
 		this.state = {
 			visible: false,
 			position: {
@@ -2043,7 +2084,7 @@ class Expander {
 			if (content.length == 0) {
 				empty = spawnDiv();
 				empty.innerHTML = "No results";
-				empty.classList.add("empty-block");
+				empty.agd("expanderEmptyBlock");
 
 				this.element.append(empty);
 			} else {
@@ -2069,10 +2110,11 @@ class Expander {
 						tagSeparator.innerHTML = orderedListByTag[index].tag;
 						this.element.append(tagSeparator);
 					}
-					tagSeparator?.classList.add("tag-separator");
+					tagSeparator?.agd("expanderTagSeparator");
 
 					clickableValue = spawnDiv();
-					clickableValue.classList.add("clickable-value");
+					console.log(clickableValue);
+					clickableValue.agd("expanderClickableValue")
 					this.element.append(clickableValue);
 					//Give it activation properties
 					clickableValue.innerHTML = orderedListByTag[index].value;
@@ -2097,7 +2139,7 @@ class Expander {
 
 			if (content.length == 0) {
 				empty.innerHTML = "No options available";
-				empty.classList.add("empty-block");
+				empty.agd("expanderEmptyBlock")
 				this.element.append(empty);
 				console.error("No directive given when generating moreOptions expander")
 			}
@@ -2128,17 +2170,17 @@ class Expander {
 				}
 				if (selectedButtons.length == 0) {
 					empty.innerHTML = "No options available";
-					empty.classList.add("empty-block");
+					empty.agd("expanderEmptyBlock")
 					this.element.append(empty);
 					console.error("Directive given, but no results from userPrefs");
 				} else {
 					selectedButtons.forEach(button => {
 						const newBtn = spawnBtn();
-						newBtn.classList.add("new-button");
+						newBtn.agd("spawnerButton");
 						if (button.attachedNumber == "0") {
 							newBtn.classList.add("quick-spawn");
 						} else if (button.attachedNumber == "1") {
-							newBtn.classList.add("main");
+							newBtn.classList.add("spawner-main");
 						}
 						this.element.append(newBtn);
 						newBtn.innerHTML = button.text;
@@ -2213,7 +2255,7 @@ class Row2 {
 	setEditing = (fieldName: string) => {
 		this.structure[fieldName].editing = true;
 		//Adding to the fieldholder for buttons
-		this.structure[fieldName].target.memory.fieldHolder.classList.add("editing");
+		this.structure[fieldName].target.memory.fieldHolder.agd("holderEditing");
 		this.state.editing = true;
 		this.state.editingList.push(fieldName);
 	};
@@ -2224,7 +2266,8 @@ class Row2 {
 	 */
 	removeEditing = (fieldName: string) => {
 		this.structure[fieldName].editing = false;
-		this.structure[fieldName].target.memory.fieldHolder.classList.remove("editing");
+		this.structure[fieldName].target.memory.fieldHolder.rgd("holderEditing");
+
 		this.state.editingList = this.state.editingList.filter(
 			(item) => item !== fieldName
 		);
@@ -2290,9 +2333,9 @@ class Row2 {
 	 * @returns {domElement} Returns the container object
 	 */
 	createContainer() {
-		const container = document.createElement("tbody");
+		const container = document.createElement("div");
 		this.state.container = container;
-		container.classList.add("trade-container");
+		container.agd("tradeContainer");
 		return container;
 	}
 	/**
@@ -2391,8 +2434,8 @@ class Row2 {
 					d_saveChanges,
 					true
 				)
-				this.structure[gin("b2")].target.classList.remove("disabled-btn");
-				this.structure[gin("b1")].target.classList.remove("disabled-btn");
+				this.structure[gin("b2")].target.rgd("disabledRowButton");
+				this.structure[gin("b1")].target.rgd("disabledRowButton");
 				this.structure[gin("b2")].hasCancelListener = true;
 			}
 			//Make it clickable
@@ -2407,8 +2450,8 @@ class Row2 {
 			this.structure[gin("b2")].target = noEventCloseField;
 			this.structure[gin("b1")].target = noEventSaveField;
 			//TODO: FINISH SAVE CANCEL PARALLELs
-			this.structure[gin("b2")].target.classList.add("disabled-btn");
-			this.structure[gin("b1")].target.classList.add("disabled-btn");
+			this.structure[gin("b2")].target.agd("disabledRowButton");
+			this.structure[gin("b1")].target.agd("disabledRowButton");
 			//To prevent multiple listening. (Only checked on the cancel button)
 			this.structure[gin("b2")].hasCancelListener = false;
 			//Remove clickability
@@ -2495,30 +2538,32 @@ class Row2 {
 
 		//STYLEME
 		//This is the container for everything
-		const promptBox = document.createElement("div");
+		const promptBox = spawnDiv();
 		promptBox.dataset.visible = "true";
-		promptBox.classList.add("tt-prompt-box");
+		promptBox.agd("promptBox");
 		promptBox.style.zIndex = "11";
 		//This is the title of the box
 		const promptTitle = document.createElement("h3");
+		promptTitle.agd("h3");
 		//This is the description of what the heck you are doing
-		const promptDesc = document.createElement("div");
+		const promptDesc = spawnDiv();
+		promptDesc.agd("description");
 		//This box is used to manually send the amout - BIG ON DESKTOP, SMALL ON MOBILE
-		const inputBox = document.createElement("input");
+		const inputBox = spawnInput();
 		inputBox.setAttribute("type", "number");
 		inputBox.setAttribute("max", "100");
 		inputBox.setAttribute("min", "0");
 
 		//These buttons are used to autofill the element - BIG ON MOBILE SMALL ON DESKTOP
-		const inputButtonArray = document.createElement("div");
+		const inputButtonArray = spawnDiv();
 		//Add a close button
-		const closeBtn = document.createElement("button");
+		const closeBtn = spawnBtn();
 		closeBtn.innerHTML = "Close this";
 		//Spawn the buttons that the user wanted to have as preference
 		for (const value of Object.values(
 			userPrefs.promptDefaults.closePrompt
 		)) {
-			const button = document.createElement("button");
+			const button = spawnBtn();
 			button.innerHTML = value.text;
 			//Onclick edit the input field
 			button.onclick = function () {
@@ -2531,12 +2576,12 @@ class Row2 {
 		}
 
 		// If on mobile we need an ok button, but the event will be fired also on Enter click
-		const enterButton = document.createElement("button");
+		const enterButton = spawnBtn();
 		enterButton.innerHTML = "Enter";
 		//Where you show errors when they arise
-		const errorBox = document.createElement("div");
+		const errorBox = spawnDiv();
 		//Used to show basic information, like the key to press
-		const infoBox = document.createElement("div");
+		const infoBox = spawnDiv();
 
 		//Fill the thingy
 		promptBox.append(
@@ -2552,14 +2597,9 @@ class Row2 {
 		document.body.append(promptBox);
 		//FOcus on the field
 		inputBox.focus();
-		//Block the scrolling
-		blockBody();
-		//Darken the background - we pass an index below the promptbox one. Here TEN
-		zDarkner("10");
+
 		//Bind the meaning to the closebutton of the box
 		closeBtn.onclick = function () {
-			blockBody(false);
-			zDarkner("0", true);
 			delClosePrompt();
 		};
 		//Now we add the listeners for OK or enter key that run the close function
@@ -2721,11 +2761,14 @@ class Row2 {
 			//Add editing with "faking" of the object
 			this.addEditingOnStdInput({ target: { name: "closed" } } as usableEvent);
 			//GRAPHICAL CHANGES
-			//STYLEME
 			this.structure[gin("1")].target.innerHTML = "Open";
-            this.structure[gin("1")].target.classList.add("btn", "btn-success", "h-100");
 			// Add the open event listener
 			this.structure[gin("1")].target.onclick = this.open;
+
+			this.structure[gin("1")].target.rgd("button");
+			this.structure[gin("1")].target.rgd("openedBtn");
+			this.structure[gin("1")].target.agd("closedBtn");
+
 		} else {
 			//Edit the fields, create a "complete" partial close, then add a SAVE PROMPT to it
 			const availableFields = availableFieldsGen();
@@ -2807,6 +2850,9 @@ class Row2 {
 		this.structure[gin("1")].target.innerHTML = "Close";
 		//Re-add the close event listener
 		this.structure[gin("1")].target.onclick = this.closePrompt;
+
+		this.structure[gin("1")].target.rgd("closedBtn");
+		this.structure[gin("1")].target.agd("openedBtn");
 	};
 	/**
 	 * * Function to spawn an INPUT field
@@ -3007,8 +3053,7 @@ class Row2 {
 		};
 		//Used to hold "excess" elements around the input itself.
 		const fieldHolder = spawnDiv() as fieldHolder;
-		fieldHolder.classList.add("field-holder");
-		fieldHolder.classList.add("field-holder", "form-group", "custom-group-width", "mb-0");
+		fieldHolder.agd("fieldHolder");
 		//Declaration of used fields in the process
 		let field!: inputField | selectField | buttonField; //* The ! serves to tell typescript that I WILL define it
 		//Put the thing into a variable for easier access
@@ -3024,25 +3069,20 @@ class Row2 {
 				switch (dirProperties.subtype) {
 					case "text":
 						field.setAttribute("type", "text");
-                        field.classList.add("form-control");
 						break;
 					case "locked":
 						field.setAttribute("type", "text");
 						field.setAttribute("disabled", "true");
-                        field.classList.add("form-control");
 						break;
 					case "number":
 						field.setAttribute("type", "number");
 						field.setAttribute("placeholder", dirProperties.placeholder);
-                        field.classList.add("form-control");
 						break;
 					case "date":
 						field.setAttribute("type", "date");
-                        field.classList.add("form-control");
 						break;
 					case "time":
 						field.setAttribute("type", "time");
-                        field.classList.add("form-control");
 						break;
 				}
 				field.addEventListener("input", updateOnStdInput as () => void);
@@ -3091,22 +3131,22 @@ class Row2 {
 				break;
 			case "closed":
 				field = spawnBtn() as buttonField;
+				field.rgd("button");
 				//Make the button into a "closed" string that you cvan click on to reopen the trade.
 				if (this.getValue(gin("1")).value == "true") {
 					field.innerHTML = "Open";
-                    field.classList.add("btn", "btn-light", "h-100");
 					field.onclick = this.open;
+					field.agd("closedBtn");
 				} else {
 					field.innerHTML = "Close";
-                    field.classList.add("btn", "btn-warning", "h-100");
 					//ADD EVENT LISTENER
 					field.onclick = this.closePrompt;
+					field.agd("openedBtn");
 				}
 				fieldHolder.append(field);
 				break;
 			case "button":
 				field = spawnBtn() as buttonField;
-                field.classList.add("btn", "btn-sm"); 
 				//Set the basic text to the default one provided in the dir object - can be changed later
 				field.innerHTML = dirProperties.default;
 				//Add it to its own holder
@@ -3115,16 +3155,14 @@ class Row2 {
 					//The "Default disabling" of the cancel and savebutton is ran after the fields are created in the renderrow FuNCTION
 					//* REMEMBER TO RUN IT IF THE ROW IS GENERATED IN ANOTHER WAY.
 					case "cancel":
-                        field.classList.add("btn-primary");
+						field.agd("cancelBtn");
 						break;
 					case "save":
-                        field.classList.add("btn-secondary");
+						field.agd("saveBtn");
 						break;
 					case "delete":
-                        field.classList.add("btn-danger");
+						field.agd("deleteBtn");
 						field.onclick = this.deletePrompt
-
-
 						break;
 				}
 				fieldHolder.memory.field = field;
@@ -3138,7 +3176,6 @@ class Row2 {
 				//STYLEME
 				field.value = propInfo.value;
 				field.setAttribute("placeholder", dirProperties.placeholder);
-                field.classList.add("form-control"); 
 				fieldHolder.append(field);
 				break;
 		}
@@ -3167,7 +3204,7 @@ class Row2 {
 		const layout = this.getLayout();
 		//Main row;
 		//USE: "MULTIPLE ROWS" in a single trade or expanded views
-		const mainRow = document.createElement("tr");
+		const mainRow = document.createElement("div");
 		this.state.mainRow = mainRow;
 		//If it's an historical trade, do this
 		// Container
@@ -3175,7 +3212,7 @@ class Row2 {
 		let container;
 		if (this.origin[gin("29")] != "-1") {
 			//STYLEME
-			mainRow.classList.add("closed-row", "row");
+			mainRow.agd("closedRow");
 			//Get the container from the origin trade by using its closedRef
 			//HIGH UP- not stuck to the current row, may find other ones if needed
 			//Possible feature to change
@@ -3224,21 +3261,20 @@ class Row2 {
 				}
 			}
 			if (this.state.isLegend) {
-				mainRow.classList.add("legend-row", "row");
+				mainRow.agd("legendRow");
 				if (this.state.container != "")
-					this.state.container.classList.add("legendary");
+					this.state.container.agd("legendContainer");
 			} else {
-				mainRow.classList.add("main-row", "row");
+				mainRow.agd("mainRow");
 			}
 		}
 		//Visible fields
 		layout.forEach((block) => {
-			const section = document.createElement("td");
+			const section = document.createElement("div");
 			//STYLEME
 			//width
 			if (block.size == "0") {
-				// section.style.display = "none";
-                section.classList.add("hideThis"); 
+				section.style.display = "none";
 				//Generate the list of not visible fields
 				block.elements = Object.keys(availableFields).filter(
 					//Only use elements which are not used in any other field
@@ -3250,12 +3286,10 @@ class Row2 {
 			if (block.fixed) {
 				//? DOUBTFUL about how to handle the width property
 				section.style.minWidth = block.size;
-				section.classList.add("fixed-section", "col-2", "d-flex");
+				section.agd("fixedSection");
 			} else {
 				section.style.width = block.size;
-                section.style.overflowX = 'scroll';
-				section.classList.add("scrollable-section", "col-7", "d-flex");
-
+				section.agd("scrollableSection");
 				//Sync Scrolling
 				if (this.state.table != "" && this.state.table.target != "") {
 					//Create an hashed event for sections with the same properties
@@ -3415,8 +3449,8 @@ tradesList.forEach(trade => {
 // Controller Section //
 ////////////////////////
 
-const controllerBox = document.createElement("div");
-controllerBox.classList.add("tt-controller-box");
+const controllerBox = spawnDiv();
+controllerBox.agd("controllerBox")
 tradeWindowTarget?.prepend(controllerBox);
 
 
@@ -3424,9 +3458,9 @@ tradeWindowTarget?.prepend(controllerBox);
 /////////////////////////
 // New Row
 
-const newRowButton = document.createElement("button");
-newRowButton.classList.add("new-btn", "btn", "btn-sm", "btn-primary", "mr-3");
+const newRowButton = spawnBtn();
 newRowButton.innerHTML = "New row";
+newRowButton.agd("mainBtn", "button");
 
 const newRowOptionExpander = new Expander(newRowButton, "moreOptions");
 
@@ -3473,9 +3507,9 @@ controllerBox.append(newRowButton);
 ////////////////7/////
 // Edit User preferences
 
-const editPrefsBtn = document.createElement("button");
+const editPrefsBtn = spawnBtn();
 controllerBox.append(editPrefsBtn);
-editPrefsBtn.classList.add("new-btn", "btn", "btn-sm", "btn-primary", "h-100");
+editPrefsBtn.agd("button", "mainBtn");
 editPrefsBtn.innerHTML = "Settings";
 
 const mainEditPrefsWindow = document.querySelector(".tt-edit-user-preferences") as HTMLElement;
@@ -3553,8 +3587,9 @@ if (mainEditPrefsWindow != null) {
 //Notifications
 function newAlert(message: { status: "error" | "success", message: string }) {
 	// {status: ----, message: ----}
-	const alert = document.createElement("div");
-	alert.classList.add("tt-alert", `tt-${message.status}`);
+	const alert = spawnDiv();
+	alert.agd("alert");
+	alert.classList.add(`tt-${message.status}`);
 	alert.innerHTML = message.message;
 
 	const alertBox = document.querySelector(".tt-alert-box");

@@ -32,7 +32,25 @@ $title				= 'Verify Email Address';
 	#header01-m {padding-top: 1rem !important;}
 	}
 </style>
-<section class="cid-s0KKUOB7cY border-bottom pb-0" id="header01-m">
+<div class="intro-section intro-feature bg-white pb-0" id="features">
+    <div class="container container-ld pt-5">
+        <div class="row justify-content-center pt-3">
+            <div class="col-lg-9 col-xl-7">
+                <div class="intro-section-title text-center">
+                    <span class="overline-title">Account Verification</span>
+                    <h2 class="intro-heading-lead title">Verify Your Email Address</h2>
+                    <div class="intro-section-desc">
+                        <p>
+                            Activate your account to verify your email address to to join our Community of Investors and Partners, while enjoying the benefits of our Investment Accounting/Analytical Software and Crypto Asset Marketplace & Exchange.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="intro-section intro-feature bg-white pt-0" id="registration-form">
     <div class="container-fluid px-0">
         <div class="row justify-content-center py-0">
             <div class="mbr-black col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
@@ -51,7 +69,7 @@ $title				= 'Verify Email Address';
 											<li>Make sure you provided the correct email address.</li>
 											<li>Check your email spam/junk folder.</li>
 											<li>Verify that you haven't already signed up for an account with this email address.</li>
-											<li>To resend Activation Code to your email, click <a href="<?php echo site_url('/resend-activation/' . $cuID); ?>">here</a></li>
+											<li>To resend the Activation Code to your email, click <a href="<?php echo site_url('/resend-activation/' . $cuID); ?>">here</a></li>
 										</ul>
 										<p class="mbr-bold mb-0">Need assistance?</p>
 										<p class="text-muted"> Contact <a href="mailto:support@mymiwallet.comm">support@mymiwallet.com</a></p>
@@ -142,4 +160,4 @@ $title				= 'Verify Email Address';
             </div>
         </div>
     </div>
-</section>
+</div>

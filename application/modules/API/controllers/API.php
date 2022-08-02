@@ -57,7 +57,7 @@ class API extends Front_Controller
     public function index()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         $this->load->library('users/auth');
         $this->set_current_user();
         
@@ -70,7 +70,7 @@ class API extends Front_Controller
     public function Purchase_Coins_Transaction()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         // $this->load->library('users/auth');
         // $this->set_current_user();
         
@@ -96,7 +96,7 @@ class API extends Front_Controller
     public function TDA_Access_Code()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         $this->load->library('users/auth');
         $this->set_current_user();
         

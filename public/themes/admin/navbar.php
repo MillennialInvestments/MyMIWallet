@@ -150,7 +150,7 @@ $myMIGPerChange			= $_SESSION['allSessionData']['userGoldData']['myMIGPerChange'
                                     </li>*/
                                     ?>
 									<li>
-										<a href="<?php echo site_url('/Profile-Settings'); ?>"><em class="icon ni ni-setting-alt"></em><span>Account Setting</span></a>
+										<a href="<?php echo site_url('/Investor-Profile'); ?>"><em class="icon ni ni-setting-alt"></em><span>Account Setting</span></a>
 									</li>
 								</ul>
 							</div>

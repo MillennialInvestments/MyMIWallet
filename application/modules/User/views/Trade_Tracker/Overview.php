@@ -17,6 +17,12 @@ $cuID			= $_SESSION['allSessionData']['userAccount']['cuID'];
     .datatable-wrap {
         border: none !important;    
     }
+    .tt-edit-user-preferences {
+        display: none; 
+    }
+    .tt-trade-window {
+        background-color: transparent !important;
+    }
 </style>
 <?php
 //~ print_r($getOrdersJSON);
@@ -99,7 +105,7 @@ $cuID			= $_SESSION['allSessionData']['userAccount']['cuID'];
         <div class="card-inner pt-0"> 
             <div class="dt-bootstrap4 no-footer">
                 <div class="my-3">
-                    <div class="new-target px-0"></div>
+                    <div class="new-target p-0"></div>
                     <div class="origin" style="width: 50%;"></div>
                     <div class="current" style="width: 50%;"></div>
                     <div class="tt-edit-user-preferences">

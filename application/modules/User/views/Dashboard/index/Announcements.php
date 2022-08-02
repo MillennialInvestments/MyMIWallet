@@ -1,5 +1,5 @@
 <div class="card-head">
-	<div class="card-title mb-0 py-3"><h5 class="title">Annoucements</h5></div>
+	<div class="card-title mb-0 py-3"><h5 class="title">Announcements</h5></div>
 	<div class="card-tools">
 		<ul class="card-tools-nav">
 		</ul>

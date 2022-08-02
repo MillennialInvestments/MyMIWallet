@@ -51,8 +51,8 @@ if ($this->uri->segment(1) === 'Knowledge-Base' && $this->uri->segment(2) === 'M
                         <h5 class="nk-block-title fw-normal pb-3">Listing MyMI Assets</h5>
                         <div class="nk-block-des">
                             <p class="lead fs-14px">    
-                                Once you have created your MyMI Assets, you have the ability to create a Private or Public Listing of your Asset on the MyM Asset Marketplace. 
-                                By release your asset, you will have the option to identify the <strong>Percentage of Limitation (POI)</strong> of the asset you wish to list. 
+                                Once you have created your MyMI Assets, you can create a Private or Public Listing of your Asset on the MyM Asset Marketplace. 
+                                By releasing your asset, you will have the option to identify the <strong>Percentage of Limitation (POI)</strong> of the asset you wish to list. 
                                 The percentage of limitation is the total percentage of available coins that you wish to allocate to the Private/Public Marketplace.                       
                             </p>
                             <p class="lead fs-14px">    
@@ -60,7 +60,7 @@ if ($this->uri->segment(1) === 'Knowledge-Base' && $this->uri->segment(2) === 'M
                                 This defines your <strong>Percentage of Limitation</strong>. This means that once the Percentage of Limitation is reached, the coins allocated to that MyMI Assets will only be available for purchase on the MyMI Exchange.                 
                             </p>
                             <p class="lead fs-14px">   
-                                <strong>Please Note:</strong> Once the Percentage of Limitation has been reached, the creator has the ability to conduct a <strong>Coin Redistribution</strong>. 
+                                <strong>Please Note:</strong> Once the Percentage of Limitation has been reached, the creator can conduct a <strong>Coin Redistribution</strong>. 
                                 Learn more about Coin Redistribution by clicking <a href="#asset-distribution">here</a>  
                             </p>
                         </div>
@@ -80,12 +80,12 @@ if ($this->uri->segment(1) === 'Knowledge-Base' && $this->uri->segment(2) === 'M
                         <h5 class="nk-block-title fw-normal pb-3">How Are MyMI Assets Valued?</h5>
                         <div class="nk-block-des">
                             <p class="lead fs-14px">    
-                                When a Asset Creator is preparing to list their MyMI Asset on the MyMI Marketplace, 
-                                an evaluation of the asset valuation most be conducted to secure it's Initial Coin Value before being offered to the Marketplace. 
-                                After the very first initial purchase of that MyMI Asset is completed, that locks in the Initial Price Oferring. 
+                                When an Asset Creator is preparing to list their MyMI Asset on the MyMI Marketplace, 
+                                an evaluation of the asset valuation must be conducted to secure its Initial Coin Value before being offered to the Marketplace. 
+                                After the very first initial purchase of that MyMI Asset is completed, that locks in the Initial Price Offering. 
                             </p>
                             <p class="lead fs-14px">   
-                                As investors continue to purchase the asset, the Coin Value is determined by the Total Evaluation divided by what is left in the Percentage of Limitation to be purchased from the Marketplace.
+                                As investors continue to purchase the asset, the Coin Value is determined by the Total Evaluation divided by what is left in the Percentage of Limitations to be purchased from the Marketplace.
                             </p>
                             <p class="lead fs-14px">   
                                 <strong>For Example:</strong> 
@@ -162,9 +162,9 @@ if ($this->uri->segment(1) === 'Knowledge-Base' && $this->uri->segment(2) === 'M
                         <h5 class="nk-block-title fw-normal pb-3">Coin Redistribution</h5>
                         <div class="nk-block-des">
                             <p class="lead fs-14px">   
-                                Once the Percentage of Limitation has been reached, the creator has the ability to conduct a <strong>Coin Redistribution</strong>. 
-                                With this tool, the Creator would virtually duplicate the amount of coins available in the Percentage of Limitations. 
-                                When conducting a Coin Redistribution, the Creator has to considered three rules:                                                
+                                Once the Percentage of Limitation has been reached, the creator can conduct a <strong>Coin Redistribution</strong>. 
+                                With this tool, the Creator would virtually duplicate the number of coins available in the Percentage of Limitations. 
+                                When conducting a Coin Redistribution, the Creator has to consider three rules:                                                
                                 <dl class="row">
                                     <dt class="col-sm-3">Existing Investor Compensation</dt>
                                     <dd class="col-sm-9">{Definition Here}</dd>

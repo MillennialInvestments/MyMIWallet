@@ -90,31 +90,12 @@ $fundAccountData						= array(
 		<div class="col-md-12 mb-3">  
 			<?php $this->load->view('User/Wallets/index/header', $walletData); ?>
 		</div>
-        <?php
-        if ($plaid === '0') {
-            ?>
-		<div class="col-md-12 mb-3">
-			<?php $this->load->view('User/Wallets/index/fiat_wallets', $walletData); ?>
-		</div>
-		<div class="col-md-12 mb-3">
-			<?php $this->load->view('User/Wallets/index/crypto_wallets', $walletData); ?>
-		</div>
-		<hr>
-		<div class="col-md-12">			
-			<?php $this->load->view('User/Wallets/index/wallet_transactions', $walletData); ?>
-		</div>
-        <?php
-        } else {
-            ?>
 		<div class="col-md-12 mb-3">
 			<?php $this->load->view('User/Wallets/index/plaid/fiat_wallets', $walletData); ?>
 		</div>
         <div class="col-md-12 mb-3">
 			<?php $this->load->view('User/Wallets/index/plaid/crypto_wallets', $walletData); ?>
 		</div>
-        <?php
-        }
-        ?>
 	</div>
 </div>
 

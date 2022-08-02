@@ -30,12 +30,12 @@
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
                                                 This article will review the power and benefits behind how our Investor Profiles work. 
-                                                By understanding the philosophy and goal of an Investor, you are able to calculate similarities between one trader and the next regarding their investment strategies and goals. 
+                                                By understanding the philosophy and goal of an Investor, you can begin analyze and calculate similarities between one trader and the next regarding their investment strategies and goals. 
                                                 In these scenarios, you can begin to analyze how decisions are made when utilizing specific trading strategies and begin to pre-calculate the results based on historical data and events in comparison to Real-Time Data and forward-looking analysis. 
                                             </p>
                                             <p class="lead fs-14px"> 
                                                 With that thought in mind, one of our goals at MyMI Wallet is to obtain, compile, analyze and predict. 
-                                                By doing so, we compile all Financial Investment Data that we obtain, analyze the results by utilzing our Backtesting/Trading Algorithms, Investor Sentiment, and Trend Analysis to predict futuristic price movements within specific financial markets and securities. 
+                                                By doing so, we compile all Financial Investment Data that we obtain and analyze the results by utilizing our Backtesting/Trading Algorithms, Investor Sentiment, and Trend Analysis to predict futuristic price movements within specific financial markets and securities. 
                                             </p>
                                         </div>
                                     </div>
@@ -85,11 +85,11 @@
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
                                                 At MyMI Wallet, we aim to provide the ability to account for every investment account an investor may hold with a financial brokerage firm. 
-                                                By utilizing our Premium Brokerage Integrations, Investors gain the ability to compile all of their financial data and information into one place to further conduct their own analysis or utilize our Pre-defined Accounting and Analytical Algorithms.
+                                                By utilizing our Premium Brokerage Integrations, Investors gain the ability to compile all of their financial data and information into one place to further conduct their analysis or utilize our Pre-defined Accounting and Analytical Algorithms.
                                             </p>    
                                             <p class="lead fs-14px">
                                                 Once Investors utilize our Premium Brokerage Integrations, they are authorizing MyMI Wallet to access their account information, current holdings, and historical investments. 
-                                                We have the ability to obtain up to 15+ years of financial data (per account) and store that information in our databases to provide the ability to determine specific analysis on all the data acquired. 
+                                                We can obtain up to 15+ years of financial data (per account) and store that information in our databases to provide the ability to determine specific analysis on all the data acquired. 
                                             </p>
                                             <p class="lead fs-14px">
                                                 To view a list of the financial brokerages that we currently integrate with, click the link below: 
@@ -115,7 +115,7 @@
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
                                                 Once we have compiled all the financial data an Investor provides, we continue forward by conducting an Initial Investment Evaluation across the Investor's Linked Brokerage Accounts. 
-                                                MyMI Wallet's Analytical Algorithms are designed to include Previous Trade History & Performance Analysis, Historic/Real-Time Trend Analysis and New Releases and overall Investor Sentiment within the MyMI Community to assist in calculating trade opportunities across all financial markets.
+                                                MyMI Wallet's Analytical Algorithms are designed to include Previous Trade History & Performance Analysis, Historic/Real-Time Trend Analysis, and overall Investor Sentiment within the MyMI Community to assist in calculating trade opportunities across all financial markets.
                                             </p>
                                             <p class="lead fs-14px">
                                                 <ul class="link-list-plain">
@@ -140,13 +140,13 @@
                                         <h5 class="nk-block-title fw-normal">Updating Investor Profile</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
-                                                You can access your Investor Profile by visting the link below:  
+                                                You can access your Investor Profile by visiting the link below:  
                                                 <ul class="link-list-plain">
                                                     <li><a href="https://www.mymiwallet.com/Investor-Profile">https://www.mymiwallet.com/Investor-Profile</a></li>
                                                 </ul>
                                             </p>
                                             <p class="lead fs-14px">
-                                                In your Investor Profile, you have the ability to view/change the following information:  
+                                                In your Investor Profile, you can view/change the following information:  
                                                 <ul class="link-list-plain">
                                                     <li><a href="#">Account Information</a></li>
                                                     <li><a href="#">Financial Goals</a></li>

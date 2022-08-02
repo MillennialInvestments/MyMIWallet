@@ -9,8 +9,8 @@
                         <div class="nk-block-des">
                             <p class="lead fs-14px">  
                                 Introducing <strong>MyMI Assets</strong>! 
-                                MyMI Assets were created to be the finally bridge between Fungible Digital Assets and Tangible Assets that exist in our everyday world!. 
-                                With MyMI Assets, Investors and Businesses alike gain the ability to establish Private/Public Investment Pool Marketplace &amp; Exchange essentially.                  
+                                MyMI Assets were created to be the final bridge between Fungible Digital Assets and Tangible Assets that exist in our everyday world! 
+                                With MyMI Assets, Investors and Businesses alike gain the ability to establish a Private/Public Investment Pool Marketplace &amp; Exchange essentially.                  
                             </p>
                         </div>
                     </div>

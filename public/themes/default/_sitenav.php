@@ -24,21 +24,25 @@ if (empty($currentUserID)) {
   background-color: #fff !important;
   transition: background-color 200ms linear;
 }
+.intro-action .btn {
+    line-height: .75rem; 
+}
 .logo-light {
     opacity: 1; 
 }
 </style>
 <div class="intro-navbar">
     <div class="container container-ld">
-        <div class="intro-wrap">
-            <div class="intro-logo">
-                <a href="<?php echo site_url('/'); ?>" class="logo-link">
-                    <img class="logo-img logo-light" src="<?php echo base_url('assets/images/Millennial-Investments.png'); ?>" srcset="<?php echo base_url('assets/images/Millennial-Investments.png'); ?>" alt="MyMI Wallet - Investment Accounting/Analytical Software & Crypto Asset Marketplace/Exchange">
-                    <img class="logo-img logo-dark" src="<?php echo base_url('assets/images/Millennial-Investments.png'); ?>" srcset="<?php echo base_url('assets/images/Millennial-Investments.png'); ?>" alt="MyMI Wallet - Investment Accounting/Analytical Software & Crypto Asset Marketplace/Exchange">
+        <div class="intro-wrap row">
+            <div class="intro-logo d-flex col-3 col-sm-4">
+                <a href="<?php echo site_url('/'); ?>" class="logo-link w-100">
+                    <img class="logo-img logo-light img-fluid d-none d-sm-block" src="<?php echo base_url('assets/images/Millennial-Investments.png'); ?>" srcset="<?php echo base_url('assets/images/Millennial-Investments.png'); ?>" alt="MyMI Wallet - Investment Accounting/Analytical Software & Crypto Asset Marketplace/Exchange">
+                    <img class="logo-img logo-dark img-fluid d-block d-sm-none" src="<?php echo base_url('assets/images/MyMI-Wallet.png'); ?>" srcset="<?php echo base_url('assets/images/MyMI-Wallet.png'); ?>" alt="MyMI Wallet - Investment Accounting/Analytical Software & Crypto Asset Marketplace/Exchange">
                 </a>
             </div>
-            <div class="intro-nav">
-                <ul class="nav">
+            <div class="col-sm-2"></div>
+            <div class="intro-nav align-items-right col-9 col-sm-6">
+                <ul class="nav mt-1 pl-5">
                     <!-- <li class="nav-item intro-nav-item">
                         <a href="#preview" class="link-to nav-link intro-nav-link">
                             <span class="d-none d-md-inline">All Preview</span> <span class="d-md-none">Preview</span> 
@@ -47,27 +51,22 @@ if (empty($currentUserID)) {
                     <li class="nav-item intro-nav-item">
                         <a href="#features" class="link-to nav-link intro-nav-link">Features</a>
                     </li>
-                    <li class="nav-item intro-nav-item">
+                    <li class="nav-item d-none intro-nav-item">
                         <a href="<?php echo site_url('Knowledge-Base'); ?>" target="_blank" class="nav-link intro-nav-link">Docs</a>
                     </li>
-                    <li class="nav-item intro-nav-item d-none d-lg-inline-flex">
+                    <!-- <li class="nav-item intro-nav-item">
+                        <a href="<?php //echo site_url('Invest'); ?>" target="_blank" class="nav-link intro-nav-link">Invest</a>
+                    </li> -->
+                    <li class="nav-item intro-nav-item d-lg-inline-flex">
                         <a href="<?php echo site_url('Customer-Support'); ?>" target="_blank" class="nav-link intro-nav-link">Need Help?</a>
                     </li>
                 </ul>
                 <div class="intro-action">
-                    <a href="<?php echo $btnURL; ?>" class="btn btn-primary" target="_blank">
-                        <span class="d-none d-md-block"><?php echo $btnText; ?></span>
+                    <a href="<?php echo site_url('/login'); ?>" class="btn btn-primary">
+                        <span>Login</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-    $(function () {
-        $(document).scroll(function () {
-            var $nav = $(".intro-navbar");
-            $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
-        });
-    });
-</script>

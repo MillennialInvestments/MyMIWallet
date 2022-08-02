@@ -91,6 +91,7 @@ $fieldData = array(
 		<?php echo validation_errors(); ?>
 	</div>
 <?php endif; ?>
+<?php $this->load->view('User/Wallets/Create_Bank_Accounts'); ?>
 <script>
 function calculateWithdraw()
 {

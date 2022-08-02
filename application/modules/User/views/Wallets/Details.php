@@ -621,13 +621,13 @@ $total_trades                   = $getSymbols->num_rows();
 // ';
 ?>
 <?php 
-if ($walletPremium === 'Yes') {
-    if ($walletBroker === 'TD Ameritrade') {
-        if($this->exchange->update_wallet_records($cuID, $cuEmail, $cuUsername, $walletID, $walletAccountID, $walletAccessCode, $walletBroker)) {
-            Template::set_message('Account successfully updated and up-to-date!', 'success'); 
-        } else {
-            Template::set_message('ERROR: Account could not be updated successfully', 'error'); 
-        }
-    }
-}
+// if ($walletPremium === 'Yes') {
+//     if ($walletBroker === 'TD Ameritrade') {
+//         if($this->exchange_model->update_wallet_records($cuID, $cuEmail, $cuUsername, $walletID, $walletAccountID, $walletAccessCode, $walletBroker)) {
+//             Template::set_message('Account successfully updated and up-to-date!', 'success'); 
+//         } else {
+//             Template::set_message('ERROR: Account could not be updated successfully', 'error'); 
+//         }
+//     }
+// }
 ?>

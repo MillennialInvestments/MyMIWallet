@@ -57,7 +57,7 @@ class Template extends Admin_Controller
     public function index()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         

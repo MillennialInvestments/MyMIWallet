@@ -57,7 +57,7 @@ class How_To_Guides extends Front_Controller
     public function index()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         

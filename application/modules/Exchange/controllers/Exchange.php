@@ -58,7 +58,7 @@ class Exchange extends Admin_Controller
     public function index()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         
@@ -70,7 +70,7 @@ class Exchange extends Admin_Controller
     public function Dashboard()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         
@@ -82,7 +82,7 @@ class Exchange extends Admin_Controller
     public function Application_Manager()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         
@@ -92,7 +92,7 @@ class Exchange extends Admin_Controller
     public function Coin_Listing_Request()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         
@@ -104,7 +104,7 @@ class Exchange extends Admin_Controller
     public function Coin_Listing_Asset_Information()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         
@@ -116,7 +116,7 @@ class Exchange extends Admin_Controller
     public function Coin_Listing_Asset_Information_Modal()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         
@@ -128,7 +128,7 @@ class Exchange extends Admin_Controller
     public function Coin_Listing_Request_Complete()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         
@@ -140,7 +140,7 @@ class Exchange extends Admin_Controller
     public function Order_Event_Manager($market_pair, $market, $lastOrderID)
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         
@@ -150,7 +150,7 @@ class Exchange extends Admin_Controller
     public function Order_Buy_Manager()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         
@@ -160,7 +160,7 @@ class Exchange extends Admin_Controller
     public function Order_Sell_Manager()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         
@@ -170,14 +170,14 @@ class Exchange extends Admin_Controller
     public function Order_Event_Manager_Working($market_pair, $market, $lastOrderID)
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         $this->load->view('Exchange/Order_Event_Manager');
     }
     
     public function Overview($market_pair, $market)
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         

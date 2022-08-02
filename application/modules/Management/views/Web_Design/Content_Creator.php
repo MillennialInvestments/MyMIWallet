@@ -31,15 +31,16 @@ $testInfo						= array(
             // $tdaClient              = new TDAmeritradeAPI(); 
             // // $tdaClient->login();
 			// print_r($tdaClient);   
-            use MichaelDrennen\TDAmeritradeAPI\Authenticator;
-            $callbackURL                = 'https%3A%2F%2Fwww.mymiwallet.com%2Fpublic%2Findex.php%2FWallets%2FLink-Account%2F1';
-            $oauthConsumerKey           = 'XGCE3NA1BXIGQG2NHDTLHZ6OUSIZTITF%40AMER.OAUTHAP';
-            $tdaAuthenticator           = new Authenticator($callbackURL, $oauthConsumerKey); 
-            $tdaAuthenticate            = $tdaAuthenticator->authenticate($callbackURL, $oauthConsumerKey); 
-            // $tdaAuthenticator->authenticate($callbackURL,$oauthConsumerKey,$debug = FALSE);
-			print_r($tdaAuthenticator); 
-            echo '<br><br>';
-			print_r($tdaAuthenticate); 
+            // $pageName           = Template::get('pageName'); 
+            // echo $pageName; 
+            // echo '<br><br>';
+            $pageSEOData        = $_SESSION['allSessionData']['pageSEOData'];
+            print_r($pageSEOData->result_array()); 
+            // echo '<br><br>';
+
+            // $this->db->from('bf_marketing_page_seo');
+            // $getPageSEO                                 = $this->db->get()->result_array();
+            // print_r($this->mymimarketing->get_page_headers_by_name($pageName));
             ?>
 		</div>
 	</div>

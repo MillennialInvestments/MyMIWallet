@@ -33,7 +33,7 @@
                                         <h5 class="nk-block-title fw-normal">Overview</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
-                                                This article will introduce you to the MyMI Trade Tracker and the immense tools that you are able to design &amp; development yourself.<br> 
+                                                This article will introduce you to the MyMI Trade Tracker and the immense tools that you can design &amp; develop yourself.<br> 
                                                 This article will cover a majority of what our Trade Tracker is designed to do by default, but we provide links to more in-depth information regarding certain functionality and tools.
                                             </p>
                                         </div>
@@ -72,14 +72,14 @@
                                         <h5 class="nk-block-title fw-normal pb-3">What is The MyMI Trade Tracker?</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
-                                                Contrary to belief, there are a number of traders that still track their trades utilzing pen and paper. 
+                                                Contrary to belief, many traders still track their trades utilizing pen and paper. 
                                                 Some investors use Microsoft Excel and other forms of that software which may work just fine. 
                                                 Some investors are searching for more advanced resources &amp; tools that do more than just store data. 
-                                                By gaining the ability to actively analysis their investment data in real-time, investors gain the insight of making more efficiently investment decisions.                                   
+                                                By gaining the ability to actively analyze their investment data in real-time, investors gain insight into making more efficient investment decisions.                                   
                                             </p>
                                             <p class="lead fs-14px">
                                                 <strong>Welcome to the MyMI Trade Tracker!</strong> The MyMI Trade Tracker is designed to flex to the Investor's needs in terms of what they're wanting to analyze and track. 
-                                                Whether it's analyzing Risk-Reward Ratios or Trend Analysis and Selected Indiciators, Investors are able to access our <strong>Premium Customizable Trade Tracker Features</strong> utilizing our MyMI Trade Tracker.                                    
+                                                Whether it's analyzing Risk-Reward Ratios or Trend Analysis and Selected Indicators, Investors can access our <strong>Premium Customizable Trade Tracker Features</strong> utilizing our MyMI Trade Tracker.                                    
                                             </p>
                                         </div>
                                     </div>

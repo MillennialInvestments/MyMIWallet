@@ -293,6 +293,24 @@ class Exchange_model extends BF_Model
         $getUserWalletInfo					= $this->db->get();
         return $getUserWalletInfo;
     }
+
+    // public function update($cuID)
+    // {
+    //     $this->db->from('bf_users_wallet');
+    //     $this->db->where('user_id', $cuID);
+    //     $this->db->where('default_wallet', 'Yes');
+    //     $getUserWalletInfo					= $this->db->get();
+    //     return $getUserWalletInfo;
+    // }
+
+    public function update_wallet($cuID)
+    {
+        $this->db->from('bf_users_wallet');
+        $this->db->where('user_id', $cuID);
+        $this->db->where('default_wallet', 'Yes');
+        $getUserWalletInfo					= $this->db->get();
+        return $getUserWalletInfo;
+    }
     
     public function kyc_reward($status, $cuBeta, $cuID, $cuEmail, $cuWalletID, $reward, $reward_type, $initial_value, $current_value, $available_coins, $new_availability, $initial_coin_value, $coin_value, $amount, $total, $total_cost, $gas_fee, $trans_fee, $trans_percent)
     {

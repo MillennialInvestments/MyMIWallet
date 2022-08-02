@@ -121,6 +121,15 @@ class Marketing_model extends BF_Model
     public function get_marketing_page_seo()
     {
         $this->db->from('bf_marketing_page_seo');
+        $this->db->where('page_name', $pageName);
+        $getPageSEO                                 = $this->db->get();
+        return $getPageSEO;
+    }
+
+    public function get_marketing_page_seo_by_name($pageName)
+    {
+        $this->db->from('bf_marketing_page_seo');
+        $this->db->where('page_name', $pageName);
         $getPageSEO                                 = $this->db->get();
         return $getPageSEO;
     }

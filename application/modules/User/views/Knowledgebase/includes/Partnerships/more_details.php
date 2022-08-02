@@ -11,7 +11,7 @@
                                 To get more information on our MyMI Partnership Program, please visit the links below for more details:
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item"><a href="<?php echo site_url('Knowledge-Base/Types-Of-Accounts'); ?>">Partnership Accounts</a></li>
-                                    <li class="list-group-item"><a href="<?php echo site_url('Knowledge-Base/Partnerships'); ?>">MyMI Partnerships</a></li>
+                                    <li class="list-group-item"><a href="<?php echo site_url('Knowledge-Base/MyMI-Partnerships'); ?>">MyMI Partnerships</a></li>
                                 </ul>
                             </p>
                         </div>

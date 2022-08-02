@@ -37,7 +37,7 @@ $config['base_url'] = $root;
 | variable so that it is blank.
 |
  */
-$config['index_page'] = "index.php";
+// $config['index_page'] = "index.php";
 // $config['index_page'] = "";
 
 /*
@@ -380,12 +380,12 @@ $config['encryption_key'] = "58f62e7a5c072527eb00fad7ccb6f547";
 $config['sess_driver'] = 'database';
 //~ $config['sess_driver'] = 'files';
 $config['sess_cookie_name']		= 'ci_session';
-$config['sess_expiration']		= 720000000;
+$config['sess_expiration']		= 0;
 //~ $config['sess_save_path'] = sys_get_temp_dir();
 $config['sess_save_path'] = 'ci3_sessions';
 $config['sess_match_ip'] = false;
-$config['sess_time_to_update'] = 3600;
-$config['sess_regenerate_destroy'] = false;
+$config['sess_time_to_update'] = 360000;
+$config['sess_regenerate_destroy'] = true;
 /*
 |--------------------------------------------------------------------------
 | Cookie Related Variables
@@ -401,11 +401,13 @@ $config['sess_regenerate_destroy'] = false;
 |       'cookie_httponly') will also affect sessions.
 |
 */
-$config['cookie_prefix']	= '';
-$config['cookie_domain']	= '';
-$config['cookie_path']		= '/';
-$config['cookie_secure'] = false;
-$config['cookie_httponly'] = false;
+$config['cookie_prefix']	    = '';
+// $config['cookie_domain']	= $root;
+$config['cookie_domain']	    = '';
+$config['cookie_path']		    = '';
+// $config['cookie_path']		= 'assets/Cookies';
+$config['cookie_secure']        = false;
+$config['cookie_httponly']      = false;
 
 /*
 |--------------------------------------------------------------------------

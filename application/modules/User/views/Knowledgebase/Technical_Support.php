@@ -30,7 +30,7 @@
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
                                                 This article will introduce you to our Technical Support.<br> 
-                                                This article will provide you with the resouces needed to ensure the best customer service possible for all of our members.
+                                                This article will provide you with the resources needed to ensure the best customer service possible for all of our members.
                                             </p>
                                         </div>
                                     </div>
@@ -68,7 +68,7 @@
                                         <h5 class="nk-block-title fw-normal">Managing Account Security</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
-                                                You can view and manage your Account Security by visting the link below:
+                                                You can view and manage your Account Security by visiting the link below:
                                                 <ul class="link-list-plain">
                                                     <li><a href="<?php echo site_url('Investor-Profile'); ?>">Investor Profile</a></li>
                                                 </ul>
@@ -150,7 +150,7 @@
                                         <h5 class="nk-block-title fw-normal pb-3"></h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
-                                                You can view and manage your Support Tickets by visting the link below:
+                                                You can view and manage your Support Tickets by visiting the link below:
                                                 <ul class="link-list-plain">
                                                     <li><a href="<?php echo site_url('Investor-Profile'); ?>">Investor Profile</a></li>
                                                 </ul>

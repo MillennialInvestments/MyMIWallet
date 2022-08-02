@@ -22,10 +22,10 @@ $uriSegmentInfo         = array(
 <head>
 	<meta charset="ISO-8859-1">
 	<?php echo theme_view('metadata-information', $uriSegmentInfo); ?>
-	<title><?php
-        echo isset($toolbar_title) ? "{$toolbar_title} : " : '';
-        e($this->settings_lib->item('site.title'));
-    ?></title>
+	<!-- <title><?php
+        // echo isset($toolbar_title) ? "{$toolbar_title} : " : '';
+        // e($this->settings_lib->item('site.title'));
+    ?></title> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="robots" content="noindex" />
 	<meta http-equiv="cache-control" content="no-cache">

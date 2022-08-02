@@ -211,10 +211,25 @@ if ($this->agent->is_mobile()) {
 							</a>
 						</li>  
 						<li class="nk-menu-item">
+							<a class="nk-menu-link postAnnouncementBtn" data-toggle="modal" data-target="#transactionModal">
+							<span class="nk-menu-icon"><em class="icon ni ni-notice"></em></span><span class="nk-menu-text">Announcements</span>
+							</a>
+						</li> 
+						<li class="nk-menu-item">
 							<a class="nk-menu-link" href="<?php echo site_url('/Management/Assets'); ?>">
 							<span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span><span class="nk-menu-text">Assets</span>
 							</a>
 						</li>    
+						<li class="nk-menu-item">
+							<a href="<?php echo site_url('Management/Exchange'); ?>" class="nk-menu-link">
+							<span class="nk-menu-icon"><em class="icon ni ni-sign-usd"></em></span><span class="nk-menu-text">Exchange</span>
+							</a>
+						</li>
+                        <!-- <li class="nk-menu-item">
+							<a href="<?php //echo site_url('Management/Investment'); ?>" class="nk-menu-link">
+							<span class="nk-menu-icon"><em class="icon ni ni-sign-usd"></em></span><span class="nk-menu-text">Investments</span>
+							</a>
+						</li> -->
 						<li class="nk-menu-item">
 							<a class="nk-menu-link" href="<?php echo site_url('/Management/Partners'); ?>">
 							<span class="nk-menu-icon"><em class="icon ni ni-briefcase"></em></span><span class="nk-menu-text">Partners</span>
@@ -224,44 +239,7 @@ if ($this->agent->is_mobile()) {
 							<a class="nk-menu-link" href="<?php echo site_url('/Management/Users'); ?>">
 							<span class="nk-menu-icon"><em class="icon ni ni-users"></em></span><span class="nk-menu-text">Users</span>
 							</a>
-						</li>    
-						<li class="nk-menu-item">
-							<a class="nk-menu-link postAnnouncementBtn" data-toggle="modal" data-target="#transactionModal">
-							<span class="nk-menu-icon"><em class="icon ni ni-notice"></em></span><span class="nk-menu-text">Announcements</span>
-							</a>
-						</li>      
-						<?php
-                        if ($cuKYC === 'Yes') {
-                            ?>    
-						<li class="nk-menu-item">
-							<a href="<?php echo site_url('/Exchange'); ?>" class="nk-menu-link">
-								<span class="nk-menu-icon"><em class="icon ni ni-coins"></em></i></span><span class="nk-menu-text">MyMI Exchange</span>
-							</a>
-						</li>
-						<?php
-                        } elseif ($cuKYC === 'No') {
-                            ?>    
-						<li class="nk-menu-item">
-							<a href="<?php echo site_url('/Exchange/Personal-Information/' . $cuID); ?>" class="nk-menu-link">
-								<span class="nk-menu-icon"><em class="icon ni ni-coins"></em></i></span><span class="nk-menu-text">MyMI Exchange</span>
-							</a>
-						</li>
-						<?php
-                        } ?>
-						<li class="nk-menu-item">
-							<a href="<?php echo site_url('Exchange-Management'); ?>" class="nk-menu-link">
-							<span class="nk-menu-icon"><em class="icon ni ni-sign-usd"></em></span><span class="nk-menu-text">Exchange</span>
-							</a>
-						</li><li class="nk-menu-item">
-							<a href="<?php echo site_url('Investment-Management'); ?>" class="nk-menu-link">
-							<span class="nk-menu-icon"><em class="icon ni ni-sign-usd"></em></span><span class="nk-menu-text">Investments</span>
-							</a>
-						</li>
-						<li class="nk-menu-item">
-							<a href="<?php echo site_url('Users'); ?>" class="nk-menu-link">
-							<span class="nk-menu-icon"><em class="icon ni ni-users"></em></span><span class="nk-menu-text">Users</span>
-							</a>
-						</li>
+						</li>         
 					</ul>
 				</div>
 				<div class="nk-sidebar-menu">

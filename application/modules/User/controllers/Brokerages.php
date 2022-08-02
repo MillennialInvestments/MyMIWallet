@@ -56,7 +56,7 @@ class Brokerages extends Admin_Controller
     public function index()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
@@ -67,7 +67,7 @@ class Brokerages extends Admin_Controller
     public function TD_Ameritrade($id)
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         $this->set_current_user();
         $cuID                                           = $_SESSION['allSessionData']['userAccount']['cuID'];
         $cuEmail                                        = $_SESSION['allSessionData']['userAccount']['cuEmail'];

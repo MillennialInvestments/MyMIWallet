@@ -36,8 +36,8 @@ $formCustomText			= $this->config->item('form_custom_text');
 	</div>
 </div>
 <div class="row">
-	<div class="col-6"></div>
-	<div class="col-6 text-right">
+	<div class="col-3 col-md-6"></div>
+	<div class="col-9 col-md-6 text-right">
 		<p style="font-size: 0.75rem"><span>Subtotal: </span><span id="subtotal">0.00</span><span> USD</span></p>
 		<p style="font-size: 0.75rem"><span>Card Processing Fee: </span><span id="expenses">0.00</span><span> USD</span></p>
 		<p style="font-size: 0.75rem"><span>Total Charge: </span><span id="total_charge">$0.00</span><span> USD</span></p>

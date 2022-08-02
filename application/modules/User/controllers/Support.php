@@ -45,7 +45,7 @@ class Support extends Admin_Controller
     public function index()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -57,7 +57,7 @@ class Support extends Admin_Controller
     public function Communication_Manager()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -67,7 +67,7 @@ class Support extends Admin_Controller
     public function Knowledge_Base()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -79,7 +79,7 @@ class Support extends Admin_Controller
     public function My_Request()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -91,7 +91,7 @@ class Support extends Admin_Controller
     public function Request()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         

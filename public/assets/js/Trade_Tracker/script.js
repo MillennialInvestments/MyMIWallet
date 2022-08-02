@@ -1,3 +1,4 @@
+"use strict";
 /*
 ! THE PRIORITIES !
 - Being a service, not a burden. And the best service
@@ -32,78 +33,27 @@ HUGE
 - Autosave
 ? - Structure more stuff with events
 SMALLER
+- Refactor with maps (and where possible) with sets
 - Do something about the "plain" main new-row button
 - deletePrompt
 - Give the ability to enter images
 - Give the ability for "tag" blocks and use expandeers to do so. Notion like
-- Re-create the sort feature
 - Finish the compute functions
-- Manual/Field/Db Tracked sorting
+- Multiple newRow setup
 ACTIVE
-! Closed rows on different pages get pushed to first page and last order
-- Saveall
-- Styling ability
+
+- When saving sub row also save the main one. When saving main row, save all the rows
+- Create an editing map or some checking element to enable/diable the button
+
+- Saveall (Finish button and disable/enable appropriately)
 
 */
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-var TradeObj = /** @class */ (function () {
-    function TradeObj(row) {
+//START OF THE PROGRAM
+const debug = true;
+class TradeObj {
+    constructor(row) {
         this.legend = row.legend || "false";
+        this.saved_sorting = (row.saved_sorting || row.id) || "0";
         this.id = row.id || "0";
         this.pseudo_id = row.pseudo_id || row.id || "0n1";
         this.order_id = row.order_id || "0";
@@ -144,22 +94,108 @@ var TradeObj = /** @class */ (function () {
         this.json_user_fields = row.json_user_fields || buildDefaultUserFields();
         this.save = row.save || "Save";
         this.cancel = row.cancel || "Cancel";
-        this["delete"] = row["delete"] || "Delete";
+        this.delete = row.delete || "Delete";
     }
-    return TradeObj;
-}());
-var graphicsLibrary = {
+}
+const debugGraphicsLibrary = {
+    h3: [],
+    description: [],
+    input: ["form-control"],
+    select: ["form-control"],
+    div: [],
+    button: ["btn", "btn-sm", "h-100", "btn"],
+    openedBtn: ["btn", "btn-light", "h-100"],
+    closedBtn: ["btn", "btn-warning", "h-100"],
+    cancelBtn: ["btn-primary"],
+    saveBtn: ["btn-secondary"],
+    deleteBtn: ["btn-danger"],
     darkener: ["tt-darkener"],
     tradeTable: ["trade-table"],
     tableBottomController: ["table-bottom-controller"],
-    pageMoverHolder: ["page-mover-holder"]
+    pageMoverHolder: ["page-mover-holder"],
+    tradeWindow: ["tt-trade-window"],
+    expander: ["tt-expander", "hidden"],
+    expanderEmptyBlock: ["empty-block"],
+    expanderTagSeparator: ["tag-separator"],
+    expanderClickableValue: ["clickable-value"],
+    mainBtn: ["btn-primary", "mr-3"],
+    spawnerButton: ["spawner-new-button", "btn-primary", "mr-3"],
+    tradeContainer: ["trade-container"],
+    disabledBtn: ["disabled-btn"],
+    promptBox: ["tt-prompt-box"],
+    fieldHolder: ["field-holder", "form-group", "custom-group-width", "mb-0"],
+    editing: ["editing"],
+    legendContainer: ["legendary"],
+    closedRow: ["closed-row"],
+    legendRow: ["legend-row"],
+    mainRow: ["main-row"],
+    fixedSection: ["fixed-section"],
+    scrollableSection: ["scrollable-section"],
+    controllerBox: ["tt-controller-box"],
+    alert: ["tt-alert"],
+    closeWindowBtn: ["close-button"],
 };
-HTMLElement.prototype.agd = function (classSet) {
-    var _this = this;
-    classSet.forEach(function (index) {
-        var _a;
-        (_a = _this.classList).add.apply(_a, graphicsLibrary[index]);
-    });
+const graphicsLibrary = {
+    h3: [],
+    description: [],
+    input: ["form-control"],
+    select: ["form-control"],
+    div: [],
+    button: ["btn"],
+    openedBtn: ["btn", "btn-light", "btn-block"],
+    closedBtn: ["btn", "btn-warning", "btn-block"],
+    cancelBtn: ["btn-warning", "btn-block"],
+    saveBtn: ["btn-primary", "btn-block"],
+    deleteBtn: ["btn-danger", "btn-block"],
+    darkener: ["tt-darkener", "btn-block"],
+    tradeTable: ["trade-table"],
+    tableBottomController: ["table-bottom-controller"],
+    pageMoverHolder: ["page-mover-holder"],
+    tradeWindow: ["tt-trade-window"],
+    expander: ["tt-expander", "hidden"],
+    expanderEmptyBlock: ["empty-block"],
+    expanderTagSeparator: ["tag-separator"],
+    expanderClickableValue: ["clickable-value"],
+    mainBtn: ["btn-primary", "mr-3"],
+    spawnerButton: ["spawner-new-button", "btn-primary", "mr-3"],
+    tradeContainer: ["trade-container", "pl-3"],
+    disabledBtn: ["disabled-btn"],
+    promptBox: ["tt-prompt-box"],
+    fieldHolder: ["field-holder", "form-group", "custom-group-width", "mb-0"],
+    editing: ["editing"],
+    legendContainer: ["legendary"],
+    closedRow: ["closed-row"],
+    legendRow: ["legend-row"],
+    mainRow: ["main-row", "row"],
+    fixedSection: ["fixed-section", "col-3", "d-flex", "px-0"],
+    scrollableSection: ["scrollable-section", "col-6", "overflow-auto", "d-flex", "px-0"],
+    controllerBox: ["tt-controller-box", "pb-5"],
+    alert: ["tt-alert", "alert", "alert-dimissable"],
+    closeWindowBtn: ["close-button"],
+};
+HTMLElement.prototype.agd = function (...classSet) {
+    if (debug == true) {
+        classSet.forEach(index => {
+            this.classList.add(...debugGraphicsLibrary[index]);
+        });
+    }
+    else {
+        classSet.forEach(index => {
+            this.classList.add(...graphicsLibrary[index]);
+        });
+    }
+};
+HTMLElement.prototype.rgd = function (...classSet) {
+    if (debug == true) {
+        classSet.forEach(index => {
+            this.classList.remove(...debugGraphicsLibrary[index]);
+        });
+    }
+    else {
+        classSet.forEach(index => {
+            this.classList.remove(...graphicsLibrary[index]);
+        });
+    }
 };
 function instanceOfIF(object) {
     return object.discriminator === "INPUT-FIELD";
@@ -173,13 +209,13 @@ function instanceOfBF(object) {
 function isStructObj(obj) {
     return 'name' in obj && 'target' in obj && 'editing' in obj && 'dirTag' in obj;
 }
-var darkenedScreenElement = null;
-var darkenedScreenIndex = 0;
+let darkenedScreenElement = null;
+let darkenedScreenIndex = 0;
 //Gather backend data
-var tradeElement = document.getElementById("trade-list");
-var symbolElement = document.getElementById("symbol-list");
-var walletElement = document.getElementById("wallet-list");
-var tradesList, symbolList, walletList;
+const tradeElement = document.getElementById("trade-list");
+const symbolElement = document.getElementById("symbol-list");
+const walletElement = document.getElementById("wallet-list");
+let tradesList, symbolList, walletList;
 if (tradeElement === null || tradeElement.textContent === null) {
     tradesList = [];
 }
@@ -203,8 +239,8 @@ else {
  * @returns {domElement} Input field
  */
 function spawnInput() {
-    var res = document.createElement("input");
-    res.classList.add("form-control");
+    const res = document.createElement("input");
+    res.agd("input");
     res.memory = {};
     return res;
 }
@@ -213,13 +249,14 @@ function spawnInput() {
  * @returns {domElement}
  */
 function spawnSelect() {
-    var res = document.createElement("select");
-    res.classList.add("form-control");
+    const res = document.createElement("select");
+    res.agd("select");
     res.memory = {};
     return res;
 }
 function spawnDiv() {
-    var res = document.createElement("div");
+    const res = document.createElement("div");
+    res.agd("div");
     res.memory = {};
     return res;
 }
@@ -228,8 +265,8 @@ function spawnDiv() {
  * @returns {domElemeent}
  */
 function spawnBtn() {
-    var res = document.createElement("button");
-    res.classList.add("btn", "btn-block", "h-100");
+    const res = document.createElement("button");
+    res.agd("button");
     res.memory = {};
     return res;
 }
@@ -255,13 +292,11 @@ function isEquivalent(a, b) {
         // If values of same property are not equal,
         // objects are not equivalent
         if (a[propName] !== b[propName]) {
-            // console.log("> $isEquivalent: The objects are different");
             return false;
         }
     }
     // If we made it this far, objects
     // are considered equivalent
-    // console.log("> $isEquivalent: The objects are equal");
     return true;
 }
 /**
@@ -273,10 +308,10 @@ function isEquivalent(a, b) {
  *
  * This function is currently used to throw the right events to scroll the other rows.
 */
-var simpleHash = function (str) {
-    var hash = 0;
-    for (var i = 0; i < str.length; i++) {
-        var char = str.charCodeAt(i);
+const simpleHash = (str) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
         hash = (hash << 5) - hash + char;
         hash &= hash; // Convert to 32bit integer
     }
@@ -287,13 +322,12 @@ var simpleHash = function (str) {
  * @param {int} index At what z-index to spawn it
  * @param {true|false} remove Whether it should be removed
  */
-function zDarkner(index, remove) {
-    if (remove === void 0) { remove = false; }
+function zDarkner(index, remove = false) {
     if (!remove) {
         if (darkenedScreenElement == null) {
-            var darkener = document.createElement("div");
+            const darkener = document.createElement("div");
             document.body.append(darkener);
-            darkener.agd(["darkener"]);
+            darkener.agd("darkener");
             darkenedScreenElement = darkener;
             //Style it
             darkener.style.opacity = "0.35";
@@ -319,8 +353,7 @@ function zDarkner(index, remove) {
  * Either blocks the body or unlocks it
  * @param {true|false} block
  */
-function blockBody(block) {
-    if (block === void 0) { block = true; }
+function blockBody(block = true) {
     if (block) {
         document.body.style.overflow = "hidden";
     }
@@ -339,7 +372,7 @@ function validPerc(closeValue) {
         closeValue.match(regex) != null ||
         parseFloat(closeValue) < 0 ||
         parseFloat(closeValue) > 100) {
-        console.log("La percentuale:", closeValue, "non va bene INT:", parseFloat(closeValue));
+        console.error("La percentuale:", closeValue, "non va bene INT:", parseFloat(closeValue));
         return false;
     }
     return true;
@@ -350,9 +383,7 @@ function validPerc(closeValue) {
  * @param visible In which state to put the element
  * @param stateProperties An array of state properties to update
  */
-function changeVisible(element, visible, stateProperties) {
-    if (stateProperties === void 0) { stateProperties = []; }
-    console.log(element, "HWHW");
+function changeVisible(element, visible, stateProperties = []) {
     if (visible == true) {
         element.classList.add("visible");
         element.classList.remove("hidden");
@@ -361,7 +392,7 @@ function changeVisible(element, visible, stateProperties) {
         element.classList.add("hidden");
         element.classList.remove("visible");
     }
-    stateProperties.forEach(function (property) {
+    stateProperties.forEach(property => {
         property = visible;
     });
 }
@@ -369,7 +400,7 @@ function changeVisible(element, visible, stateProperties) {
 //The user can add trades (logs) of that type. Every tipe has specific features
 //Then the user can define views using the available fields inside the available types
 //The user can add a new type, and he can
-var userPrefs = {
+const userPrefs = {
     //Sortings are based on one database column
     selectedSorting: "categories",
     sortings: {
@@ -394,8 +425,8 @@ var userPrefs = {
                         //If an element is not fixed, then it will be able to scroll
                         //Which elements get rendered? Check "availableFields"
                         //If fixed is true, then the size 
-                        "default": [
-                            { fixed: true, size: "10%", elements: ["1", "2", "3"], nElements: [] },
+                        default: [
+                            { fixed: true, size: "20%", elements: ["1", "2", "3"], nElements: [] },
                             {
                                 fixed: false,
                                 size: "80%",
@@ -435,10 +466,10 @@ var userPrefs = {
                                     "b2",
                                     "b3",
                                 ],
-                                elements: []
+                                elements: [],
                             },
-                        ]
-                    }
+                        ],
+                    },
                 },
                 option_buy: {
                     name: "Option Buy",
@@ -456,7 +487,7 @@ var userPrefs = {
                         //If an element is not fixed, then it will be able to scroll
                         //Which elements get rendered? Check "availableFields"
                         //If fixed is true, then the size 
-                        "default": [
+                        default: [
                             { fixed: true, size: "10%", elements: ["1", "2", "3"], nElements: [] },
                             {
                                 fixed: false,
@@ -497,28 +528,54 @@ var userPrefs = {
                                     "b2",
                                     "b3",
                                 ],
-                                elements: []
+                                elements: [],
                             },
-                        ]
-                    }
-                }
-            }
-        }
+                        ],
+                    },
+                },
+                // option: {
+                // 	name: "Buy Options",
+                // 	tag: "option",
+                // 	tagLogical: "equal",
+                // 	variations: [
+                // 		{ text: "Call", value: "call" },
+                // 		{ text: "Putt", value: "put" },
+                // 	],
+                // 	selected: "default",
+                // 	layouts: {
+                // 		default: {},
+                // 	},
+                // },
+                // optionSell: {
+                // 	name: "Write options",
+                // 	tag: "optionSell",
+                // 	tagLogical: "equal",
+                // 	variations: [
+                // 		{ text: "Call", value: "call" },
+                // 		{ text: "Putt", value: "put" },
+                // 	],
+                // 	selected: "default",
+                // 	layouts: {
+                // 		default: {},
+                // 	},
+                // },
+            },
+        },
     },
     rowsPerPage: 10,
     customFields: {
         "u1": {
             name: "testText",
             type: "input",
-            "default": "testingthisthinghere",
+            default: "testingthisthinghere",
             render: "true",
             subtype: "text",
             modifiers: [],
             computed: [],
             description: "A test input I built to try this feature out",
             placeholder: "testing",
-            columnName: "Test Text (Field!)"
-        }
+            columnName: "Test Text (Field!)",
+        },
     },
     /**
     * These are common elements to be spawned in prompts (like standard close percentage and other stuff)
@@ -545,15 +602,15 @@ var userPrefs = {
             "0": { text: "New Trade", attachedNumber: "1", attachedObj: {} },
             "1": { text: "Equity Trade", attachedNumber: "0", attachedObj: { category: "equity", trade_type: "long" } },
             "2": { text: "Buy Option", attachedNumber: "0", attachedObj: { category: "option_buy", trade_type: "call" } },
-            "3": { text: "Sell Option", attachedNumber: "0", attachedObj: { category: "option_sell" } }
+            "3": { text: "Sell Option", attachedNumber: "0", attachedObj: { category: "option_sell" } },
         },
         //
         closePrompt: {
             "0": { text: "25%", attachedNumber: "25", attachedObj: {} },
             "1": { text: "50%", attachedNumber: "50", attachedObj: {} },
             "2": { text: "75%", attachedNumber: "75", attachedObj: {} },
-            "3": { text: "100%", attachedNumber: "100", attachedObj: {} }
-        }
+            "3": { text: "100%", attachedNumber: "100", attachedObj: {} },
+        },
     },
     /**
      * These are used to keep every newly created option saved in the defaults, but let users decide a configuration for them.
@@ -567,31 +624,35 @@ var userPrefs = {
             templateName: "newRowsTemplates",
             selected: "default",
             variations: {
-                "default": ["1", "2"]
+                default: ["1", "2"]
             }
         }
     },
     formulas: {
         fields: {
-            totalCost: function (row, directive) {
+            totalCost: (row, directive) => {
             }
-        }
+        },
     },
-    walletList: __spreadArray([], walletList, true),
-    symbolList: __spreadArray([], symbolList, true)
+    walletList: [...walletList],
+    symbolList: [...symbolList],
+    // [
+    // 	{ id: "01", value: "Personal Account", tag: "Schwab" },
+    // 	{ id: "02", value: "WALL2", tag: "Ungrouped" },
+    // 	{ id: "03", value: "WALL3", tag: "TD Ameritrade" },
+    // ],
 };
 function getTradeTypeVars() {
-    var result = {};
-    for (var _i = 0, _a = Object.entries(userPrefs.sortings.categories.blocks); _i < _a.length; _i++) {
-        var _b = _a[_i], key = _b[0], value = _b[1];
+    const result = {};
+    for (const [key, value] of Object.entries(userPrefs.sortings.categories.blocks)) {
         result[key] = value.variations;
     }
     return result;
 }
 function buildDefaultUserFields() {
-    var res = {};
-    Object.values(userPrefs.customFields).forEach(function (customField) {
-        res[customField.name] = customField["default"];
+    const res = {};
+    Object.values(userPrefs.customFields).forEach(customField => {
+        res[customField.name] = customField.default;
     });
     return JSON.stringify(res);
 }
@@ -620,72 +681,84 @@ function buildDefaultUserFields() {
  * "stat" - calculated in the frontend
  *
  */
-var currentKeys = Object.keys(new TradeObj({}));
-var defaultFields = {
+//? Rebuild with Record<>??
+const defaultFields = {
     "0": {
         name: "legend",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "locked",
         modifiers: [],
         computed: [],
         description: "Fixed text field - shows the text which it's given as value",
         placeholder: "",
-        columnName: "Legend?"
+        columnName: "Legend?",
+    },
+    "s": {
+        name: "saved_sorting",
+        render: "false",
+        default: "",
+        type: "input",
+        subtype: "number",
+        modifiers: [],
+        computed: [],
+        description: "The saved sorting in the database",
+        placeholder: "",
+        columnName: "Saved Sorting",
     },
     "00i": {
         name: "id",
         render: "false",
-        "default": "0",
+        default: "0",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Id of the trade from our database. Autoincremented by the backend",
         placeholder: "",
-        columnName: "DB Id"
+        columnName: "DB Id",
     },
     "00p": {
         name: "pseudo_id",
         render: "false",
-        "default": "0",
+        default: "0",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Used for linear access. If the trade comes from the database, equal to the trade id. Otherwise, adjusted in the frontend to signify closedness etc.",
         placeholder: "",
-        columnName: "Pseudo Id"
+        columnName: "Pseudo Id",
     },
     "00b": {
         name: "order_id",
         render: "false",
-        "default": "0",
+        default: "0",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "broker based order id",
         placeholder: "",
-        columnName: "Broker Id"
+        columnName: "Broker Id",
     },
     "1": {
         name: "closed",
         render: "true",
-        "default": "false",
+        default: "false",
         type: "closed",
         subtype: "",
         modifiers: [],
         computed: [],
         description: "Toggles the trade status between open and closed",
         placeholder: "",
-        columnName: "Closed"
+        columnName: "Closed",
     },
     "2": {
         name: "symbol",
         render: "true",
-        "default": "",
+        default: "",
         type: "choice",
         subtype: "list",
         options: symbolList,
@@ -694,12 +767,12 @@ var defaultFields = {
         objLinked: ["symbol_tag", "symbol_id"],
         description: "Here you store which ticker you traded",
         placeholder: "AAPL, SPY, AMZN",
-        columnName: "Symbol"
+        columnName: "Symbol",
     },
     "2b": {
         name: "broker_symbol_id",
         render: "true",
-        "default": "",
+        default: "",
         type: "choice",
         subtype: "list",
         options: symbolList,
@@ -708,13 +781,13 @@ var defaultFields = {
         objLinked: [],
         description: "Symbol id in the broker (userful if treating options)",
         placeholder: "0ROOT.JF10007500",
-        columnName: "Broker Symbol ID"
+        columnName: "Broker Symbol ID",
     },
     "3": {
         // NOT THE CATEGORY, that one is at id 27
         name: "trade_type",
         render: "true",
-        "default": "buy",
+        default: "buy",
         type: "choice",
         subtype: "select",
         //* Function - Here we are not allowing users to change category of trade from the trade itself. We can implement re-creation later
@@ -723,144 +796,144 @@ var defaultFields = {
         computed: [],
         description: "This choice impacts statistic calculations",
         placeholder: "",
-        columnName: "Trade Type"
+        columnName: "Trade Type",
     },
     "4": {
         name: "open_date",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "date",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Open Date"
+        columnName: "Open Date",
     },
     "5": {
         name: "close_date",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "date",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Close Date"
+        columnName: "Close Date",
     },
     "6": {
         name: "shares",
         render: "true",
-        "default": "0",
+        default: "0",
         type: "input",
         subtype: "number",
         modifiers: ["closed_reduce"],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Shares"
+        columnName: "Shares",
     },
     "7": {
         name: "entry_price",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Entry Price"
+        columnName: "Entry Price",
     },
     "8": {
         name: "close_price",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Close Price"
+        columnName: "Close Price",
     },
     "9": {
         name: "leverage",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Leverage"
+        columnName: "Leverage",
     },
     "10": {
         name: "total_trade_cost",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: ["closed_reduce", "total_cost"],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Total Trade Cost"
+        columnName: "Total Trade Cost",
     },
     "11": {
         name: "price_target",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Price Target"
+        columnName: "Price Target",
     },
     "12": {
         name: "stop_loss",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Stop Loss"
+        columnName: "Stop Loss",
     },
     "13": {
         name: "open_time",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "time",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Open Time"
+        columnName: "Open Time",
     },
     "14": {
         name: "close_time",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "time",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Close Time"
+        columnName: "Close Time",
     },
     "15": {
         name: "trading_account",
         render: "true",
-        "default": "",
+        default: "",
         type: "choice",
         subtype: "list",
         modifiers: [],
@@ -869,282 +942,282 @@ var defaultFields = {
         options: walletList,
         description: "Desc",
         placeholder: "",
-        columnName: "Trading Account"
+        columnName: "Trading Account",
     },
     "16": {
         name: "details",
         render: "true",
-        "default": "",
+        default: "",
         type: "tags",
         subtype: "",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Details"
+        columnName: "Details",
     },
     "17": {
         name: "premium",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Premium"
+        columnName: "Premium",
     },
     "18": {
         name: "number_of_contracts",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: ["closed_reduce"],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Number of Contracts"
+        columnName: "Number of Contracts",
     },
     "19": {
         name: "expiration",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "date",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Expiration Date"
+        columnName: "Expiration Date",
     },
     "20": {
         name: "strike",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Strike"
+        columnName: "Strike",
     },
     "21": {
         name: "variation_perc",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Variation Percentage"
+        columnName: "Variation Percentage",
     },
     "22": {
         name: "variation",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: ["closed_reduce"],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Variation"
+        columnName: "Variation",
     },
     "23": {
         name: "symbol_tag",
         render: "false",
         //Default synced with List match function and list builder
-        "default": "",
+        default: "",
         type: "input",
         subtype: "text",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Symbol Tag"
+        columnName: "Symbol Tag",
     },
     "24": {
         name: "symbol_id",
         //Default synced with List match function and list builder
         render: "false",
-        "default": "-1",
+        default: "-1",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Symbol Id"
+        columnName: "Symbol Id",
     },
     "25": {
         name: "trading_account_id",
         //Default synced with List match function and list builder
         render: "false",
-        "default": "-1",
+        default: "-1",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Trading Account Id"
+        columnName: "Trading Account Id",
     },
     "26": {
         name: "trading_account_tag",
         //Default synced with List match function and list builder
         render: "false",
-        "default": "-1",
+        default: "-1",
         type: "input",
         subtype: "tag",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Trading Account Tag"
+        columnName: "Trading Account Tag",
     },
     "27": {
         name: "category",
         //Default synced with List match function and list builder
         render: "true",
-        "default": "equity",
+        default: "equity",
         type: "input",
         subtype: "text",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Trade Category"
+        columnName: "Trade Category",
     },
     "28": {
         name: "total_fees",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: ["closed_reduce"],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Total Fees"
+        columnName: "Total Fees",
     },
     "29": {
         //REF IS DIRECTED TOWARDS THE PSEUDOID, NOT THE ID
         name: "closed_ref",
         //Default synced with List match function and list builder
         render: "false",
-        "default": "-1",
+        default: "-1",
         type: "input",
         subtype: "id",
         modifiers: [],
         computed: [],
         description: "if -1, the trade is not closed, otherwise it's the id of the trade to which this is a partial close",
         placeholder: "",
-        columnName: "Closed Reference"
+        columnName: "Closed Reference",
     },
     "30": {
         name: "closed_list",
         //Default synced with List match function and list builder
         render: "false",
         //TODO: Update on save
-        "default": "[]",
+        default: "[]",
         type: "input",
         subtype: "array[int]",
         modifiers: [],
         computed: [],
         description: "Contains IDs of partial closes of this trade. When this trade is partially closed, this field obtains the id of the first partial close",
         placeholder: "",
-        columnName: "Closed List"
+        columnName: "Closed List",
     },
     "31": {
         name: "on_open_fees",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: ["closed_reduce"],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "On Open Fees"
+        columnName: "On Open Fees",
     },
     "32": {
         name: "on_close_fees",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: ["closed_reduce"],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "On Close Fees"
+        columnName: "On Close Fees",
     },
     "33": {
         name: "current_price",
         render: "true",
-        "default": "",
+        default: "",
         type: "input",
         subtype: "number",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Current Price"
+        columnName: "Current Price",
     },
     "juf": {
         name: "json_user_fields",
         //Default synced with List match function and list builder
         render: "false",
-        "default": "{}",
+        default: "{}",
         type: "input",
         subtype: "JSON",
         modifiers: [],
         computed: [],
         description: "Gets parsed to all the user fields as value. When the trade is saved all the user field data gets jsonized in here",
         placeholder: "",
-        columnName: "Json User Fields"
+        columnName: "Json User Fields",
     },
     "b1": {
         name: "save",
         render: "true",
-        "default": "Save",
+        default: "Save",
         type: "button",
         subtype: "save",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Save"
+        columnName: "Save",
     },
     "b2": {
         name: "delete",
         render: "true",
-        "default": "Cancel",
+        default: "Cancel",
         type: "button",
         subtype: "cancel",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Cancel"
+        columnName: "Cancel",
     },
     "b3": {
         name: "cancel",
         render: "true",
-        "default": "Delete",
+        default: "Delete",
         type: "button",
         subtype: "delete",
         modifiers: [],
         computed: [],
         description: "Desc",
         placeholder: "",
-        columnName: "Delete"
-    }
+        columnName: "Delete",
+    },
 };
 /**
  * * Function to create a CLEAN list of available fields
@@ -1152,8 +1225,8 @@ var defaultFields = {
  * - Overlapping is not taken care of
  * @returns {{int:{}} }
  */
-var availableFieldsGen = function () {
-    var res = __assign(__assign({}, defaultFields), userPrefs.customFields);
+const availableFieldsGen = () => {
+    const res = Object.assign(Object.assign({}, defaultFields), userPrefs.customFields);
     return res;
 };
 /**
@@ -1165,8 +1238,8 @@ var availableFieldsGen = function () {
 ////////////////////
 // Tables Section //
 ////////////////////
-var gin = function (identifier) {
-    var availableFields = availableFieldsGen();
+const gin = (identifier) => {
+    const availableFields = availableFieldsGen();
     if (availableFields.hasOwnProperty(identifier)) {
         return availableFields[identifier].name;
     }
@@ -1175,20 +1248,19 @@ var gin = function (identifier) {
         return gin("0");
     }
 };
-var Table = /** @class */ (function () {
+class Table {
     /**
      *
      * @param {domElement} parent Literally where to render the table
      * @param {Row[]} originalChildrenArray array of rows.
      * @param {TradeWindow} tradeWindowRef used to reference high-up from rows
      */
-    function Table(parent, originalChildrenArray, tradeWindowRef) {
-        if (originalChildrenArray === void 0) { originalChildrenArray = []; }
+    constructor(parent, originalChildrenArray = [], tradeWindowRef) {
         this.parent = parent;
         this.target = "";
         this.tradeWindowRef = tradeWindowRef;
         //
-        var tableProps = this.c_sortChildren(originalChildrenArray);
+        const tableProps = this.c_sortChildren(originalChildrenArray);
         //Increasing order by id
         this.sortedChildren = tableProps[0];
         this.activeLegend = "";
@@ -1203,78 +1275,100 @@ var Table = /** @class */ (function () {
                 holder: "",
                 currentPage: "",
                 moveBackward: "",
-                moveForward: ""
+                moveForward: "",
             }
         };
     }
-    //Sorry algorithm lord
-    Table.prototype.c_sortChildren = function (childArray) {
-        var byIdObj = {};
-        //Sort in increasing order
-        //TODO: Adapt this to sort by pseudoId in case it's not already doing it.
-        var sortedArr = childArray.sort(function (rowA, rowB) {
-            return parseFloat(rowA.origin[gin("00i")]) - parseFloat(rowB.origin[gin("00i")]);
+    /**
+     * Returns an array containing the rows in sorted order and the rows by id.
+     * @param childArray The rows coming in
+     */
+    c_sortChildren(childArray) {
+        const byIdObj = {};
+        //Sort in INCREASING order
+        //The LOWEST sorting gets put first as of css convention.
+        //OTHERWISE
+        //By sorting from smallest to greates, the smallest gets rendered as the first element, hence pushed to the end
+        const mainTrades = [...childArray].filter(row => row.current[gin("29")] == "-1");
+        const sortedArr = mainTrades.sort(function (rowA, rowB) {
+            return rowB.state.currentSorting - rowA.state.currentSorting;
         });
-        for (var i = 0; i < childArray.length; i++) {
-            var children = childArray[i];
+        for (let i = 0; i < childArray.length; i++) {
+            const children = childArray[i];
             byIdObj[children.origin[gin('00p')]] = children;
             children.changeTableReference(this);
         }
         return [sortedArr, byIdObj];
-    };
-    Table.prototype.renderTable = function () {
+    }
+    reorderRows() {
+        //We can call sortChildren with ONLY mainRows, reducing loops and getting the same result
+        this.sortedChildren = this.c_sortChildren(this.sortedChildren)[0];
+        this.sortedChildren.forEach(mainRow => {
+            if (mainRow.state.container != "") {
+                mainRow.state.container.style.order = mainRow.state.currentSorting.toLocaleString();
+            }
+            else {
+                console.error("Impossible to reorder given row: its container is undefined");
+            }
+        });
+        this.refreshPages();
+    }
+    renderTable() {
         //STYLEME
-        var table = document.createElement("table");
-        table.agd(["tradeTable"]);
-        table.classList.add("datatable-init-export", "nowrap", "table", "no-footer", "dtr-inline");
-        table.setAttribute('id', "tradeTrackerDatatable");
+        const table = document.createElement("div");
+        table.agd("tradeTable");
         this.parent.append(table);
         this.target = table;
         this.renderController();
-    };
+    }
     /**
      * Renders all the needed controllers for the table.
      */
-    Table.prototype.renderController = function () {
-        var _this = this;
-        var controllerBox = document.createElement("div");
+    renderController() {
+        const controllerBox = document.createElement("div");
         this.controllerBox.box = controllerBox;
-        controllerBox.agd(["tableBottomController"]);
+        controllerBox.agd("tableBottomController");
         if (this.target != "") {
             ////////////
             //PAGE MOVER
-            var holder = document.createElement("div");
+            const holder = document.createElement("div");
             this.target.append(controllerBox);
-            holder.agd(["pageMoverHolder"]);
-            var moveForward = document.createElement("button");
+            holder.agd("pageMoverHolder");
+            const moveForward = spawnBtn();
             moveForward.innerHTML = "&rarr;";
-            var moveBackward = document.createElement("button");
+            const moveBackward = spawnBtn();
             moveBackward.innerHTML = "&larr;";
-            var currentPage = document.createElement("input");
+            const currentPage = spawnInput();
             currentPage.value = this.currentPage.toLocaleString();
             holder.append(moveBackward, currentPage, moveForward);
             this.controllerBox.pageMover = {
-                holder: holder,
-                currentPage: currentPage,
-                moveBackward: moveBackward,
-                moveForward: moveForward
+                holder,
+                currentPage,
+                moveBackward,
+                moveForward,
             };
             controllerBox.append(holder);
-            moveForward.addEventListener("click", function (e) { _this.pageForward(); });
-            moveBackward.addEventListener("click", function (e) { _this.pageBackward(); });
+            moveForward.addEventListener("click", (e) => { this.pageForward(); });
+            moveBackward.addEventListener("click", (e) => { this.pageBackward(); });
+            currentPage.addEventListener("change", () => {
+                //The other functions already check for this, but we avoid a streak of refreshing functions
+                if (this.currentPageMin <= parseInt(currentPage.value) && parseInt(currentPage.value) <= this.currentPageMax) {
+                    this.currentPage = parseInt(currentPage.value);
+                    this.refreshPages();
+                }
+            });
         }
         else {
             console.error("Trying to append controller to DOM undefined table");
         }
-    };
+    }
     /**
      * Renders each present row following the sortedChildren order
      * @param {bool} refreshLayout Whether we are creating new containers or just refereshing the layout.
      * It works because when we render we take the value from the current object and not the origin one.
      */
-    Table.prototype.renderRows = function (refreshLayout) {
-        if (refreshLayout === void 0) { refreshLayout = false; }
-        this.sortedChildren.forEach(function (row) {
+    renderRows(refreshLayout = false) {
+        this.sortedChildren.forEach((row) => {
             row.renderRow(!refreshLayout);
         });
         if (refreshLayout) {
@@ -1286,30 +1380,31 @@ var Table = /** @class */ (function () {
             }
         }
         this.refreshPages();
-    };
-    Table.prototype.renderLegend = function (information) {
+    }
+    renderLegend(information) {
         if (this.activeLegend != "") {
             this.activeLegend.d_delete();
             this.activeLegend = "";
         }
         //Create a legend with properties that satisfy the refSortingTag
-        var selectedSortingTarget = userPrefs.sortings[userPrefs.selectedSorting].targets;
-        var freshLegendObj = new TradeObj({ legend: "true" });
+        const selectedSortingTarget = userPrefs.sortings[userPrefs.selectedSorting].targets;
+        const freshLegendObj = new TradeObj({ legend: "true", id: "-1" });
         switch (information.logical) {
             case "equal":
                 freshLegendObj[selectedSortingTarget] = information.tag;
                 break;
         }
-        var newLegend = new Row2(freshLegendObj, true);
+        const newLegend = new Row2(freshLegendObj, true);
         newLegend.changeTableReference(this);
         newLegend.renderRow();
         this.activeLegend = newLegend;
-    };
-    Table.prototype.hideTable = function () {
+    }
+    hideTable() {
         if (!!this.target) {
+            //??? this.classList.add("hideThis");
             this.target.style.display = "none";
         }
-    };
+    }
     /**
      * This is a general function to refresh things when a trade gets deleted, number of trades per pages gets changed or any other impacting change
      *
@@ -1319,20 +1414,21 @@ var Table = /** @class */ (function () {
      * - Calls the refreshCurrentPageVisibility function
      * - Calls the refreshPageController function
      */
-    Table.prototype.refreshPages = function () {
+    refreshPages() {
         //Check whether after the update you are on an empty page
         if (this.pagedTrades().length == 0) {
-            var maxPage = Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) + 1;
+            const maxPage = Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) + 1;
             this.currentPage = maxPage;
         }
         else {
-            var lastTradePosition = this.sortedChildren.indexOf(this.pagedTrades()[0]);
+            const lastTradePosition = this.sortedChildren.indexOf(this.pagedTrades()[0]);
             this.currentPage = Math.floor(lastTradePosition / userPrefs.rowsPerPage) + 1;
         }
         //Update the controller and which trades should be shown
         this.refreshCurrentPageVisibility();
         this.refreshPageController();
-    };
+        this.updateLegendPosition();
+    }
     /**
      * Shows the current page trades based on the sortedChildren property of the table, and hides all the rest
      *
@@ -1340,53 +1436,63 @@ var Table = /** @class */ (function () {
      */
     //! Big optimization flaw
     //TODO: Optimize this by working with reverse indexes instead of reversing the array
-    Table.prototype.refreshCurrentPageVisibility = function () {
+    refreshCurrentPageVisibility() {
         //Spread to not reverse the sorted one
         //Reference to objects is kept anyways
-        var reversedArray = __spreadArray([], this.sortedChildren, true).reverse();
-        var lowerBound = (this.currentPage - 1) * userPrefs.rowsPerPage;
-        var upperBound = (this.currentPage * userPrefs.rowsPerPage - 1);
-        for (var index = 0; index < reversedArray.length; index++) {
-            var element = reversedArray[index];
+        const reversedArray = [...this.sortedChildren].reverse();
+        const lowerBound = (this.currentPage - 1) * userPrefs.rowsPerPage;
+        const upperBound = (this.currentPage * userPrefs.rowsPerPage - 1);
+        for (let index = 0; index < reversedArray.length; index++) {
+            const element = reversedArray[index];
             //TODO: Decide whether to hide the mainRow or the container. 
             if (index >= lowerBound && index <= upperBound) {
-                if (element.state.mainRow != "") {
+                if (element.state.container != "") {
                     element.state.paged = true;
-                    element.state.mainRow.classList.add("visible");
-                    element.state.mainRow.classList.remove("hidden");
+                    const childTrades = JSON.parse(element.current[gin("30")]);
+                    childTrades.forEach(id => {
+                        //Backward pagination update. Ran forward when new rows are inserted
+                        if (this.tradeWindowRef.allRowsObj.hasOwnProperty(id)) {
+                            this.tradeWindowRef.allRowsObj[id].state.paged = true;
+                        }
+                    });
+                    changeVisible(element.state.container, true);
                 }
                 else {
-                    console.error("The row which has been tried to page is currently not rendered");
+                    console.error("The container of the row which has been tried to page is currently not rendered");
                 }
             }
             else {
-                if (element.state.mainRow != "") {
+                if (element.state.container != "") {
                     element.state.paged = false;
-                    element.state.mainRow.classList.remove("visible");
-                    element.state.mainRow.classList.add("hidden");
+                    const childTrades = JSON.parse(element.current[gin("30")]);
+                    childTrades.forEach(id => {
+                        if (this.tradeWindowRef.allRowsObj.hasOwnProperty(id)) {
+                            this.tradeWindowRef.allRowsObj[id].state.paged = false;
+                        }
+                    });
+                    changeVisible(element.state.container, false);
                 }
                 else {
-                    console.error("The row which has been tried to page is currently not rendered");
+                    console.error("The container of the row which has been tried to page is currently not rendered");
                 }
             }
         }
-    };
+    }
     /**
      * Visually refreshes the currentPage counter and the buttons in case we NOW are on the last/first page
      *
      * Used alongside other refresh functions.
      */
-    Table.prototype.refreshPageController = function () {
-        var currentPage = this.controllerBox.pageMover.currentPage;
+    refreshPageController() {
+        const currentPage = this.controllerBox.pageMover.currentPage;
         if (currentPage != "") {
-            var newMax = this.sortedChildren.length != 0 && (Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) - this.sortedChildren.length / userPrefs.rowsPerPage) == 0 ? this.sortedChildren.length / userPrefs.rowsPerPage : Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) + 1;
-            var newMin = 1;
+            const newMax = this.sortedChildren.length != 0 && (Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) - this.sortedChildren.length / userPrefs.rowsPerPage) == 0 ? this.sortedChildren.length / userPrefs.rowsPerPage : Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) + 1;
+            const newMin = 1;
             this.currentPageMin = newMin;
             this.currentPageMax = newMax;
             currentPage.value = this.currentPage.toLocaleString();
             currentPage.min = newMin.toLocaleString();
             currentPage.max = newMax.toLocaleString();
-            console.log(newMax, newMin);
             if (this.currentPage == newMin) {
                 if (this.controllerBox.pageMover.moveBackward != "") {
                     this.controllerBox.pageMover.moveBackward.classList.add("disabled");
@@ -1418,10 +1524,15 @@ var Table = /** @class */ (function () {
         else {
             console.error("currentPage HTMLinput controller is not rendered/not saved in the obj properties");
         }
-    };
-    Table.prototype.pageForward = function (numberOfPages) {
-        if (numberOfPages === void 0) { numberOfPages = 1; }
-        var reversedArray = __spreadArray([], this.sortedChildren, true).reverse();
+    }
+    updateLegendPosition() {
+        if (this.activeLegend != "" && this.activeLegend.state.container != "") {
+            this.activeLegend.state.currentSorting = this.tradeWindowRef.biggestSorting + 1;
+            this.activeLegend.state.container.style.order = this.activeLegend.state.currentSorting.toLocaleString();
+        }
+    }
+    pageForward(numberOfPages = 1) {
+        const reversedArray = [...this.sortedChildren].reverse();
         if (reversedArray.slice((this.currentPage - 1 + numberOfPages) * userPrefs.rowsPerPage, ((this.currentPage + numberOfPages) * userPrefs.rowsPerPage) - 1).length == 0) {
             //There are no trades on that page
             return false;
@@ -1437,10 +1548,9 @@ var Table = /** @class */ (function () {
             this.refreshCurrentPageVisibility();
             return true;
         }
-    };
-    Table.prototype.pageBackward = function (numberOfPages) {
-        if (numberOfPages === void 0) { numberOfPages = 1; }
-        var reversedArray = __spreadArray([], this.sortedChildren, true).reverse();
+    }
+    pageBackward(numberOfPages = 1) {
+        const reversedArray = [...this.sortedChildren].reverse();
         if ((this.currentPage - 1 - numberOfPages) < 0 || reversedArray.slice((this.currentPage - 1 - numberOfPages) * userPrefs.rowsPerPage, ((this.currentPage - numberOfPages) * userPrefs.rowsPerPage) - 1).length == 0) {
             //There are no trades on that page
             return false;
@@ -1454,15 +1564,14 @@ var Table = /** @class */ (function () {
             this.refreshCurrentPageVisibility();
             return true;
         }
-    };
+    }
     /**
      * Defaults to return the trades of the current page.
      * @returns Reference to the trades of the given page
      */
-    Table.prototype.pagedTrades = function (page) {
-        if (page === void 0) { page = this.currentPage; }
+    pagedTrades(page = this.currentPage) {
         return this.sortedChildren.slice((page - 1) * userPrefs.rowsPerPage, (page * userPrefs.rowsPerPage) - 1);
-    };
+    }
     //TODO: More on these
     /**
      * Function to add a children to the table elements
@@ -1470,63 +1579,102 @@ var Table = /** @class */ (function () {
      * @param {Row[]} children List of rows to push
      * @param {boolean} fresh Whether the element is new (has the highest id) or older (has a lower id)
      */
-    Table.prototype.pushChildren = function (children, fresh) {
-        var _this = this;
-        if (fresh === void 0) { fresh = true; }
+    pushChildren(children) {
         //STYLEME 
         //?? I don't know whether I need to change the order here or somewhere else.
-        children.forEach(function (child) {
-            child.changeTableReference(_this);
-            _this.children[child.origin[gin("00p")]] = child;
-            //Sort in the sortedChildern array - which is already sorted from the bottom
-            //If the array is empty, or the element has a bigger id than the last, just put it there. Otherwise find the one which is bigger
-            //TODO: Sort better based on pseudoId
-            if (_this.sortedChildren.length < 1 ||
-                parseFloat(_this.sortedChildren[_this.sortedChildren.length - 1].origin[gin("00i")]) <= parseFloat(child.origin[gin("00i")])) {
-                _this.sortedChildren.push(child);
-            }
-            else {
-                for (var index = 0; index < _this.sortedChildren.length; index++) {
-                    //> makes sure that trades with the same ids (closes) are still pushed to the last point of the sorted array
-                    //If the list is empty, push the trade no matter what
-                    if (parseFloat(_this.sortedChildren[index].origin[gin("00i")]) >
-                        parseFloat(child.origin[gin("00i")])) {
-                        //Shift the array forward and push this element
-                        _this.sortedChildren.splice(index, 0, child);
-                        //Finish the loop
-                        //RISKY IF ANYTHING IS CHANGED, COULD INFINITE LOOP
-                        index = _this.sortedChildren.length;
+        children.forEach((child) => {
+            child.changeTableReference(this);
+            this.children[child.origin[gin("00p")]] = child;
+            //Sort only mainRows. If empty, unshift in the increasing order array. Otherwise find the first row it's bigger of
+            if (child.current[gin("29")] == "-1") {
+                //SORTING
+                if (this.sortedChildren.length < 1 ||
+                    child.state.currentSorting <= this.sortedChildren[0].state.currentSorting) {
+                    this.sortedChildren.unshift(child);
+                }
+                else {
+                    //The worst case scenario now is that the second element is already greater than the coming one
+                    //splice puts to the right of the index
+                    //The smallest index we can get is 0
+                    for (let index = 0; index < this.sortedChildren.length; index++) {
+                        const element = this.sortedChildren[index];
+                        if (index == this.sortedChildren.length - 1 && child.state.currentSorting >= element.state.currentSorting) {
+                            this.sortedChildren.push(child);
+                            //Loop closure
+                            index = this.sortedChildren.length;
+                        }
+                        else {
+                            if (child.state.currentSorting < element.state.currentSorting) {
+                                this.sortedChildren.splice(index, 0, child);
+                                //Loop closure
+                                index = this.sortedChildren.length;
+                            }
+                        }
                     }
                 }
+                //Repeating the renderRow to avoid another if (closedRef check)
+                child.renderRow();
+                //The state.paged is handled by the page manager because this row is in the sorted list
+                if (child.state.container != "") {
+                    child.state.container.style.order = child.state.currentSorting.toLocaleString();
+                    if (child.current[gin("30")] != "[]") {
+                        const partialCloses = JSON.parse(child.current[gin("30")]);
+                        partialCloses.forEach(pseudoId => {
+                            //Backwards pagination and rendering
+                            if (this.children.hasOwnProperty(pseudoId)) {
+                                if (Object.entries(this.children[pseudoId].structure).length == 0) {
+                                    this.children[pseudoId].renderRow();
+                                    this.children[pseudoId].state.paged = child.state.paged;
+                                }
+                            }
+                        });
+                    }
+                }
+                else {
+                    console.error("Trying to push mainRow and reorder its container but failed because the container is undefined");
+                }
             }
-            child.renderRow();
-            _this.currentPageMax = Math.floor(_this.sortedChildren.length / userPrefs.rowsPerPage) + 1;
+            else {
+                //* DELAYED RENDERING: The partial row renders only when the parent exists.
+                //FORWARD CHECKING: Update the pagination for that children if it has a closedRef property working
+                //Backward check is done in the pagination update
+                if (this.children.hasOwnProperty(child.current[gin("29")])) {
+                    //If it has not been rendered yet by the backwards rendering, then do so
+                    if (Object.entries(child.structure).length == 0) {
+                        child.state.paged = this.children[child.current[gin("29")]].state.paged;
+                        child.renderRow();
+                    }
+                }
+                //If the main row is not there yet, she will take care of rendering this one
+            }
+            this.currentPageMax = Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) + 1;
         });
         this.refreshPages();
-        //? Later make old blocks render "in blocks" and so follow an ordering process.
-    };
-    Table.prototype.dropChildren = function (children) {
-        var _this = this;
-        children.forEach(function (child) {
+    }
+    //! Incomplete function - doesn't de-render rows.
+    dropChildren(children) {
+        children.forEach((child) => {
             //When the db is called, the pseudoids vanish, and also get edited
-            delete _this.children[child.origin[gin("00p")]];
-            _this.currentPageMax = Math.floor(_this.sortedChildren.length / userPrefs.rowsPerPage) + 1;
+            delete this.children[child.origin[gin("00p")]];
+            this.currentPageMax = Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) + 1;
             //todo: optimize this, could be moved below
-            _this.sortedChildren.filter(function (element) {
+            this.sortedChildren.filter((element) => {
                 element.origin[gin("00p")] != child.origin[gin("00p")];
             });
         });
         this.refreshPages();
-    };
-    return Table;
-}());
-var TradeWindow = /** @class */ (function () {
-    function TradeWindow(holder) {
+    }
+}
+class TradeWindow {
+    constructor(holder) {
         this.holder = holder;
         this.tables = {};
         this.allRows = [];
+        this.delayedRenderStack = {};
+        this.biggestSorting = 0;
         //Linear access
         this.allRowsObj = {};
+        this.currentlyEdited = new Set();
         this.sortings = userPrefs.sortings;
         this.selectedSorting = userPrefs.sortings[userPrefs.selectedSorting];
         //DB column that is getting tag-checked
@@ -1535,7 +1683,10 @@ var TradeWindow = /** @class */ (function () {
         // {tag: "equity", logical: "equal"}
         this.refSortingTags = [];
         //Parent styling
-        holder.classList.add("tt-trade-window");
+        holder.agd("tradeWindow");
+        this.controllers = {
+            saveAll: "",
+        };
     }
     /**
      * Fractions the tradelist into tables based on the selected sorting
@@ -1544,7 +1695,7 @@ var TradeWindow = /** @class */ (function () {
      * - To populate trades *, we use the filtertrades function
      * The * is just for reading reference
      */
-    TradeWindow.prototype.updateSortingInfo = function () {
+    updateSortingInfo() {
         this.sortings = userPrefs.sortings;
         this.selectedSorting = this.sortings[userPrefs.selectedSorting];
         if (typeof this.selectedSorting === "string") {
@@ -1553,8 +1704,7 @@ var TradeWindow = /** @class */ (function () {
         else {
             this.columnTarget = this.selectedSorting.targets;
             this.refSortingTags = [];
-            for (var _i = 0, _a = Object.values(this.selectedSorting.blocks); _i < _a.length; _i++) {
-                var blockObj = _a[_i];
+            for (const blockObj of Object.values(this.selectedSorting.blocks)) {
                 //The list
                 this.refSortingTags.push({
                     tag: blockObj.tag,
@@ -1563,70 +1713,112 @@ var TradeWindow = /** @class */ (function () {
                         tag: blockObj.tag,
                         logical: blockObj.tagLogical,
                         trades: []
-                    }, this.allRows)
+                    }, this.allRows),
                 });
             }
         }
-    };
-    TradeWindow.prototype.buildTables = function () {
-        var _this = this;
+    }
+    buildTables() {
         this.tables = {};
         this.updateSortingInfo();
-        this.refSortingTags.forEach(function (tagObj) {
-            var newTable = new Table(_this.holder, tagObj.trades, _this);
-            _this.tables[tagObj.tag] = newTable;
+        this.refSortingTags.forEach((tagObj) => {
+            const newTable = new Table(this.holder, tagObj.trades, this);
+            this.tables[tagObj.tag] = newTable;
             newTable.renderTable();
             newTable.renderRows();
             newTable.renderLegend(tagObj);
         });
-    };
+    }
     /**
      * Filters trade for tradesList generation through updateSortingInfo.
      * Also adds trades to o(n) object array - used ALI partial close rows rendering to find the parent trade
+     *
+     * ATTENTION: Closed rows are part of the main row, hence if they don't meet the criteria of the filtering they asre still pushed with the main row in the respective object
      * @param {{tag: string, logical: string, trades: Row[] }} tagObj
      * @returns
      */
-    TradeWindow.prototype.filterTrades = function (tagObj, rows) {
-        var _this = this;
+    filterTrades(tagObj, rows) {
+        const copiedRows = [...rows];
+        const entireList = [];
+        const delayedRenderStack = [];
         switch (tagObj.logical) {
             //TODO add other cases
             case "equal":
             default:
-                return rows.filter(function (row) {
-                    _this.allRowsObj[row.origin[gin("00p")]] = row;
-                    if (row.origin[_this.columnTarget] == tagObj.tag) {
+                entireList.push(...copiedRows.filter((row) => {
+                    // Only care about the main rows, not the closed ones, those one get pushed in tag object if their reference is already there
+                    //Handling partial rows
+                    //THIS IS USED FOR ROWS THAT GET INCLUDE AFTER THEIR CLOSED PARENT COMES IN
+                    if (row.current[gin("29")] != "-1") {
+                        //Check if the tagObj already has this row
+                        if (tagObj.trades.filter((otherRow) => otherRow.current[gin("00p")] == row.current[gin("00p")]).length == 0) {
+                            //Forward check
+                            if (this.allRowsObj.hasOwnProperty(row.current[gin("29")])) {
+                                if (this.allRowsObj[row.current[gin("29")]].origin[this.columnTarget] == tagObj.tag) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                    // if the row is an entire one and it matches, take all its referenced rows and gather them in the object as well  
+                    else if (row.origin[this.columnTarget] == tagObj.tag && row.current[gin("29")] == "-1") {
+                        if (row.current[gin("30")] != "[]") {
+                            //Gather all those rows and get them in here too
+                            const list = JSON.parse(row.current[gin("30")]);
+                            //We don't have only db rows, as in the current we keep the pseudoIds as well
+                            ////Here we only have db rows, so we can compare ids rather than pseudos
+                            list.forEach(partialRowPId => {
+                                //Check that it's not already in there. 
+                                if (tagObj.trades.filter((otherRow) => otherRow.current[gin("00p")] == partialRowPId).length == 0) {
+                                    //Backward check
+                                    if (this.allRowsObj.hasOwnProperty(partialRowPId))
+                                        entireList.push(this.allRowsObj[partialRowPId]);
+                                }
+                            });
+                        }
                         return true;
                     }
-                });
+                }));
         }
-    };
-    TradeWindow.prototype.sortAndTableTrades = function (trades) {
-        var _this = this;
+        return entireList;
+    }
+    sortAndTableTrades(trades) {
         //We need to push this here to
         this.allRows = this.allRows.concat(trades);
-        this.refSortingTags.forEach(function (tagObj) {
-            var correctTrades = _this.filterTrades(tagObj, trades);
-            tagObj.trades = tagObj.trades.concat(correctTrades);
-            _this.tables[tagObj.tag].pushChildren(correctTrades);
+        trades.forEach(row => {
+            this.allRowsObj[row.origin[gin("00p")]] = row;
+            if (row.state.currentSorting > this.biggestSorting) {
+                this.biggestSorting = row.state.currentSorting;
+            }
         });
-    };
-    TradeWindow.prototype.dropTrades = function (trades) {
-    };
-    return TradeWindow;
-}());
+        this.refSortingTags.forEach((tagObj) => {
+            let correctTrades = this.filterTrades(tagObj, trades);
+            tagObj.trades = tagObj.trades.concat(correctTrades);
+            this.tables[tagObj.tag].pushChildren(correctTrades);
+        });
+    }
+    dropTrades(trades) {
+    }
+    saveAll() {
+        this.allRows.forEach(row => {
+            if (row.state.editingList.length != 0) {
+                row.d_saveChanges();
+            }
+        });
+    }
+}
 // When a value is clicked, the "newInput" event is dispatched. 
 // The dom target must be adapted to contain such listener
-var Expander = /** @class */ (function () {
-    function Expander(newDomTarget, type, activeRow) {
-        if (activeRow === void 0) { activeRow = ""; }
+class Expander {
+    constructor(newDomTarget, type, activeRow = "") {
         this.activeRow = "";
         this.currentFormat = "lister";
         //The dom target is the element which the lister has effect on
         this.currentDomTarget = newDomTarget;
         this.activeRow = activeRow;
         this.element = document.createElement("div");
-        this.element.classList.add("tt-expander");
-        this.element.classList.add("hidden");
+        //Also hiding it at spawn
+        this.element.agd("expander");
         this.state = {
             visible: false,
             position: {
@@ -1637,135 +1829,127 @@ var Expander = /** @class */ (function () {
         this.changeFormat(type);
         document.body.append(this.element);
     }
-    Expander.prototype.changeFormat = function (newFormat) {
+    changeFormat(newFormat) {
         this.element.classList.remove(this.currentFormat);
         this.element.classList.add(newFormat);
         this.currentFormat = newFormat;
-    };
+    }
     /**
      * Checking for status before hiding or showing must be done outside of these functions
      */
-    Expander.prototype.hide = function () {
+    hide() {
         this.element.classList.remove(this.currentFormat);
         this.element.classList.add("hidden");
         this.state.visible = false;
-    };
+    }
     /**
      * Moves the expander to the target and shows it
      *
      * Checking for status before hiding or showing must be done outside of these functions.
      * https://tutorial.eyehunts.com/js/get-absolute-position-of-element-javascript-html-element-browser-window/
      */
-    Expander.prototype.show = function () {
+    show() {
         this.moveAndResizeTo(this.currentDomTarget);
         this.element.classList.add(this.currentFormat);
         this.element.classList.remove("hidden");
         this.state.visible = true;
-        console.log("SHOWING", this.element);
-    };
+    }
     //Moves the expander to the current target by default, or another input/select if passed
-    Expander.prototype.moveAndResizeTo = function (target) {
-        if (target === void 0) { target = this.currentDomTarget; }
-        var rect = target.getBoundingClientRect();
-        var width = rect.width;
-        var left = rect.left;
-        var bottom = rect.bottom;
+    moveAndResizeTo(target = this.currentDomTarget) {
+        const rect = target.getBoundingClientRect();
+        const width = rect.width;
+        const left = rect.left;
+        const bottom = rect.bottom;
         // Edit the expander element
-        this.element.style.width = "".concat(width, "px");
-        this.element.style.top = "".concat(bottom + window.scrollY, "px");
-        this.element.style.left = "".concat(left + window.scrollX, "px");
-    };
+        this.element.style.width = `${width}px`;
+        this.element.style.top = `${bottom + window.scrollY}px`;
+        this.element.style.left = `${left + window.scrollX}px`;
+    }
     /**
      *  In case of a moreOptions expander, the values are not going to be filtered (at least in this patch). So only a single element will be taken giving directions on which promptDefatults object to read from
      * */
-    Expander.prototype.fill = function (content) {
-        var _this = this;
+    fill(content) {
         // The content type determines how the listerObj list is interpreted
         if (this.currentFormat == "lister") {
             //Todo: Check that the content type matches the expander type
             this.element.textContent = "";
-            var empty = void 0;
+            let empty;
             if (content.length == 0) {
                 empty = spawnDiv();
                 empty.innerHTML = "No results";
-                empty.classList.add("empty-block");
+                empty.agd("expanderEmptyBlock");
                 this.element.append(empty);
             }
             else {
-                var orderedListByTag = __spreadArray([], content, true).sort(function (a, b) { return a.tag.localeCompare(b.tag); });
-                var _loop_1 = function (index) {
+                const orderedListByTag = [...content].sort((a, b) => a.tag.localeCompare(b.tag));
+                // Print a divider based on tag
+                for (let index = 0; index < orderedListByTag.length; index++) {
                     //Separate the elements with different tags
                     /*ideas:
                         - Make the paragraph cliccable and show only the trades with that specific
                     */
                     //Check if a tag separator is needed and print it
-                    var tagSeparator = void 0, clickableValue;
+                    let tagSeparator, clickableValue;
                     if (index == 0) {
                         //HERE: we don't print anything if the first tag is empty. Which is unlikely, but whatever
                         if (orderedListByTag[index].tag != "") {
                             tagSeparator = spawnDiv();
                             tagSeparator.innerHTML = orderedListByTag[index].tag;
-                            this_1.element.append(tagSeparator);
+                            this.element.append(tagSeparator);
                         }
                     }
                     else if (orderedListByTag[index].tag != orderedListByTag[index - 1].tag) {
                         tagSeparator = spawnDiv();
                         tagSeparator.innerHTML = orderedListByTag[index].tag;
-                        this_1.element.append(tagSeparator);
+                        this.element.append(tagSeparator);
                     }
-                    tagSeparator === null || tagSeparator === void 0 ? void 0 : tagSeparator.classList.add("tag-separator");
+                    tagSeparator === null || tagSeparator === void 0 ? void 0 : tagSeparator.agd("expanderTagSeparator");
                     clickableValue = spawnDiv();
-                    clickableValue.classList.add("clickable-value");
-                    this_1.element.append(clickableValue);
+                    clickableValue.agd("expanderClickableValue");
+                    this.element.append(clickableValue);
                     //Give it activation properties
                     clickableValue.innerHTML = orderedListByTag[index].value;
-                    clickableValue.realValue = __assign({}, orderedListByTag[index]);
-                    console.log(clickableValue);
+                    clickableValue.realValue = Object.assign({}, orderedListByTag[index]);
                     //Click event
-                    clickableValue.addEventListener("click", function (e) {
+                    clickableValue.addEventListener("click", (e) => {
                         var _a;
                         //Dispatch an event to the field to edit everything
-                        var newInputEvent = new CustomEvent("newInput", { detail: { inputValue: clickableValue.realValue } });
-                        _this.currentDomTarget.dispatchEvent(newInputEvent);
+                        const newInputEvent = new CustomEvent("newInput", { detail: { inputValue: clickableValue.realValue } });
+                        this.currentDomTarget.dispatchEvent(newInputEvent);
                         //Now change the inner value of the linked field
-                        _this.currentDomTarget.value = (_a = clickableValue.realValue) === null || _a === void 0 ? void 0 : _a.value;
+                        this.currentDomTarget.value = (_a = clickableValue.realValue) === null || _a === void 0 ? void 0 : _a.value;
                     });
-                };
-                var this_1 = this;
-                // Print a divider based on tag
-                for (var index = 0; index < orderedListByTag.length; index++) {
-                    _loop_1(index);
                 }
             }
         }
         else if (this.currentFormat == "moreOptions") {
             // Let the id refer to the 
             this.element.textContent = "";
-            var empty = spawnDiv();
+            let empty = spawnDiv();
             if (content.length == 0) {
                 empty.innerHTML = "No options available";
-                empty.classList.add("empty-block");
+                empty.agd("expanderEmptyBlock");
                 this.element.append(empty);
                 console.error("No directive given when generating moreOptions expander");
             }
             else {
                 //Get to promptDefaults and check whether the required directives are available
-                var selectedButtons_1 = [];
+                const selectedButtons = [];
                 //A lot of error management, more of an excercise than anything.
                 //The big part of error management has to be done in the creation of userPrefs
                 if (userPrefs.promptDefaultsDirectives.hasOwnProperty(content[0].id)) {
-                    var directive_1 = userPrefs.promptDefaultsDirectives[content[0].id];
-                    if (userPrefs.promptDefaults.hasOwnProperty(directive_1.templateName)) {
-                        if (directive_1.variations.hasOwnProperty(directive_1.selected)) {
-                            var selected = directive_1.variations[directive_1.selected];
+                    const directive = userPrefs.promptDefaultsDirectives[content[0].id];
+                    if (userPrefs.promptDefaults.hasOwnProperty(directive.templateName)) {
+                        if (directive.variations.hasOwnProperty(directive.selected)) {
+                            const selected = directive.variations[directive.selected];
                             //Not empty checking
-                            selected.forEach(function (element) {
+                            selected.forEach(element => {
                                 //@ts-ignore
-                                selectedButtons_1.push(userPrefs.promptDefaults[directive_1.templateName][element]);
+                                selectedButtons.push(userPrefs.promptDefaults[directive.templateName][element]);
                             });
                         }
                         else {
-                            console.error("Selected directive for ".concat(content[0].id, " has no match in its variations"));
+                            console.error(`Selected directive for ${content[0].id} has no match in its variations`);
                         }
                     }
                     else {
@@ -1775,64 +1959,113 @@ var Expander = /** @class */ (function () {
                 else {
                     console.error("Given directive has no match in userPrefs/promptDefaultsDirectives");
                 }
-                if (selectedButtons_1.length == 0) {
+                if (selectedButtons.length == 0) {
                     empty.innerHTML = "No options available";
-                    empty.classList.add("empty-block");
+                    empty.agd("expanderEmptyBlock");
                     this.element.append(empty);
                     console.error("Directive given, but no results from userPrefs");
                 }
                 else {
-                    selectedButtons_1.forEach(function (button) {
-                        var newBtn = spawnBtn();
-                        newBtn.classList.add("new-button");
+                    selectedButtons.forEach(button => {
+                        const newBtn = spawnBtn();
+                        newBtn.agd("spawnerButton");
                         if (button.attachedNumber == "0") {
                             newBtn.classList.add("quick-spawn");
                         }
                         else if (button.attachedNumber == "1") {
-                            newBtn.classList.add("main");
+                            newBtn.classList.add("spawner-main");
                         }
-                        _this.element.append(newBtn);
+                        this.element.append(newBtn);
                         newBtn.innerHTML = button.text;
-                        newBtn.addEventListener("click", function (e) {
+                        newBtn.addEventListener("click", (e) => {
                             //Dispatch an event to the field to edit everything
-                            var newInputEvent = new CustomEvent("directive", { detail: { type: button.attachedNumber, attachedObj: button.attachedObj } });
-                            _this.currentDomTarget.dispatchEvent(newInputEvent);
+                            const newInputEvent = new CustomEvent("directive", { detail: { type: button.attachedNumber, attachedObj: button.attachedObj } });
+                            this.currentDomTarget.dispatchEvent(newInputEvent);
                         });
                     });
                 }
             }
         }
-    };
+    }
     ;
-    return Expander;
-}());
-var Row2 = /** @class */ (function () {
-    function Row2(data, legend) {
-        if (legend === void 0) { legend = false; }
-        var _this = this;
+}
+class Row2 {
+    constructor(data, legend = false) {
         /**
                  * Function that sets the field to an editing state and adds the item to the editingList
                  * - for lists only the main property is being tracked
                  * @param {"string"} fieldName The name of the field
                  */
-        this.setEditing = function (fieldName) {
-            _this.structure[fieldName].editing = true;
+        this.setEditing = (fieldName) => {
+            this.structure[fieldName].editing = true;
             //Adding to the fieldholder for buttons
-            _this.structure[fieldName].target.memory.fieldHolder.classList.add("editing");
-            _this.state.editing = true;
-            _this.state.editingList.push(fieldName);
+            this.structure[fieldName].target.memory.fieldHolder.agd("editing");
+            this.state.editing = true;
+            this.state.editingList.push(fieldName);
         };
         /**
          * Function that removes the field from an editing state and if the edittinglist is empty REMOVES the editing state
          * - for lists only the main property is being tracked
          * @param {"string"} fieldName The name of the field
          */
-        this.removeEditing = function (fieldName) {
-            _this.structure[fieldName].editing = false;
-            _this.structure[fieldName].target.memory.fieldHolder.classList.remove("editing");
-            _this.state.editingList = _this.state.editingList.filter(function (item) { return item !== fieldName; });
-            if (_this.state.editingList.length == 0) {
-                _this.state.editing = false;
+        this.removeEditing = (fieldName) => {
+            this.structure[fieldName].editing = false;
+            this.structure[fieldName].target.memory.fieldHolder.rgd("editing");
+            this.state.editingList = this.state.editingList.filter((item) => item !== fieldName);
+            if (this.state.editingList.length == 0) {
+                this.state.editing = false;
+            }
+        };
+        this.cancelChanges = () => {
+            //We don't have to work on "Linked" fields since they only exist in the current object
+            this.state.editingList.forEach((changedField) => {
+                //Get the fiend which has been changed in the structure property
+                if (isStructObj(this.structure[changedField])) {
+                    const fieldStruct = this.structure[changedField];
+                    //Use the predefined reset function for each field
+                    // @ts-ignore
+                    fieldStruct.reset();
+                    //We let it change the close value no matter what
+                    //Drops field from array & sets all the states to the right "Position"
+                    // @ts-ignore
+                    this.removeEditing(fieldStruct.name);
+                }
+                else {
+                    console.error("A function name has been added to the editing list and is now being iterated:", this.state.editingList);
+                }
+            });
+            //THIS THING RIGHT HERE SOLVES A LOT OF PROBLEMS
+            //Current = ...Origin now
+            this.updateCurrent("", -1);
+            //Run an iteration of the toggler to "remove" the clickability from the cancel field
+            this.cancelSaveToggler();
+        };
+        this.d_saveChanges = async () => {
+            try {
+                // Put user field changes into the json_user_fields field
+                const dbObject = Object.assign({}, this.current);
+                //DB
+                // PseudoId implementation: when a trade with a pseaudoid is saved, get him a real id. Then this id gets changed in the frontend both in the actual row and in all of the linearObjs in tables and tradewindows referring to it (including closed_ref and other)
+                // Closed_list: when a trade with a closed reference is saved, update the closed list of the parent trade in the frontend and backend. 
+                //! The closed list must be updated based on this trade refernece, because the main trade doesn't have any actual contents in the current closedList
+                //Async save changes
+                //Edit the pseudoid and other db fields (like the id)
+                //Refresh the origin object to mirror the (just modified) current one
+                this.updateCurrent("", 1);
+                //Cancelchanges will removeEditing, then run the cancelSaveToggler to fix any still active button
+                this.cancelChanges();
+                //Upward Save Propagation
+                if (this.current[gin("29")] != "-1") {
+                    if (this.state.table != "") {
+                        this.state.table.tradeWindowRef.allRowsObj[this.current[gin("29")]].d_saveChanges();
+                    }
+                    else {
+                        console.error("d_saveChanges$ Couldn't propagate changes upwards because this row has no table reference", this);
+                    }
+                }
+            }
+            catch (error) {
+                //Let the user know something was wrong
             }
         };
         /**
@@ -1841,55 +2074,60 @@ var Row2 = /** @class */ (function () {
          * @param {*} value The value to change it to
          * @param {string| -1} target If -1 makes the current object identical to the origin one, if 1 the opposite
          */
-        this.updateCurrent = function (value, target) {
-            if (value === void 0) { value = ""; }
+        this.updateCurrent = (value = "", target) => {
             if (target == -1) {
-                _this.current = __assign({}, _this.origin);
+                this.current = Object.assign({}, this.origin);
             }
             else if (target == 1) {
-                _this.origin = __assign({}, _this.current);
+                this.origin = Object.assign({}, this.current);
             }
             else {
-                _this.current[target] = value;
+                this.current[target] = value;
             }
             //DEBUG
-            // Prints the current objects for the "test" row clearly in another div
-            var curPrint = document.querySelector(".current");
-            var oriPrint = document.querySelector(".origin");
-            // @ts-ignore
-            curPrint.innerHTML = JSON.stringify(_this.current);
-            // @ts-ignore
-            oriPrint.innerHTML = JSON.stringify(_this.origin);
-            //DEBUG
+            if (debug) {
+                // Prints the current objects for the "test" row clearly in another div
+                const curPrint = document.querySelector(".current");
+                const oriPrint = document.querySelector(".origin");
+                // @ts-ignore
+                curPrint.innerHTML = JSON.stringify(this.current);
+                // @ts-ignore
+                oriPrint.innerHTML = JSON.stringify(this.origin);
+                //DEBUG
+            }
         };
         /**
          * Function to prompt a close event. Takes no argument because it acts on the row itself
          */
-        this.closePrompt = function () {
+        this.closePrompt = () => {
             // Needed for ease of managing events below (onclose)
-            var rowRef = _this;
+            const rowRef = this;
             //STYLEME
             //This is the container for everything
-            var promptBox = document.createElement("div");
+            const promptBox = spawnDiv();
             promptBox.dataset.visible = "true";
-            promptBox.classList.add("tt-prompt-box");
+            promptBox.agd("promptBox");
             promptBox.style.zIndex = "11";
             //This is the title of the box
-            var promptTitle = document.createElement("h3");
+            const promptTitle = document.createElement("h3");
+            promptTitle.agd("h3");
             //This is the description of what the heck you are doing
-            var promptDesc = document.createElement("div");
+            const promptDesc = spawnDiv();
+            promptDesc.agd("description");
             //This box is used to manually send the amout - BIG ON DESKTOP, SMALL ON MOBILE
-            var inputBox = document.createElement("input");
+            const inputBox = spawnInput();
             inputBox.setAttribute("type", "number");
             inputBox.setAttribute("max", "100");
             inputBox.setAttribute("min", "0");
             //These buttons are used to autofill the element - BIG ON MOBILE SMALL ON DESKTOP
-            var inputButtonArray = document.createElement("div");
+            const inputButtonArray = spawnDiv();
             //Add a close button
-            var closeBtn = document.createElement("button");
-            closeBtn.innerHTML = "Close this";
-            var _loop_2 = function (value) {
-                var button = document.createElement("button");
+            const closeBtn = spawnBtn();
+            closeBtn.innerHTML = "✕";
+            closeBtn.agd("closeWindowBtn");
+            //Spawn the buttons that the user wanted to have as preference
+            for (const value of Object.values(userPrefs.promptDefaults.closePrompt)) {
+                const button = spawnBtn();
                 button.innerHTML = value.text;
                 //Onclick edit the input field
                 button.onclick = function () {
@@ -1899,38 +2137,27 @@ var Row2 = /** @class */ (function () {
                 button.style.order = value.attachedNumber.toLocaleString();
                 //Append it
                 inputButtonArray.append(button);
-            };
-            //Spawn the buttons that the user wanted to have as preference
-            for (var _i = 0, _a = Object.values(userPrefs.promptDefaults.closePrompt); _i < _a.length; _i++) {
-                var value = _a[_i];
-                _loop_2(value);
             }
             // If on mobile we need an ok button, but the event will be fired also on Enter click
-            var enterButton = document.createElement("button");
+            const enterButton = spawnBtn();
             enterButton.innerHTML = "Enter";
             //Where you show errors when they arise
-            var errorBox = document.createElement("div");
+            const errorBox = spawnDiv();
             //Used to show basic information, like the key to press
-            var infoBox = document.createElement("div");
+            const infoBox = spawnDiv();
             //Fill the thingy
             promptBox.append(promptTitle, promptDesc, inputBox, inputButtonArray, enterButton, closeBtn, errorBox, infoBox);
             document.body.append(promptBox);
             //FOcus on the field
             inputBox.focus();
-            //Block the scrolling
-            blockBody();
-            //Darken the background - we pass an index below the promptbox one. Here TEN
-            zDarkner("10");
             //Bind the meaning to the closebutton of the box
             closeBtn.onclick = function () {
-                blockBody(false);
-                zDarkner("0", true);
                 delClosePrompt();
             };
             //Now we add the listeners for OK or enter key that run the close function
             inputBox.oninput = function () {
                 //Check if everything is alright
-                var isGood = validPerc(inputBox.value);
+                const isGood = validPerc(inputBox.value);
                 if (isGood) {
                     errorBox.innerHTML = "";
                 }
@@ -1940,7 +2167,7 @@ var Row2 = /** @class */ (function () {
             //Function below runs function above
             window.addEventListener("keyup", function (event) {
                 // Number 13 is the "Enter" key on the keyboard
-                if (event.key === "13") {
+                if (event.key === "Enter") {
                     // Cancel the default action, if needed
                     event.preventDefault();
                     // Trigger the button element with a click
@@ -1953,23 +2180,22 @@ var Row2 = /** @class */ (function () {
             });
             // window.addEventListener("click", function (event) {
             // 	if (promptBox.dataset.visible == "true" && event.target != promptBox) {
-            // 		console.log("Yooooo")
             // 		closeBtn.click();
             // 	}
             // });
             function submitClose() {
-                var closeValue = inputBox.value;
+                const closeValue = inputBox.value;
                 //Error checking
                 if (!validPerc(closeValue)) {
                     errorBox.innerHTML = "Choose a percentage between 1 and 100";
                 }
                 else {
-                    var partial = true;
+                    let partial = true;
                     //If we are closing 100% then don't spawn a new trade
                     if (closeValue == "100") {
                         partial = false;
                     }
-                    var result = rowRef.close(partial, closeValue);
+                    const result = rowRef.close(partial, closeValue);
                     if (result == false) {
                         errorBox.innerHTML = "Choose a percentage between 1 and 100";
                     }
@@ -1994,22 +2220,21 @@ var Row2 = /** @class */ (function () {
                 infoBox.remove();
             }
         };
-        this.deletePrompt = function () {
+        this.deletePrompt = () => {
             //TODO: Actually prompt
             return true;
         };
-        this.d_delete = function (definitive) {
-            if (definitive === void 0) { definitive = _this.state.isLegend; }
+        this.d_delete = (definitive = this.state.isLegend) => {
             if (definitive == false) {
-                if (_this.deletePrompt() == true) {
+                if (this.deletePrompt() == true) {
                     //TODO - COMPLETE
                     //Database stuff
-                    var fetch_1 = true;
+                    const fetch = true;
                     //...
                     //Drop from every list, then remove
-                    if (fetch_1) {
+                    if (fetch) {
                         //SAY THAT IF IT HAS CLOSED FIELDS ALSO THOSE WILL BE DELETED
-                        if (JSON.parse(_this.current[gin("31")]))
+                        if (JSON.parse(this.current[gin("31")]))
                             tradeWindow.allRowsObj; //Continue
                     }
                     else {
@@ -2026,40 +2251,40 @@ var Row2 = /** @class */ (function () {
          *@param {{target: {name:string, "//Other dom stuff"}, "//Other event stuff"}} event  Input event
          * Doesn't work for multi-field-editing inputs like the lists
          */
-        this.addEditingOnStdInput = function (event) {
-            var theProperty = event.target.name;
-            if (_this.current[theProperty] != _this.origin[theProperty]) {
-                _this.setEditing(theProperty);
+        this.addEditingOnStdInput = (event) => {
+            const theProperty = event.target.name;
+            if (this.current[theProperty] != this.origin[theProperty]) {
+                this.setEditing(theProperty);
             }
             else {
-                _this.removeEditing(theProperty);
+                this.removeEditing(theProperty);
             }
             //Toggle the cancel button
-            _this.cancelSaveToggler();
+            this.cancelSaveToggler();
         };
         /**
          * Function to change the editing state of an input
          * @param {{target: {name:string, "//Other dom stuff"}, "//Other event stuff"}} event
          */
-        this.addEditingOnListInput = function (event) {
-            var theProperty = event.target.name;
-            var linked = _this.structure[theProperty].objLinked;
+        this.addEditingOnListInput = (event) => {
+            const theProperty = event.target.name;
+            const linked = this.structure[theProperty].objLinked;
             //Work on the property
-            if (_this.current[theProperty] != _this.origin[theProperty]) {
-                _this.setEditing(theProperty);
+            if (this.current[theProperty] != this.origin[theProperty]) {
+                this.setEditing(theProperty);
             }
             else {
-                linked.forEach(function (link) {
-                    if (_this.current[link] != _this.origin[link]) {
-                        _this.setEditing(theProperty);
+                linked.forEach((link) => {
+                    if (this.current[link] != this.origin[link]) {
+                        this.setEditing(theProperty);
                         //Cut the function
                         return true;
                     }
                 });
-                _this.removeEditing(theProperty);
+                this.removeEditing(theProperty);
             }
             //Toggle the cancel button
-            _this.cancelSaveToggler();
+            this.cancelSaveToggler();
         };
         /**
          * Function to close the trade
@@ -2070,15 +2295,13 @@ var Row2 = /** @class */ (function () {
          * @returns {bool} Whether the close was succesful or not.
          * - The closed ref list gets updated only on pseudoid removal
          */
-        this.close = function (partial, percentageStr) {
-            if (partial === void 0) { partial = false; }
-            if (percentageStr === void 0) { percentageStr = "100"; }
+        this.close = (partial = false, percentageStr = "100") => {
             //Double check if coming from closeprompt
             //If the number is wrong, then return an error before closing weird stuff
             if (!validPerc(percentageStr)) {
                 return false;
             }
-            var percentage = parseFloat(percentageStr);
+            const percentage = parseFloat(percentageStr);
             //TODO
             //Either change the property of the trade itself (partial = false, perc = 100) or create new trade
             //If this trade edited, add cancel button
@@ -2087,79 +2310,89 @@ var Row2 = /** @class */ (function () {
             //If not partial, then close the current trade
             if (!partial) {
                 //TODO
-                _this.updateCurrent("true", "closed");
+                this.updateCurrent("true", "closed");
                 //Add editing with "faking" of the object
-                _this.addEditingOnStdInput({ target: { name: "closed" } });
+                this.addEditingOnStdInput({ target: { name: "closed" } });
                 //GRAPHICAL CHANGES
-                //STYLEME
-                _this.structure[gin("1")].target.innerHTML = "Open";
-                _this.structure[gin("1")].target.classList.add("btn", "btn-success", "h-100");
+                this.structure[gin("1")].target.innerHTML = "Open";
                 // Add the open event listener
-                _this.structure[gin("1")].target.onclick = _this.open;
+                this.structure[gin("1")].target.onclick = this.open;
+                this.structure[gin("1")].target.rgd("button");
+                this.structure[gin("1")].target.rgd("openedBtn");
+                this.structure[gin("1")].target.agd("closedBtn");
             }
             else {
                 //Edit the fields, create a "complete" partial close, then add a SAVE PROMPT to it
-                var availableFields = availableFieldsGen();
+                const availableFields = availableFieldsGen();
                 //Create the new trade object
                 //Create a new row "percenting" the numerical values of the current one and creating a relative different one
-                var percentedNewTrade_1 = __assign({}, _this.current);
-                var index = 1;
-                var newPseudoId = "".concat(_this.origin[gin("00i")], "c").concat(index);
-                if (_this.state.table == "") {
-                    console.error("Table not yet assigned to row while closing it:", _this);
+                const percentedNewTrade = Object.assign({}, this.current);
+                let index = 1;
+                let newPseudoId = `${this.origin[gin("00i")]}c${index}`;
+                if (this.state.table == "") {
+                    console.error("Table not yet assigned to row while closing it:", this);
                     return false;
                 }
                 else {
-                    while (_this.state.table.tradeWindowRef.allRowsObj.hasOwnProperty(newPseudoId)) {
-                        newPseudoId = "".concat(_this.origin[gin("00i")], "c").concat(index);
+                    while (this.state.table.tradeWindowRef.allRowsObj.hasOwnProperty(newPseudoId)) {
+                        newPseudoId = `${this.origin[gin("00i")]}c${index}`;
                         index++;
                     }
-                    percentedNewTrade_1[gin("00p")] = newPseudoId;
+                    percentedNewTrade[gin("00p")] = newPseudoId;
                     //00i is the id
                     //Closed Ref
                     //* Here we decide that if you close a sub trade you are still closing a part of the main trade and not of the sub trade
-                    if (_this.current[gin("29")] != "-1") {
-                        percentedNewTrade_1[gin("29")] = _this.current[gin("29")];
-                        //DONE IN THE BACKEND - affecting directly the origin of the parent
-                        //  const parentTrade = this.state.table.tradeWindowRef.allRowsObj[this.current[gin("29")]];
-                        //	parentTrade.current[gin("30")] = JSON.stringify(JSON.parse(parentTrade.current[gin("30")]).push(newPseudoId))
+                    if (this.current[gin("29")] != "-1") {
+                        percentedNewTrade[gin("29")] = this.current[gin("29")];
+                        //THE ORIGIN IS UPDATED IN THE BACKEND - affecting directly the origin of the parent
+                        const parentTrade = this.state.table.tradeWindowRef.allRowsObj[this.current[gin("29")]];
+                        const newList = JSON.parse(parentTrade.current[gin("30")]);
+                        newList.push(newPseudoId);
+                        parentTrade.current[gin("30")] = JSON.stringify(newList);
                     }
                     else {
-                        percentedNewTrade_1[gin("29")] = _this.current[gin("00p")];
-                        //DONE IN THE BACKEND
-                        //	this.current[gin("30")] = JSON.stringify(JSON.parse(this.current[gin("30")]).push(newPseudoId))
+                        percentedNewTrade[gin("29")] = this.current[gin("00p")];
+                        //THE ORIGIN GETS UPDATED ON SAVE BY THE BACKEND
+                        const newList = JSON.parse(this.current[gin("30")]);
+                        newList.push(newPseudoId);
+                        this.current[gin("30")] = JSON.stringify(newList);
+                        //Addition of this id to the current closed list of the main row
                     }
                     //Closed
-                    percentedNewTrade_1[gin("1")] = "true";
+                    percentedNewTrade[gin("1")] = "true";
                     //Change the values of the current trade and of the percented one following the modifiers directions
                     //Add editing to all of these properties
                     //- We create the new row here, to give the attributes which remove from the main row the 0 value on the origin, so that people are prompted to save them.
-                    var newPartialCloseRow_1 = new Row2(percentedNewTrade_1, false);
-                    _this.state.table.tradeWindowRef.sortAndTableTrades([newPartialCloseRow_1]);
-                    Object.values(availableFields).forEach(function (field) {
+                    const newPartialCloseRow = new Row2(percentedNewTrade, false);
+                    this.state.table.tradeWindowRef.sortAndTableTrades([newPartialCloseRow]);
+                    Object.values(availableFields).forEach((field) => {
                         if (field.modifiers.includes("closed_reduce")) {
                             //Change the values in the visual interface
                             //Change the values in the reference objects
                             //this.structure[field.name].target;
-                            _this.current[field.name] = (((100 - percentage) / 100) * parseFloat(percentedNewTrade_1[field.name])).toString();
-                            newPartialCloseRow_1.current[field.name] = ((percentage / 100) * parseFloat(percentedNewTrade_1[field.name])).toString();
-                            //We are reducing the value, so if it were to be reset it would go to 0 - hence the following decision
-                            newPartialCloseRow_1.origin[field.name] = "0";
-                            //Add this property to the editing tab
-                            _this.addEditingOnStdInput({ target: { name: field.name } });
-                            newPartialCloseRow_1.addEditingOnStdInput({ target: { name: field.name } });
-                            _this.changeValue(field.name, _this.structure[field.name].target);
-                            newPartialCloseRow_1.changeValue(field.name, newPartialCloseRow_1.structure[field.name].target);
-                            //Change the field visually
+                            if (!isNaN(parseFloat(this.current[field.name]))) {
+                                this.current[field.name] = (((100 - percentage) / 100) * parseFloat(percentedNewTrade[field.name])).toString();
+                                newPartialCloseRow.current[field.name] = ((percentage / 100) * parseFloat(percentedNewTrade[field.name])).toString();
+                                //We are reducing the value, so if it were to be reset it would go to 0 - hence the following decision
+                                newPartialCloseRow.origin[field.name] = "0";
+                                //Add this property to the editing tab
+                                this.addEditingOnStdInput({ target: { name: field.name } });
+                                newPartialCloseRow.addEditingOnStdInput({ target: { name: field.name } });
+                                this.changeValue(field.name, this.structure[field.name].target);
+                                newPartialCloseRow.changeValue(field.name, newPartialCloseRow.structure[field.name].target);
+                                //Change the field visually
+                            }
                         }
                         //This was made for future implementation of fields like the closed perc one
                         else if (field.modifiers.includes("closed_relative_increase")) {
                             //Change the values
-                            _this.current[field.name] +=
-                                (100 - parseFloat(_this.current[field.name])) * percentage / 100;
-                            //Add this property to the editing tab
-                            _this.addEditingOnStdInput({ target: { name: field.name } });
-                            _this.changeValue(field.name, _this.structure[field.name].target);
+                            if (!isNaN(parseFloat(this.current[field.name]))) {
+                                this.current[field.name] +=
+                                    (100 - parseFloat(this.current[field.name])) * percentage / 100;
+                                //Add this property to the editing tab
+                                this.addEditingOnStdInput({ target: { name: field.name } });
+                                this.changeValue(field.name, this.structure[field.name].target);
+                            }
                         }
                     });
                 }
@@ -2169,20 +2402,22 @@ var Row2 = /** @class */ (function () {
         /**
          * Function to open the trade and change the style of the button
          */
-        this.open = function () {
+        this.open = () => {
             //STYLEME
-            _this.updateCurrent("false", "closed");
-            _this.addEditingOnStdInput({ target: { name: "closed" } });
-            _this.structure[gin("1")].target.innerHTML = "Close";
+            this.updateCurrent("false", "closed");
+            this.addEditingOnStdInput({ target: { name: "closed" } });
+            this.structure[gin("1")].target.innerHTML = "Close";
             //Re-add the close event listener
-            _this.structure[gin("1")].target.onclick = _this.closePrompt;
+            this.structure[gin("1")].target.onclick = this.closePrompt;
+            this.structure[gin("1")].target.rgd("closedBtn");
+            this.structure[gin("1")].target.agd("openedBtn");
         };
         //* Row2 keeps the empty fields empty rather than deleting them
         //Fields used to compare changes.
         //TOBETESTED: Depends on the way the database stores the user fields data
-        var interpolatedData = this.c_userFieldsInterpolate(data);
-        this.origin = __assign({}, interpolatedData);
-        this.current = __assign({}, interpolatedData);
+        const interpolatedData = this.c_userFieldsInterpolate(data);
+        this.origin = Object.assign({}, interpolatedData);
+        this.current = Object.assign({}, interpolatedData);
         //State information
         this.state = {
             isLegend: legend,
@@ -2199,7 +2434,8 @@ var Row2 = /** @class */ (function () {
             //Used for raising the zindex of a row. The raiser is the element which is currently raising that specific row.
             //Deprecated after change in expander structure
             raiser: "",
-            paged: false
+            paged: false,
+            currentSorting: parseFloat(this.origin.saved_sorting),
         };
         this.structure = {};
     }
@@ -2209,18 +2445,16 @@ var Row2 = /** @class */ (function () {
      * Run in the constuctor. Gets all properties in the json_user_fields column, parses them and adds themo to both the origin and current object.
      * The trade will re-add those properties in here once the trade is getting sent
      */
-    Row2.prototype.c_userFieldsInterpolate = function (originObject) {
+    c_userFieldsInterpolate(originObject) {
         if (originObject.hasOwnProperty("json_user_fields")) {
-            var userFieldData = JSON.parse(originObject.json_user_fields);
-            return __assign(__assign({}, originObject), userFieldData);
+            const userFieldData = JSON.parse(originObject.json_user_fields);
+            return Object.assign(Object.assign({}, originObject), userFieldData);
         }
         return originObject;
-    };
-    Row2.prototype.c_generateManuallyChangedList = function (comparingObj, basicObj) {
-        if (basicObj === void 0) { basicObj = new TradeObj({}); }
-        var result = [];
-        for (var _i = 0, _a = Object.entries(comparingObj); _i < _a.length; _i++) {
-            var _b = _a[_i], key = _b[0], value = _b[1];
+    }
+    c_generateManuallyChangedList(comparingObj, basicObj = new TradeObj({})) {
+        const result = [];
+        for (const [key, value] of Object.entries(comparingObj)) {
             if (value != basicObj[key]) {
                 if (result.indexOf(key) == -1) {
                     result.push(key);
@@ -2233,56 +2467,59 @@ var Row2 = /** @class */ (function () {
             }
         }
         return result;
-    };
+    }
     /**
      *  To run when assigned to a table. Changes this.state.table and this.parent
      * @param {Table} table Changes the table element of this trade.
      */
-    Row2.prototype.changeTableReference = function (table) {
+    changeTableReference(table) {
         this.state.table = table;
         this.state.parent = table.target;
-    };
+    }
     /**
      * Given the current userpref sorting, returns the layout based on the important database entry
      * @returns layout
      */
-    Row2.prototype.getLayout = function () {
+    getLayout() {
         //Mental stuff
-        var sortings = userPrefs.sortings;
-        var selectedSorting = userPrefs.selectedSorting;
-        var sortingTarget = sortings[selectedSorting].targets;
-        var thisRowTargetedValue = this.current[sortingTarget];
+        if (this.current[gin("29")] != "-1") {
+            if (this.state.table != "") {
+                const parentRow = this.state.table.tradeWindowRef.allRowsObj[this.current[gin("29")]];
+                return parentRow.getLayout();
+            }
+            else {
+                console.error("getLayout$ This partial row doesn't have a table reference, using available layout", this);
+            }
+        }
+        const sortings = userPrefs.sortings;
+        const selectedSorting = userPrefs.selectedSorting;
+        const sortingTarget = sortings[selectedSorting].targets;
+        const thisRowTargetedValue = this.current[sortingTarget];
         //! Meh the below casting
-        var associatedBlock = sortings[selectedSorting].blocks[thisRowTargetedValue];
-        var selectedLayout = associatedBlock.selected;
+        const associatedBlock = sortings[selectedSorting].blocks[thisRowTargetedValue];
+        const selectedLayout = associatedBlock.selected;
         return associatedBlock.layouts[selectedLayout];
-    };
+    }
     /**
      * * Function that creates a new container and assigns the object the container property
      * @returns {domElement} Returns the container object
      */
-    Row2.prototype.createContainer = function () {
-        var container = document.createElement("tr");
+    createContainer() {
+        const container = document.createElement("div");
         this.state.container = container;
-        container.classList.add("trade-container");
+        container.agd("tradeContainer");
         return container;
-    };
-    Row2.prototype.theadContainer = function () {
-        var container = document.createElement("tr");
-        this.state.container = container;
-        container.classList.add("thead-container");
-        return container;
-    };
+    }
     /**
      * Function that replaces the given field with a cloned one. Useful for removing event listeners
      * @param {domElement} field The row field to replace
      * @returns {domElemeent} The newly created field with updated memory
      */
-    Row2.prototype.domCloneField = function (field) {
+    domCloneField(field) {
         //Replace the dom element
         var old_element = field;
         if (instanceOfIF(field)) {
-            var new_element = old_element.cloneNode(true);
+            const new_element = old_element.cloneNode(true);
             new_element.discriminator = "INPUT-FIELD";
             old_element.memory.fieldHolder.replaceChild(new_element, old_element);
             //Add the memory properties to the field which you just created
@@ -2290,7 +2527,7 @@ var Row2 = /** @class */ (function () {
             return new_element;
         }
         else if (instanceOfSF(field)) {
-            var new_element = old_element.cloneNode(true);
+            const new_element = old_element.cloneNode(true);
             new_element.discriminator = "SELECT-FIELD";
             old_element.memory.fieldHolder.replaceChild(new_element, old_element);
             //Add the memory properties to the field which you just created
@@ -2298,98 +2535,91 @@ var Row2 = /** @class */ (function () {
             return new_element;
         }
         else {
-            var new_element = old_element.cloneNode(true);
+            const new_element = old_element.cloneNode(true);
             new_element.discriminator = "BUTTON-FIELD";
             old_element.memory.fieldHolder.replaceChild(new_element, old_element);
             //Add the memory properties to the field which you just created
             new_element.memory = old_element.memory;
             return new_element;
         }
-    };
+    }
     /**
      * Toggles the cancel and save button, cancels changes if required and resets all necessary parts
      */
-    Row2.prototype.cancelSaveToggler = function () {
-        var _this = this;
-        var cancelChanges = function () {
-            //We don't have to work on "Linked" fields since they only exist in the current object
-            _this.state.editingList.forEach(function (changedField) {
-                //Get the fiend which has been changed in the structure property
-                console.log(changedField);
-                if (isStructObj(_this.structure[changedField])) {
-                    var fieldStruct = _this.structure[changedField];
-                    //Use the predefined reset function for each field
-                    // @ts-ignore
-                    fieldStruct.reset();
-                    //We let it change the close value no matter what
-                    //Drops field from array & sets all the states to the right "Position"
-                    // @ts-ignore
-                    _this.removeEditing(fieldStruct.name);
-                }
-                else {
-                    console.error("A function name has been added to the editing list and is now being iterated:", _this.state.editingList);
-                }
-            });
-            //THIS THING RIGHT HERE SOLVES A LOT OF PROBLEMS
-            //Current = ...Origin now
-            _this.updateCurrent("", -1);
-            //Run an iteration of the toggler to "remove" the clickability from the cancel field
-            _this.cancelSaveToggler();
-        };
-        var d_saveChanges = function () { return __awaiter(_this, void 0, void 0, function () {
-            var dbObject;
-            return __generator(this, function (_a) {
-                try {
-                    dbObject = __assign({}, this.current);
-                    //DB
-                    // PseudoId implementation: when a trade with a pseaudoid is saved, get him a real id. Then this id gets changed in the frontend both in the actual row and in all of the linearObjs in tables and tradewindows referring to it (including closed_ref and other)
-                    // Closed_list: when a trade with a closed reference is saved, update the closed list of the parent trade in the frontend and backend.
-                    //Async save changes
-                    //Edit the pseudoid and other db fields (like the id)
-                    //Refresh the origin object to mirror the (just modified) current one
-                    this.updateCurrent("", 1);
-                    //Cancelchanges will removeEditing, then run the cancelSaveToggler to fix any still active button
-                    cancelChanges();
-                }
-                catch (error) {
-                    //Let the user know something was wrong
-                }
-                return [2 /*return*/];
-            });
-        }); };
+    cancelSaveToggler() {
         //The editings and checks are being done only on the cancel changes button
         if (this.state.editing) {
             //Add event listener - To prevent multiple firings, we use a checking property when this runs
             if (!this.structure[gin("b2")].hasCancelListener) {
-                this.structure[gin("b2")].target.addEventListener("click", cancelChanges, true);
-                this.structure[gin("b1")].target.addEventListener("click", d_saveChanges, true);
-                this.structure[gin("b2")].target.classList.remove("disabled-btn");
-                this.structure[gin("b1")].target.classList.remove("disabled-btn");
+                this.structure[gin("b2")].target.addEventListener("click", this.cancelChanges, true);
+                this.structure[gin("b1")].target.addEventListener("click", this.d_saveChanges, true);
+                this.structure[gin("b2")].target.rgd("disabledBtn");
+                this.structure[gin("b1")].target.rgd("disabledBtn");
                 this.structure[gin("b2")].hasCancelListener = true;
             }
             //Make it clickable
             //TODO: Implement better looking disabled/enabled transitions
             this.structure[gin("b2")].target.disabled = false;
             this.structure[gin("b1")].target.disabled = false;
+            //External
+            if (this.state.container != "" && this.state.mainRow != "") {
+                this.state.container.agd("editing");
+                this.state.mainRow.agd("editing");
+            }
+            else {
+                console.error("cancelSaveToggler$ The container or mainRow of the row is not defined", this);
+            }
+            //SaveAll
+            if (this.state.table != "") {
+                this.state.table.tradeWindowRef.currentlyEdited.add(this);
+                if (this.state.table.tradeWindowRef.controllers.saveAll != "") {
+                    if (Array.from(this.state.table.tradeWindowRef.currentlyEdited).length != 0) {
+                        this.state.table.tradeWindowRef.controllers.saveAll.disabled = false;
+                        saveAllBtn.rgd("disabledBtn");
+                    }
+                }
+            }
+            else {
+                console.error("cancelSaveToggler$ The given row doesn't have a table reference", this);
+            }
         }
         else {
             //Remove event listener
-            var noEventCloseField = this.domCloneField(this.structure[gin("b2")].target);
-            var noEventSaveField = this.domCloneField(this.structure[gin("b1")].target);
+            const noEventCloseField = this.domCloneField(this.structure[gin("b2")].target);
+            const noEventSaveField = this.domCloneField(this.structure[gin("b1")].target);
             //RE-ADD this element to the structure object;
             this.structure[gin("b2")].target = noEventCloseField;
             this.structure[gin("b1")].target = noEventSaveField;
-            //TODO: FINISH SAVE CANCEL PARALLELs
-            this.structure[gin("b2")].target.classList.add("disabled-btn");
-            this.structure[gin("b1")].target.classList.add("disabled-btn");
+            this.structure[gin("b2")].target.agd("disabledBtn");
+            this.structure[gin("b1")].target.agd("disabledBtn");
             //To prevent multiple listening. (Only checked on the cancel button)
             this.structure[gin("b2")].hasCancelListener = false;
             //Remove clickability
             this.structure[gin("b2")].target.disabled = true;
             this.structure[gin("b1")].target.disabled = true;
             //Act on the save button - which works in parallel to the cancel button
+            //External
+            if (this.state.container != "" && this.state.mainRow != "") {
+                this.state.container.rgd("editing");
+                this.state.mainRow.rgd("editing");
+            }
+            else {
+                console.error("cancelSaveToggler$ The container or mainRow of the row is not defined", this);
+            }
+            if (this.state.table != "") {
+                this.state.table.tradeWindowRef.currentlyEdited.delete(this);
+                if (this.state.table.tradeWindowRef.controllers.saveAll != "") {
+                    if (Array.from(this.state.table.tradeWindowRef.currentlyEdited).length == 0) {
+                        this.state.table.tradeWindowRef.controllers.saveAll.disabled = true;
+                        saveAllBtn.agd("disabledBtn");
+                    }
+                }
+            }
+            else {
+                console.error("cancelSaveToggler$ The given row doesn't have a table reference", this);
+            }
         }
-    };
+    }
     /**
      * * Gather the value based on the given property
      * - IN ROW2 EMPTY FIELDS KEEP BEING DEFINED, SO THE "HAS" PROPERTY SHOULD ALWAYS RETURN TRUE
@@ -2398,19 +2628,17 @@ var Row2 = /** @class */ (function () {
      * @returns {{value: string, has:true | false}} Specific value given the key
      * - Boolean in use for select fields: if false, do not try to pull the rest of the data.
      */
-    Row2.prototype.getValue = function (property, target) {
-        if (target === void 0) { target = "current"; }
+    getValue(property, target = "current") {
         return this[target].hasOwnProperty(property)
             ? { value: this[target][property], has: true }
             : { value: "", has: false };
-    };
+    }
     //Value and current object are never not linked. So to update the value of a fieald you must update the current object first
-    Row2.prototype.changeValue = function (property, target, origin) {
-        if (origin === void 0) { origin = "current"; }
-        var availableFields = availableFieldsGen();
-        var propertyFieldInstructions = Object.values(availableFields).filter(
+    changeValue(property, target, origin = "current") {
+        const availableFields = availableFieldsGen();
+        const propertyFieldInstructions = Object.values(availableFields).filter(
         //The lenght of this should be 1
-        function (field) { return field.name == property; });
+        (field) => field.name == property);
         switch (propertyFieldInstructions[0].type) {
             //Closed will
             case "closed":
@@ -2424,7 +2652,7 @@ var Row2 = /** @class */ (function () {
                         this.close();
                     }
                     else {
-                        //DEBUG
+                        // ?? //DEBUG
                         this.open();
                     }
                 }
@@ -2434,7 +2662,7 @@ var Row2 = /** @class */ (function () {
                 //					field.value = this.getValue(field.name, "origin").value;
                 break;
         }
-    };
+    }
     /**
      * * Function to spawn an INPUT field
      * @param {int} directive
@@ -2442,47 +2670,46 @@ var Row2 = /** @class */ (function () {
      * - WEIRD BEHIAVIOUR: We give the value before the directive is rendered to enable legend rendering - and also historical referencing
      * @returns {domElement} !ATTENTION! You are getting the container with the field in it, not the "actual input". To access it use the .field property
      */
-    Row2.prototype.spawnField = function (directive, propInfo) {
-        var _this = this;
+    spawnField(directive, propInfo) {
         //Get the current available fields;
-        var availableFields = availableFieldsGen();
+        const availableFields = availableFieldsGen();
         /**
          * - Function that takes in the event coming from an input event and changes the current object acccrodingly
          * @param {{"//contains a lot of stuff",target:{ ..., value: string}}} event
          */
-        var updateOnStdInput = function (event) {
-            _this.updateCurrent(event.target.value, event.target.name);
+        const updateOnStdInput = (event) => {
+            this.updateCurrent(event.target.value, event.target.name);
         };
         //Pass the two functions from the parent object
-        var addEditingOnStdInput = this.addEditingOnStdInput;
-        var addEditingOnListInput = this.addEditingOnListInput;
+        const addEditingOnStdInput = this.addEditingOnStdInput;
+        const addEditingOnListInput = this.addEditingOnListInput;
         /**
          * Function to create a structure in the this.structure object for the given std input field
          * @param {domElemeent} field
          * @param {{name: string, render: boolean,default:any,objLinked: [] | string[],"//And more fields which can be found above the defaultfields delcaration"}} directive
          */
-        var createStructure = function (field, directive) {
-            _this.structure[field.name] = {
+        const createStructure = (field, directive) => {
+            this.structure[field.name] = {
                 target: field,
                 editing: false,
                 name: field.name,
                 //Used for understanding whether it's a button, an user generated element or a normal input
-                dirTag: Object.keys(availableFields).find(function (key) { return availableFields[key] === directive; }),
+                dirTag: Object.keys(availableFields).find((key) => availableFields[key] === directive),
                 hasCancelListener: false,
                 //Attributes which this edits as well in the current object
                 objLinked: [],
                 /**
                  * Function that resets the field to its origin value. Changes based on directive type
                  */
-                reset: function () {
-                    _this.changeValue(field.name, field, "origin");
-                }
+                reset: () => {
+                    this.changeValue(field.name, field, "origin");
+                },
             };
             //If the field is linked to others, save it here
             if (directive.hasOwnProperty("objLinked") && directive.objLinked != undefined &&
                 directive.objLinked.length != 0) {
                 //If there are linked properties, push them in here so that they can be "edited" and checked accordingly
-                _this.structure[field.name].objLinked = __spreadArray([], directive.objLinked, true);
+                this.structure[field.name].objLinked = [...directive.objLinked];
             }
         };
         /**
@@ -2493,15 +2720,15 @@ var Row2 = /** @class */ (function () {
          * - STRICT IS CURRENTLY NOT IN USE
          * @param {boolean} strict Wheter it's allowed or not to input not-in-list elements into the field
          */
-        var buildLister = function (targetValue, targetInputHolder, list) {
+        const buildLister = (targetValue, targetInputHolder, list) => {
             if (instanceOfIF(targetInputHolder.memory.field) || instanceOfSF(targetInputHolder.memory.field)) {
-                var listingExpander_1 = new Expander(targetInputHolder.memory.field, "lister");
+                const listingExpander = new Expander(targetInputHolder.memory.field, "lister");
                 //Create the element which contains the available options
                 //Set the input value to the right one
-                var initialValue = {
-                    value: _this.current[targetValue],
-                    id: _this.current["".concat(targetValue, "_id")],
-                    tag: _this.current["".concat(targetValue, "_tag")]
+                const initialValue = {
+                    value: this.current[targetValue],
+                    id: this.current[`${targetValue}_id`],
+                    tag: this.current[`${targetValue}_tag`],
                 };
                 targetInputHolder.memory.field.value = initialValue.value;
                 /**
@@ -2509,11 +2736,11 @@ var Row2 = /** @class */ (function () {
                  * @param {{id: -1 | number, value: string, tag: "" | string}} matchedInput
                  * @param {"current" | "origin"} directive where to "aim the change". Used for INITIAL setup
                  */
-                var updateOnInput_1 = function (matchedInput) {
+                const updateOnInput = (matchedInput) => {
                     //Update the current element
-                    _this.updateCurrent(matchedInput.value, targetValue);
-                    _this.updateCurrent(matchedInput.id, "".concat(targetValue, "_id"));
-                    _this.updateCurrent(matchedInput.tag, "".concat(targetValue, "_tag"));
+                    this.updateCurrent(matchedInput.value, targetValue);
+                    this.updateCurrent(matchedInput.id, `${targetValue}_id`);
+                    this.updateCurrent(matchedInput.tag, `${targetValue}_tag`);
                 };
                 /**
                  * - For list inputs
@@ -2530,8 +2757,7 @@ var Row2 = /** @class */ (function () {
                  */
                 function listMatch(list, specValue) {
                     if (typeof specValue == "string") {
-                        var newList = list.filter(function (element) {
-                            console.log("---", element);
+                        const newList = list.filter((element) => {
                             return element.value.toLowerCase() == specValue.toLowerCase();
                         });
                         if (newList.length == 0) {
@@ -2541,7 +2767,7 @@ var Row2 = /** @class */ (function () {
                     }
                     //IF THE specValue IS AN OBJECT, WHICH IS UNLIKELY, use the equivalent function to check equality
                     else {
-                        var newList = list.filter(function (element) {
+                        const newList = list.filter((element) => {
                             return isEquivalent(element, specValue);
                         });
                         if (newList.length == 0) {
@@ -2557,7 +2783,7 @@ var Row2 = /** @class */ (function () {
                  * @returns {[{id: number, value: string, tag: string}]}
                  */
                 function listBrowse(list, value) {
-                    var newList = list.filter(function (element) {
+                    const newList = list.filter((element) => {
                         return element.value.toLowerCase().includes(value.toLowerCase());
                     });
                     return newList;
@@ -2566,18 +2792,17 @@ var Row2 = /** @class */ (function () {
                     //RUNTIME
                     //@ts-ignore
                     if (e.target != null) {
-                        var input = targetInputHolder.memory.field.value;
+                        const input = targetInputHolder.memory.field.value;
                         //UPDATE
-                        console.log("LIST MATCHING WITH:", list);
-                        var matchedInput = listMatch(list, input);
-                        updateOnInput_1(matchedInput);
+                        const matchedInput = listMatch(list, input);
+                        updateOnInput(matchedInput);
                         //Add editing state
                         addEditingOnListInput(e);
                         //Now filter using that input
-                        var availableChoices = listBrowse(list, input);
+                        const availableChoices = listBrowse(list, input);
                         //Show the listing block
-                        listingExpander_1.moveAndResizeTo();
-                        listingExpander_1.fill(availableChoices);
+                        listingExpander.moveAndResizeTo();
+                        listingExpander.fill(availableChoices);
                     }
                     else {
                         console.error("Target is null");
@@ -2586,32 +2811,32 @@ var Row2 = /** @class */ (function () {
                 targetInputHolder.memory.field.addEventListener("focus", function (e) {
                     if (e.target != null) {
                         //RUNTIME
-                        var input = targetInputHolder.memory.field.value;
+                        const input = targetInputHolder.memory.field.value;
                         //Now filter using that input
-                        var availableChoices = listBrowse(list, input);
+                        const availableChoices = listBrowse(list, input);
                         //Show the listing block
-                        listingExpander_1.fill(availableChoices);
-                        listingExpander_1.show();
+                        listingExpander.fill(availableChoices);
+                        listingExpander.show();
                     }
                     else {
                         console.error("Target is null");
                     }
                     //? To be tested: "clickaway method" on the entire holder
                 });
-                targetInputHolder.memory.field.addEventListener("newInput", (function (e) {
-                    listingExpander_1.hide();
-                    var inputValue = e.detail.inputValue;
-                    updateOnInput_1(inputValue);
+                targetInputHolder.memory.field.addEventListener("newInput", ((e) => {
+                    listingExpander.hide();
+                    const inputValue = e.detail.inputValue;
+                    updateOnInput(inputValue);
                     addEditingOnListInput({ target: { name: targetValue } });
                     targetInputHolder.memory.field.value = inputValue.value;
                 }));
                 window.addEventListener("click", function (event) {
-                    if (listingExpander_1.state.visible == true) {
+                    if (listingExpander.state.visible == true) {
                         if (event.target != targetInputHolder &&
                             event.target != targetInputHolder.memory.field &&
                             event.target != targetInputHolder.memory.fieldHolder &&
-                            event.target != listingExpander_1.element) {
-                            listingExpander_1.hide();
+                            event.target != listingExpander.element) {
+                            listingExpander.hide();
                         }
                     }
                 });
@@ -2621,13 +2846,12 @@ var Row2 = /** @class */ (function () {
             }
         };
         //Used to hold "excess" elements around the input itself.
-        var fieldHolder = spawnDiv();
-        fieldHolder.classList.add("field-holder");
-        fieldHolder.classList.add("field-holder", "form-group", "custom-group-width", "mb-0");
+        const fieldHolder = spawnDiv();
+        fieldHolder.agd("fieldHolder");
         //Declaration of used fields in the process
-        var field; //* The ! serves to tell typescript that I WILL define it
+        let field; //* The ! serves to tell typescript that I WILL define it
         //Put the thing into a variable for easier access
-        var dirProperties = availableFields[directive];
+        const dirProperties = availableFields[directive];
         //The type switches between the "structure" of the element to spawn, not its HTML type
         switch (dirProperties.type) {
             case "input":
@@ -2639,25 +2863,20 @@ var Row2 = /** @class */ (function () {
                 switch (dirProperties.subtype) {
                     case "text":
                         field.setAttribute("type", "text");
-                        field.classList.add("form-control");
                         break;
                     case "locked":
                         field.setAttribute("type", "text");
                         field.setAttribute("disabled", "true");
-                        field.classList.add("form-control");
                         break;
                     case "number":
                         field.setAttribute("type", "number");
                         field.setAttribute("placeholder", dirProperties.placeholder);
-                        field.classList.add("form-control");
                         break;
                     case "date":
                         field.setAttribute("type", "date");
-                        field.classList.add("form-control");
                         break;
                     case "time":
                         field.setAttribute("type", "time");
-                        field.classList.add("form-control");
                         break;
                 }
                 field.addEventListener("input", updateOnStdInput);
@@ -2674,11 +2893,9 @@ var Row2 = /** @class */ (function () {
                         field.discriminator = "INPUT-FIELD";
                         fieldHolder.append(field);
                         fieldHolder.memory.field = field;
-                        console.log(">> creating the field$", fieldHolder.memory);
                         //Easier access when referencing things in the aftermath (1/2)
                         //Used in the
                         buildLister(dirProperties.name, fieldHolder, dirProperties.options);
-                        console.log("Built lister with", dirProperties.options);
                         break;
                     case "select":
                         field = spawnSelect();
@@ -2686,8 +2903,8 @@ var Row2 = /** @class */ (function () {
                         //STYLEME
                         if (dirProperties.options != undefined) {
                             //@ts-ignore
-                            dirProperties.options[this.current[gin(27)]].forEach(function (option) {
-                                var optionSelect = document.createElement("option");
+                            dirProperties.options[this.current[gin(27)]].forEach((option) => {
+                                const optionSelect = document.createElement("option");
                                 optionSelect.value = option.value;
                                 optionSelect.innerText = option.text;
                                 field.append(optionSelect);
@@ -2707,38 +2924,38 @@ var Row2 = /** @class */ (function () {
                 break;
             case "closed":
                 field = spawnBtn();
+                field.rgd("button");
                 //Make the button into a "closed" string that you cvan click on to reopen the trade.
                 if (this.getValue(gin("1")).value == "true") {
                     field.innerHTML = "Open";
-                    field.classList.add("btn", "btn-light", "h-100");
                     field.onclick = this.open;
+                    field.agd("closedBtn");
                 }
                 else {
                     field.innerHTML = "Close";
-                    field.classList.add("btn", "btn-warning", "h-100");
                     //ADD EVENT LISTENER
                     field.onclick = this.closePrompt;
+                    field.agd("openedBtn");
                 }
                 fieldHolder.append(field);
                 break;
             case "button":
                 field = spawnBtn();
-                field.classList.add("btn", "btn-sm");
                 //Set the basic text to the default one provided in the dir object - can be changed later
-                field.innerHTML = dirProperties["default"];
+                field.innerHTML = dirProperties.default;
                 //Add it to its own holder
                 fieldHolder.append(field);
                 switch (dirProperties.subtype) {
                     //The "Default disabling" of the cancel and savebutton is ran after the fields are created in the renderrow FuNCTION
                     //* REMEMBER TO RUN IT IF THE ROW IS GENERATED IN ANOTHER WAY.
                     case "cancel":
-                        field.classList.add("btn-primary");
+                        field.agd("cancelBtn");
                         break;
                     case "save":
-                        field.classList.add("btn-secondary");
+                        field.agd("saveBtn");
                         break;
                     case "delete":
-                        field.classList.add("btn-danger");
+                        field.agd("deleteBtn");
                         field.onclick = this.deletePrompt;
                         break;
                 }
@@ -2752,7 +2969,6 @@ var Row2 = /** @class */ (function () {
                 //STYLEME
                 field.value = propInfo.value;
                 field.setAttribute("placeholder", dirProperties.placeholder);
-                field.classList.add("form-control");
                 fieldHolder.append(field);
                 break;
         }
@@ -2765,7 +2981,7 @@ var Row2 = /** @class */ (function () {
         fieldHolder.memory.field = field;
         field.memory.fieldHolder = fieldHolder;
         return fieldHolder;
-    };
+    }
     //Different name for different layout
     /**
      * * The rendering function
@@ -2773,24 +2989,22 @@ var Row2 = /** @class */ (function () {
      * Used to render rows, not to render historical trades; Open | Closed | Partial closed
      * - Fresh set to false is used to re-render rows with a different layout.
      */
-    Row2.prototype.renderRow = function (fresh) {
-        var _this = this;
-        if (fresh === void 0) { fresh = true; }
+    renderRow(fresh = true) {
         //All the fields layout you can use
-        var availableFields = availableFieldsGen();
+        const availableFields = availableFieldsGen();
         //Retrive the layout of the trade || NO difference between this.origin and this.current
-        var layout = this.getLayout();
+        const layout = this.getLayout();
         //Main row;
         //USE: "MULTIPLE ROWS" in a single trade or expanded views
-        var mainRow = document.createElement("tr");
+        const mainRow = document.createElement("div");
         this.state.mainRow = mainRow;
         //If it's an historical trade, do this
         // Container
         //USE: hold the multiple rows
-        var container;
+        let container;
         if (this.origin[gin("29")] != "-1") {
             //STYLEME
-            mainRow.classList.add("closed-row", "row");
+            mainRow.agd("closedRow");
             //Get the container from the origin trade by using its closedRef
             //HIGH UP- not stuck to the current row, may find other ones if needed
             //Possible feature to change
@@ -2800,7 +3014,7 @@ var Row2 = /** @class */ (function () {
             else {
                 //TODO: Make the ref to the pseudoId and not the Id
                 container =
-                    this.state.table.tradeWindowRef.allRowsObj[this.origin[gin("29")]].state
+                    this.state.table.children[this.origin[gin("29")]].state
                         .container;
                 this.state.container = container;
                 //Only one append required, unlike normal rows where we are creating a trade container to put the main row in, we simply add the trade row to the main trade pre-existing container
@@ -2819,17 +3033,10 @@ var Row2 = /** @class */ (function () {
             //If the trade is not closed, then either build a new container
             //THE CONTAINER IS "ABOVE" THE MAIN ROW
             if (fresh) {
-                if (this.state.isLegend) {
-                    //Create the trade box
-                    //USE: Row and expansion container
-                    container = this.theadContainer();
-                    container.append(mainRow);
-                } else {
-                    //Create the trade box
-                    //USE: Row and expansion container
-                    container = this.createContainer();
-                    container.append(mainRow);
-                }
+                //Create the trade box
+                //USE: Row and expansion container
+                container = this.createContainer();
+                container.append(mainRow);
             }
             else {
                 if (this.state.container == "") {
@@ -2851,74 +3058,73 @@ var Row2 = /** @class */ (function () {
                 }
             }
             if (this.state.isLegend) {
-                mainRow.classList.add("legend-row", "row");
+                mainRow.agd("legendRow");
                 if (this.state.container != "")
-                    this.state.container.classList.add("legendary");
+                    this.state.container.agd("legendContainer");
             }
             else {
-                mainRow.classList.add("main-row", "row");
+                mainRow.agd("mainRow");
             }
         }
         //Visible fields
-        layout.forEach(function (block) {
-            var section = document.createElement("td");
+        layout.forEach((block) => {
+            const section = document.createElement("div");
             //STYLEME
             //width
             if (block.size == "0") {
-                // section.style.display = "none";
-                section.classList.add("hideThis");
+                section.style.display = "none";
                 //Generate the list of not visible fields
                 block.elements = Object.keys(availableFields).filter(
                 //Only use elements which are not used in any other field
                 //I have no clue why this thing has double the same negation but whatever, it works nonetheless
-                function (key) { return !block.nElements.includes(key) && !block.nElements.includes(key); });
+                (key) => !block.nElements.includes(key) && !block.nElements.includes(key));
             }
             //scrollable
             if (block.fixed) {
                 //? DOUBTFUL about how to handle the width property
                 section.style.minWidth = block.size;
-                section.classList.add("fixed-section", "col-2", "d-flex");
+                section.style.maxWidth = block.size;
+                section.agd("fixedSection");
             }
             else {
                 section.style.width = block.size;
-                section.style.overflowX = 'scroll';
-                section.classList.add("scrollable-section", "col-4", "d-flex");
+                section.agd("scrollableSection");
                 //Sync Scrolling
-                if (_this.state.table != "" && _this.state.table.target != "") {
+                if (this.state.table != "" && this.state.table.target != "") {
                     //Create an hashed event for sections with the same properties
                     //! Possible bug if two sections are identical, but a problem for some intern later.
-                    var hashEventCode = simpleHash(JSON.stringify(block));
-                    var eventScroll_1 = new CustomEvent(hashEventCode, { detail: { scroll: 0, sender: _this.origin.pseudo_id } });
-                    _this.state.table.target.addEventListener(hashEventCode, (function (e) {
-                        if (e.detail.sender != _this.origin.pseudo_id) {
+                    const hashEventCode = simpleHash(JSON.stringify(block));
+                    const eventScroll = new CustomEvent(hashEventCode, { detail: { scroll: 0, sender: this.origin.pseudo_id } });
+                    this.state.table.target.addEventListener(hashEventCode, ((e) => {
+                        if (e.detail.sender != this.origin.pseudo_id) {
                             section.scrollLeft = e.detail.scroll;
                         }
                     }));
-                    section.addEventListener("scroll", function () {
-                        if (_this.state.table != "" && _this.state.table.target != "") {
-                            eventScroll_1.detail.scroll = section.scrollLeft;
-                            _this.state.table.target.dispatchEvent(eventScroll_1);
+                    section.addEventListener("scroll", () => {
+                        if (this.state.table != "" && this.state.table.target != "") {
+                            eventScroll.detail.scroll = section.scrollLeft;
+                            this.state.table.target.dispatchEvent(eventScroll);
                         }
                     });
                 }
             }
             //ELEMENTS
-            block.elements.forEach(function (directive) {
-                var fieldInfo = availableFields[directive];
-                if (_this.state.isLegend) {
+            block.elements.forEach((directive) => {
+                const fieldInfo = availableFields[directive];
+                if (this.state.isLegend) {
                     //Get the info for the specific column
                     //Get the columnname to either the columName defined or the dbName
-                    var columnName = fieldInfo.columnName == "" ? fieldInfo.name : fieldInfo.columnName;
-                    var hasObj = { value: columnName, has: true };
+                    const columnName = fieldInfo.columnName == "" ? fieldInfo.name : fieldInfo.columnName;
+                    const hasObj = { value: columnName, has: true };
                     //Get the value for that element
                     //Render based on the 0 field
-                    var field = _this.spawnField("0", hasObj);
+                    const field = this.spawnField("0", hasObj);
                     section.append(field);
                 }
                 else {
                     //Get the property
-                    var value = _this.getValue(fieldInfo.name);
-                    var field = _this.spawnField(directive, value);
+                    const value = this.getValue(fieldInfo.name);
+                    const field = this.spawnField(directive, value);
                     section.append(field);
                 }
             });
@@ -2929,80 +3135,65 @@ var Row2 = /** @class */ (function () {
             //Run the cancel toggler thingy, to disable  (or enable, up to future implementations) the cancel button
             this.cancelSaveToggler();
         }
-    };
-    return Row2;
-}());
+    }
+}
 ////////////
 // RUNTIME
-function createNewRow(startingObj, options) {
-    if (startingObj === void 0) { startingObj = new TradeObj({}); }
-    if (options === void 0) { options = { separator: "n", forcedProperties: {}, repeat: 1 }; }
-    var tradeArray = [];
-    for (var index = 0; index < options.repeat; index++) {
-        var tradeObj = new TradeObj(startingObj);
-        if (tradeWindow.allRows.length != 0) {
-            //Set the new id to be the same as the one of the last trade, then create a pseudoId that has format IDnINDEX where the index depends on the amount of just built trades. When they get created, they also get saved and the database sends back to them a new id
-            var currentLatest = tradeWindow.allRows[tradeWindow.allRows.length - 1];
-            var copiedId = currentLatest.origin[gin("00i")];
-            var index_1 = 1;
-            var newPseudoId = "".concat(copiedId).concat(options.separator).concat(index_1);
+function createNewRow(startingObj = new TradeObj({}), options = { separator: "n", forcedProperties: {}, repeat: 1 }) {
+    const tradeArray = [];
+    for (let index = 0; index < options.repeat; index++) {
+        const tradeObj = new TradeObj(startingObj);
+        if (tradeWindow.allRows.length != 0 && !startingObj.hasOwnProperty(gin("00i"))) {
+            //! Needs map fixing because this is highly stupid
+            let copiedId = (tradeWindow.biggestSorting + 1).toLocaleString();
+            let index = 1;
+            let newPseudoId = `${copiedId}${options.separator}${index}`;
             while (tradeWindow.allRowsObj.hasOwnProperty(newPseudoId)) {
-                index_1++;
-                newPseudoId = "".concat(copiedId).concat(options.separator).concat(index_1);
+                index++;
+                newPseudoId = `${copiedId}${options.separator}${index}`;
             }
             tradeObj[gin("00p")] = newPseudoId;
             tradeObj[gin("00i")] = copiedId;
-            console.log("EEEEE: ", newPseudoId, copiedId);
         }
-        for (var _i = 0, _a = Object.entries(options.forcedProperties); _i < _a.length; _i++) {
-            var _b = _a[_i], key = _b[0], value = _b[1];
+        //! Needs map fixing because this is highly stupid
+        if (tradeObj[gin("s")] == "0" && tradeObj[gin("00p")] != tradeObj[gin("00i")]) {
+            tradeObj.saved_sorting = (tradeWindow.biggestSorting + 1).toLocaleString();
+        }
+        for (const [key, value] of Object.entries(options.forcedProperties)) {
             tradeObj[key] = value;
         }
         //If it's not the first one, then the default "0n1" value will work fine
         //As soon as the thing is sent, then the pseudoId will be changed to match the ID - unless another row has been gathered before it.
-        var newRow = new Row2(tradeObj);
+        const newRow = new Row2(tradeObj);
         tradeArray.push(newRow);
     }
     tradeWindow.sortAndTableTrades(tradeArray);
 }
-/**
- * Builds a legend row to be sorted with the
- * @param startingObj
- */
-function createLegend(startingObj) {
-    //LOGIC:
-    /*
-        Create a legend row and table it in each table. When tabled, do not add it to the all rows thingy and just have it in a separate property called "legend" or "legends".
-        Create one for each sorting and in a table have the table just mindlessly delete the legend if it already has one and receives one more.
-        Also make the hidden feature of pagination not hide the legend itself when shit happens
-    */
-}
-var tradeWindowTarget = document.querySelector(".new-target");
+const tradeWindowTarget = document.querySelector(".new-target");
 //Create new tradeewindow
-var tradeWindow = new TradeWindow(tradeWindowTarget);
+const tradeWindow = new TradeWindow(tradeWindowTarget);
 //Add all trades to this tradewindow
 //Get trades
 //Trasform them into rows
 //Push them into the tradewindow
 //? User data (user pref) oject generator API?
 tradeWindow.buildTables();
-//TODO: FINISH HERE
-tradesList.forEach(function (trade) {
+tradesList.forEach(trade => {
     createNewRow(trade);
 });
 ////////////////////////
 // Controller Section //
 ////////////////////////
-var controllerBox = document.createElement("div");
-controllerBox.classList.add("tt-controller-box");
+const controllerBox = spawnDiv();
+controllerBox.agd("controllerBox");
 tradeWindowTarget === null || tradeWindowTarget === void 0 ? void 0 : tradeWindowTarget.prepend(controllerBox);
 /////////////////////////
 // New Row
-var newRowButton = document.createElement("button");
-newRowButton.classList.add("new-btn", "btn", "btn-sm", "btn-primary", "mr-3");
+const newRowButton = spawnBtn();
 newRowButton.innerHTML = "New row";
-var newRowOptionExpander = new Expander(newRowButton, "moreOptions");
-newRowButton.addEventListener("click", function (e) {
+newRowButton.agd("mainBtn", "button");
+const newRowOptionExpander = new Expander(newRowButton, "moreOptions");
+newRowButton.addEventListener("click", (e) => {
     newRowOptionExpander.show();
     newRowOptionExpander.fill([{
             id: "newRows",
@@ -3021,7 +3212,7 @@ window.addEventListener("click", function (event) {
         }
     }
 });
-newRowButton.addEventListener("directive", (function (e) {
+newRowButton.addEventListener("directive", ((e) => {
     newRowOptionExpander.hide();
     // { detail: { type: button.attachedNumber, attachedObj: button.attachedObj} }
     // type refers to whether to spawn a trade builder box
@@ -3033,21 +3224,36 @@ newRowButton.addEventListener("directive", (function (e) {
     else if (e.detail.type == "1") {
     }
 }));
-var spawnNewTradeBuilder = function () { };
+const spawnNewTradeBuilder = () => { };
 controllerBox.append(newRowButton);
+//////////////////////
+// SaveAll
+const saveAllBtn = spawnBtn();
+saveAllBtn.disabled = true;
+saveAllBtn.agd("disabledBtn");
+tradeWindow.controllers.saveAll = saveAllBtn;
+saveAllBtn.innerHTML = "Save All";
+saveAllBtn.agd("mainBtn", "button");
+controllerBox.append(saveAllBtn);
+saveAllBtn.onclick = function () {
+    for (const row of tradeWindow.currentlyEdited.values()) {
+        row.d_saveChanges();
+    }
+};
+//TODO: FINISH IMPLEMENTING
 ////////////////7/////
 // Edit User preferences
-var editPrefsBtn = document.createElement("button");
+const editPrefsBtn = spawnBtn();
 controllerBox.append(editPrefsBtn);
-editPrefsBtn.classList.add("new-btn", "btn", "btn-sm", "btn-primary", "h-100");
+editPrefsBtn.agd("button", "mainBtn");
 editPrefsBtn.innerHTML = "Settings";
-var mainEditPrefsWindow = document.querySelector(".tt-edit-user-preferences");
+const mainEditPrefsWindow = document.querySelector(".tt-edit-user-preferences");
 if (mainEditPrefsWindow != null) {
-    var editPrefsObj_1 = {
+    const editPrefsObj = {
         fullActivatorBtn: editPrefsBtn,
         state: {
             visible: false,
-            currentPage: "columnsEditor"
+            currentPage: "columnsEditor",
         },
         elements: {
             mainWindow: mainEditPrefsWindow,
@@ -3056,16 +3262,16 @@ if (mainEditPrefsWindow != null) {
             pageSection: mainEditPrefsWindow.querySelector(".page-section"),
             pages: {
                 columnsEditor: mainEditPrefsWindow.querySelector(".columns-editor"),
-                customColumns: mainEditPrefsWindow.querySelector(".custom-columns")
+                customColumns: mainEditPrefsWindow.querySelector(".custom-columns"),
             }
         },
-        showMainTab: function () {
+        showMainTab() {
             changeVisible(this.elements.mainWindow, true, [this.state.visible]);
         },
-        hideMainTab: function () {
+        hideMainTab() {
             changeVisible(this.elements.mainWindow, false, [this.state.visible]);
         },
-        switchPage: function (newPage) {
+        switchPage(newPage) {
             if (this.elements.pages.hasOwnProperty(newPage)) {
                 changeVisible(this.elements.pages[this.state.currentPage], false);
                 changeVisible(this.elements.pages[newPage], true);
@@ -3078,25 +3284,25 @@ if (mainEditPrefsWindow != null) {
     };
     //Runtimes
     //Initializers
-    editPrefsObj_1.hideMainTab();
+    editPrefsObj.hideMainTab();
     //hide all pages
-    Object.values(editPrefsObj_1.elements.pages).forEach(function (page) {
+    Object.values(editPrefsObj.elements.pages).forEach(page => {
         changeVisible(page, false);
     });
     //make the first one show
-    editPrefsObj_1.switchPage("columnsEditor");
+    editPrefsObj.switchPage("columnsEditor");
     //Listeners
     //main tab
     editPrefsBtn.addEventListener("click", function () {
-        editPrefsObj_1.showMainTab();
+        editPrefsObj.showMainTab();
     });
-    editPrefsObj_1.elements.closeBtn.addEventListener("click", function () {
-        editPrefsObj_1.hideMainTab();
+    editPrefsObj.elements.closeBtn.addEventListener("click", function () {
+        editPrefsObj.hideMainTab();
     });
-    window.addEventListener("click", function (event) {
-        if (editPrefsObj_1.state.visible == true) {
-            if (event.target != editPrefsObj_1.elements.mainWindow) {
-                editPrefsObj_1.hideMainTab();
+    window.addEventListener("click", (event) => {
+        if (editPrefsObj.state.visible == true) {
+            if (event.target != editPrefsObj.elements.mainWindow) {
+                editPrefsObj.hideMainTab();
             }
         }
     });
@@ -3107,13 +3313,14 @@ else {
 //Notifications
 function newAlert(message) {
     // {status: ----, message: ----}
-    var alert = document.createElement("div");
-    alert.classList.add("tt-alert", "tt-".concat(message.status));
+    const alert = spawnDiv();
+    alert.agd("alert");
+    alert.classList.add(`tt-${message.status}`);
     alert.innerHTML = message.message;
-    var alertBox = document.querySelector(".tt-alert-box");
+    const alertBox = document.querySelector(".tt-alert-box");
     if (alertBox != null) {
         alertBox.append(alert);
-        setTimeout(function () {
+        setTimeout(() => {
             alertBox.removeChild(alert);
         }, 3500);
     }
@@ -3123,12 +3330,13 @@ function newAlert(message) {
 }
 ///* Styling blocks
 // Main Rows
-document.querySelectorAll(".trade-container .main-row").forEach(function (mainRow) {
+document.querySelectorAll(".trade-container .main-row").forEach(mainRow => {
     //Add classes
 });
 //Closed Rows
-document.querySelectorAll(".trade-container .closed-row").forEach(function (mainRow) {
+document.querySelectorAll(".trade-container .closed-row").forEach(mainRow => {
     //Add classes
 });
 //Fields
 //Field Holders
+//# sourceMappingURL=script.js.map

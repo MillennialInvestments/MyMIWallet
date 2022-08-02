@@ -43,7 +43,25 @@ if ($registerType 	=== 'Investor') {
 	#header01-m {padding-top: 1rem !important;}
 	}
 </style>
-<section class="cid-s0KKUOB7cY border-bottom pb-0" id="header01-m">
+<div class="intro-section intro-feature bg-white pb-0" id="features">
+    <div class="container container-ld pt-5">
+        <div class="row justify-content-center pt-3">
+            <div class="col-lg-9 col-xl-7">
+                <div class="intro-section-title text-center">
+                    <span class="overline-title">Account Information</span>
+                    <h2 class="intro-heading-lead title">Complete Your Account Information</h2>
+                    <div class="intro-section-desc">
+                        <p>
+                            Provide your account information to complete you registration and access our Investor Dashboard and Crypto Asset Marketplace & Exchange.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="intro-section intro-feature bg-white pt-0" id="registration-form">
     <div class="container-fluid px-0">
         <div class="row justify-content-center py-0">
             <div class="mbr-black col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
@@ -146,7 +164,7 @@ if ($registerType 	=== 'Investor') {
             </div>
         </div>
     </div>
-</section>
+</div>
 <script src="<?php echo base_url('assets/js/BitcoinJS-lib/bitcoinjs.min.js'); ?>"></script>								
 <script type="text/javascript">
 const generateWalletAddress		    = document.querySelector("#generateWalletAddressSubmit");

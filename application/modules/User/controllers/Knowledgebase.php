@@ -314,7 +314,7 @@ class Knowledgebase extends Admin_Controller
     public function index()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Knowledge_Base';
         
         $this->set_current_user();
         
@@ -326,7 +326,7 @@ class Knowledgebase extends Admin_Controller
     public function Account_Billing()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Knowledge_Base_Account_And_Billing';
         
         $this->set_current_user();
         
@@ -338,7 +338,7 @@ class Knowledgebase extends Admin_Controller
     public function Assets()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Knowledge_Base_Assets';
         
         $this->set_current_user();
         
@@ -350,7 +350,7 @@ class Knowledgebase extends Admin_Controller
     public function Getting_Started()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Knowledge_Base_Getting_Started';
         
         $this->set_current_user();
         
@@ -362,7 +362,7 @@ class Knowledgebase extends Admin_Controller
     public function Integrating_Wallets() 
    {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Knowledge_Base_Integrating_Wallets';
         
         $this->set_current_user();
         
@@ -374,7 +374,7 @@ class Knowledgebase extends Admin_Controller
     public function Investor_Profile()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Knowledge_Base_Investor_Profile';
         
         $this->set_current_user();
         
@@ -386,7 +386,7 @@ class Knowledgebase extends Admin_Controller
     public function KYC_Verification()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Knowledge_Base_KYC_Verification';
         
         $this->set_current_user();
         
@@ -398,7 +398,7 @@ class Knowledgebase extends Admin_Controller
     public function Partnerships()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Knowledge_Base_MyMI_Partnerships';
         
         $this->set_current_user();
         
@@ -410,7 +410,7 @@ class Knowledgebase extends Admin_Controller
     public function Promoted_Articles()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -422,7 +422,7 @@ class Knowledgebase extends Admin_Controller
     public function Technical_Support()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Knowledge_Base_Technical_Support';
         
         $this->set_current_user();
         
@@ -434,7 +434,7 @@ class Knowledgebase extends Admin_Controller
     public function Trade_Tracker()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Knowledge_Base_Trade_Tracker';
         
         $this->set_current_user();
         
@@ -446,7 +446,7 @@ class Knowledgebase extends Admin_Controller
     public function Tutorials()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Knowledge_Base_Tutorials';
         
         $this->set_current_user();
         
@@ -458,7 +458,7 @@ class Knowledgebase extends Admin_Controller
     public function Types_Of_Accounts()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Knowledge_Base_Types_Of_Accounts';
         
         $this->set_current_user();
         

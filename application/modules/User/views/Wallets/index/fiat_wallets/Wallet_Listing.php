@@ -18,10 +18,13 @@ echo '
 			<div class="nk-wgw-actions">
 				<ul>
 					<li>
-						<a class="trackDepositBtn" href="#" data-toggle="modal" data-target="#transactionModal"><i class="icon icon-arrow-up"></i> <span>Track Deposit</span></a>
+						<!-- <a href="#" data-toggle="modal" data-target="#transactionModal"><i class="icon icon-arrow-up"></i> <span>Track Deposit</span></a> -->
+						<!-- <a href="' . site_url('Wallets/Add-Deposit/' . $walletID) . '"><i class="icon icon-arrow-up"></i> <span>Track Deposit</span></a> -->
+						<a href="' . site_url('Wallets-Details/' . $walletID) . '"><i class="icon icon-arrow-up"></i> <span>View Details</span></a>
 					</li>
 					<li>
-						<a class="trackWithdrawBtn" href="#" data-toggle="modal" data-target="#transactionModal"><i class="icon icon-arrow-down"></i> <span>Track Withdraw</span></a>
+                        <!-- <a class="trackWithdrawBtn" href="#" data-toggle="modal" data-target="#transactionModal"><i class="icon icon-arrow-down"></i> <span>Track Withdraw</span></a> -->
+						<!-- <a href="' . site_url('Wallets/Add-Withdraw/' . $walletID) . '"><i class="icon icon-arrow-up"></i> <span>Track Withdraw</span></a> -->
 					</li>
 				</ul>
 			</div>

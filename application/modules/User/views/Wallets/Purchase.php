@@ -102,7 +102,7 @@ if (purchaseWalletForm) {
 			redirect: "manual",
             });
            	const data = await result;
-		    location.href = <?php echo '\'' . $redirect_url . '\'';?>;
+		    location.href = <?php echo '\'' . $featureRedirectURL . '\'';?>;
             console.log(data);
         } catch (err) {
             //If fetch doesn't work, maker 

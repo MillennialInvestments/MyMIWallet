@@ -43,14 +43,14 @@ https://www.electronicid.eu/en/blog/post/kyc-know-your-customer-means/en
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
                                                 This article will introduce you to our KYC Verification Process &amp; Requirements.<br> 
-                                                This article will not cover everything in detail, but it will cover the basis of what is required from any member of the MyMI Community.
+                                                This article will not cover everything in detail, but it will cover the basics of what is required from any member of the MyMI Community.
                                             </p>
                                             <p class="lead fs-14px">
-                                                To comply with <a href="#">Anti-Money Launering (AML) Laws</a>, we require KYC Verification of all members in the MyMI Community to protect and provide safety in our Investment Platform. 
+                                                To comply with <a href="#">Anti-Money Laundering (AML) Laws</a>, we require KYC Verification of all members in the MyMI Community to protect and provide safety in our Investment Platform. 
                                                 KYC Verification is the process of verifying your identity and financial activities to ensure safety from risks of any illegal activities. 
                                             </p>
                                             <p class="lead fs-14px">
-                                                To learn more about our KYC Process and Requipments, as well as checking on the status of your KYC Verification, simply review the information below:
+                                                To learn more about our KYC Process and Requirements, as well as check on the status of your KYC Verification, simply review the information below:
                                             </p>
                                         </div>
                                     </div>

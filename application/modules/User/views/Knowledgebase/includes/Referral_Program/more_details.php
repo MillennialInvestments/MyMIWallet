@@ -10,7 +10,7 @@
                             <p class="lead fs-14px">
                                 To learn more about our MyMI Referral Program, simply visit the link below:
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><a href="<?php echo site_url('Knowledge-Base/Type-Of-Accounts#partner-referrals'); ?>">MyMI Referral Program</a></li>
+                                    <li class="list-group-item"><a href="<?php echo site_url('Knowledge-Base/Types-Of-Accounts#partner-referrals'); ?>">MyMI Referral Program</a></li>
                                 </ul>
                             </p>
                         </div>

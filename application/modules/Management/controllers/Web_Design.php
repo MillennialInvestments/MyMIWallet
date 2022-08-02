@@ -75,7 +75,7 @@ class Web_Design extends Admin_Controller
     public function Content_Creator()
     {
         $pageType = 'Standard';
-        $pageName = 'Web_Design_Dashboard';
+        $pageName = 'Content_Creator';
         
         $this->set_current_user();
         

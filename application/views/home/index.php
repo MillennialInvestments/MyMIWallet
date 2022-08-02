@@ -41,7 +41,7 @@ $totalApprovedAssets    = $_SESSION['reporting']['totalApprovedAssets'];
                                     <span class="overline-title pt-5">Introducing</span>
                                     <h1 class="title text-white">MyMI Wallet <span class="version">v7.1.5</span> </h1>
                                     <ul class="intro-action-group mt-3">
-                                        <li><a href="<?php echo site_url($btnURL); ?>" class="btn btn-md btn-primary" target="_blank"><?php echo $btnText; ?></a></li>
+                                        <li><a href="<?php echo $btnURL; ?>" class="btn btn-md btn-primary" target="_blank"><?php echo $btnText; ?></a></li>
                                         <li><a href="<?php echo site_url('/Knowledge-Base'); ?>" class="link-to btn btn-md btn-light">Learn More</a></li>
                                     </ul>
                                 </div>
@@ -72,10 +72,10 @@ $totalApprovedAssets    = $_SESSION['reporting']['totalApprovedAssets'];
                             <h2 class="subttitle text-white pb-5">Investment Accounting/Analytical Software<br>Crypto Asset Marketplace &amp; Exchange</h1>
                             <p class="text-light">
                                 A powerful Investment Accounting/Analytical Software and Crypto Asset Marketplace & Exchange for Retail & Institutional Investors alike. 
-                                <strong class="text-white">MyMI Wallet</strong> comes with a variety of <a href="">Premium Features</a>, necessary to provide Investors with the Accounting & Analytical Tools and our <strong class="text-primary">Asset Marketplace & Exchanges</strong> that helps you to create your own <a href="">Digital Assets</a> to sell to intereseted potential investors.</p>
+                                <strong class="text-white">MyMI Wallet</strong> comes with a variety of <a href="#features">Premium Features</a>, necessary to provide Investors with the Accounting & Analytical Tools and our <strong class="text-primary">Asset Marketplace & Exchanges</strong> that helps you to create your <a href="#features">Digital Assets</a> to sell to interested potential investors.</p>
                         </div>
                         <ul class="intro-action-group">
-                            <li><a href="<?php echo site_url($btnURL); ?>" class="btn btn-lg btn-primary" target="_blank"><?php echo $btnText; ?></a></li>
+                            <li><a href="<?php echo $btnURL; ?>" class="btn btn-lg btn-primary" target="_blank"><?php echo $btnText; ?></a></li>
                             <li><a href="<?php echo site_url('/Knowledge-Base'); ?>" class="link-to btn btn-lg btn-light">Learn More</a></li>
                         </ul>
                     </div>
@@ -94,7 +94,7 @@ $totalApprovedAssets    = $_SESSION['reporting']['totalApprovedAssets'];
                     <div class="intro-section-desc">
                         <p>
                             An overview of <strong class="text-soft">MyMI Wallet</strong> – capture all of your financial data in one place, customize your analytics, and optimize your investment decisions. 
-                            Utilize our <a href="<?php echo site_url('/Marketplace'); ?>">MyMI Asset Marketplace</a> &amp; <a href="<?php echo site_url('/Exchange'); ?>">Exchange</a> to profit from your investment data, build liquidity and more at MyMI Wallet. 
+                            Utilize our <a href="<?php echo site_url('/Marketplace'); ?>">MyMI Asset Marketplace</a> &amp; <a href="<?php echo site_url('/Exchange'); ?>">Exchange</a> to profit from your investment data, build liquidity, and more at MyMI Wallet. 
                         </p>
                         <p>
                             To us, you are not just an investor, you are a <a href="<?php echo site_url('Knowledge-Base/MyMI-Partnerships'); ?>">Partner</a> in the Future to Come.
@@ -117,7 +117,7 @@ $totalApprovedAssets    = $_SESSION['reporting']['totalApprovedAssets'];
         </div>
         <div class="intro-overview-action">
             <ul>
-                <li><a href="<?php echo site_url($btnURL); ?>" class="link-to btn btn-lg btn-primary"><?php echo $btnText; ?></a></li>
+                <li><a href="<?php echo $btnURL; ?>" class="link-to btn btn-lg btn-primary"><?php echo $btnText; ?></a></li>
                 <li><a href="<?php echo site_url('Knowledge-Base/Getting-Started'); ?>" class="link-to btn btn-lg btn-round btn-outline-primary">Get Started</a></li>
             </ul>
         </div>
@@ -230,7 +230,7 @@ $totalApprovedAssets    = $_SESSION['reporting']['totalApprovedAssets'];
                             </div>
                             <div class="intro-feature-info">
                                 <h4 class="title">MyMI Integrations</h4>
-                                <p>Integrate all of your Brokerage Accounts in one dashboard.</p>
+                                <p>Integrate all of your Brokerage Accounts into one dashboard.</p>
                             </div>
                         </div>
                     </div>
@@ -282,7 +282,7 @@ $totalApprovedAssets    = $_SESSION['reporting']['totalApprovedAssets'];
                             </div>
                             <div class="intro-feature-info">
                                 <h4 class="title">MyMI Asset Marketplace</h4>
-                                <p>Privateiy sell your financial data and digitsl assets.</p>
+                                <p>Privately sell your financial data and digital assets.</p>
                             </div>
                         </div>
                     </div>

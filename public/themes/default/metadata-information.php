@@ -38,6 +38,28 @@ if ($pageType === 'Standard') {
 			
 		';
     };
+} elseif ($pageType === 'Release') { 
+    $page_title 			= $pageURIB . ' Release - ' . $pageURIC . ' | Releases | MyMI Wallet';
+    $page_description 		= 'View more details and in-depth information regarding our most recent ' . $pageURIC . ' Beta Release at MyMI Wallet';
+    $page_url 				= site_url($this->uri->uri_string());
+    $page_sitemap_url 		= $page_url;
+    $page_image 			= $defaultImage;
+    echo
+'<title>' . $page_title . '</title>
+<meta name="description" content="' . $page_description . '">
+<meta property="fb:app_id" content="272102760777052" >
+<meta property="og:type" content="product">
+<meta property="og:url" content="'    . $page_url . '" >
+<meta name="twitter:url" content="' . $page_url . '">
+<link rel="canonical" href="'        . $page_url . '"/>
+<meta property="og:title" content="' . $page_title . '" >
+<meta name="twitter:title" content="' . $page_title . '" >
+<meta property="og:image" content="' . $page_image . '" >
+<meta name="twitter:image:" content="' . $page_image . '" >
+<meta property="og:description" content="' . $page_description . '">
+<meta name="twitter:description" content="' . $page_description . '">      
+        
+    ';
 } elseif ($pageType === 'Search') {
     $page_title 				= 'Search ' . $pageURIC . ' | MyMI Wallet';
     $page_description 			= 'Search for ' . $pageURIC . ' and discover technical analysis and fundamental information to discover your next potential investment';

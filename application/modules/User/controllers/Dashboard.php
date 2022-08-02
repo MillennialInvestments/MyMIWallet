@@ -48,7 +48,7 @@ class Dashboard extends Admin_Controller
     public function index()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -60,7 +60,7 @@ class Dashboard extends Admin_Controller
     public function Investor_Profile()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Investor_Profile';
         
         $this->set_current_user();
         
@@ -72,7 +72,7 @@ class Dashboard extends Admin_Controller
     public function Profile_Manager()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Profile_Manager';
         
         $this->set_current_user();
         
@@ -142,7 +142,7 @@ class Dashboard extends Admin_Controller
     public function Announcements()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->load->model('Management/announcements_model');
         $this->set_current_user();
@@ -318,7 +318,7 @@ class Dashboard extends Admin_Controller
     public function Mymi_Coins()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -509,7 +509,7 @@ class Dashboard extends Admin_Controller
     public function Markets()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -551,7 +551,7 @@ class Dashboard extends Admin_Controller
     public function Trade_Alerts()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         
@@ -563,7 +563,7 @@ class Dashboard extends Admin_Controller
     public function Trade_Alerts_Log()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Dashboard';
         
         $this->set_current_user();
         

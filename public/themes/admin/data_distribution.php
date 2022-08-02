@@ -1,4 +1,10 @@
 <?php
+// Get Page Info
+$pageType 						= Template::get('pageType');
+$pageName 						= Template::get('pageName');
+// $this->load->model('Management/Marketing_model'); 
+// $pageSEOData                    = $this->marketing_model->get_marketing_page_seo_by_name($pageName); 
+// Get User Info
 $cuID 							= $_SESSION['user_id'];
 $allSessionData                 = array();
 $userAccount	        		= $this->mymiuser->user_account_info($cuID);
@@ -51,6 +57,7 @@ $allSessionData					= array(
     'exchangeMarketData'		=> $exchangeMarketData,
     'userLastOrder'			    => $userLastOrder,
     'userLastCompletedOrder'    => $userLastCompletedOrder,
+    // 'pageSEOData'               => $pageSEOData,
     // 'userExchangeInfo'			=> $userExchangeInfo,
 );
 

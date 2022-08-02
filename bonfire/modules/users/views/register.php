@@ -14,7 +14,7 @@ if ($registerType === 'Investor') {
     $title		= 'Create an Investor Account';
 } else {
     $title		= 'Create an Account';
-}
+};
 ?>
 <style scoped='scoped'>
 #register p.already-registered {
@@ -29,7 +29,25 @@ if ($registerType === 'Investor') {
 	#header01-m {padding-top: 1rem !important;}
 	}  
 </style>
-<section class="cid-s0KKUOB7cY border-bottom pb-0" id="header01-m">
+<div class="intro-section intro-feature bg-white pb-0" id="features">
+    <div class="container container-ld pt-5">
+        <div class="row justify-content-center pt-3">
+            <div class="col-lg-9 col-xl-7">
+                <div class="intro-section-title text-center">
+                    <span class="overline-title">Register Your <?php echo $registerType; ?> Account</span>
+                    <h2 class="intro-heading-lead title">Account Registration</h2>
+                    <div class="intro-section-desc">
+                        <p>
+                            Register your <?php echo $registerType; ?> Account to join our Community of Investors and Partners, while enjoying the benefits of our Investment Accounting/Analytical Software and Crypto Asset Marketplace & Exchange.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="intro-section intro-feature bg-white pt-0" id="registration-form">
     <div class="container-fluid px-0">
         <div class="row justify-content-center py-0">
             <div class="mbr-black col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
@@ -55,7 +73,7 @@ if ($registerType === 'Investor') {
 										</div>	
 									</div>
 									<div class="col-md-1 border-right px-5"></div>		
-									<div class="col-12 col-sm-12 col-md-3 pl-5">         
+									<div class="d-none col-sm-12 col-md-3 pl-5">         
 										<h2 class="mbr-section-title mb-5 pb-3 mbr-fonts-style card-title display-7">My Progress</h2>
 										<div class="stepper d-flex flex-column mt-5 ml-2">
 											<?php
@@ -141,7 +159,7 @@ if ($registerType === 'Investor') {
             </div>
         </div>
     </div>
-</section>
+</div>
 <script>
 $(document).ready(function(){
 

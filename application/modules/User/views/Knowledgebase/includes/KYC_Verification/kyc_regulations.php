@@ -9,7 +9,7 @@
                         <div class="nk-block-des">
                             <p class="lead fs-14px">
                                 At MyMI Wallet, we work to ensure that we comply with all Regulations for Financial Services and Cryptocurrencies. 
-                                Below is a list of Regulations (by terrority) that we work to comply with: 
+                                Below is a list of Regulations (by territory) that we work to comply with: 
                             </p>
                             <p class="lead fs-14px">
                                 <strong>United States (US) Financial Regulations & Resources</strong>
@@ -21,7 +21,7 @@
                                 </ul>
                             </p>
                             <p class="lead fs-14px">
-                                <strong>United Kingom (UK) Financial Regulations & Resources</strong>
+                                <strong>United Kindgom (UK) Financial Regulations & Resources</strong>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item"><a href="https://www.sygna.io/blog/what-is-amld5-anti-money-laundering-directive-five-a-guide/" target="_blank">5th Anti-Money Laundering Directive (5AMLD)</a></li>
                                     <li class="list-group-item"><a href="https://ec.europa.eu/malta/news/digital-finance-package-commission-sets-out-new-ambitious-approach-encourage-responsible_en" target="_blank">European Digital Finance Package</a></li>

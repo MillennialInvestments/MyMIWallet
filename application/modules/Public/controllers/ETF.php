@@ -58,7 +58,7 @@ class ETF extends Front_Controller
     public function index()
     {
         $pageType = 'Standard';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         
@@ -70,7 +70,7 @@ class ETF extends Front_Controller
     public function Template()
     {
         $pageType = 'ETF';
-        $pageName = 'User_Dashboard';
+        $pageName = 'Home';
         
         $this->set_current_user();
         $this->output->cache(1);

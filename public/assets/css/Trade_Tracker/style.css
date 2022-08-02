@@ -151,6 +151,13 @@
   .tt-trade-window .trade-table .table-bottom-controller {
     order: 10;
   }
+  .tt-trade-window .trade-table .table-bottom-controller .page-mover-holder {
+    display: flex;
+    flex-direction: row;
+  }
+  .tt-trade-window .trade-table .table-bottom-controller .page-mover-holder input {
+    max-width: 10%;
+  }
   .tt-trade-window .trade-table .trade-container {
     display: flex;
     flex-direction: column;
@@ -166,7 +173,6 @@
     border-bottom: gray 1px solid;
     order: 0;
   }
-  .hidden{ display: none !important;}
   .tt-trade-window .trade-table .trade-container .main-row.hidden {
     display: none !important;
   }
@@ -193,6 +199,7 @@
     align-items: center;
     justify-content: start;
     position: relative;
+    width: 12vw;
   }
   .tt-trade-window .trade-table .trade-container .main-row .scrollable-section .field-holder input {
     border: none;
@@ -207,10 +214,6 @@
     background: whitesmoke;
   }
   .tt-trade-window .trade-table .trade-container .main-row .scrollable-section .field-holder select {
-    border: none;
-    background: none;
-  }
-  .tt-trade-window .trade-table .trade-container .main-row .scrollable-section .field-holder button {
     border: none;
     background: none;
   }
@@ -248,6 +251,7 @@
     align-items: center;
     justify-content: start;
     position: relative;
+    width: 12vw;
   }
   .tt-trade-window .trade-table .trade-container .main-row .fixed-section .field-holder input {
     border: none;
@@ -262,10 +266,6 @@
     background: whitesmoke;
   }
   .tt-trade-window .trade-table .trade-container .main-row .fixed-section .field-holder select {
-    border: none;
-    background: none;
-  }
-  .tt-trade-window .trade-table .trade-container .main-row .fixed-section .field-holder button {
     border: none;
     background: none;
   }
@@ -320,6 +320,7 @@
     align-items: center;
     justify-content: start;
     position: relative;
+    width: 12vw;
   }
   .tt-trade-window .trade-table .trade-container .closed-row .scrollable-section .field-holder input {
     border: none;
@@ -334,10 +335,6 @@
     background: whitesmoke;
   }
   .tt-trade-window .trade-table .trade-container .closed-row .scrollable-section .field-holder select {
-    border: none;
-    background: none;
-  }
-  .tt-trade-window .trade-table .trade-container .closed-row .scrollable-section .field-holder button {
     border: none;
     background: none;
   }
@@ -375,6 +372,7 @@
     align-items: center;
     justify-content: start;
     position: relative;
+    width: 12vw;
   }
   .tt-trade-window .trade-table .trade-container .closed-row .fixed-section .field-holder input {
     border: none;
@@ -389,10 +387,6 @@
     background: whitesmoke;
   }
   .tt-trade-window .trade-table .trade-container .closed-row .fixed-section .field-holder select {
-    border: none;
-    background: none;
-  }
-  .tt-trade-window .trade-table .trade-container .closed-row .fixed-section .field-holder button {
     border: none;
     background: none;
   }
@@ -444,6 +438,7 @@
     align-items: center;
     justify-content: start;
     position: relative;
+    width: 12vw;
   }
   .tt-trade-window .trade-table .trade-container .legend-row .scrollable-section .field-holder input {
     border: none;
@@ -458,10 +453,6 @@
     background: whitesmoke;
   }
   .tt-trade-window .trade-table .trade-container .legend-row .scrollable-section .field-holder select {
-    border: none;
-    background: none;
-  }
-  .tt-trade-window .trade-table .trade-container .legend-row .scrollable-section .field-holder button {
     border: none;
     background: none;
   }
@@ -499,6 +490,7 @@
     align-items: center;
     justify-content: start;
     position: relative;
+    width: 12vw;
   }
   .tt-trade-window .trade-table .trade-container .legend-row .fixed-section .field-holder input {
     border: none;
@@ -513,10 +505,6 @@
     background: whitesmoke;
   }
   .tt-trade-window .trade-table .trade-container .legend-row .fixed-section .field-holder select {
-    border: none;
-    background: none;
-  }
-  .tt-trade-window .trade-table .trade-container .legend-row .fixed-section .field-holder button {
     border: none;
     background: none;
   }
@@ -555,6 +543,7 @@
     left: 50%;
     background: white;
     transform: translate(-50%, -50%);
+    box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.21);
   }
   
   .tt-edit-user-preferences {
