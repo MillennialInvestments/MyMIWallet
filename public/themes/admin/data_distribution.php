@@ -6,6 +6,27 @@ $pageName 						= Template::get('pageName');
 // $pageSEOData                    = $this->marketing_model->get_marketing_page_seo_by_name($pageName); 
 // Get User Info
 $cuID 							= $_SESSION['user_id'];
+$betaStatus                     = $this->config->item('beta');
+if ($betaStatus === 0) {
+    $beta                       = 'No';
+} else {
+    $beta                       = 'Yes';
+}
+$thisController                 = $this->router->fetch_class();
+$thisMethod                     = $this->router->fetch_method();
+$thisURL                        = $this->uri->uri_string();
+$thisFullURL                    = current_url();
+$thisComment                    = 'User (' . $cuID . ') successfully viewed the following page: ' . $thisURL;
+$this->mymilogger
+     ->user($cuID) //Set UserID, who created this  Action
+     ->beta($beta) //Set whether in Beta or nto
+     ->type('Page Visit') //Entry type like, Post, Page, Entry
+     ->controller($thisController)
+     ->method($thisMethod)
+     ->url($thisURL)
+     ->full_url($thisFullURL)
+     ->comment($thisComment) //Token identify Action
+     ->log(); //Add Database Entry
 $allSessionData                 = array();
 $userAccount	        		= $this->mymiuser->user_account_info($cuID);
 $walletID                       = $userAccount['walletID'];

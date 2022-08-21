@@ -27,20 +27,7 @@ $testInfo						= array(
                 </div>
 			</div>     -->
             <?php 
-            // use MichaelDrennen\TDAmeritradeAPI\TDAmeritradeAPI;
-            // $tdaClient              = new TDAmeritradeAPI(); 
-            // // $tdaClient->login();
-			// print_r($tdaClient);   
-            // $pageName           = Template::get('pageName'); 
-            // echo $pageName; 
-            // echo '<br><br>';
-            $pageSEOData        = $_SESSION['allSessionData']['pageSEOData'];
-            print_r($pageSEOData->result_array()); 
-            // echo '<br><br>';
-
-            // $this->db->from('bf_marketing_page_seo');
-            // $getPageSEO                                 = $this->db->get()->result_array();
-            // print_r($this->mymimarketing->get_page_headers_by_name($pageName));
+            $this->load->view('User/Dashboard/Investor_Profile/Activity', $testInfo); 
             ?>
 		</div>
 	</div>

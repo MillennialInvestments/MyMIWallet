@@ -60,6 +60,7 @@ class ComposerStaticInite736f3a96dcfa2be38470e88b24ca348
         array (
             'Codenixsv\\BittrexApi\\' => 21,
             'Carbon\\' => 7,
+            'CILogViewer\\' => 12,
         ),
         'B' => 
         array (
@@ -156,6 +157,10 @@ class ComposerStaticInite736f3a96dcfa2be38470e88b24ca348
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
+        ),
+        'CILogViewer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/seunmatt/codeigniter-log-viewer/src',
         ),
         'Bonfire\\' => 
         array (

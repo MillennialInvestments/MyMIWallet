@@ -411,6 +411,27 @@ class User_model extends BF_Model
         
         return $this->db->insert('bf_users_wallet', $users);
     }
+
+    public function add_default_wallet_for_existing($id, $active, $beta, $default_wallet, $exchange_wallet, $market_pair, $market, $username, $email, $broker, $wallet_type, $amount, $nickname)
+    {
+        $users = array(
+         'user_id'				=> $id,
+         'active'				=> $active,
+         'beta'					=> $beta,
+         'default_wallet'		=> $default_wallet,
+         'exchange_wallet'		=> $exchange_wallet,
+         'market_pair'			=> $market_pair,
+         'market'				=> $market,
+         'username'				=> $username,
+         'user_email'			=> $email,
+         'broker'				=> $broker,
+         'wallet_type'  		=> $wallet_type,
+         'amount'				=> $amount,
+         'nickname'				=> $nickname,
+        );
+        
+        return $this->db->insert('bf_users_wallet', $users);
+    }
     
     /**
      * Update an existing user. Before saving, it will:

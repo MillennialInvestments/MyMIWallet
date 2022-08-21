@@ -30,6 +30,7 @@
         "php": ">=7.1",
         "guzzlehttp/guzzle": ">=7.4",
         "codenix-sv/bittrex-api": "^1.0",
-        "michaeldrennen/td-ameritrade-api": "^0.1.13"
+        "michaeldrennen/td-ameritrade-api": "^0.1.13",
+        "seunmatt/codeigniter-log-viewer": "^1.1"
     }
 }

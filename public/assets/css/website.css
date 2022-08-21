@@ -26,6 +26,7 @@ fieldset {
 	height: 3px !important;
 	background-color: #3E61BC !important;
 }
+.grecaptcha-badge{visibility: hidden}
 .lead {
 	font-size: 1.1rem;
 }

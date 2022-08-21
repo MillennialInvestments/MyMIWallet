@@ -23,6 +23,7 @@
  * @author     Bonfire Dev Team
  * @link    http://cibonfire.com/docs/developer
  */
+
 class Users extends Front_Controller
 {
     /** @var array Site's settings to be passed to the view. */
@@ -67,9 +68,24 @@ class Users extends Front_Controller
         $pageType = 'Standard';
         Template::set('pageName', $pageName);
         Template::set('pageType', $pageType);
+        if (!empty($_SESSION['user_id'])) {
+             $cuID 			            = $_SESSION['user_id'];
+        } else {
+            $cuID                       = $this->input->ip_address();
+        }
+        $betaStatus                     = $this->config->item('beta');
+        if ($betaStatus === 0) {
+            $beta                       = 'No';
+        } else {
+            $beta                       = 'Yes';
+        }
+        $thisController                 = $this->router->fetch_class();
+        $thisMethod                     = $this->router->fetch_method();
+        $thisURL                        = $this->uri->uri_string();
+        $thisFullURL                    = current_url();
         // If the user is already logged in, go home.
         if ($this->auth->is_logged_in() !== false) {
-            Template::redirect('/');
+            Template::redirect('/Dashboard');
         }
 
         // Try to login.
@@ -85,6 +101,17 @@ class Users extends Front_Controller
                 lang('us_log_logged') . ': ' . $this->input->ip_address(),
                 'users'
             );
+            $thisComment                    = 'User (' . $cuID . ') successfully logged into the following page: ' . $thisURL;
+            $this->mymilogger
+                ->user($cuID) //Set UserID, who created this  Action
+                ->beta($beta) //Set whether in Beta or nto
+                ->type('User Account') //Entry type like, Post, Page, Entry
+                ->controller($thisController)
+                ->method($thisMethod)
+                ->url($thisURL)
+                ->full_url($thisFullURL)
+                ->comment($thisComment) //Token identify Action
+                ->log(); //Add Database Entry
 
             // Now redirect. (If this ever changes to render something, note that
             // auth->login() currently doesn't attempt to fix `$this->current_user`
@@ -130,6 +157,21 @@ class Users extends Front_Controller
      */
     public function logout()
     {
+        if (!empty($_SESSION['user_id'])) {
+             $cuID 			            = $_SESSION['user_id'];
+        } else {
+            $cuID                       = $this->input->ip_address();
+        }
+        $betaStatus                     = $this->config->item('beta');
+        if ($betaStatus === 0) {
+            $beta                       = 'No';
+        } else {
+            $beta                       = 'Yes';
+        }
+        $thisController                 = $this->router->fetch_class();
+        $thisMethod                     = $this->router->fetch_method();
+        $thisURL                        = $this->uri->uri_string();
+        $thisFullURL                    = current_url();
         if (isset($this->current_user->id)) {
             // Login session is valid. Log the Activity.
             log_activity(
@@ -137,6 +179,17 @@ class Users extends Front_Controller
                 lang('us_log_logged_out') . ': ' . $this->input->ip_address(),
                 'users'
             );
+            $thisComment                    = 'User (' . $cuID . ') successfully logged out!';
+            $this->mymilogger
+                ->user($cuID) //Set UserID, who created this  Action
+                ->beta($beta) //Set whether in Beta or nto
+                ->type('User Account') //Entry type like, Post, Page, Entry
+                ->controller($thisController)
+                ->method($thisMethod)
+                ->url($thisURL)
+                ->full_url($thisFullURL)
+                ->comment($thisComment) //Token identify Action
+                ->log(); //Add Database Entry
         }
 
         // Always clear browser data (don't silently ignore user requests).
@@ -229,75 +282,127 @@ class Users extends Front_Controller
         }
 
         // return an error of your choosing
-        $id	 				= $this->input->post('id');
-        $beta               = $this->input->post('beta');
-        $type	 			= $this->input->post('type');
-        $partner 			= $this->input->post('partner');
-        $investor 			= $this->input->post('investor');
-        $organization		= $this->input->post('organization');
-        $signup_date		= $this->input->post('signup_date');
-        $account_type       = $this->input->post('account_type');
-        $email	 			= $this->input->post('email');
-        $username			= $this->input->post('username');
-        $user_email	 		= $email;
-        $register_url 		= $this->input->post('register_url') ?: REGISTER_URL;
-        $login_url    		= $this->input->post('login_url') ?: LOGIN_URL;
+        $id	 				            = $this->input->post('id');
+        $beta                           = $this->input->post('beta');
+        $type	 			            = $this->input->post('type');
+        $partner 			            = $this->input->post('partner');
+        $investor 			            = $this->input->post('investor');
+        $organization		            = $this->input->post('organization');
+        $signup_date		            = $this->input->post('signup_date');
+        $account_type                   = $this->input->post('account_type');
+        $email	 			            = $this->input->post('email');
+        $username			            = $this->input->post('username');
+        $user_email	 		            = $em7ail;
+        $register_url 		            = $this->input->post('register_url') ?: REGISTER_URL;
+        $login_url    		            = $this->input->post('login_url') ?: LOGIN_URL;
                 
-        $phone				= $this->input->post('phone');
-        $address			= $this->input->post('address');
-        $city				= $this->input->post('city');
-        $state				= $this->input->post('state');
-        $country			= $this->input->post('country');
-        $zipcode			= $this->input->post('zipcode');
+        $phone				            = $this->input->post('phone');
+        $address			            = $this->input->post('address');
+        $city				            = $this->input->post('city');
+        $state				            = $this->input->post('state');
+        $country			            = $this->input->post('country');
+        $zipcode			            = $this->input->post('zipcode');
                 
         // Default Wallet Information
-        $default_wallet		= 'Yes';
-        $exchange_wallet	= 'Yes';
-        $active				= 'Yes';
-        $market_pair		= 'USD';
-        $market				= 'MYMI';
-        $broker				= 'Default';
-        $nickname			= 'MyMI Funds';
-        $wallet_type		= 'Fiat';
-        $amount				= '0.00';
+        $default_wallet		            = 'Yes';
+        $exchange_wallet	            = 'Yes';
+        $active				            = 'Yes';
+        $market_pair		            = 'USD';
+        $market				            = 'MYMI';
+        $broker				            = 'Default';
+        $nickname			            = 'MyMI Funds';
+        $wallet_type		            = 'Fiat';
+        $amount				            = '0.00';
+
+        // Set Activity Logger Configuration
+        if (!empty($_SESSION['user_id'])) {
+             $cuID 			            = $_SESSION['user_id'];
+        } else {
+            $cuID                       = $this->input->ip_address();
+        }
+        $betaStatus                     = $this->config->item('beta');
+        if ($betaStatus === 0) {
+            $betaAlt                    = 'No';
+        } else {
+            $betaAlt                    = 'Yes';
+        }
+        $thisController                 = $this->router->fetch_class();
+        $thisMethod                     = $this->router->fetch_method();
+        $thisURL                        = $this->uri->uri_string();
+        $thisFullURL                    = current_url();
                 
         $this->load->model('roles/role_model');
         $this->load->helper('date');
 
         $this->load->config('address');
         $this->load->helper('address');
-        $pageType		    = 'register';
+        $pageType		                = 'register';
         // $this->load->config('user_meta');
         // $meta_fields = config_item('user_meta_fields');
         // Template::set('meta_fields', $meta_fields);
         Template::set('pageType', $pageType);
 
         if (isset($_POST['register'])) {
-            $score = get_recapture_score($this->input->post('g-recaptcha-response'));
+            // $score = get_recapture_score($_POST['g-recaptcha-response']);
         
-            if ($score > RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
+            // if ($score > RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
                 if ($userId = $this->saveUser('insert', 0)) {
                     if ($this->user_model->add_social_networks($id, $email, $username)) {
                         if ($this->user_model->add_default_wallet($id, $active, $beta, $default_wallet, $exchange_wallet, $market_pair, $market, $username, $email, $broker, $wallet_type, $amount, $nickname)) {
                             // User Activation
                             $activation = $this->user_model->set_activation($userId);
-                            $message = $activation['message'];
-                            $error   = $activation['error'];
+                            $message    = $activation['message'];
+                            $error      = $activation['error'];
 
                             Template::set_message($message, $error ? 'error' : 'success');
 
                             log_activity($userId, 'User registered account', 'users');
                             Template::redirect('Verify-Email/' . $userId);
+                            $thisComment                    = 'User (' . $cuID . ') successfully registered an account!';
+                            $this->mymilogger
+                                ->user($cuID) //Set UserID, who created this  Action
+                                ->beta($betaAlt) //Set whether in Beta or nto
+                                ->type('User Account') //Entry type like, Post, Page, Entry
+                                ->controller($thisController)
+                                ->method($thisMethod)
+                                ->url($thisURL)
+                                ->full_url($thisFullURL)
+                                ->comment($thisComment) //Token identify Action
+                                ->log(); //Add Database Entry
                         }
                     }
                 } else {
+                    $thisComment                    = 'ERROR: User (' . $cuID . ') Account registration failed!';
+                    $this->mymilogger
+                        ->user($cuID) //Set UserID, who created this  Action
+                        ->beta($betaAlt) //Set whether in Beta or nto
+                        ->type('ERROR: User Account') //Entry type like, Post, Page, Entry
+                        ->controller($thisController)
+                        ->method($thisMethod)
+                        ->url($thisURL)
+                        ->full_url($thisFullURL)
+                        ->comment($thisComment) //Token identify Action
+                        ->log(); //Add Database Entry
                     Template::set_message(lang('us_registration_fail'), 'error');
                     // Don't redirect because validation errors will be lost.
                 }
-            } else {
-                Template::set_message('Potential Spam! Please verify you are not a robot.', 'error'); 
-                Template::redirect($this->uri->uri_string()); 
-            }
+            // } else {
+            //     $thisComment                    = 'ERROR: User (' . $cuID . ') Registration Recaptcha failed!';
+            //     $this->mymilogger
+            //         ->user($cuID) //Set UserID, who created this  Action
+            //         ->beta($betaAlt) //Set whether in Beta or nto
+            //         ->type('ERROR: User Account') //Entry type like, Post, Page, Entry
+            //         ->controller($thisController)
+            //         ->method($thisMethod)
+            //         ->url($thisURL)
+            //         ->full_url($thisFullURL)
+            //         ->comment($thisComment) //Token identify Action
+            //         ->log(); //Add Database Entry
+            //     Template::set_message(lang('us_registration_fail'), 'error');
+            //     // Don't redirect because validation errors will be lost.
+            //     Template::set_message('Potential Spam! Please verify you are not a robot.', 'error'); 
+            //     Template::redirect($this->uri->uri_string()); 
+            // }
         }
 
         if ($this->siteSettings['auth.password_show_labels'] == 1) {
@@ -329,8 +434,35 @@ class Users extends Front_Controller
      */
     public function forgot_password()
     {
+        // Set Activity Logger Variables
+        if (!empty($_SESSION['user_id'])) {
+             $cuID 			            = $_SESSION['user_id'];
+        } else {
+            $cuID                       = $this->input->ip_address();
+        }
+        $betaStatus                     = $this->config->item('beta');
+        if ($betaStatus === 0) {
+            $beta                       = 'No';
+        } else {
+            $beta                       = 'Yes';
+        }
+        $thisController                 = $this->router->fetch_class();
+        $thisMethod                     = $this->router->fetch_method();
+        $thisURL                        = $this->uri->uri_string();
+        $thisFullURL                    = current_url();
         // If the user is logged in, go home.
         if ($this->auth->is_logged_in() !== false) {
+            $thisComment                    = 'Forgot Password: User (' . $cuID . ') is already logged in!';
+            $this->mymilogger
+                ->user($cuID) //Set UserID, who created this  Action
+                ->beta($beta) //Set whether in Beta or nto
+                ->type('User Account') //Entry type like, Post, Page, Entry
+                ->controller($thisController)
+                ->method($thisMethod)
+                ->url($thisURL)
+                ->full_url($thisFullURL)
+                ->comment($thisComment) //Token identify Action
+                ->log(); //Add Database Entry
             Template::redirect('/');
         }
 
@@ -371,9 +503,31 @@ class Users extends Front_Controller
                      );
 
                     if ($this->emailer->send($data)) {
-                        log_activity($userId, 'User forgot password', 'users');
+                        log_activity($cuID, 'User forgot password', 'users');
+                        $thisComment                    = 'Forgot Password: User (' . $cuID . ') Instructions sent via email!';
+                        $this->mymilogger
+                            ->user($cuID) //Set UserID, who created this  Action
+                            ->beta($beta) //Set whether in Beta or nto
+                            ->type('User Account') //Entry type like, Post, Page, Entry
+                            ->controller($thisController)
+                            ->method($thisMethod)
+                            ->url($thisURL)
+                            ->full_url($thisFullURL)
+                            ->comment($thisComment) //Token identify Action
+                            ->log(); //Add Database Entry
                         Template::set_message(lang('us_reset_pass_message'), 'success');
                     } else {
+                        $thisComment                    = 'ERRORR: Forgot Password: User (' . $cuID . ') Instructions failed to be sent via email!';
+                        $this->mymilogger
+                            ->user($cuID) //Set UserID, who created this  Action
+                            ->beta($beta) //Set whether in Beta or nto
+                            ->type('User Account') //Entry type like, Post, Page, Entry
+                            ->controller($thisController)
+                            ->method($thisMethod)
+                            ->url($thisURL)
+                            ->full_url($thisFullURL)
+                            ->comment($thisComment) //Token identify Action
+                            ->log(); //Add Database Entry
                         Template::set_message(lang('us_reset_pass_error') . $this->emailer->error, 'error');
                     }
                 }
@@ -401,8 +555,35 @@ class Users extends Front_Controller
      */
     public function reset_password($email = '', $code = '')
     {
+        // Set Activity Logger Variables
+        if (!empty($_SESSION['user_id'])) {
+             $cuID 			            = $_SESSION['user_id'];
+        } else {
+            $cuID                       = $this->input->ip_address();
+        }
+        $betaStatus                     = $this->config->item('beta');
+        if ($betaStatus === 0) {
+            $beta                       = 'No';
+        } else {
+            $beta                       = 'Yes';
+        }
+        $thisController                 = $this->router->fetch_class();
+        $thisMethod                     = $this->router->fetch_method();
+        $thisURL                        = $this->uri->uri_string();
+        $thisFullURL                    = current_url();
         // If the user is logged in, go home.
         if ($this->auth->is_logged_in() !== false) {
+            $thisComment                    = 'Reset Password: User (' . $cuID . ') is already logged in!';
+            $this->mymilogger
+                ->user($cuID) //Set UserID, who created this  Action
+                ->beta($beta) //Set whether in Beta or nto
+                ->type('User Account') //Entry type like, Post, Page, Entry
+                ->controller($thisController)
+                ->method($thisMethod)
+                ->url($thisURL)
+                ->full_url($thisFullURL)
+                ->comment($thisComment) //Token identify Action
+                ->log(); //Add Database Entry
             Template::redirect('/');
         }
 
@@ -434,15 +615,36 @@ class Users extends Front_Controller
                                   'reset_hash'  => '',
                     'force_password_reset' => 0,
                 );
-
                 if ($this->user_model->update($this->input->post('user_id'), $data)) {
                     log_activity($this->input->post('user_id'), 'User Reset Password', 'users');
+                    $thisComment                    = 'User (' . $cuID . ') successfully reset password';
+                    $this->mymilogger
+                        ->user($cuID) //Set UserID, who created this  Action
+                        ->beta($beta) //Set whether in Beta or nto
+                        ->type('Account') //Entry type like, Post, Page, Entry
+                        ->controller($thisController)
+                        ->method($thisMethod)
+                        ->url($thisURL)
+                        ->full_url($thisFullURL)
+                        ->comment($thisComment) //Token identify Action
+                        ->log(); //Add Database Entry
 
                     Template::set_message(lang('us_reset_password_success'), 'success');
                     Template::redirect(LOGIN_URL);
                 }
 
                 if (! empty($this->user_model->error)) {
+                    $thisComment                    = 'User (' . $cuID . ') failed to reset password';
+                    $this->mymilogger
+                        ->user($cuID) //Set UserID, who created this  Action
+                        ->beta($beta) //Set whether in Beta or nto
+                        ->type('User Account') //Entry type like, Post, Page, Entry
+                        ->controller($thisController)
+                        ->method($thisMethod)
+                        ->url($thisURL)
+                        ->full_url($thisFullURL)
+                        ->comment($thisComment) //Token identify Action
+                        ->log(); //Add Database Entry
                     Template::set_message(sprintf(lang('us_reset_password_error'), $this->user_model->error), 'error');
                 }
             }
@@ -485,6 +687,33 @@ class Users extends Front_Controller
         $this->load->library('users/auth');
         $this->set_current_user();
         
+        // Set Activity Logger Variables
+        if (!empty($_SESSION['user_id'])) {
+             $cuID 			            = $_SESSION['user_id'];
+        } else {
+            $cuID                       = $this->input->ip_address();
+        }
+        $betaStatus                     = $this->config->item('beta');
+        if ($betaStatus === 0) {
+            $beta                       = 'No';
+        } else {
+            $beta                       = 'Yes';
+        }
+        $thisController                 = $this->router->fetch_class();
+        $thisMethod                     = $this->router->fetch_method();
+        $thisURL                        = $this->uri->uri_string();
+        $thisFullURL                    = current_url();
+        $thisComment                    = 'User (' . $cuID . ') has reached Email Verification Notification';
+        $this->mymilogger
+            ->user($cuID) //Set UserID, who created this  Action
+            ->beta($beta) //Set whether in Beta or nto
+            ->type('User Account') //Entry type like, Post, Page, Entry
+            ->controller($thisController)
+            ->method($thisMethod)
+            ->url($thisURL)
+            ->full_url($thisFullURL)
+            ->comment($thisComment) //Token identify Action
+            ->log(); //Add Database Entry
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
         Template::render();
@@ -530,6 +759,16 @@ class Users extends Front_Controller
         $wallet_type		= 'Fiat';
         $amount				= '0.00';
         $nickname			= 'MyMI Funds';
+        // Set Activity Logger Variables
+        if (!empty($_SESSION['user_id'])) {
+            $cuID 			            = $_SESSION['user_id'];
+        } else {
+            $cuID                       = $this->input->ip_address();
+        }
+        $thisController                 = $this->router->fetch_class();
+        $thisMethod                     = $this->router->fetch_method();
+        $thisURL                        = $this->uri->uri_string();
+        $thisFullURL                    = current_url();
         
         if ($this->form_validation->run() === false) {
             $this->load->view('users/Account_Information');
@@ -558,10 +797,32 @@ class Users extends Front_Controller
             
             if ($this->user_model->add_account_information($user_id, $private_key, $wallet_id, $realize_id, $first_name, $middle_name, $last_name, $name_suffix, $phone, $address, $city, $state, $country, $zipcode, $timezones, $language, $advertisement)) {
                 // user creation ok
+                $thisComment                    = 'User (' . $cuID . ') has successfully updated their Account Information.';
+                $this->mymilogger
+                    ->user($cuID) //Set UserID, who created this  Action
+                    ->beta($beta) //Set whether in Beta or nto
+                    ->type('User Account') //Entry type like, Post, Page, Entry
+                    ->controller($thisController)
+                    ->method($thisMethod)
+                    ->url($thisURL)
+                    ->full_url($thisFullURL)
+                    ->comment($thisComment) //Token identify Action
+                    ->log(); //Add Database Entry
                 Template::set_message('Account Information Submitted Successfully', 'success');
                 redirect('/Registration-Successful/' . $user_id);
             } else {
                 
+                $thisComment                    = 'ERROR: User (' . $cuID . ') failed to successfully update their Account Information.';
+                $this->mymilogger
+                    ->user($cuID) //Set UserID, who created this  Action
+                    ->beta($beta) //Set whether in Beta or nto
+                    ->type('ERROR: User Account') //Entry type like, Post, Page, Entry
+                    ->controller($thisController)
+                    ->method($thisMethod)
+                    ->url($thisURL)
+                    ->full_url($thisFullURL)
+                    ->comment($thisComment) //Token identify Action
+                    ->log(); //Add Database Entry
                 // user creation failed, this should never happen
                 $data->error = 'There was a problem udpating your account information. Please try again or contact us at <a href="mailto:support@mymiwallet.com">support@mymiwallet.com</a>.';
                 
@@ -628,6 +889,22 @@ class Users extends Front_Controller
      */
     public function activate($user_id = null)
     {
+        // Set Activity Logger Variables
+        if (!empty($_SESSION['user_id'])) {
+             $cuID 			            = $_SESSION['user_id'];
+        } else {
+            $cuID                       = $this->input->ip_address();
+        }
+        $betaStatus                     = $this->config->item('beta');
+        if ($betaStatus === 0) {
+            $beta                       = 'No';
+        } else {
+            $beta                       = 'Yes';
+        }
+        $thisController                 = $this->router->fetch_class();
+        $thisMethod                     = $this->router->fetch_method();
+        $thisURL                        = $this->uri->uri_string();
+        $thisFullURL                    = current_url();
         if (isset($_POST['activate'])) {
             $this->form_validation->set_rules('code', 'Verification Code', 'required|trim');
             if ($this->form_validation->run()) {
@@ -649,8 +926,30 @@ class Users extends Front_Controller
                     );
 
                     if ($this->emailer->send($data)) {
+                        $thisComment                    = 'User (' . $cuID . ') has reached Email Verification Notification';
+                        $this->mymilogger
+                            ->user($cuID) //Set UserID, who created this  Action
+                            ->beta($beta) //Set whether in Beta or nto
+                            ->type('User Account') //Entry type like, Post, Page, Entry
+                            ->controller($thisController)
+                            ->method($thisMethod)
+                            ->url($thisURL)
+                            ->full_url($thisFullURL)
+                            ->comment($thisComment) //Token identify Action
+                            ->log(); //Add Database Entry
                         Template::set_message(lang('us_account_active'), 'success');
                     } else {
+                        $thisComment                    = 'ERROR: User (' . $cuID . ') ' . lang('us_err_no_email');
+                        $this->mymilogger
+                            ->user($cuID) //Set UserID, who created this  Action
+                            ->beta($beta) //Set whether in Beta or nto
+                            ->type('ERROR: User Account') //Entry type like, Post, Page, Entry
+                            ->controller($thisController)
+                            ->method($thisMethod)
+                            ->url($thisURL)
+                            ->full_url($thisFullURL)
+                            ->comment($thisComment) //Token identify Action
+                            ->log(); //Add Database Entry
                         Template::set_message(lang('us_err_no_email'). $this->emailer->error, 'error');
                     }
 
@@ -658,6 +957,17 @@ class Users extends Front_Controller
                 }
 
                 if (! empty($this->user_model->error)) {
+                    $thisComment                    = 'ERROR: User (' . $cuID . ') ' . lang('us_err_activate_code');
+                    $this->mymilogger
+                        ->user($cuID) //Set UserID, who created this  Action
+                        ->beta($beta) //Set whether in Beta or nto
+                        ->type('ERROR: User Account') //Entry type like, Post, Page, Entry
+                        ->controller($thisController)
+                        ->method($thisMethod)
+                        ->url($thisURL)
+                        ->full_url($thisFullURL)
+                        ->comment($thisComment) //Token identify Action
+                        ->log(); //Add Database Entry
                     Template::set_message($this->user_model->error . '. ' . lang('us_err_activate_code'), 'error');
                 }
             }
@@ -679,6 +989,22 @@ class Users extends Front_Controller
      */
     public function resend_activation()
     {
+        // Set Activity Logger Variables
+        if (!empty($_SESSION['user_id'])) {
+             $cuID 			            = $_SESSION['user_id'];
+        } else {
+            $cuID                       = $this->input->ip_address();
+        }
+        $betaStatus                     = $this->config->item('beta');
+        if ($betaStatus === 0) {
+            $beta                       = 'No';
+        } else {
+            $beta                       = 'Yes';
+        }
+        $thisController                 = $this->router->fetch_class();
+        $thisMethod                     = $this->router->fetch_method();
+        $thisURL                        = $this->uri->uri_string();
+        $thisFullURL                    = current_url();
         if (isset($_POST['send'])) {
             $this->form_validation->set_rules('email', 'lang:bf_email', 'required|trim|valid_email');
 
@@ -686,11 +1012,33 @@ class Users extends Front_Controller
                 // Form validated. Does the user actually exist?
                 $user = $this->user_model->find_by('email', $_POST['email']);
                 if ($user === false) {
+                    $thisComment                    = 'ERROR: User (' . $cuID . ') Cannot find that email in our records';
+                    $this->mymilogger
+                        ->user($cuID) //Set UserID, who created this  Action
+                        ->beta($beta) //Set whether in Beta or nto
+                        ->type('ERROR: User Account') //Entry type like, Post, Page, Entry
+                        ->controller($thisController)
+                        ->method($thisMethod)
+                        ->url($thisURL)
+                        ->full_url($thisFullURL)
+                        ->comment($thisComment) //Token identify Action
+                        ->log(); //Add Database Entry
                     Template::set_message('Cannot find that email in our records.', 'error');
                 } else {
                     $activation = $this->user_model->set_activation($user->id);
                     $message = $activation['message'];
                     $error = $activation['error'];
+                    $thisComment                    = 'User (' . $cuID . ') requested to resent activation code';
+                    $this->mymilogger
+                        ->user($cuID) //Set UserID, who created this  Action
+                        ->beta($beta) //Set whether in Beta or nto
+                        ->type('User Account') //Entry type like, Post, Page, Entry
+                        ->controller($thisController)
+                        ->method($thisMethod)
+                        ->url($thisURL)
+                        ->full_url($thisFullURL)
+                        ->comment($thisComment) //Token identify Action
+                        ->log(); //Add Database Entry
 
                     Template::set_message($message, $error ? 'error' : 'success');
                 }

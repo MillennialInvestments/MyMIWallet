@@ -3,7 +3,32 @@
     $reporting                      = $this->mymianalytics->reporting();
 if (!empty($_SESSION['userAccount']['cuID'])) {
     $this->load->library('MyMIAnalytics'); 
-    $cuID 					        = $_SESSION['user_id'];
+    if (!empty($_SESSION['user_id'])) {
+        $cuID 					    = $_SESSION['user_id'];
+    } else {
+        $cuID                       = $this->input->ip_address();
+    }
+    $betaStatus                     = $this->config->item('beta');
+    if ($betaStatus === 0) {
+        $beta                       = 'No';
+    } else {
+        $beta                       = 'Yes';
+    }
+    $thisController                 = $this->router->fetch_class();
+    $thisMethod                     = $this->router->fetch_method();
+    $thisURL                        = $this->uri->uri_string();
+    $thisFullURL                    = $this->uri->current_url();
+    $thisComment                    = 'User (' . $cuID . ') successfully viewed the following page: ' . $thisURL;
+    $this->mymilogger
+        ->user($cuID) //Set UserID, who created this  Action
+        ->beta($beta) //Set whether in Beta or nto
+        ->type('Page Visit') //Entry type like, Post, Page, Entry
+        ->controller($thisController)
+        ->method($thisMethod)
+        ->url($thisURL)
+        ->full_url($thisFullURL)
+        ->comment($thisComment) //Token identify Action
+        ->log(); //Add Database Entry
     $allSessionData                 = array();
     $userAccount	        		= $this->mymiuser->user_account_info($cuID);
     $walletID                       = $userAccount['walletID'];

@@ -1,12 +1,14 @@
 <?php
 $userAccount                            = $_SESSION['allSessionData']['userAccount']; 
+// print_r($userAccount); 
 $cuID                                   = $userAccount['cuID']; 
 $cuFirstName                            = $userAccount['cuFirstName']; 
 $cuMiddleName                           = $userAccount['cuMiddleName']; 
 $cuLastName                             = $userAccount['cuLastName']; 
 $cuNameSuffix                           = $userAccount['cuNameSuffix']; 
-$cuDisplayName                          = $userAccount['cuDisplayName']; 
+$cuUsername                             = $userAccount['cuUsername']; 
 $cuEmail                                = $userAccount['cuEmail']; 
+// $cuDOB                                  = $userAccount['cuDOB']; 
 $cuPhone                                = $userAccount['cuPhone']; 
 $cuAddress                              = $userAccount['cuAddress']; 
 $cuCity                                 = $userAccount['cuCity']; 
@@ -16,6 +18,13 @@ $cuZipCode                              = $userAccount['cuZipCode'];
 $cuReferrer                             = $userAccount['cuReferrer']; 
 $cuPartner                              = $userAccount['cuPartner']; 
 $cuWalletID                             = $userAccount['cuWalletID']; 
+$walletSum                              = $_SESSION['allSessionData']['myMIWalletSummary']['walletSum'];
+$MyMIGCoinSum			                = $_SESSION['allSessionData']['userGoldData']['coinSum'];
+if (!empty($_SESSION['allSessionData']['userAccount']['assetNetValue'])) {
+    $walletAmount                       = $walletSum;
+} else {
+    $walletAmount					    = $walletSum;
+}
 $viewData                               = array(
     'userAccount'                       => $userAccount,
     'cuID'                              => $cuID,
@@ -23,8 +32,9 @@ $viewData                               = array(
     'cuMiddleName'                      => $cuMiddleName,
     'cuLastName'                        => $cuLastName,
     'cuNameSuffix'                      => $cuNameSuffix,
-    'cuDisplayName'                     => $cuDisplayName,
+    'cuUsername'                        => $cuUsername,
     'cuEmail'                           => $cuEmail,
+    // 'cuDOB'                             => $cuDOB,
     'cuPhone'                           => $cuPhone,
     'cuAddress'                         => $cuAddress,
     'cuCity'                            => $cuCity,
@@ -34,6 +44,8 @@ $viewData                               = array(
     'cuReferrer'                        => $cuReferrer,
     'cuPartner'                         => $cuPartner,
     'cuWalletID'                        => $cuWalletID,
+    'walletSum'                         => $walletSum,
+    'MyMIGCoinSum'                      => $MyMIGCoinSum,
 );
 ?>
 <div class="nk-block">
@@ -56,21 +68,25 @@ $viewData                               = array(
                     <!-- Bank Accounts -->
                     <div class="tab-pane" id="tabItem4">
                         <?php $this->load->view('User/Dashboard/Investor_Profile/Bank_Accounts', $viewData); ?>
+                    </div> 
+                    <!-- Expense Accounts -->
+                    <div class="tab-pane" id="tabItem5">
+                        <?php $this->load->view('User/Dashboard/Investor_Profile/External_Accounts', $viewData); ?>
                     </div>  
                     <!-- Connected Accounts -->
-                    <div class="tab-pane" id="tabItem5">
+                    <div class="tab-pane" id="tabItem6">
                         <?php //$this->load->view('User/Dashboard/Investor_Profile/Connected_Accounts', $viewData); ?>
                     </div>
                     <!-- Notification Settings -->
-                    <div class="tab-pane" id="tabItem6">
+                    <div class="tab-pane" id="tabItem7">
                         <?php //$this->load->view('User/Dashboard/Investor_Profile/Notifications', $viewData); ?>
                     </div>
                     <!-- Security Settings -->
-                    <div class="tab-pane" id="tabItem7">
+                    <div class="tab-pane" id="tabItem8">
                         <?php $this->load->view('User/Dashboard/Investor_Profile/Security_Settings', $viewData); ?>
                     </div>
                     <!-- Transactions -->
-                    <div class="tab-pane" id="tabItem7">
+                    <div class="tab-pane" id="tabItem9">
                         <?php 
                         $transactionData                    = array(
                             'userAccount'                   => $userAccount,
@@ -96,8 +112,8 @@ $viewData                               = array(
                                     <a class="btn btn-icon btn-trigger me-n2" data-bs-toggle="dropdown" href="#"><em class="icon ni ni-more-v"></em></a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <ul class="link-list-opt no-bdr">
-                                            <li><a href="#"><em class="icon ni ni-camera-fill"></em><span>Change Photo</span></a></li>
-                                            <li><a href="#"><em class="icon ni ni-edit-fill"></em><span>Update Profile</span></a></li>
+                                            <!-- <li><a href="#"><em class="icon ni ni-camera-fill"></em><span>Change Photo</span></a></li> -->
+                                            <!-- <li><a href="#"><em class="icon ni ni-edit-fill"></em><span>Update Profile</span></a></li> -->
                                         </ul>
                                     </div>
                                 </div>
@@ -107,8 +123,8 @@ $viewData                               = array(
                     <div class="card-inner">
                         <div class="user-account-info py-0">
                             <h6 class="overline-title-alt">MyMI Wallet</h6>
-                            <div class="user-balance">12.395769 <small class="currency currency-btc">BTC</small></div>
-                            <div class="user-balance-sub">Locked <span>0.344939 <span class="currency currency-btc">BTC</span></span></div>
+                            <div class="user-balance"><?php echo $walletAmount; ?> <small class="currency currency-btc">USD</small></div>
+                            <div class="user-balance-sub"><span><?php echo $MyMIGCoinSum; ?> <span class="currency currency-usd">MyMI Gold</span></span></div>
                         </div>
                     </div><!-- .card-inner -->
                     <div class="card-inner p-0">
@@ -117,10 +133,11 @@ $viewData                               = array(
                             <li><a data-bs-toggle="tab" href="#tabItem2"><em class="icon ni ni-activity-round-fill"></em><span>Activities</span></a></li>
                             <li><a data-bs-toggle="tab" href="#tabItem3"><em class="icon ni ni-coins"></em><span>Assets</span></a></li>
                             <li><a data-bs-toggle="tab" href="#tabItem4"><em class="icon ni ni-wallet-fill"></em><span>Bank Accounts</span></a></li>
-                            <!-- <li><a data-bs-toggle="tab" href="#tabItem5"><em class="icon ni ni-grid-add-fill-c"></em><span>Connected Accounts</span></a></li>
-                            <li><a data-bs-toggle="tab" href="#tabItem6"><em class="icon ni ni-bell-fill"></em><span>Notifications</span></a></li> -->
-                            <li><a data-bs-toggle="tab" href="#tabItem7"><em class="icon ni ni-lock-alt-fill"></em><span>Security Settings</span></a></li>
-                            <li><a data-bs-toggle="tab" href="#tabItem8"><em class="icon ni ni-bell-fill"></em><span>Transactions</span></a></li>
+                            <li><a data-bs-toggle="tab" href="#tabItem5"><em class="icon ni ni-wallet-out"></em><span>External Accounts</span></a></li>
+                            <!-- <li><a data-bs-toggle="tab" href="#tabItem6"><em class="icon ni ni-grid-add-fill-c"></em><span>Connected Accounts</span></a></li>
+                            <li><a data-bs-toggle="tab" href="#tabItem7"><em class="icon ni ni-bell-fill"></em><span>Notifications</span></a></li> -->
+                            <li><a data-bs-toggle="tab" href="#tabItem8"><em class="icon ni ni-lock-alt-fill"></em><span>Security Settings</span></a></li>
+                            <li><a data-bs-toggle="tab" href="#tabItem9"><em class="icon ni ni-bell-fill"></em><span>Transactions</span></a></li>
                         </ul>
                     </div><!-- .card-inner -->
                 </div><!-- .card-inner-group -->

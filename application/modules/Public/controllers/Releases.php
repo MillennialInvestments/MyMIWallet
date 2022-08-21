@@ -57,7 +57,7 @@ class Releases extends Front_Controller
 
     public function index()
     {
-        $pageType = 'Release';
+        $pageType = 'Releaseesd';
         $pageName = 'Home';
         
         $this->set_current_user();

@@ -3,9 +3,10 @@
         <div class="nk-block-head-content">
             <h3 class="nk-block-title page-title">Transactions</h3>
             <div class="nk-block-des text-soft">
-                <p>You have total 12,835 orders.</p>
+                <!-- <p>You have total 12,835 orders.</p> -->
             </div>
         </div><!-- .nk-block-head-content -->
+        <?php /** 
         <div class="nk-block-head-content">
             <div class="toggle-wrap nk-block-tools-toggle">
                 <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
@@ -28,6 +29,7 @@
                 </div>
             </div>
         </div><!-- .nk-block-head-content -->
+        */ ?> 
     </div><!-- .nk-block-between -->
 </div><!-- .nk-block-head -->
 <?php

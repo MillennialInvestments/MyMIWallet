@@ -24,7 +24,7 @@ if (empty($tradeForm)) {
     $trading_account_id						= $tradeForm['trade']['trading_account_id'];
     $trading_account						= $tradeForm['trade']['trading_account'];
     $trading_account_tag					= $tradeForm['trade']['trading_account_tag'];
-    $order_status                           = $tradeForm['trade']['order_status'];
+    // $order_status                           = $tradeForm['trade']['order_status'];
     $category								= $tradeForm['trade']['category'];
     $trade_type								= $tradeForm['trade']['trade_type'];
     $closed									= $tradeForm['trade']['closed'];
@@ -34,7 +34,7 @@ if (empty($tradeForm)) {
     $current_price							= $tradeForm['trade']['current_price'];
     $entry_price							= $tradeForm['trade']['entry_price'];
     $close_price							= $tradeForm['trade']['close_price'];
-    $net_gains							    = $tradeForm['trade']['net_gains'];
+    // $net_gains							    = $tradeForm['trade']['net_gains'];
     $open_date								= $tradeForm['trade']['open_date'];
     $open_time								= $tradeForm['trade']['open_time'];
     $close_date								= $tradeForm['trade']['close_date'];
@@ -44,16 +44,16 @@ if (empty($tradeForm)) {
     $total_trade_cost						= $tradeForm['trade']['total_trade_cost'];
     $expiration								= $tradeForm['trade']['expiration'];
     $shares									= $tradeForm['trade']['shares'];
-    $remaining_shares						= $tradeForm['trade']['remaining_shares'];
+    // $remaining_shares						= $tradeForm['trade']['remaining_shares'];
     $number_of_contracts					= $tradeForm['trade']['number_of_contracts'];
     $strike									= $tradeForm['trade']['strike'];
-    $wallet									= $tradeForm['trade']['wallet'];
+    // $wallet									= $tradeForm['trade']['wallet'];
     $details								= $tradeForm['trade']['details'];
     $premium								= $tradeForm['trade']['premium'];
     $leverage								= $tradeForm['trade']['leverage'];
     $variation_perc							= $tradeForm['trade']['variation_perc'];
     $variation								= $tradeForm['trade']['variation'];
-    $closed_perc							= $tradeForm['trade']['closed_perc'];
+    // $closed_perc							= $tradeForm['trade']['closed_perc'];
     $closed_ref								= $tradeForm['trade']['closed_ref'];
     $closed_list							= $tradeForm['trade']['closed_list'];
     $on_open_fees							= $tradeForm['trade']['on_open_fees'];
@@ -68,7 +68,7 @@ if (empty($tradeForm)) {
         'trading_account_id'				=> $trading_account_id,
         'trading_account'					=> $trading_account,
         'trading_account_tag'				=> $trading_account_tag,
-        'order_status'                      => $order_status,
+        // 'order_status'                      => $order_status,
         'category'							=> $category,
         'trade_type'						=> $trade_type,
         'closed'							=> $closed,
@@ -78,7 +78,7 @@ if (empty($tradeForm)) {
         'current_price'						=> $current_price,
         'entry_price'						=> $entry_price,
         'close_price'						=> $close_price,
-        'net_gains'						    => $net_gains,
+        // 'net_gains'						    => $net_gains,
         'open_date'							=> $open_date,
         'open_time'							=> $open_time,
         'close_date'						=> $close_date,
@@ -88,16 +88,16 @@ if (empty($tradeForm)) {
         'total_trade_cost'					=> $total_trade_cost,
         'expiration'						=> $expiration,
         'shares'							=> $shares,
-        'remaining_shares'                  => $remaining_shares,
+        // 'remaining_shares'                  => $remaining_shares,
         'number_of_contracts'				=> $number_of_contracts,
         'strike'							=> $strike,
-        'wallet'							=> $wallet,
+        // 'wallet'							=> $wallet,
         'details'							=> $details,
         'premium'							=> $premium,
         'leverage'							=> $leverage,
         'variation_perc'					=> $variation_perc,
         'variation'							=> $variation,
-        'closed_perc'						=> $closed_perc,
+        // 'closed_perc'						=> $closed_perc,
         'closed_ref'						=> $closed_ref,
         'closed_list'						=> $closed_list,
         'on_open_fees'						=> $on_open_fees,
@@ -105,7 +105,7 @@ if (empty($tradeForm)) {
         'total_fees'						=> $total_fees,
         'json_user_fields'					=> $json_user_fields,
     );
-    if ($tradeForm['closed_ref'] !== -1) {
+    if ($closed_ref !== "-1") {
         $this->db->from('bf_users_trades'); 
         $this->db->where('id', $tradeForm['closed_ref']); 
         $getOriginalTrade                   = $this->db->get(); 
@@ -137,10 +137,10 @@ if (empty($tradeForm)) {
         flush();
     } elseif ($tradeForm['tag'] === 'Edit') {
         $status									= 'Active';
-        $this->db->where('id', $trade_id);
+        $this->db->where('id', $order_id);
         $this->db->update('bf_users_trades', $tradeData);
 
-        $response = array("status" => "success", "message" => $trade_id); //The fact that the message is the old trade id right now doesn't mean anything. It's a "checking" script for now - but can come in handy later
+        $response = array("status" => "success", "message" => $order_id); //The fact that the message is the old trade id right now doesn't mean anything. It's a "checking" script for now - but can come in handy later
         header('Content-Type: application/json');
         return json_encode($response);
     // $this->response($response, REST_Controller::HTTP_OK);
@@ -150,9 +150,9 @@ if (empty($tradeForm)) {
         $deleteData								= array(
             'status'							=> $status,
         );
-        $this->db->where('id', $trade_id);
+        $this->db->where('id', $order_id);
         $this->db->update('bf_users_trades', $deleteData);
-        $response = array("status" => "success", "message" => $trade_id); //The fact that the message is the old trade id right now doesn't mean anything. It's a "checking" script for now - but can come in handy later
+        $response = array("status" => "success", "message" => $order_id); //The fact that the message is the old trade id right now doesn't mean anything. It's a "checking" script for now - but can come in handy later
         header('Content-Type: application/json');
         echo json_encode($response);
         // $this->response($response, REST_Controller::HTTP_OK);

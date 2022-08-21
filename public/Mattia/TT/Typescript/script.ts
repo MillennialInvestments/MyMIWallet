@@ -20,35 +20,34 @@ TODOS (backend)
 
 TODOS (frontend)
 HUGE
-- styling
-- linked scrolling
 - Sync the "lateral" fields for tag and id with the changeValue function and make them update/reset accordingly
 - historical
 - expanded view
 - image
-- Save + delete button
-- Fix ts-ignores
-- Working on block designing
 - Autosave
-? - Structure more stuff with events
+- Customize Columns
+- Customize Formulas
+
 SMALLER
+- Refactor with maps (and where possible) with sets
+- Cleanup the Window event listeners with a zdarkener or something else I really don't know
 - Do something about the "plain" main new-row button
 - deletePrompt
 - Give the ability to enter images
 - Give the ability for "tag" blocks and use expandeers to do so. Notion like
-- Re-create the sort feature
-- Finish the compute functions
-- Manual/Field/Db Tracked sorting
+- Finish the compute functions (For strings and make them customizable)
+- Multiple newRow setup
+- Share trades
+- Export/Import User Preferences
+
 ACTIVE
-! Closed rows on different pages get pushed to first page and last order
-- Saveall
-- Styling ability
+
 
 */
 
 
 //START OF THE PROGRAM
-
+let debug: boolean = true;
 
 
 interface listerObj {
@@ -78,6 +77,11 @@ interface fieldDirective {
 	columnName: string,
 }
 
+type dbTag = "New" | "Edit" | "Delete";
+interface tableApiResponse {
+	status: string,
+	message: string,
+}
 class TradeObj {
 	//0
 	legend: string;
@@ -157,6 +161,8 @@ class TradeObj {
 	on_close_fees: string;
 	//33
 	current_price: string;
+	//sif
+	stats_interpolated_fields: string;
 	//juf
 	json_user_fields: string;
 	//b1
@@ -167,9 +173,9 @@ class TradeObj {
 	delete: string;
 	constructor(row: Partial<TradeObj>) {
 		this.legend = row.legend || "false";
-		this.saved_sorting = row.saved_sorting || "0";
+		this.saved_sorting = (row.saved_sorting || row.id) || "0";
 		this.id = row.id || "0";
-		this.pseudo_id = row.pseudo_id || row.id || "0n1";
+		this.pseudo_id = (row.pseudo_id || row.id) || "0n1";
 		this.order_id = row.order_id || "0";
 		this.closed = row.closed || "false";
 		this.symbol = row.symbol || "";
@@ -177,7 +183,7 @@ class TradeObj {
 		this.trade_type = row.trade_type || (row.category == "equity" || !row.category ? "long" : "call");
 		this.open_date = row.open_date || "";
 		this.close_date = row.close_date || "";
-		this.shares = row.shares || "0";
+		this.shares = row.shares || "";
 		this.entry_price = row.entry_price || "";
 		this.close_price = row.close_price || "";
 		this.leverage = row.leverage || "";
@@ -205,28 +211,28 @@ class TradeObj {
 		this.on_open_fees = row.total_fees || "";
 		this.on_close_fees = row.total_fees || "";
 		this.current_price = row.current_price || "";
+		this.stats_interpolated_fields = row.stats_interpolated_fields || "[]";
 		this.json_user_fields = row.json_user_fields || buildDefaultUserFields();
 		this.save = row.save || "Save";
 		this.cancel = row.cancel || "Cancel";
 		this.delete = row.delete || "Delete";
-
 	}
 
 }
 
 type GraphicsDirective = Array<string>
-const graphicsLibrary: { [key: string]: GraphicsDirective } = {
+const debugGraphicsLibrary: { [key: string]: GraphicsDirective } = {
 	h3: [],
 	description: [],
 	input: ["form-control"],
 	select: ["form-control"],
 	div: [],
-	button: ["btn", "btn-sm", "h-100", "btn"],
+	button: ["btn", "btn-sm", "h-100"],
 	openedBtn: ["btn", "btn-light", "h-100"],
 	closedBtn: ["btn", "btn-warning", "h-100"],
-	cancelBtn: ["btn-primary"],
-	saveBtn: ["btn-secondary"],
-	deleteBtn: ["btn-danger"],
+	cancelBtn: ["btn-warning", "btn-block"],
+	saveBtn: ["btn-primary", "btn-block"],
+	deleteBtn: ["btn-danger", "btn-block"],
 	darkener: ["tt-darkener"],
 	tradeTable: ["trade-table"],
 	tableBottomController: ["table-bottom-controller"],
@@ -239,18 +245,62 @@ const graphicsLibrary: { [key: string]: GraphicsDirective } = {
 	mainBtn: ["btn-primary", "mr-3"],
 	spawnerButton: ["spawner-new-button", "btn-primary", "mr-3"],
 	tradeContainer: ["trade-container"],
-	disabledRowButton: ["disabled-btn"],
+	containerDropdown: ["dropdown-btn"],
+	disabledBtn: ["disabled-btn"],
 	promptBox: ["tt-prompt-box"],
 	fieldHolder: ["field-holder", "form-group", "custom-group-width", "mb-0"],
-	holderEditing: ["editing"],
+	autoCalculated: [],
+	editing: ["editing"],
 	legendContainer: ["legendary"],
 	closedRow: ["closed-row"],
 	legendRow: ["legend-row"],
 	mainRow: ["main-row"],
-	fixedSection: ["fixed-section"],
-	scrollableSection: ["scrollable-section"],
-	controllerBox: ["tt-controller-box"],
-	alert: ["tt-alert"]
+	fixedSection: ["fixed-section", "px-0"],
+	scrollableSection: ["scrollable-section", "overflow-auto", "px-0"],
+	controllerBox: ["tt-controller-box", "pb-5"],
+	alert: ["tt-alert", "alert", "alert-dimissable"],
+	closeWindowBtn: ["close-button"],
+}
+const graphicsLibrary: { [key: string]: GraphicsDirective } = {
+	h3: [],
+	description: [],
+	input: ["form-control"],
+	select: ["form-control"],
+	div: [],
+	button: ["btn"],
+	openedBtn: ["btn", "btn-light", "btn-block"],
+	closedBtn: ["btn", "btn-warning", "btn-block"],
+	cancelBtn: ["btn-warning", "btn-block"],
+	saveBtn: ["btn-primary", "btn-block"],
+	deleteBtn: ["btn-danger", "btn-block"],
+	darkener: ["tt-darkener", "btn-block"],
+	tradeTable: ["trade-table"],
+	tableBottomController: ["table-bottom-controller"],
+	pageMoverHolder: ["page-mover-holder"],
+	tradeWindow: ["tt-trade-window"],
+	expander: ["tt-expander", "hidden"],
+	expanderEmptyBlock: ["empty-block"],
+	expanderTagSeparator: ["tag-separator"],
+	expanderClickableValue: ["clickable-value"],
+	mainBtn: ["btn-primary", "mr-3"],
+	spawnerButton: ["spawner-new-button", "btn-primary", "mr-3"],
+	tradeContainer: ["trade-container", "pl-3"],
+	containerDropdown: ["dropdown-btn"],
+	disabledBtn: ["disabled-btn"],
+	promptBox: ["tt-prompt-box"],
+	fieldHolder: ["field-holder", "form-group", "custom-group-width", "mb-0"],
+	autoCalculated: [],
+	editing: ["editing"],
+	legendContainer: ["legendary"],
+	closedRow: ["closed-row"],
+	legendRow: ["legend-row"],
+	mainRow: ["main-row", "row"],
+	fixedSection: ["fixed-section", "col-3", "d-flex", "px-0"],
+	scrollableSection: ["scrollable-section", "col-6", "overflow-auto", "d-flex", "px-0"],
+	controllerBox: ["tt-controller-box", "pb-5"],
+	alert: ["tt-alert", "alert", "alert-dimissable"],
+	closeWindowBtn: ["close-button"],
+
 }
 //Merged interfacte
 interface HTMLElement {
@@ -263,14 +313,28 @@ interface HTMLElement {
 
 
 HTMLElement.prototype.agd = function (...classSet: Array<keyof typeof graphicsLibrary>) {
-	classSet.forEach(index => {
-		this.classList.add(...graphicsLibrary[index]);
-	})
+	if (debug == true) {
+		classSet.forEach(index => {
+			this.classList.add(...debugGraphicsLibrary[index]);
+		})
+	} else {
+		classSet.forEach(index => {
+			this.classList.add(...graphicsLibrary[index]);
+		})
+	}
 }
 HTMLElement.prototype.rgd = function (...classSet: Array<keyof typeof graphicsLibrary>) {
-	classSet.forEach(index => {
-		this.classList.remove(...graphicsLibrary[index]);
-	})
+	if (debug == true) {
+
+		classSet.forEach(index => {
+			this.classList.remove(...debugGraphicsLibrary[index]);
+		})
+	} else {
+		classSet.forEach(index => {
+			this.classList.remove(...graphicsLibrary[index]);
+		})
+
+	}
 }
 
 //Html extended Input element
@@ -349,7 +413,7 @@ interface structObj {
 	editing: boolean,
 	hasCancelListener: boolean,
 	//Tag of the directive
-	dirTag: string | undefined,
+	dirTag: string,
 	objLinked: string[],
 	reset: (() => void),
 }
@@ -364,11 +428,111 @@ interface usableEvent extends Partial<Event> {
 
 
 interface refSortingTag {
-	tag: string;
-	logical: "equal";
+	tag: string,
+	logical: "equal",
 	trades: Array<Row2>
 }
 
+//CustomFuncs
+type TrueDirectives = "e" | "g" | "s" | "ge" | "se" | "im"; //greater, smaller, im: impossible
+//Im is used for multipliers
+interface TrueCondition {
+	type: "string" | "number",
+	//If it's a string defaults to "e"
+	dir: TrueDirectives, //equal, greater, smaller etc.
+	value: string | number,
+}
+interface FuncDirective {
+	//Directive pointer, which field to check the data of
+	dp: string,
+	defaults: -1 | string, // -1 means that if it doesn't satisfy the conditions, it's blocking. A string means that it can default to that value in case, like leverage at "" can default to 1
+	trueCondition: TrueCondition,
+}
+
+interface FuncTopic {
+	defaults: -1 | string, // -1 means that if this topic is not satisfied the whole execution fails, otherwise it's what the topic defaults to
+	//The type is inferred by the operations
+	directives: Array<FuncDirective>
+}
+
+type FuncOperator = "+" | "-" | "i" | "*";
+interface FuncOperation {
+	//These get repeated as long as the chain exists
+	mainOperationStreak: FuncOperator[],
+	//If it's an array, it gets repeated only once, otherwise it gets repeated as long as there is space to do so
+	subTopicOperation: Array<Array<
+		Array<FuncOperator> | FuncOperator
+	>>, //As above, but one for each block. Again, if missing they get repeated
+}
+interface FuncStructure {
+	targets: string //the column to write in
+	underlyingType: "string" | "number", //The operations act differently depending on this
+	overwrite: 0 | 1, //0 overwrite only if condition is met, 1 always overwrite (basically autoupdate)
+	overwriteCond: string //-1 never, string: only if it matches given string 
+	topics: Array<FuncTopic>,
+	operator: FuncOperation,
+}
+/**
+ * NOT COMPLETE CHECKER OF A TRUECONDITION FOR A COMPFUNC
+ * 
+ * TODO: COMPLETE
+ * @param element The element to check
+ * @param trueCondition The appropriate truth condition
+ * @returns bool
+ */
+function trueConditionCheck(element: string, trueCondition: TrueCondition) {
+	if (trueCondition.dir == "im") {
+		return false
+	} else {
+		switch (trueCondition.type) {
+			case "number":
+				switch (trueCondition.dir) {
+					case "e":
+						return pf(element) == trueCondition.value
+					case "g":
+						return pf(element) > trueCondition.value;
+					case "ge":
+						return pf(element) >= trueCondition.value;
+					case "s":
+						return pf(element) < trueCondition.value;
+					case "se":
+						return pf(element) <= trueCondition.value;
+				}
+			case "string":
+				switch (trueCondition.dir) {
+					case "e":
+						return element == trueCondition.value
+				}
+				break
+		}
+		console.error("trueConditionCheck$ No case catched")
+		return false
+	}
+}
+
+/**
+ * - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * 
+ * INCOMPLETE FUNCTION, DO NOT USE
+ */
+function applyStrOperator(firstEl: string, secondEl: string, operator: FuncOperator): string {
+	console.error("DO NOT CALL THIS FUNCTION, STILL WORK IN PROGRESS")
+	return ""
+}
+function applyNumOperator(firstEl: number, secondEl: number, operator: FuncOperator): number {
+	switch (operator) {
+		case "+":
+			return firstEl + secondEl
+		case "-":
+			return firstEl - secondEl
+		case "*":
+			return firstEl * secondEl
+		case "i":
+			console.error("Trying to operate on two numbers with an ignore operator")
+			return 0
+	}
+}
+//
 
 let darkenedScreenElement: null | HTMLElement = null;
 let darkenedScreenIndex = 0;
@@ -432,8 +596,65 @@ function spawnBtn() {
 	res.memory = {};
 	return res;
 }
+/**
+ * 
+ * @param text The text to prompt
+ * @param options CURRENTLY NOT OPERATIONAL 
+ * @returns 
+ */
+async function trueFalsePrompt(text: string, options: { trueTxt: string, falseTxt: string } = { trueTxt: "Yes", falseTxt: "Cancel" }): Promise<boolean> {
+	const prompt = spawnDiv();
+	document.body.append(prompt);
+	prompt.agd("promptBox");
+
+	const closeBtn = spawnBtn();
+	closeBtn.innerHTML = "✕";
+	closeBtn.agd("closeWindowBtn");
+
+	const trueBtn = spawnBtn();
+	const falseBtn = spawnBtn();
+
+	falseBtn.agd("deleteBtn");
+	trueBtn.agd("saveBtn");
 
 
+	const description = spawnDiv();
+	description.agd("h3");
+
+	description.innerHTML = text;
+	trueBtn.innerHTML = options.trueTxt;
+	falseBtn.innerHTML = options.falseTxt;
+
+	prompt.append(closeBtn);
+	prompt.append(description);
+	prompt.append(trueBtn);
+	prompt.append(falseBtn);
+
+
+	const result: boolean = await new Promise(function (resolve) {
+		window.addEventListener("mousedown", function (e) {
+			if (e.target != prompt && e.target != trueBtn && e.target != falseBtn) {
+				prompt.remove();
+				resolve(false)
+			}
+		})
+		closeBtn.addEventListener("click", function () {
+			prompt.remove();
+			resolve(false)
+		});
+		falseBtn.addEventListener("click", function () {
+			prompt.remove();
+			resolve(false)
+		});
+		trueBtn.addEventListener("click", function () {
+			prompt.remove();
+			resolve(true)
+		});
+	})
+
+	return result;
+
+}
 
 //TODO: Increase capabilities of this function using keymatching, iterating through the object, checking for hollow elements.
 /**
@@ -460,13 +681,11 @@ function isEquivalent(a: { [key: string]: any }, b: { [key: string]: any }): boo
 		// If values of same property are not equal,
 		// objects are not equivalent
 		if (a[propName] !== b[propName]) {
-			// console.log("> $isEquivalent: The objects are different");
 			return false;
 		}
 	}
 	// If we made it this far, objects
 	// are considered equivalent
-	// console.log("> $isEquivalent: The objects are equal");
 	return true;
 }
 /**
@@ -487,12 +706,23 @@ const simpleHash = (str: string) => {
 	}
 	return new Uint32Array([hash])[0].toString(36);
 };
+
+const isN = (el: string) => {
+	return !isNaN(parseFloat(el))
+}
+
+function getFuncName() {
+	return getFuncName.caller.name
+}
+
+//For ease of writing where multiple conversion are needed
+const pf = parseFloat;
 /**
  * Function that darkens the screen at a given zindex. Moves it up if the current index is below the argument, or deletes it if remove is true
  * @param {int} index At what z-index to spawn it
  * @param {true|false} remove Whether it should be removed
  */
-function zDarkner(index: string, remove: boolean = false) {
+function zDarkner(index: string, remove: boolean = false, opacity = "0.35", pointerEvents: boolean = false) {
 	if (!remove) {
 		if (darkenedScreenElement == null) {
 			const darkener = document.createElement("div");
@@ -500,21 +730,23 @@ function zDarkner(index: string, remove: boolean = false) {
 			darkener.agd("darkener");
 			darkenedScreenElement = darkener;
 			//Style it
-			darkener.style.opacity = "0.35";
+			darkener.style.opacity = opacity;
 			darkener.style.zIndex = index;
-			darkener.style.pointerEvents = "none";
+			darkener.style.pointerEvents = pointerEvents ? "all" : "none";
 		} else {
 			//Only do something if the index is bigger than the current one
 			if (darkenedScreenIndex < parseFloat(index)) {
 				darkenedScreenElement.style.zIndex = index;
 			}
-			darkenedScreenElement.style.opacity = "0.35";
+			darkenedScreenElement.style.opacity = opacity;
 		}
+		return darkenedScreenElement;
 	} else {
 		if (darkenedScreenElement != undefined) {
 			darkenedScreenElement.style.opacity = "0";
 			darkenedScreenIndex = 0;
 		}
+		return null;
 	}
 }
 /**
@@ -541,7 +773,7 @@ function validPerc(closeValue: string) {
 		parseFloat(closeValue) < 0 ||
 		parseFloat(closeValue) > 100
 	) {
-		console.log("La percentuale:", closeValue, "non va bene INT:", parseFloat(closeValue))
+		console.error("La percentuale:", closeValue, "non va bene INT:", parseFloat(closeValue))
 		return false;
 	}
 	return true;
@@ -553,7 +785,6 @@ function validPerc(closeValue: string) {
  * @param stateProperties An array of state properties to update
  */
 function changeVisible(element: HTMLElement, visible: boolean, stateProperties: boolean[] = []) {
-	console.log(element, "HWHW")
 	if (visible == true) {
 		element.classList.add("visible");
 		element.classList.remove("hidden");
@@ -566,6 +797,15 @@ function changeVisible(element: HTMLElement, visible: boolean, stateProperties: 
 	})
 }
 
+type sectionsLayout = Array<{
+	fixed: boolean,
+	size: string,
+	//elements: Array<keyof typeof defaultFields | keyof typeof userPrefs.customFields>,
+	//nElements: Array<keyof typeof defaultFields | keyof typeof userPrefs.customFields>
+	elements: Array<string>,
+	activeFormulas: Array<keyof UserPreferences['formulas']['fields']>,
+	nElements: Array<string>
+}>
 interface UserPreferences {
 	//selectedSorting: keyof UserPreferences["sortings"]
 	selectedSorting: string,
@@ -584,15 +824,8 @@ interface UserPreferences {
 					//selected: keyof UserPreferences["sortings"][UserPreferences["selectedSorting"]]["blocks"]["layouts"],
 					selected: string,
 					layouts: {
-						[key: string]: Array<{
-							fixed: boolean,
-							size: string,
-							//elements: Array<keyof typeof defaultFields | keyof typeof userPrefs.customFields>,
-							//nElements: Array<keyof typeof defaultFields | keyof typeof userPrefs.customFields>
-							elements: Array<string>,
-							nElements: Array<string>
-						}>
-					}
+						[key: string]: sectionsLayout
+					},
 				}
 
 			}
@@ -616,11 +849,18 @@ interface UserPreferences {
 			}
 		}
 	},
+	/*
 	formulas: {
 		fields: {
-			[key: string]: (row: Row2, directive: fieldDirective) => void
+			[key: string]: (row: Row2, dirPointer: string) => void
 		}
 	},
+	*/
+	formulas: {
+		fields: {
+			[key: string]: FuncStructure
+		}
+	}
 	walletList: Array<listerObj>,
 	symbolList: Array<listerObj>,
 
@@ -653,22 +893,25 @@ const userPrefs: UserPreferences = {
 						{ text: "Short", value: "short" },
 					],
 					selected: "default",
+
 					layouts: {
 						//If an element is not fixed, then it will be able to scroll
 						//Which elements get rendered? Check "availableFields"
 						//If fixed is true, then the size 
 						default: [
-							{ fixed: true, size: "10%", elements: ["1", "2", "3"], nElements: [] as string[] },
+							{ fixed: true, size: "20%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] as string[] },
 							{
 								fixed: false,
-								size: "80%",
-								elements: ["7", "6", "9", "8", "11", "12", "4", "13", "5", "14", "u1", "15"],
+								size: "75%",
+								elements: ["7", "6", "9", "8", "10", "11", "12", "4", "13", "5", "14", "u1", "15"],
+								activeFormulas: ["totalCost"],
 								nElements: [] as string[]
 							},
 							{
 								fixed: true,
-								size: "10%",
+								size: "15%",
 								elements: ["b1", "b2", "b3"],
+								activeFormulas: [],
 								nElements: [] as string[]
 							},
 							//0 layouts are holding all the not displayed fields till now
@@ -677,6 +920,7 @@ const userPrefs: UserPreferences = {
 							{
 								fixed: true,
 								size: "0",
+								activeFormulas: [],
 								//This is a list of all the element NOT to include - Made up from all the elements included in the other parts of the row
 								nElements: [
 									"1",
@@ -686,6 +930,7 @@ const userPrefs: UserPreferences = {
 									"6",
 									"9",
 									"8",
+									"10",
 									"11",
 									"12",
 									"4",
@@ -721,17 +966,20 @@ const userPrefs: UserPreferences = {
 						//Which elements get rendered? Check "availableFields"
 						//If fixed is true, then the size 
 						default: [
-							{ fixed: true, size: "10%", elements: ["1", "2", "3"], nElements: [] as string[] },
+
+							{ fixed: true, size: "10%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] as string[] },
 							{
 								fixed: false,
 								size: "80%",
-								elements: ["12", "6", "9", "8", "11", "7", "4", "13", "5", "14", "u1", "15"],
+								elements: ["17", "18", "10", "19", "20", "11", "12"],
+								activeFormulas: ["totalCost"],
 								nElements: [] as string[]
 							},
 							{
 								fixed: true,
 								size: "10%",
 								elements: ["b1", "b2", "b3"],
+								activeFormulas: [],
 								nElements: [] as string[]
 							},
 							//0 layouts are holding all the not displayed fields till now
@@ -740,21 +988,19 @@ const userPrefs: UserPreferences = {
 							{
 								fixed: true,
 								size: "0",
+								activeFormulas: [],
 								//This is a list of all the element NOT to include - Made up from all the elements included in the other parts of the row
 								nElements: [
 									"1",
 									"2",
 									"3",
-									"7",
-									"6",
-									"9",
-									"8",
+									"17",
+									"18",
+									"10",
+									"19",
+									"20",
 									"11",
 									"12",
-									"4",
-									"13",
-									"5",
-									"14",
 									"u1",
 									"15",
 									"b1",
@@ -864,11 +1110,132 @@ const userPrefs: UserPreferences = {
 	},
 	formulas: {
 		fields: {
-			totalCost: (row: Row2, directive: fieldDirective) => {
+			totalCost: {
+				targets: "10",
+				underlyingType: "number",
+				overwrite: 0,
+				overwriteCond: "",
+				topics: [
+					{
+						defaults: "0",
+						directives: [
+							//Ignore the first if true and calculate with the others
+							{
+								dp: "27",
+								defaults: -1,
+								trueCondition: {
+									type: "string",
+									dir: "e",
+									value: "option_buy",
+								}
+							},
+							{
+								dp: "18",
+								defaults: -1,
+								trueCondition: {
+									type: "number",
+									dir: "ge",
+									value: 0,
+								}
+							},
+							{
+								dp: "17",
+								defaults: -1,
+								trueCondition: {
+									type: "number",
+									dir: "ge",
+									value: 0,
+								}
+							},
+							//100x premium multiplier
+							{
+								dp: "0",
+								defaults: "100",
+								trueCondition: {
+									type: "number",
+									dir: "im",
+									value: 0,
+								}
+							},
+						]
 
+					},
+					{
+						defaults: "0",
+						directives: [
+							//Ignore the first if true and calculate with the others
+							{
+								dp: "27",
+								defaults: -1,
+								trueCondition: {
+									type: "string",
+									dir: "e",
+									value: "equity",
+								}
+							},
+							{
+								dp: "6",
+								defaults: -1,
+								trueCondition: {
+									type: "number",
+									dir: "ge",
+									value: 0,
+								}
+							},
+							{
+								dp: "7",
+								defaults: -1,
+								trueCondition: {
+									type: "number",
+									dir: "ge",
+									value: 0,
+								}
+							},
+						]
+
+					},
+					{
+						defaults: "0",
+						directives: [
+							{
+								dp: "31",
+								defaults: -1,
+								trueCondition: {
+									type: "number",
+									dir: "ge",
+									value: 0,
+								}
+							},
+							{
+								dp: "32",
+								defaults: -1,
+								trueCondition: {
+									type: "number",
+									dir: "ge",
+									value: 0,
+								}
+							},
+							{
+								dp: "34",
+								defaults: -1,
+								trueCondition: {
+									type: "number",
+									dir: "ge",
+									value: 0,
+								}
+							},
+						]
+
+					},
+				],
+				operator: {
+					mainOperationStreak: ["+"],
+					subTopicOperation: [[["i"], "+", "*", "*"], [["i"], "+", "*"], ["+"]]
+				}
 			}
-		},
+		}
 	},
+
 	walletList: [...walletList],
 	symbolList: [...symbolList],
 	// [
@@ -922,7 +1289,7 @@ function buildDefaultUserFields() {
 
 
 
-const currentKeys = Object.keys(new TradeObj({}));
+//? Rebuild with Record<>??
 const defaultFields: { [key: string]: fieldDirective } = {
 	"0": {
 		name: "legend",
@@ -935,6 +1302,18 @@ const defaultFields: { [key: string]: fieldDirective } = {
 		description: "Fixed text field - shows the text which it's given as value",
 		placeholder: "",
 		columnName: "Legend?",
+	},
+	"s": {
+		name: "saved_sorting",
+		render: "false",
+		default: "",
+		type: "input",
+		subtype: "number",
+		modifiers: [] as string[],
+		computed: [] as string[],
+		description: "The saved sorting in the database",
+		placeholder: "",
+		columnName: "Saved Sorting",
 	},
 	"00i": {
 		name: "id",
@@ -1441,6 +1820,34 @@ const defaultFields: { [key: string]: fieldDirective } = {
 		placeholder: "",
 		columnName: "Current Price",
 	},
+	"34": {
+		name: "position_holding_fees",
+		render: "true",
+		default: "",
+		type: "input",
+		subtype: "number",
+		modifiers: ["closed_reduce"],
+		computed: [] as string[],
+
+		description: "Fees that accumulate through overnight or other sort of means",
+		placeholder: "",
+		columnName: "Ownership Fees",
+	},
+	"sif": {
+		name: "stats_interpolated_fields",
+		//Default synced with List match function and list builder
+		render: "false",
+		default: "{}",
+		type: "input",
+		subtype: "JSON",
+		modifiers: [] as string[],
+		computed: [] as string[],
+
+		description:
+			"Holds the fields which are currently controlled by the stats attribute. Becomes a set in the row object",
+		placeholder: "",
+		columnName: "Stats interpolated fields",
+	},
 	"juf": {
 		name: "json_user_fields",
 		//Default synced with List match function and list builder
@@ -1530,6 +1937,7 @@ class Table {
 	//Target is empty until the row is built
 	target: HTMLElement | "";
 	tradeWindowRef: TradeWindow;
+	//Sorted children only contains main trades NOT partial ones
 	sortedChildren: Array<Row2>;
 	activeLegend: Row2 | "";
 	children: { [key: string]: Row2 };
@@ -1577,17 +1985,23 @@ class Table {
 			}
 		}
 	}
-	//Sorry algorithm lord
+	/**
+	 * Returns an array containing the rows in sorted order and the rows by id.
+	 * @param childArray The rows coming in
+	 */
 	c_sortChildren(childArray: Array<Row2>): [Array<Row2>, { [key: string | number]: Row2 }] {
 		const byIdObj: { [key: string]: Row2 } = {};
-		//Sort in increasing order
-		//TODO: Adapt this to sort by pseudoId in case it's not already doing it.
-		const sortedArr: Array<Row2> = childArray.sort(function (rowA, rowB) {
-			return parseFloat(rowA.origin[gin("00i") as keyof TradeObj]) - parseFloat(rowB.origin[gin("00i") as keyof TradeObj]);
+		//Sort in INCREASING order
+		//The LOWEST sorting gets put first as of css convention.
+		//OTHERWISE
+		//By sorting from smallest to greates, the smallest gets rendered as the first element, hence pushed to the end
+		const mainTrades = [...childArray].filter(row => row.current[gin("29")] == "-1")
+		const sortedArr: Array<Row2> = mainTrades.sort(function (rowA, rowB) {
+			return rowB.state.currentSorting - rowA.state.currentSorting;
 		});
 		for (let i = 0; i < childArray.length; i++) {
 			const children = childArray[i];
-			byIdObj[children.origin[gin('00p')]] = children;
+			byIdObj[children.current[gin('00p')]] = children;
 			children.changeTableReference(this);
 
 		}
@@ -1595,7 +2009,18 @@ class Table {
 
 
 	}
-
+	reorderRows() {
+		//We can call sortChildren with ONLY mainRows, reducing loops and getting the same result
+		this.sortedChildren = this.c_sortChildren(this.sortedChildren)[0]
+		this.sortedChildren.forEach(mainRow => {
+			if (mainRow.state.container != "") {
+				mainRow.state.container.style.order = mainRow.state.currentSorting.toString();
+			} else {
+				console.error("Impossible to reorder given row: its container is undefined")
+			}
+		})
+		this.refreshPages();
+	}
 	renderTable() {
 		//STYLEME
 		const table = document.createElement("div");
@@ -1623,7 +2048,7 @@ class Table {
 			const moveBackward = spawnBtn();
 			moveBackward.innerHTML = "&larr;";
 			const currentPage = spawnInput();
-			currentPage.value = this.currentPage.toLocaleString();
+			currentPage.value = this.currentPage.toString();
 			holder.append(moveBackward, currentPage, moveForward);
 
 			this.controllerBox.pageMover = {
@@ -1638,6 +2063,13 @@ class Table {
 			moveBackward.addEventListener("click", (e) => { this.pageBackward() });
 
 
+			currentPage.addEventListener("change", () => {
+				//The other functions already check for this, but we avoid a streak of refreshing functions
+				if (this.currentPageMin <= parseInt(currentPage.value) && parseInt(currentPage.value) <= this.currentPageMax) {
+					this.currentPage = parseInt(currentPage.value);
+					this.refreshPages();
+				}
+			})
 		} else {
 			console.error("Trying to append controller to DOM undefined table");
 
@@ -1668,7 +2100,7 @@ class Table {
 		}
 		//Create a legend with properties that satisfy the refSortingTag
 		const selectedSortingTarget = userPrefs.sortings[userPrefs.selectedSorting as keyof typeof userPrefs.sortings].targets;
-		const freshLegendObj = new TradeObj({ legend: "true" })
+		const freshLegendObj = new TradeObj({ legend: "true", id: "-1" })
 		switch (information.logical) {
 			case "equal":
 				freshLegendObj[selectedSortingTarget] = information.tag;
@@ -1680,9 +2112,10 @@ class Table {
 
 		this.activeLegend = newLegend;
 	}
+
+
 	hideTable() {
 		if (!!this.target) {
-			//??? this.classList.add("hideThis");
 			this.target.style.display = "none";
 		}
 	}
@@ -1708,6 +2141,7 @@ class Table {
 		//Update the controller and which trades should be shown
 		this.refreshCurrentPageVisibility();
 		this.refreshPageController();
+		this.updateLegendPosition();
 	}
 	/**
 	 * Shows the current page trades based on the sortedChildren property of the table, and hides all the rest  
@@ -1727,20 +2161,32 @@ class Table {
 			const element = reversedArray[index];
 			//TODO: Decide whether to hide the mainRow or the container. 
 			if (index >= lowerBound && index <= upperBound) {
-				if (element.state.mainRow != "") {
+				if (element.state.container != "") {
 					element.state.paged = true;
-					element.state.mainRow.classList.add("visible");
-					element.state.mainRow.classList.remove("hidden");
+					const childTrades: string[] = JSON.parse(element.current[gin("30")]);
+					childTrades.forEach(id => {
+						//Backward pagination update. Ran forward when new rows are inserted
+						if (this.tradeWindowRef.allRowsObj.hasOwnProperty(id)) {
+							this.tradeWindowRef.allRowsObj[id].state.paged = true
+						}
+					});
+					changeVisible(element.state.container, true);
 				} else {
-					console.error("The row which has been tried to page is currently not rendered");
+					console.error("The container of the row which has been tried to page is currently not rendered");
 				}
 			} else {
-				if (element.state.mainRow != "") {
+				if (element.state.container != "") {
 					element.state.paged = false;
-					element.state.mainRow.classList.remove("visible");
-					element.state.mainRow.classList.add("hidden");
+					const childTrades: string[] = JSON.parse(element.current[gin("30")])
+					childTrades.forEach(id => {
+						if (this.tradeWindowRef.allRowsObj.hasOwnProperty(id)) {
+							this.tradeWindowRef.allRowsObj[id].state.paged = false
+						}
+
+					});
+					changeVisible(element.state.container, false);
 				} else {
-					console.error("The row which has been tried to page is currently not rendered");
+					console.error("The container of the row which has been tried to page is currently not rendered");
 				}
 			}
 		}
@@ -1753,16 +2199,17 @@ class Table {
 	refreshPageController() {
 		const currentPage = this.controllerBox.pageMover.currentPage;
 		if (currentPage != "") {
+
+
 			const newMax = this.sortedChildren.length != 0 && (Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) - this.sortedChildren.length / userPrefs.rowsPerPage) == 0 ? this.sortedChildren.length / userPrefs.rowsPerPage : Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) + 1;
 			const newMin = 1;
 			this.currentPageMin = newMin;
 			this.currentPageMax = newMax;
 
-			currentPage.value = this.currentPage.toLocaleString();
-			currentPage.min = newMin.toLocaleString();
-			currentPage.max = newMax.toLocaleString();
+			currentPage.value = this.currentPage.toString();
+			currentPage.min = newMin.toString();
+			currentPage.max = newMax.toString();
 
-			console.log(newMax, newMin);
 			if (this.currentPage == newMin) {
 				if (this.controllerBox.pageMover.moveBackward != "") {
 
@@ -1793,6 +2240,14 @@ class Table {
 			console.error("currentPage HTMLinput controller is not rendered/not saved in the obj properties");
 		}
 	}
+	updateLegendPosition() {
+		if (this.activeLegend != "" && this.activeLegend.state.container != "") {
+			this.activeLegend.state.currentSorting = this.tradeWindowRef.biggestSorting + 1;
+			this.activeLegend.state.container.style.order = this.activeLegend.state.currentSorting.toString();
+
+		}
+	}
+
 	pageForward(numberOfPages: number = 1) {
 		const reversedArray = [...this.sortedChildren].reverse();
 
@@ -1842,56 +2297,102 @@ class Table {
 	 * @param {Row[]} children List of rows to push
 	 * @param {boolean} fresh Whether the element is new (has the highest id) or older (has a lower id)
 	 */
-	pushChildren(children: Array<Row2>, fresh = true) {
-		//STYLEME 
-		//?? I don't know whether I need to change the order here or somewhere else.
+	pushChildren(children: Array<Row2>) {
 		children.forEach((child) => {
 			child.changeTableReference(this);
-			this.children[child.origin[gin("00p")]] = child;
-			//Sort in the sortedChildern array - which is already sorted from the bottom
-			//If the array is empty, or the element has a bigger id than the last, just put it there. Otherwise find the one which is bigger
-			//TODO: Sort better based on pseudoId
-			if (
-				this.sortedChildren.length < 1 ||
-				parseFloat(
-					this.sortedChildren[this.sortedChildren.length - 1].origin[gin("00i")]
-				) <= parseFloat(child.origin[gin("00i")])
-			) {
-				this.sortedChildren.push(child);
-			} else {
-				for (let index = 0; index < this.sortedChildren.length; index++) {
-					//> makes sure that trades with the same ids (closes) are still pushed to the last point of the sorted array
-					//If the list is empty, push the trade no matter what
-					if (
-						parseFloat(this.sortedChildren[index].origin[gin("00i")]) >
-						parseFloat(child.origin[gin("00i")])
-					) {
-						//Shift the array forward and push this element
-						this.sortedChildren.splice(index, 0, child);
-						//Finish the loop
-						//RISKY IF ANYTHING IS CHANGED, COULD INFINITE LOOP
-						index = this.sortedChildren.length;
+			this.children[child.current[gin("00p")]] = child;
+
+			//Sort only mainRows. If empty, unshift in the increasing order array. Otherwise find the first row it's bigger of
+			if (child.current[gin("29")] == "-1") {
+				//SORTING
+				if (
+					this.sortedChildren.length < 1 ||
+					child.state.currentSorting <= this.sortedChildren[0].state.currentSorting
+				) {
+					this.sortedChildren.unshift(child);
+				} else {
+					//The worst case scenario now is that the second element is already greater than the coming one
+					//splice puts to the right of the index
+					//The smallest index we can get is 0
+					for (let index = 0; index < this.sortedChildren.length; index++) {
+						const element = this.sortedChildren[index];
+						if (index == this.sortedChildren.length - 1 && child.state.currentSorting >= element.state.currentSorting) {
+
+							this.sortedChildren.push(child);
+							//Loop closure
+							index = this.sortedChildren.length;
+						} else {
+							if (child.state.currentSorting < element.state.currentSorting) {
+								this.sortedChildren.splice(index, 0, child);
+								//Loop closure
+								index = this.sortedChildren.length;
+
+							}
+						}
 					}
 				}
+
+				//Repeating the renderRow to avoid another if (closedRef check)
+				child.renderRow();
+				//The state.paged is handled by the page manager because this row is in the sorted list
+				if (child.state.container != "") {
+					child.state.container.style.order = child.state.currentSorting.toString();
+					if (child.current[gin("30")] != "[]") {
+						const partialCloses: string[] = JSON.parse(child.current[gin("30")]);
+						partialCloses.forEach(pseudoId => {
+							//Backwards pagination and rendering
+							if (this.children.hasOwnProperty(pseudoId)) {
+								if (Object.entries(this.children[pseudoId].structure).length == 0) {
+									this.children[pseudoId].renderRow();
+									this.children[pseudoId].state.paged = child.state.paged;
+								}
+							}
+						});
+					}
+				} else {
+					console.error("Trying to push mainRow and reorder its container but failed because the container is undefined");
+				}
+			} else {
+				//* DELAYED RENDERING: The partial row renders only when the parent exists.
+				//FORWARD CHECKING: Update the pagination for that children if it has a closedRef property working
+				//Backward check is done in the pagination update
+				if (this.children.hasOwnProperty(child.current[gin("29")])) {
+					//If it has not been rendered yet by the backwards rendering, then do so
+					if (Object.entries(child.structure).length == 0) {
+						child.state.paged = this.children[child.current[gin("29")]].state.paged;
+						child.renderRow();
+					}
+				}
+				//If the main row is not there yet, she will take care of rendering this one
 			}
-			child.renderRow();
 			this.currentPageMax = Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) + 1;
+
 		});
 		this.refreshPages();
-		//? Later make old blocks render "in blocks" and so follow an ordering process.
+
 	}
-	dropChildren(children: Array<Row2>) {
+	/**
+	 * ATTENTION: This function is used to clean data about the row from the table, not to do anything to the actual row. The row is the main caller of the tradewindow function which then calls this
+	 * @param children The rows to cleanUp
+	 */
+	dropdownChildren(children: Array<Row2>) {
 		children.forEach((child) => {
 			//When the db is called, the pseudoids vanish, and also get edited
-			delete this.children[child.origin[gin("00p")]];
+			delete this.children[child.current[gin("00p")]];
 			this.currentPageMax = Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) + 1;
 			//todo: optimize this, could be moved below
-			this.sortedChildren.filter((element) => {
-				element.origin[gin("00p")] != child.origin[gin("00p")];
-			});
+			this.sortedChildren = this.sortedChildren.filter(element =>
+				element.current[gin("00p")] != child.current[gin("00p")]
+			);
+			if (this.children.hasOwnProperty(child.current[gin("00p")])) {
+				delete this.children[child.current[gin("00p")]];
+			}
 		});
 		this.refreshPages();
+
 	}
+
+
 
 }
 
@@ -1901,18 +2402,28 @@ class TradeWindow {
 	tables: { [key: string]: Table };
 	allRows: Array<Row2>;
 	allRowsObj: { [key: string]: Row2 };
+	currentlyEdited: Set<Row2>;
+	biggestSorting: number;
+	//Partial rows that still need rendering but where the main row has not yet been pushed
+	delayedRenderStack: { [key: string]: Row2 };
 	sortings: typeof userPrefs.sortings;
 	//The string union is for the selected element
 	selectedSorting: typeof userPrefs.sortings.categories | string;
 	columnTarget: string;
 	refSortingTags: Array<refSortingTag>;
+	controllers: {
+		saveAll: "" | HTMLButtonElement;
+	}
 
 	constructor(holder: HTMLElement) {
 		this.holder = holder;
 		this.tables = {};
 		this.allRows = [];
+		this.delayedRenderStack = {};
+		this.biggestSorting = 0;
 		//Linear access
 		this.allRowsObj = {};
+		this.currentlyEdited = new Set();
 		this.sortings = userPrefs.sortings;
 		this.selectedSorting = userPrefs.sortings[userPrefs.selectedSorting as keyof typeof userPrefs.sortings];
 		//DB column that is getting tag-checked
@@ -1922,6 +2433,9 @@ class TradeWindow {
 		this.refSortingTags = [];
 		//Parent styling
 		holder.agd("tradeWindow");
+		this.controllers = {
+			saveAll: "",
+		}
 	}
 	/**
 	 * Fractions the tradelist into tables based on the selected sorting
@@ -1970,33 +2484,127 @@ class TradeWindow {
 	/**
 	 * Filters trade for tradesList generation through updateSortingInfo.
 	 * Also adds trades to o(n) object array - used ALI partial close rows rendering to find the parent trade
+	 * 
+	 * ATTENTION: Closed rows are part of the main row, hence if they don't meet the criteria of the filtering they asre still pushed with the main row in the respective object
+	 * 
+	 * ! Set/Map refactoring absolutely needed. As we have to include an unsafe paramether to have a specific function work properly
+	 * ( The solution includes not needing to check whether the object already exists to avoid duplicates)
 	 * @param {{tag: string, logical: string, trades: Row[] }} tagObj
-	 * @returns
 	 */
-	filterTrades(tagObj: typeof this.refSortingTags[number], rows: Array<Row2>) {
+	filterTrades(tagObj: typeof this.refSortingTags[number], rows: Array<Row2>, unsafe = false) {
+		const copiedRows = [...rows];
+		const entireList: Row2[] = [];
 		switch (tagObj.logical) {
 			//TODO add other cases
 			case "equal":
 			default:
-				return rows.filter((row) => {
-					this.allRowsObj[row.origin[gin("00p")]] = row;
-					if (row.origin[this.columnTarget as keyof TradeObj] == tagObj.tag) {
+				entireList.push(...copiedRows.filter((row) => {
+
+					// Only care about the main rows, not the closed ones, those one get pushed in tag object if their reference is already there
+
+					//Handling partial rows
+					//THIS IS USED FOR ROWS THAT GET INCLUDE AFTER THEIR CLOSED PARENT COMES IN
+					if (row.current[gin("29")] != "-1") {
+						//Check if the tagObj already has this row
+						if (
+							tagObj.trades.filter(
+								(otherRow) => otherRow.current[gin("00p")] == row.current[gin("00p")]
+							).length == 0 || unsafe
+						) {
+							//Forward check
+							if (this.allRowsObj.hasOwnProperty(row.current[gin("29")])) {
+								if (this.allRowsObj[row.current[gin("29")]].origin[this.columnTarget as keyof TradeObj] == tagObj.tag) {
+									return true
+
+								}
+							}
+						}
+					}
+					// if the row is an entire one and it matches, take all its referenced rows and gather them in the object as well  
+					else if (row.origin[this.columnTarget as keyof TradeObj] == tagObj.tag && row.current[gin("29")] == "-1") {
+						if (row.current[gin("30")] != "[]") {
+							//Gather all those rows and get them in here too
+							const list: string[] = JSON.parse(row.current[gin("30")]);
+							//We don't have only db rows, as in the current we keep the pseudoIds as well
+							list.forEach(partialRowPId => {
+								//Check that it's not already in there. 
+								if (tagObj.trades.filter(
+									(otherRow) => otherRow.current[gin("00p")] == partialRowPId
+								).length == 0) {
+									//Backward check
+									if (this.allRowsObj.hasOwnProperty(partialRowPId))
+										entireList.push(this.allRowsObj[partialRowPId]);
+								}
+							})
+						}
 						return true;
 					}
-				});
+				}));
+
 		}
+		return entireList
 	}
 	sortAndTableTrades(trades: Array<Row2>) {
 		//We need to push this here to
 		this.allRows = this.allRows.concat(trades);
+		trades.forEach(row => {
+			this.allRowsObj[row.current[gin("00p")]] = row;
+			if (row.state.currentSorting > this.biggestSorting) {
+				this.biggestSorting = row.state.currentSorting;
+			}
+		})
 		this.refSortingTags.forEach((tagObj) => {
 			let correctTrades = this.filterTrades(tagObj, trades);
 			tagObj.trades = tagObj.trades.concat(correctTrades);
 			this.tables[tagObj.tag].pushChildren(correctTrades);
 		});
 	}
+	/**
+	 * ATTENTION: This function removes the trades from view but it's not used to CLEAN the dom of the trade. The row is the one that invokes this function
+	 * @param trades 
+	 */
 	dropTrades(trades: Array<Row2>) {
+		trades.forEach(trade => {
+			//We check if the property still exist but don't care, because parent trades are going to take care of eliminating childr
+			if (this.allRowsObj.hasOwnProperty(trade.current[gin("00p")])) {
 
+				//Trade window cleaning
+				delete this.allRowsObj[trade.current[gin("00p")]];
+				this.allRows = this.allRows.filter(otherTrade => otherTrade.current[gin("00p")] != trade.current[gin("00p")]);
+
+				//If a main row is deleted, she will take care of all the yet existing subrows
+				if (trade.current[gin("29")] != "-1") {
+					if (this.allRowsObj.hasOwnProperty(trade.current[gin("29")])) {
+						const oldList: string[] = JSON.parse(this.allRowsObj[trade.current[gin("29")]].current[gin("30")]);
+						const newList = oldList
+							.filter(pId => pId != trade.current[gin("00p")]);
+						this.allRowsObj[trade.current[gin("29")]].current[gin("30")] = JSON.stringify(newList);
+
+					}
+				}
+			}
+		})
+
+		//TradeOBJ + table cleaning
+		this.refSortingTags.forEach((tagObj) => {
+			let correctTrades = this.filterTrades(tagObj, trades, true);
+			correctTrades.forEach(trade => {
+				tagObj.trades = tagObj.trades.filter(tagTrade => {
+
+					return tagTrade.current[gin("00p")] != trade.current[gin("00p")]
+				});
+			})
+			this.tables[tagObj.tag].dropdownChildren(trades);
+		})
+
+
+	}
+	saveAll() {
+		this.allRows.forEach(row => {
+			if (row.state.editingList.length != 0) {
+				row.d_saveChanges();
+			}
+		})
 	}
 }
 
@@ -2059,7 +2667,6 @@ class Expander {
 		this.element.classList.add(this.currentFormat);
 		this.element.classList.remove("hidden");
 		this.state.visible = true;
-		console.log("SHOWING", this.element);
 	}
 	//Moves the expander to the current target by default, or another input/select if passed
 	moveAndResizeTo(target: typeof this.currentDomTarget = this.currentDomTarget) {
@@ -2113,13 +2720,11 @@ class Expander {
 					tagSeparator?.agd("expanderTagSeparator");
 
 					clickableValue = spawnDiv();
-					console.log(clickableValue);
 					clickableValue.agd("expanderClickableValue")
 					this.element.append(clickableValue);
 					//Give it activation properties
 					clickableValue.innerHTML = orderedListByTag[index].value;
 					clickableValue.realValue = { ...orderedListByTag[index] };
-					console.log(clickableValue)
 					//Click event
 					clickableValue.addEventListener("click", (e) => {
 						//Dispatch an event to the field to edit everything
@@ -2156,7 +2761,6 @@ class Expander {
 							const selected = directive.variations[directive.selected as keyof typeof directive.variations];
 							//Not empty checking
 							selected.forEach(element => {
-								//@ts-ignore
 								selectedButtons.push(userPrefs.promptDefaults[directive.templateName][element]);
 							})
 						} else {
@@ -2208,13 +2812,21 @@ class Row2 {
 		table: Table | "",
 		parent: HTMLElement | "",
 		container: HTMLElement | "",
+		dropDown: {
+			target: HTMLElement | "",
+			expanded: boolean,
+		},
 		mainRow: HTMLElement | "",
 		editing: boolean,
 		editingList: Array<string>,
-		manuallyChangedList: Array<string>,
+		statsChangedList: Set<string>,
+		//TODO: Rework the stuff below to make access easier and less resource intensive
+		childRows: Set<Row2>,
+		parentRow: Row2 | "",
 		raiser: string,
 		//Whether the row is currently visible in a page
-		paged: boolean
+		paged: boolean,
+		currentSorting: number,
 	};
 	structure: {
 		[key: string]: structObj
@@ -2234,16 +2846,24 @@ class Row2 {
 			parent: "",
 			//Keep track of the trade conatiner dom object
 			container: "",
+			dropDown: {
+				target: "",
+				expanded: false,
+			},
 			//Keep track of the row itself
 			mainRow: "",
 			editing: false,
 			//For o(1) access of how many elements are being "edited"
 			editingList: [],
-			manuallyChangedList: this.c_generateManuallyChangedList(this.origin),
+
+			statsChangedList: this.c_statsManipulatedInterpolate(this.origin),
+			childRows: new Set([]),
+			parentRow: "",
 			//Used for raising the zindex of a row. The raiser is the element which is currently raising that specific row.
 			//Deprecated after change in expander structure
 			raiser: "",
 			paged: false,
+			currentSorting: parseFloat(this.origin.saved_sorting),
 		};
 		this.structure = {};
 	}
@@ -2255,7 +2875,7 @@ class Row2 {
 	setEditing = (fieldName: string) => {
 		this.structure[fieldName].editing = true;
 		//Adding to the fieldholder for buttons
-		this.structure[fieldName].target.memory.fieldHolder.agd("holderEditing");
+		this.structure[fieldName].target.memory.fieldHolder.agd("editing");
 		this.state.editing = true;
 		this.state.editingList.push(fieldName);
 	};
@@ -2266,7 +2886,7 @@ class Row2 {
 	 */
 	removeEditing = (fieldName: string) => {
 		this.structure[fieldName].editing = false;
-		this.structure[fieldName].target.memory.fieldHolder.rgd("holderEditing");
+		this.structure[fieldName].target.memory.fieldHolder.rgd("editing");
 
 		this.state.editingList = this.state.editingList.filter(
 			(item) => item !== fieldName
@@ -2288,20 +2908,13 @@ class Row2 {
 		}
 		return originObject;
 	}
-	c_generateManuallyChangedList(comparingObj: Required<TradeObj>, basicObj: Required<TradeObj> = new TradeObj({})): Array<string> {
-		const result: Array<string> = [];
-		for (const [key, value] of Object.entries(comparingObj)) {
-			if (value != basicObj[key as keyof typeof basicObj]) {
-				if (result.indexOf(key) == -1) {
-					result.push(key);
-				}
-			} else {
-				if (result.indexOf(key) != -1) {
-					result.splice(result.indexOf(key), 1);
-				}
-			}
+	c_statsManipulatedInterpolate(originObject: TradeObj): Set<string> {
+		if (originObject.hasOwnProperty(gin("sif"))) {
+			return new Set(JSON.parse(originObject[gin("sif")]))
+		} else {
+			console.error("c_statsManipulatedInterpolate$ Given object was missing the sif property", originObject);
+			return new Set([])
 		}
-		return result;
 	}
 	/**
 	 *  To run when assigned to a table. Changes this.state.table and this.parent
@@ -2315,8 +2928,16 @@ class Row2 {
 	 * Given the current userpref sorting, returns the layout based on the important database entry
 	 * @returns layout
 	 */
-	getLayout() {
+	getLayout(): sectionsLayout {
 		//Mental stuff
+		if (this.current[gin("29")] != "-1") {
+			if (this.state.table != "") {
+				const parentRow = this.state.table.tradeWindowRef.allRowsObj[this.current[gin("29")]];
+				return parentRow.getLayout();
+			} else {
+				console.error("getLayout$ This partial row doesn't have a table reference, using available layout", this);
+			}
+		}
 		const sortings = userPrefs.sortings;
 		const selectedSorting = userPrefs.selectedSorting;
 
@@ -2327,17 +2948,102 @@ class Row2 {
 			sortings[selectedSorting as keyof typeof sortings].blocks[thisRowTargetedValue as keyof typeof userPrefs.sortings.categories.blocks];
 		const selectedLayout = associatedBlock.selected;
 		return associatedBlock.layouts[selectedLayout as keyof typeof associatedBlock.layouts];
+
 	}
 	/**
 	 * * Function that creates a new container and assigns the object the container property
+	 * 
+	 * Also adds the dropdown button to toggle visibility of the closed rows
 	 * @returns {domElement} Returns the container object
 	 */
 	createContainer() {
 		const container = document.createElement("div");
 		this.state.container = container;
 		container.agd("tradeContainer");
+		this.refreshDropdown();
+
 		return container;
 	}
+	dropdownChildren(expand = !this.state.dropDown.expanded) {
+		const childList: string[] = JSON.parse(this.current[gin("30")]);
+		const theTable = this.state.table;
+		if (theTable != "") {
+			childList.forEach(pId => {
+				if (theTable.tradeWindowRef.allRowsObj.hasOwnProperty(pId)) {
+					const mainRow = theTable.tradeWindowRef.allRowsObj[pId].state.mainRow
+					if (mainRow != "") {
+						changeVisible(mainRow, expand);
+						this.state.dropDown.expanded = expand;
+
+						if (this.state.dropDown.target != "")
+							this.state.dropDown.target.innerHTML = this.state.dropDown.expanded ? "^" : "˅"
+					}
+				}
+			})
+		} else {
+			console.error("dropdownChildren$ This row's table is not yet defined.", this)
+		}
+	}
+	/**
+	 * Creates the dropdown and hides child rows in case they must not be displayed
+	 * @param secondCall 
+	 * @returns 
+	 */
+	refreshDropdown(secondCall = false) {
+		if (this.state.container != "") {
+			if (this.state.dropDown.target != "" || this.current[gin("29")] != "-1") {
+
+				//Backwards check
+
+				//If this row has children then it can't have a reference, hence the target must be an htmlelement
+				if (this.current[gin("30")] != "[]") {
+					changeVisible(this.state.dropDown.target as HTMLElement, true)
+					//DEFAULT EXPANSION
+					this.dropdownChildren(false);
+				}
+				//Forward check
+				if (this.current[gin("29")] != "-1") {
+					console.log("Going into the partial row: ", this.structure.cancel);
+
+					const theTable = this.state.table;
+					if (theTable != "") {
+						if (theTable.tradeWindowRef.allRowsObj.hasOwnProperty(this.current[gin("29")])) {
+							console.log("- Calling Mom")
+							theTable.tradeWindowRef.allRowsObj[this.current[gin("29")]].refreshDropdown(true);
+							console.log("- Called Mom")
+							if (this.state.mainRow != "") {
+								changeVisible(this.state.mainRow, theTable.tradeWindowRef.allRowsObj[this.current[gin("29")]].state.dropDown.expanded)
+							}
+						}
+						//Bad/Old implementation that requires even more checking.
+						//changeVisible(theTable.tradeWindowRef.allRowsObj[this.current[gin("29")]].state.dropDown.target, true)
+
+					}
+				}
+			} else {
+				if (secondCall) {
+					console.error("refreshDropdown$ Second call failed: the dropdown has not been assigned correctly")
+					return;
+				}
+				console.log("Creating a new dropdown!!!")
+				const dropdown = document.createElement("button");
+				dropdown.innerHTML = this.state.dropDown.expanded ? "^" : "˅";
+				this.state.dropDown.target = dropdown;
+				console.log("Created the dropdown", this.state.dropDown.target);
+				dropdown.agd("containerDropdown");
+				this.state.container.append(dropdown);
+				changeVisible(dropdown, false);
+				//The dropdown is disabled on spawn (see the Row2 constructor)
+				dropdown.addEventListener("click", (e) => { this.dropdownChildren() });
+
+				this.refreshDropdown(true)
+			}
+
+		} else {
+			console.error("refreshDropdown$ Trying to refresh dropdown without a defined container");
+		}
+	}
+
 	/**
 	 * Function that replaces the given field with a cloned one. Useful for removing event listeners
 	 * @param {domElement} field The row field to replace
@@ -2369,56 +3075,166 @@ class Row2 {
 			return new_element;
 		}
 	}
-	/**
-	 * Toggles the cancel and save button, cancels changes if required and resets all necessary parts
-	 */
-	cancelSaveToggler() {
-		const cancelChanges = () => {
-			//We don't have to work on "Linked" fields since they only exist in the current object
-			this.state.editingList.forEach((changedField) => {
-				//Get the fiend which has been changed in the structure property
-				console.log(changedField);
-				if (isStructObj(this.structure[changedField])) {
-					const fieldStruct = this.structure[changedField];
-					//Use the predefined reset function for each field
-					// @ts-ignore
-					fieldStruct.reset();
-					//We let it change the close value no matter what
-					//Drops field from array & sets all the states to the right "Position"
-					// @ts-ignore
-					this.removeEditing(fieldStruct.name);
-				} else {
-					console.error("A function name has been added to the editing list and is now being iterated:", this.state.editingList)
-				}
+	cancelChanges = () => {
+		//We don't have to work on "Linked" fields since they only exist in the current object
+		this.state.editingList.forEach((changedField) => {
+			//Get the fiend which has been changed in the structure property
+			if (isStructObj(this.structure[changedField])) {
+				const fieldStruct = this.structure[changedField];
+				//Use the predefined reset function for each field
+
+				fieldStruct.reset();
+				//We let it change the close value no matter what
+				//Drops field from array & sets all the states to the right "Position"
+
+				this.removeEditing(fieldStruct.name);
+			} else {
+				console.error("A function name has been added to the editing list and is now being iterated:", this.state.editingList)
+			}
+		});
+
+		//THIS THING RIGHT HERE SOLVES A LOT OF PROBLEMS
+		//Current = ...Origin now
+		this.updateCurrent("", -1);
+		//Run an iteration of the toggler to "remove" the clickability from the cancel field
+		this.cancelSaveToggler();
+	};
+	d_saveChanges = async () => {
+		try {
+			//dbObject acts as a save of the previous version
+			const dbObject = { ...this.current };
+
+			// Put user field changes into the json_user_fields field
+			const jsUF: { [key: string]: string } = {};
+			Object.values(userPrefs.customFields).forEach(customField => {
+				jsUF[customField.name] = this.current[customField.name as keyof TradeObj];
 			});
+			dbObject[gin("juf")] = JSON.stringify(jsUF);
+			dbObject[gin("sif")] = JSON.stringify(Array.from(this.state.statsChangedList));
+			let tag: dbTag = "New";
+			if (dbObject[gin("00i")] == dbObject[gin("00p")]) {
+				tag = "Edit";
+			}
+            console.log(dbObject);
+			//DB
+			// PseudoId implementation: when a trade with a pseaudoid is saved, get him a real id. Then this id gets changed in the frontend both in the actual row and in all of the linearObjs in tables and tradewindows referring to it (including closed_ref and other)
+			// Closed_list: when a trade with a closed reference is saved, update the closed list of the parent trade in the frontend and backend. 
+			//! The closed list must be updated based on this trade refernece, because the main trade doesn't have any actual contents in the current closedList
+			//Async save changes
+                let link        = debug?"http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager" : "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager";
+                const request   = await fetch(link
+				,
+				{
+					method: "POST",
+					credentials: "same-origin",
+					body: JSON.stringify({ tag, trade: dbObject }),
+					headers: { "Content-Type": "application/json" },
+				}
 
-			//THIS THING RIGHT HERE SOLVES A LOT OF PROBLEMS
-			//Current = ...Origin now
-			this.updateCurrent("", -1);
-			//Run an iteration of the toggler to "remove" the clickability from the cancel field
-			this.cancelSaveToggler();
-		};
 
-		const d_saveChanges = async () => {
-			try {
-				// Put user field changes into the json_user_fields field
-				const dbObject = { ...this.current };
+			);
+			const data: tableApiResponse = await request.json();
+			if (data.status == "success") {
 
-				//DB
-				// PseudoId implementation: when a trade with a pseaudoid is saved, get him a real id. Then this id gets changed in the frontend both in the actual row and in all of the linearObjs in tables and tradewindows referring to it (including closed_ref and other)
-				// Closed_list: when a trade with a closed reference is saved, update the closed list of the parent trade in the frontend and backend.
-				//Async save changes
+
 				//Edit the pseudoid and other db fields (like the id)
+				const updatedTrade: Partial<TradeObj> = JSON.parse(data.message);
+				for (const key of Object.keys(updatedTrade)) {
+					if (!this.current.hasOwnProperty(key)) {
+						throw ({ message: "One key coming from the db object was not defined in the current object", obj: JSON.parse(data.message) })
+					}
+				}
+				this.current = { ...this.current, ...updatedTrade };
+
+				//* All of the below could be done "easily" in the backend too. But this method works fine for now
+				//Upward Save Propagation
+				if (this.current[gin("29")] != "-1") {
+					if (this.state.table != "") {
+						const mainTrade = this.state.table.tradeWindowRef
+							.allRowsObj[this.current[gin("29")]];
+						const mainTradeList = JSON.parse(mainTrade.current[gin("30")]);
+						//We have updated the pseuodId of this trade to be exactly like the id
+						//Now we update it here
+						if (mainTradeList.indexOf(dbObject[gin("00p")]) != -1) {
+							mainTradeList[mainTradeList.indexOf(dbObject[gin("00p")])] = this.current[gin("00p")];
+							mainTradeList.push(this.current[gin("00p")]);
+							mainTrade.current[gin("30")] = JSON.stringify(mainTradeList);
+							mainTrade.d_saveChanges();
+						} else {
+							console.error("d_saveChanges$ pId of this childrenRow not found in the mainRow list")
+						}
+
+					} else {
+						console.error("d_saveChanges$ Couldn't propagate changes upwards because this row has no table reference", this);
+					}
+				}
+				if (tag == "New") {
+					//Fix childRows references
+					if (this.current[gin("30")] != "[]") {
+						const childList: string[] = JSON.parse(this.current[gin("30")]);
+						childList.forEach(childRowPId => {
+							if (this.state.table != "") {
+								if (this.state.table.tradeWindowRef.allRowsObj.hasOwnProperty(childRowPId)) {
+									const childTrade = this.state.table.tradeWindowRef.allRowsObj[childRowPId];
+									//The backend will handle the updating of the childFields.
+									//? Should the backend manage it? Should I also save the main trade? Or just maybe a part of it?
+									//? Should I integrate 29 and 30 into the state of each row and update them just when necessary? This would make it easier to manage as a data structure and do stuff with it rather than parsing. Also, could use a set.
+									childTrade.current[gin("29")] = this.current[gin("00p")];
+									childTrade.origin[gin("29")] = this.current[gin("00p")];
+								} else {
+									console.error("d_saveChanges$ Couldn't propagate changes downwards because the tradeWindow doesn't have the childRow saved", this.state.table.tradeWindowRef.allRowsObj);
+								}
+							} else {
+								console.error("d_saveChanges$ Couldn't propagate changes downwards because this mainRow has no table reference", this);
+							}
+						})
+					}
+					//Fix tables/tradeWindows byKeyObj (in the future, maps)
+					if (this.state.table != "") {
+						//Delete the reference in the object above
+						const thisTableRow = Object.getOwnPropertyDescriptor(this.state.table.children, dbObject[gin("00p")]);
+						if (thisTableRow != undefined) {
+							Object.defineProperty(this.state.table.children, this.current[gin("00p")], thisTableRow)
+							delete this.state.table.children[dbObject[gin("00p")]];
+						} else {
+							console.error("d_saveChanges$ Couldn't find said property in the table reference");
+						}
+						const thisTradeWindowRow = Object.getOwnPropertyDescriptor(this.state.table.tradeWindowRef.allRowsObj, dbObject[gin("00p")]);
+						if (thisTradeWindowRow != undefined) {
+							Object.defineProperty(this.state.table.tradeWindowRef.allRowsObj, this.current[gin("00p")], thisTradeWindowRow)
+							delete this.state.table.tradeWindowRef.allRowsObj[dbObject[gin("00p")]];
+						} else {
+							console.error("d_saveChanges$ Couldn't find said property in the tradeWindow reference");
+						}
+
+					} else {
+						console.error("d_saveChanges$ Trouble Propagating table/tradeWindow changes, missing table reference", this);
+					}
+
+				}
+
 				//Refresh the origin object to mirror the (just modified) current one
 				this.updateCurrent("", 1);
 				//Cancelchanges will removeEditing, then run the cancelSaveToggler to fix any still active button
-				cancelChanges();
-			}
-			catch (error) {
-				//Let the user know something was wrong
+				this.cancelChanges();
+
+			} else {
+				newAlert({ status: "error", message: "Saving the trade was unsuccessfull" })
+				console.error("d_saveChanges$ returned an API error:", data.message);
 			}
 
 		}
+		catch (error) {
+			newAlert({ status: "error", message: "Saving the trade was unsuccessfull" })
+			console.error("d_saveChanges$ catched general error:", error);
+		}
+
+	}
+	/**
+	 * Toggles the cancel and save button, cancels changes if required and resets all necessary parts
+	 */
+
+	cancelSaveToggler() {
 		//The editings and checks are being done only on the cancel changes button
 		if (this.state.editing) {
 
@@ -2426,22 +3242,42 @@ class Row2 {
 			if (!this.structure[gin("b2")].hasCancelListener) {
 				this.structure[gin("b2")].target.addEventListener(
 					"click",
-					cancelChanges,
+					this.cancelChanges,
 					true
 				);
 				this.structure[gin("b1")].target.addEventListener(
 					"click",
-					d_saveChanges,
+					this.d_saveChanges,
 					true
 				)
-				this.structure[gin("b2")].target.rgd("disabledRowButton");
-				this.structure[gin("b1")].target.rgd("disabledRowButton");
+				this.structure[gin("b2")].target.rgd("disabledBtn");
+				this.structure[gin("b1")].target.rgd("disabledBtn");
 				this.structure[gin("b2")].hasCancelListener = true;
 			}
 			//Make it clickable
 			//TODO: Implement better looking disabled/enabled transitions
 			this.structure[gin("b2")].target.disabled = false;
 			this.structure[gin("b1")].target.disabled = false;
+
+			//External
+			if (this.state.container != "" && this.state.mainRow != "") {
+				this.state.container.agd("editing");
+				this.state.mainRow.agd("editing");
+			} else {
+				console.error("cancelSaveToggler$ The container or mainRow of the row is not defined", this);
+			}
+			//SaveAll
+			if (this.state.table != "") {
+				this.state.table.tradeWindowRef.currentlyEdited.add(this);
+				if (this.state.table.tradeWindowRef.controllers.saveAll != "") {
+					if (Array.from(this.state.table.tradeWindowRef.currentlyEdited).length != 0) {
+						this.state.table.tradeWindowRef.controllers.saveAll.disabled = false;
+						saveAllBtn.rgd("disabledBtn");
+					}
+				}
+			} else {
+				console.error("cancelSaveToggler$ The given row doesn't have a table reference", this);
+			}
 		} else {
 			//Remove event listener
 			const noEventCloseField = this.domCloneField(this.structure[gin("b2")].target);
@@ -2449,15 +3285,34 @@ class Row2 {
 			//RE-ADD this element to the structure object;
 			this.structure[gin("b2")].target = noEventCloseField;
 			this.structure[gin("b1")].target = noEventSaveField;
-			//TODO: FINISH SAVE CANCEL PARALLELs
-			this.structure[gin("b2")].target.agd("disabledRowButton");
-			this.structure[gin("b1")].target.agd("disabledRowButton");
+
+			this.structure[gin("b2")].target.agd("disabledBtn");
+			this.structure[gin("b1")].target.agd("disabledBtn");
 			//To prevent multiple listening. (Only checked on the cancel button)
 			this.structure[gin("b2")].hasCancelListener = false;
 			//Remove clickability
 			this.structure[gin("b2")].target.disabled = true;
 			this.structure[gin("b1")].target.disabled = true;
 			//Act on the save button - which works in parallel to the cancel button
+
+			//External
+			if (this.state.container != "" && this.state.mainRow != "") {
+				this.state.container.rgd("editing");
+				this.state.mainRow.rgd("editing");
+			} else {
+				console.error("cancelSaveToggler$ The container or mainRow of the row is not defined", this);
+			}
+			if (this.state.table != "") {
+				this.state.table.tradeWindowRef.currentlyEdited.delete(this);
+				if (this.state.table.tradeWindowRef.controllers.saveAll != "") {
+					if (Array.from(this.state.table.tradeWindowRef.currentlyEdited).length == 0) {
+						this.state.table.tradeWindowRef.controllers.saveAll.disabled = true;
+						saveAllBtn.agd("disabledBtn");
+					}
+				}
+			} else {
+				console.error("cancelSaveToggler$ The given row doesn't have a table reference", this);
+			}
 		}
 	}
 	/**
@@ -2474,13 +3329,10 @@ class Row2 {
 			: { value: "", has: false };
 	}
 	//Value and current object are never not linked. So to update the value of a fieald you must update the current object first
-	changeValue(property: string, target: inputField | selectField | buttonField, origin: "current" | "origin" = "current") {
+	changeValue(property: string, origin: "current" | "origin" = "current") {
 		const availableFields = availableFieldsGen();
-		const propertyFieldInstructions = Object.values(availableFields).filter(
-			//The lenght of this should be 1
-			(field) => field.name == property
-		);
-		switch (propertyFieldInstructions[0].type) {
+		const propertyFieldInstructions = availableFields[this.structure[property].dirTag]
+		switch (propertyFieldInstructions.type) {
 			//Closed will
 			case "closed":
 				//Sort of test to generalise the "close"/"open" change, but only currently used in the reset function
@@ -2492,15 +3344,14 @@ class Row2 {
 						//Close the trade, not spawning a new one and keeping 100 of it
 						this.close();
 					} else {
-						//DEBUG
+						// ?? //DEBUG
 						this.open();
 					}
 				}
 
 				break;
 			default:
-				target.value = this.getValue(property, origin).value;
-				//					field.value = this.getValue(field.name, "origin").value;
+				this.structure[property].target.value = this.getValue(property, origin).value;
 				break;
 		}
 	}
@@ -2510,24 +3361,32 @@ class Row2 {
 	 * @param {*} value The value to change it to
 	 * @param {string| -1} target If -1 makes the current object identical to the origin one, if 1 the opposite
 	 */
-	updateCurrent = (value = "", target: -1 | 1 | string) => {
+	updateCurrent = (value = "", target: -1 | 1 | string, fromStats = false) => {
 		if (target == -1) {
 			this.current = { ...this.origin };
 		} else if (target == 1) {
 			this.origin = { ...this.current };
 		} else {
 			this.current[target as keyof TradeObj] = value;
+			if (fromStats) {
+				this.structure[target].target.agd("autoCalculated");
+				this.state.statsChangedList.add(target);
+			} else {
+				this.state.statsChangedList.delete(target);
+				this.structure[target].target.rgd("autoCalculated");
+			}
 
 		}
 		//DEBUG
-		// Prints the current objects for the "test" row clearly in another div
-		const curPrint = document.querySelector(".current");
-		const oriPrint = document.querySelector(".origin");
-		// @ts-ignore
-		curPrint.innerHTML = JSON.stringify(this.current);
-		// @ts-ignore
-		oriPrint.innerHTML = JSON.stringify(this.origin);
-		//DEBUG
+		if (debug) {
+			// Prints the current objects for the "test" row clearly in another div
+			const curPrint = document.querySelector(".current") as HTMLElement;
+			const oriPrint = document.querySelector(".origin") as HTMLElement;
+
+			curPrint.innerHTML = JSON.stringify(this.current);
+			oriPrint.innerHTML = JSON.stringify(this.origin);
+			//DEBUG
+		}
 	};
 	/**
 	 * Function to prompt a close event. Takes no argument because it acts on the row itself
@@ -2558,7 +3417,8 @@ class Row2 {
 		const inputButtonArray = spawnDiv();
 		//Add a close button
 		const closeBtn = spawnBtn();
-		closeBtn.innerHTML = "Close this";
+		closeBtn.innerHTML = "✕";
+		closeBtn.agd("closeWindowBtn");
 		//Spawn the buttons that the user wanted to have as preference
 		for (const value of Object.values(
 			userPrefs.promptDefaults.closePrompt
@@ -2567,10 +3427,10 @@ class Row2 {
 			button.innerHTML = value.text;
 			//Onclick edit the input field
 			button.onclick = function () {
-				inputBox.value = value.attachedNumber.toLocaleString();
+				inputBox.value = value.attachedNumber.toString();
 			};
 			//STYLEME Just be cautious with this order property
-			button.style.order = value.attachedNumber.toLocaleString();
+			button.style.order = value.attachedNumber.toString();
 			//Append it
 			inputButtonArray.append(button);
 		}
@@ -2612,10 +3472,10 @@ class Row2 {
 			//We are adding an error on input because the UX feels better that way. The error comes up only if they submit something wrong.
 		};
 		enterButton.onclick = submitClose;
-		//Function below runs function above
-		window.addEventListener("keyup", function (event) {
+
+		function windowCloseKeyFunc(event: KeyboardEvent) {
 			// Number 13 is the "Enter" key on the keyboard
-			if (event.key === "13") {
+			if (event.key === "Enter") {
 				// Cancel the default action, if needed
 				event.preventDefault();
 				// Trigger the button element with a click
@@ -2625,10 +3485,11 @@ class Row2 {
 				event.preventDefault();
 				closeBtn.click();
 			}
-		});
+		}
+		//Function below runs function above
+		window.addEventListener("keyup", windowCloseKeyFunc);
 		// window.addEventListener("click", function (event) {
 		// 	if (promptBox.dataset.visible == "true" && event.target != promptBox) {
-		// 		console.log("Yooooo")
 		// 		closeBtn.click();
 		// 	}
 		// });
@@ -2667,31 +3528,113 @@ class Row2 {
 			closeBtn.remove();
 			errorBox.remove();
 			infoBox.remove();
+			window.removeEventListener("keyup", windowCloseKeyFunc);
 		}
 	};
-	deletePrompt = () => {
-		//TODO: Actually prompt
-		return true;
-	}
-	d_delete = (definitive: boolean = this.state.isLegend) => {
-		if (definitive == false) {
-			if (this.deletePrompt() == true) {
-				//TODO - COMPLETE
-				//Database stuff
-				const fetch = true;
-				//...
 
-				//Drop from every list, then remove
-				if (fetch) {
-					//SAY THAT IF IT HAS CLOSED FIELDS ALSO THOSE WILL BE DELETED
-					if (JSON.parse(this.current[gin("31")]))
-						tradeWindow.allRowsObj//Continue
-				} else {
-					newAlert({ status: "error", message: "Deleting the trade was unsuccessfull" })
+	/**
+	 * 
+	 * @param consequential Whether it has to be deleted (from the db) without asking
+	 * @param legend Whether to not care about the db
+	 */
+	d_delete = async (consequential: boolean = false, legend: boolean = this.state.isLegend) => {
+		if (legend == false) {
+			try {
+				if (consequential == true || await trueFalsePrompt("Are you sure you want to permanently delete this row?")) {
+					if (this.current[gin("30")] != "[]") {
+						if (
+							consequential != true && !await trueFalsePrompt("Deleting this trade will also delete all of its closed children. Proceed?")
+						) {
+							return
+						}
+					}
+
+					const tag: dbTag = "Delete";
+					const dbObject = { ...this.current };
+					//! Remember to also delete the linked properties when deleting a row. So if this has a linked ref, go delete this from the set (reverse save)
+					const request = await fetch(
+						"https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+						,
+						{
+							method: "POST",
+							credentials: "same-origin",
+							body: JSON.stringify({ tag, trade: dbObject }),
+							headers: { "Content-Type": "application/json" },
+						}
+
+
+					);
+					const data: tableApiResponse = await request.json();
+
+
+					//Drop from every list, then remove
+					//Debug if
+					if (data.status == "success") {
+						//SAY THAT IF IT HAS CLOSED FIELDS ALSO THOSE WILL BE DELETED
+						if (this.current[gin("30")] != "[]") {
+
+							//Delete all sub fields
+							const theRows: Row2[] = [];
+
+							const linkedRows: string[] = JSON.parse(this.current[gin("30")])
+							linkedRows.forEach(pId => {
+								if (this.state.table != "") {
+									if (this.state.table.tradeWindowRef.allRowsObj.hasOwnProperty(pId)) {
+										this.state.table.tradeWindowRef.allRowsObj[pId].d_delete(true);
+									} else {
+										console.error("d_delete$ A linked id is not present in the trade window ref allRowsObj", this, this.state.table.tradeWindowRef.allRowsObj);
+										throw ({ message: "d_delete$ Couldn't delete one of the childRows", obj: this });
+									}
+								}
+								else {
+									console.error("d_delete$ The given main row has no table reference:", this)
+								}
+							})
+
+
+						} else {
+							if (this.state.table != "") {
+								this.state.table.tradeWindowRef.dropTrades([this]);
+								this.cleanupDom();
+							} else {
+								console.error("d_delete$ Trying to delete row that has no table ref:", this)
+							}
+						}
+
+					} else {
+						newAlert({ status: "error", message: "Deleting the trade was unsuccessfull" })
+						console.error("d_saveChanges$ returned an API error:", data.message);
+					}
+
 				}
+			} catch (error) {
+				newAlert({ status: "error", message: "Deleting the trade was unsuccessfull" })
+				console.error("d_delete$ catched general error:", error);
 			}
 		} else {
-			//Wipe it out of existence
+			this.cleanupDom(true);
+			//Apparently the garbage collector takes care here *shrug*
+		}
+	}
+	/**
+	 * Brutal cleanup of the given row.
+	 */
+	cleanupDom(cleanContainer: boolean = false) {
+		this.structure = {};
+		if (this.state.mainRow != "") {
+			this.state.mainRow.remove();
+			this.state.mainRow = "";
+		} else {
+			console.error("cleanumDom$ mainRow of given row doesn't exist")
+		}
+		if (cleanContainer) {
+			if (this.state.container != "") {
+				this.state.container.remove();
+				this.state.container = "";
+			} else {
+				console.error("cleanumDom$ container of given row doesn't exist")
+
+			}
 		}
 	}
 	/**
@@ -2791,13 +3734,19 @@ class Row2 {
 				//* Here we decide that if you close a sub trade you are still closing a part of the main trade and not of the sub trade
 				if (this.current[gin("29")] != "-1") {
 					percentedNewTrade[gin("29")] = this.current[gin("29")];
-					//DONE IN THE BACKEND - affecting directly the origin of the parent
-					//  const parentTrade = this.state.table.tradeWindowRef.allRowsObj[this.current[gin("29")]];
-					//	parentTrade.current[gin("30")] = JSON.stringify(JSON.parse(parentTrade.current[gin("30")]).push(newPseudoId))
+					//THE ORIGIN IS UPDATED IN THE BACKEND - affecting directly the origin of the parent
+					const parentTrade = this.state.table.tradeWindowRef.allRowsObj[this.current[gin("29")]];
+					const newList = JSON.parse(parentTrade.current[gin("30")]);
+					newList.push(newPseudoId);
+					parentTrade.current[gin("30")] = JSON.stringify(newList);
 				} else {
 					percentedNewTrade[gin("29")] = this.current[gin("00p")];
-					//DONE IN THE BACKEND
-					//	this.current[gin("30")] = JSON.stringify(JSON.parse(this.current[gin("30")]).push(newPseudoId))
+					//THE ORIGIN GETS UPDATED ON SAVE BY THE BACKEND
+					const newList = JSON.parse(this.current[gin("30")]);
+					newList.push(newPseudoId);
+					this.current[gin("30")] = JSON.stringify(newList);
+
+					//Addition of this id to the current closed list of the main row
 
 				}
 				//Closed
@@ -2812,28 +3761,37 @@ class Row2 {
 						//Change the values in the visual interface
 						//Change the values in the reference objects
 						//this.structure[field.name].target;
-						this.current[field.name as keyof TradeObj] = (((100 - percentage) / 100) * parseFloat(percentedNewTrade[field.name as keyof TradeObj])).toString();
-						newPartialCloseRow.current[field.name as keyof TradeObj] = ((percentage / 100) * parseFloat(percentedNewTrade[field.name as keyof TradeObj])).toString();
-						//We are reducing the value, so if it were to be reset it would go to 0 - hence the following decision
-						newPartialCloseRow.origin[field.name as keyof TradeObj] = "0";
-						//Add this property to the editing tab
-						this.addEditingOnStdInput({ target: { name: field.name } } as usableEvent);
-						newPartialCloseRow.addEditingOnStdInput({ target: { name: field.name } } as usableEvent);
-						this.changeValue(field.name, this.structure[field.name].target);
-						newPartialCloseRow.changeValue(field.name, newPartialCloseRow.structure[field.name].target);
-						//Change the field visually
+						if (!isNaN(parseFloat(this.current[field.name as keyof TradeObj]))) {
+							this.current[field.name as keyof TradeObj] = (((100 - percentage) / 100) * parseFloat(percentedNewTrade[field.name as keyof TradeObj])).toString();
+							newPartialCloseRow.current[field.name as keyof TradeObj] = ((percentage / 100) * parseFloat(percentedNewTrade[field.name as keyof TradeObj])).toString();
+							//We are reducing the value, so if it were to be reset it would go to 0 - hence the following decision
+							newPartialCloseRow.origin[field.name as keyof TradeObj] = "0";
+							//Add this property to the editing tab
+							this.addEditingOnStdInput({ target: { name: field.name } } as usableEvent);
+							newPartialCloseRow.addEditingOnStdInput({ target: { name: field.name } } as usableEvent);
+							this.changeValue(field.name);
+							newPartialCloseRow.changeValue(field.name);
+							//Change the field visually
+
+						}
 
 					}
 					//This was made for future implementation of fields like the closed perc one
 					else if (field.modifiers.includes("closed_relative_increase")) {
 						//Change the values
-						this.current[field.name as keyof TradeObj] +=
-							(100 - parseFloat(this.current[field.name as keyof TradeObj])) * percentage / 100;
-						//Add this property to the editing tab
-						this.addEditingOnStdInput({ target: { name: field.name } } as usableEvent);
-						this.changeValue(field.name, this.structure[field.name].target);
+						if (!isNaN(parseFloat(this.current[field.name as keyof TradeObj]))) {
+
+							this.current[field.name as keyof TradeObj] +=
+								(100 - parseFloat(this.current[field.name as keyof TradeObj])) * percentage / 100;
+							//Add this property to the editing tab
+							this.addEditingOnStdInput({ target: { name: field.name } } as usableEvent);
+							this.changeValue(field.name);
+						}
 					}
 				});
+
+
+
 
 
 			}
@@ -2871,6 +3829,7 @@ class Row2 {
 		 */
 		const updateOnStdInput = (event: usableEvent) => {
 			this.updateCurrent(event.target.value, event.target.name);
+			this.formulaRun()
 		};
 
 		//Pass the two functions from the parent object
@@ -2883,15 +3842,13 @@ class Row2 {
 		 * @param {domElemeent} field
 		 * @param {{name: string, render: boolean,default:any,objLinked: [] | string[],"//And more fields which can be found above the defaultfields delcaration"}} directive
 		 */
-		const createStructure = (field: inputField | selectField | buttonField, directive: fieldDirective) => {
+		const createStructure = (field: inputField | selectField | buttonField, ginDir: string) => {
 			this.structure[field.name] = {
 				target: field,
 				editing: false,
 				name: field.name,
 				//Used for understanding whether it's a button, an user generated element or a normal input
-				dirTag: Object.keys(availableFields).find(
-					(key) => availableFields[key] === directive
-				),
+				dirTag: ginDir,
 				hasCancelListener: false,
 				//Attributes which this edits as well in the current object
 				objLinked: [],
@@ -2899,11 +3856,12 @@ class Row2 {
 				 * Function that resets the field to its origin value. Changes based on directive type
 				 */
 				reset: () => {
-					this.changeValue(field.name, field, "origin")
+					this.changeValue(field.name, "origin")
 				},
 			};
 
 			//If the field is linked to others, save it here
+			const directive = availableFieldsGen()[ginDir];
 			if (
 				directive.hasOwnProperty("objLinked") && directive.objLinked != undefined &&
 				directive.objLinked.length != 0
@@ -2945,6 +3903,7 @@ class Row2 {
 					this.updateCurrent(matchedInput.value, targetValue);
 					this.updateCurrent(matchedInput.id, `${targetValue}_id`);
 					this.updateCurrent(matchedInput.tag, `${targetValue}_tag`);
+					this.formulaRun();
 				};
 				/**
 				 * - For list inputs
@@ -2962,7 +3921,6 @@ class Row2 {
 				function listMatch(list: listerObj[], specValue: string | listerObj): listerObj {
 					if (typeof specValue == "string") {
 						const newList = list.filter((element) => {
-							console.log("---", element);
 							return element.value.toLowerCase() == specValue.toLowerCase();
 						});
 						if (newList.length == 0) {
@@ -2996,11 +3954,10 @@ class Row2 {
 
 				targetInputHolder.memory.field.addEventListener("input", function (e) {
 					//RUNTIME
-					//@ts-ignore
+
 					if (e.target != null) {
 						const input = targetInputHolder.memory.field.value;
 						//UPDATE
-						console.log("LIST MATCHING WITH:", list);
 						const matchedInput = listMatch(list, input);
 						updateOnInput(matchedInput);
 						//Add editing state
@@ -3026,7 +3983,6 @@ class Row2 {
 					} else {
 						console.error("Target is null");
 					}
-					//? To be tested: "clickaway method" on the entire holder
 				});
 				targetInputHolder.memory.field.addEventListener("newInput", ((e: CustomEvent) => {
 					listingExpander.hide();
@@ -3099,19 +4055,17 @@ class Row2 {
 						field.discriminator = "INPUT-FIELD";
 						fieldHolder.append(field);
 						fieldHolder.memory.field = field;
-						console.log(">> creating the field$", fieldHolder.memory);
 						//Easier access when referencing things in the aftermath (1/2)
 						//Used in the
 						buildLister(dirProperties.name, fieldHolder, dirProperties.options as listerObj[]);
-						console.log("Built lister with", dirProperties.options);
 						break;
 					case "select":
 						field = spawnSelect() as selectField;
 						field.discriminator = "SELECT-FIELD";
 						//STYLEME
 						if (dirProperties.options != undefined) {
-							//@ts-ignore
-							dirProperties.options[this.current[gin(27)] as keyof typeof dirProperties.options].forEach((option) => {
+							const actualOptions = dirProperties.options[this.current[gin("27")] as keyof fieldDirective["options"]] as variation[];
+							actualOptions.forEach((option) => {
 								const optionSelect = document.createElement("option");
 								optionSelect.value = option.value;
 								optionSelect.innerText = option.text;
@@ -3162,7 +4116,7 @@ class Row2 {
 						break;
 					case "delete":
 						field.agd("deleteBtn");
-						field.onclick = this.deletePrompt
+						field.onclick = () => this.d_delete();
 						break;
 				}
 				fieldHolder.memory.field = field;
@@ -3182,7 +4136,7 @@ class Row2 {
 		field.setAttribute("name", dirProperties.name);
 		field.classList.add(dirProperties.name);
 		//Here we make it easy to access the fields for future changes
-		createStructure(field, dirProperties);
+		createStructure(field, directive);
 		//Easier access when referencing things in the aftermath (2/2)
 		//Re-setting the memory.field here to the field itself, for places where I don't need to do it before this line, like listers
 		fieldHolder.memory.field = field;
@@ -3221,15 +4175,14 @@ class Row2 {
 			} else {
 				//TODO: Make the ref to the pseudoId and not the Id
 				container =
-					this.state.table.tradeWindowRef.allRowsObj[this.origin[gin("29")]].state
+					this.state.table.children[this.origin[gin("29")]].state
 						.container;
 				this.state.container = container;
 				//Only one append required, unlike normal rows where we are creating a trade container to put the main row in, we simply add the trade row to the main trade pre-existing container
 				if (this.state.container == "") {
 					console.error("Table has been assigned, but its container is empty (renderRow) (closed-row)", this, this.state.table.tradeWindowRef.allRowsObj[this.origin[gin("29")]].state.container)
 				} else {
-					//@ts-ignore
-					container.append(mainRow);
+					this.state.container.append(mainRow);
 					//Addin the row to the state of the trade for easier access in the future
 				}
 
@@ -3286,6 +4239,7 @@ class Row2 {
 			if (block.fixed) {
 				//? DOUBTFUL about how to handle the width property
 				section.style.minWidth = block.size;
+				section.style.maxWidth = block.size;
 				section.agd("fixedSection");
 			} else {
 				section.style.width = block.size;
@@ -3342,31 +4296,147 @@ class Row2 {
 		if (!this.state.isLegend) {
 			//Run the cancel toggler thingy, to disable  (or enable, up to future implementations) the cancel button
 			this.cancelSaveToggler();
+			this.formulaRun();
+			this.refreshDropdown();
 		}
 	}
 	/**
-	 * Runs field-specific compute functions (IN THE FUTURE MAY BE RUNNING ALSO GENERAL SCOPE COMPUTE FUNCTIONS)
+	 * Runs field-specific compute functions
 	 * 
-	 * Every associated function requires the row and the associated directive for easier access.
-	 * 
-	 * NB: Each one of these functions acts solely on the field itself. It can pull data from others but can't update them. Also if the field is already edited the function won't run. They only act when a field has been manually modified. 
+	 * NB: Each one of these functions acts solely on the field itself. It can pull data from others but can't update them.
 	 */
-	// formulaRun() {
-	// 	const allFieldsInfo = availableFieldsGen();
-	// 	Object.values(allFieldsInfo).forEach(field => {
-	// 		if (field.computed.length != 0) {
-	// 			field.computed.forEach(funct => {
-	// 				if (userPrefs.formulas.fields.hasOwnProperty(funct)) {
-	// 					if (this.)
-	// 						userPrefs.formulas.fields[funct as keyof typeof userPrefs.formulas.fields](this, field)
-	// 				} else {
-	// 					console.error("No such compute function exists in userPreferences");
-	// 				}
-	// 			})
-	// 		}
-	// 	})
+	formulaRun() {
+		const currentLayout = this.getLayout();
+		let formulaSet: Set<keyof UserPreferences['formulas']['fields']> = new Set();
+		currentLayout.forEach(block => {
+			formulaSet = new Set([...formulaSet, ...block.activeFormulas]);
+		})
+		Array.from(formulaSet).forEach(formulaName => {
+			//Things named with op are referred to the operator sets
+			const formula = userPrefs.formulas.fields[formulaName];
 
-	// }
+			//Overwrite checker here
+			switch (formula.overwrite) {
+				case 0:
+					if (this.current[gin(formula.targets)] != formula.overwriteCond && !this.state.statsChangedList.has(gin(formula.targets))) {
+						return
+					}
+
+				//No break to continue to the next case
+				case 1:
+					const opSubTopicLenght = formula.operator.subTopicOperation.length;
+					const opMainStreaklLenght = formula.operator.mainOperationStreak.length;
+
+					let funcValid = true;
+
+
+					let numResult = 0;
+					let strResult: string | false = "";
+
+
+					//The topic position is also used to index the current operation
+					for (let topicPosition = 0; topicPosition < formula.topics.length; topicPosition++) {
+						const topic = formula.topics[topicPosition];
+						let topicValid: boolean = true;
+
+						if (formula.underlyingType == "number") {
+							strResult = false;
+							let topicResult = 0;
+							const opTopicStreak = formula.operator.subTopicOperation[topicPosition % opSubTopicLenght]
+							const opTopicStreakLenght = opTopicStreak.length
+
+							//After the first cycle use this array instead.
+							const repeatableOperations: Array<FuncOperator> =
+								[...opTopicStreak]
+									.filter(operator => {
+										//Filter out single use elements
+										return !Array.isArray(operator)
+									}) as Array<FuncOperator>;
+
+							//ITERATE THROUGH THE ELEMENTS
+							for (let subTopicIndex = 0; subTopicIndex < topic.directives.length; subTopicIndex++) {
+								const topicDirective = topic.directives[subTopicIndex];
+								//Decide which streak to use depending on whether we are positioned in the first cycle or cycles ahead
+								let currentOperator: FuncOperator;
+
+								if (subTopicIndex >= opTopicStreakLenght) {
+									//Second operation cycle
+									//Remove the lenght of the operators which are not going to be repeated and index on base lenght of these operators.
+									currentOperator = repeatableOperations[(subTopicIndex - opTopicStreakLenght) % repeatableOperations.length];
+								} else {
+									//First operation cycle
+									//Single directive check.
+									//Had to infer types because typescript is ideotic
+									currentOperator = Array.isArray(opTopicStreak[subTopicIndex]) ? opTopicStreak[subTopicIndex][0] as FuncOperator : opTopicStreak[subTopicIndex] as FuncOperator;
+								}
+								const uValidValue = this.current[gin(topicDirective.dp)];
+								const valid = trueConditionCheck(uValidValue, topicDirective.trueCondition);
+								//Ignore?
+								if (currentOperator == "i") {
+									if (!valid) {
+										topicValid = false;
+										//Close cycle
+										subTopicIndex = topic.directives.length;
+									}
+								} else {//Now the operator is one to make work on the actual result
+									if (valid) {
+										topicResult = applyNumOperator(topicResult, pf(uValidValue), currentOperator);
+									} else if (!valid && topicDirective.defaults != -1) {
+										topicResult = applyNumOperator(topicResult, pf(topicDirective.defaults), currentOperator)
+									}
+									else if (!valid && topicDirective.defaults == -1) {
+										topicValid = false;
+										//Close cycle
+										subTopicIndex = topic.directives.length;
+									} else {
+										console.error("formulaRun$ During directive check, none of the truthCondition circumstances was catched", topicDirective);
+										topicValid = false;
+										subTopicIndex = topic.directives.length;
+									}
+								}
+							}
+
+
+							if (topicValid == true) {
+								if (topicPosition == 0) {
+									numResult = topicResult;
+								} else {
+									const currentOperation = formula.operator.mainOperationStreak[(topicPosition - 1) % opMainStreaklLenght];
+									numResult = applyNumOperator(numResult, topicResult, currentOperation);
+								}
+							}
+							else if (topic.defaults != -1 && topicValid == false) {
+								if (topicPosition == 0) {
+									numResult = pf(topic.defaults);
+								} else {
+									const currentOperation = formula.operator.mainOperationStreak[(topicPosition - 1) % opMainStreaklLenght];
+									numResult = applyNumOperator(numResult, pf(topic.defaults), currentOperation);
+								}
+							} else if (topic.defaults == -1 && topicValid == false) {
+								//Complete the whole cycle and stop running for loops
+								funcValid = false;
+								topicPosition = formula.topics.length;
+							}
+						} else {
+
+						}
+					}
+
+					if (funcValid) {
+						//Overwrite property checked before calculation
+						this.updateCurrent(strResult == false ? numResult.toString() : strResult, gin(formula.targets), true);
+						this.changeValue(gin(formula.targets))
+						this.addEditingOnStdInput({ target: this.structure[gin(formula.targets)].target });
+					} else {
+						return;//Skip this cycle and move to the next one. We are at the end but this signifies better
+					}
+
+			}
+
+
+
+		});
+	}
 }
 
 
@@ -3379,11 +4449,12 @@ function createNewRow(startingObj: Partial<TradeObj> = new TradeObj({}), options
 	for (let index = 0; index < options.repeat; index++) {
 		const tradeObj = new TradeObj(startingObj)
 
-		if (tradeWindow.allRows.length != 0) {
+		if (tradeWindow.allRows.length != 0 && !startingObj.hasOwnProperty(gin("00i"))
 
-			//Set the new id to be the same as the one of the last trade, then create a pseudoId that has format IDnINDEX where the index depends on the amount of just built trades. When they get created, they also get saved and the database sends back to them a new id
-			const currentLatest = tradeWindow.allRows[tradeWindow.allRows.length - 1];
-			const copiedId = currentLatest.origin[gin("00i")];
+		) {
+			//! Needs map fixing because this is highly stupid
+			let copiedId = (tradeWindow.biggestSorting + 1).toString();
+
 			let index = 1;
 			let newPseudoId = `${copiedId}${options.separator}${index}`;
 			while (tradeWindow.allRowsObj.hasOwnProperty(newPseudoId)) {
@@ -3394,7 +4465,11 @@ function createNewRow(startingObj: Partial<TradeObj> = new TradeObj({}), options
 
 			tradeObj[gin("00p")] = newPseudoId;
 			tradeObj[gin("00i")] = copiedId;
-			console.log("EEEEE: ", newPseudoId, copiedId)
+		}
+
+		//! Needs map fixing because this is highly stupid
+		if (tradeObj[gin("s")] == "0" && tradeObj[gin("00p")] != tradeObj[gin("00i")]) {
+			tradeObj.saved_sorting = (tradeWindow.biggestSorting + 1).toString();
 		}
 
 		for (const [key, value] of Object.entries(options.forcedProperties)) {
@@ -3407,22 +4482,6 @@ function createNewRow(startingObj: Partial<TradeObj> = new TradeObj({}), options
 	}
 
 	tradeWindow.sortAndTableTrades(tradeArray);
-}
-
-/**
- * Builds a legend row to be sorted with the 
- * @param startingObj 
- */
-function createLegend(startingObj: Partial<TradeObj>) {
-
-
-
-	//LOGIC:
-	/*
-		Create a legend row and table it in each table. When tabled, do not add it to the all rows thingy and just have it in a separate property called "legend" or "legends".
-		Create one for each sorting and in a table have the table just mindlessly delete the legend if it already has one and receives one more. 
-		Also make the hidden feature of pagination not hide the legend itself when shit happens
-	*/
 }
 
 
@@ -3439,7 +4498,6 @@ const tradeWindow = new TradeWindow(tradeWindowTarget as HTMLElement);
 
 tradeWindow.buildTables();
 
-//TODO: FINISH HERE
 tradesList.forEach(trade => {
 	createNewRow(trade);
 })
@@ -3503,6 +4561,27 @@ newRowButton.addEventListener("directive", ((e: CustomEvent) => {
 const spawnNewTradeBuilder = () => { };
 
 controllerBox.append(newRowButton);
+//////////////////////
+// SaveAll
+
+const saveAllBtn = spawnBtn();
+saveAllBtn.disabled = true;
+saveAllBtn.agd("disabledBtn");
+tradeWindow.controllers.saveAll = saveAllBtn;
+saveAllBtn.innerHTML = "Save All";
+saveAllBtn.agd("mainBtn", "button");
+
+controllerBox.append(saveAllBtn);
+
+saveAllBtn.onclick = function () {
+	for (const row of tradeWindow.currentlyEdited.values()) {
+		row.d_saveChanges();
+	}
+}
+
+
+//TODO: FINISH IMPLEMENTING
+
 
 ////////////////7/////
 // Edit User preferences
@@ -3581,7 +4660,7 @@ if (mainEditPrefsWindow != null) {
 	})
 
 } else {
-	console.error("COuldn't find the user preferences menu box");
+	console.error("Couldn't find the user preferences menu box");
 }
 
 //Notifications
@@ -3603,18 +4682,3 @@ function newAlert(message: { status: "error" | "success", message: string }) {
 		console.error("Alert box is undefined: Appending new message is impossible");
 	}
 }
-
-
-///* Styling blocks
-
-// Main Rows
-document.querySelectorAll(".trade-container .main-row").forEach(mainRow => {
-	//Add classes
-})
-//Closed Rows
-document.querySelectorAll(".trade-container .closed-row").forEach(mainRow => {
-	//Add classes
-})
-
-//Fields
-//Field Holders

@@ -30,6 +30,15 @@ window.onload = function() {
   $("#navbarSupportedContent").hide();
 };
 </script>
+
+<!-- <script src="https://www.google.com/recaptcha/api.js?render=<?php echo RECAPTCHA_SITE_KEY; ?>"></script>
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('<?php echo RECAPTCHA_SITE_KEY; ?>', {action: 'form_submission'}).then(function(token) {
+            document.querySelector('.g-recaptcha-response').value = token;
+        });
+    });
+</script> -->
 <?php if ($pageURISegmentA === 'Dashboard') { ?>
 	
 	<script>

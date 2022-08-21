@@ -21,41 +21,38 @@ TODOS (backend)
 
 TODOS (frontend)
 HUGE
-- styling
-- linked scrolling
 - Sync the "lateral" fields for tag and id with the changeValue function and make them update/reset accordingly
 - historical
 - expanded view
 - image
-- Save + delete button
-- Fix ts-ignores
-- Working on block designing
 - Autosave
-? - Structure more stuff with events
+- Customize Columns
+- Customize Formulas
+
 SMALLER
 - Refactor with maps (and where possible) with sets
+- Cleanup the Window event listeners with a zdarkener or something else I really don't know
 - Do something about the "plain" main new-row button
 - deletePrompt
 - Give the ability to enter images
 - Give the ability for "tag" blocks and use expandeers to do so. Notion like
-- Finish the compute functions
+- Finish the compute functions (For strings and make them customizable)
 - Multiple newRow setup
+- Share trades
+- Export/Import User Preferences
+
 ACTIVE
 
-- When saving sub row also save the main one. When saving main row, save all the rows
-- Create an editing map or some checking element to enable/diable the button
-
-- Saveall (Finish button and disable/enable appropriately)
 
 */
 //START OF THE PROGRAM
-const debug = true;
+let debug = true;
 class TradeObj {
     constructor(row) {
         this.legend = row.legend || "false";
         this.saved_sorting = (row.saved_sorting || row.id) || "0";
         this.id = row.id || "0";
-        this.pseudo_id = row.pseudo_id || row.id || "0n1";
+        this.pseudo_id = (row.pseudo_id || row.id) || "0n1";
         this.order_id = row.order_id || "0";
         this.closed = row.closed || "false";
         this.symbol = row.symbol || "";
@@ -63,7 +60,7 @@ class TradeObj {
         this.trade_type = row.trade_type || (row.category == "equity" || !row.category ? "long" : "call");
         this.open_date = row.open_date || "";
         this.close_date = row.close_date || "";
-        this.shares = row.shares || "0";
+        this.shares = row.shares || "";
         this.entry_price = row.entry_price || "";
         this.close_price = row.close_price || "";
         this.leverage = row.leverage || "";
@@ -91,6 +88,7 @@ class TradeObj {
         this.on_open_fees = row.total_fees || "";
         this.on_close_fees = row.total_fees || "";
         this.current_price = row.current_price || "";
+        this.stats_interpolated_fields = row.stats_interpolated_fields || "[]";
         this.json_user_fields = row.json_user_fields || buildDefaultUserFields();
         this.save = row.save || "Save";
         this.cancel = row.cancel || "Cancel";
@@ -103,12 +101,12 @@ const debugGraphicsLibrary = {
     input: ["form-control"],
     select: ["form-control"],
     div: [],
-    button: ["btn", "btn-sm", "h-100", "btn"],
+    button: ["btn", "btn-sm", "h-100"],
     openedBtn: ["btn", "btn-light", "h-100"],
     closedBtn: ["btn", "btn-warning", "h-100"],
-    cancelBtn: ["btn-primary"],
-    saveBtn: ["btn-secondary"],
-    deleteBtn: ["btn-danger"],
+    cancelBtn: ["btn-warning", "btn-block"],
+    saveBtn: ["btn-primary", "btn-block"],
+    deleteBtn: ["btn-danger", "btn-block"],
     darkener: ["tt-darkener"],
     tradeTable: ["trade-table"],
     tableBottomController: ["table-bottom-controller"],
@@ -121,18 +119,20 @@ const debugGraphicsLibrary = {
     mainBtn: ["btn-primary", "mr-3"],
     spawnerButton: ["spawner-new-button", "btn-primary", "mr-3"],
     tradeContainer: ["trade-container"],
+    containerDropdown: ["dropdown-btn"],
     disabledBtn: ["disabled-btn"],
     promptBox: ["tt-prompt-box"],
     fieldHolder: ["field-holder", "form-group", "custom-group-width", "mb-0"],
+    autoCalculated: [],
     editing: ["editing"],
     legendContainer: ["legendary"],
     closedRow: ["closed-row"],
     legendRow: ["legend-row"],
     mainRow: ["main-row"],
-    fixedSection: ["fixed-section"],
-    scrollableSection: ["scrollable-section"],
-    controllerBox: ["tt-controller-box"],
-    alert: ["tt-alert"],
+    fixedSection: ["fixed-section", "px-0"],
+    scrollableSection: ["scrollable-section", "overflow-auto", "px-0"],
+    controllerBox: ["tt-controller-box", "pb-5"],
+    alert: ["tt-alert", "alert", "alert-dimissable"],
     closeWindowBtn: ["close-button"],
 };
 const graphicsLibrary = {
@@ -159,9 +159,11 @@ const graphicsLibrary = {
     mainBtn: ["btn-primary", "mr-3"],
     spawnerButton: ["spawner-new-button", "btn-primary", "mr-3"],
     tradeContainer: ["trade-container", "pl-3"],
+    containerDropdown: ["dropdown-btn"],
     disabledBtn: ["disabled-btn"],
     promptBox: ["tt-prompt-box"],
     fieldHolder: ["field-holder", "form-group", "custom-group-width", "mb-0"],
+    autoCalculated: [],
     editing: ["editing"],
     legendContainer: ["legendary"],
     closedRow: ["closed-row"],
@@ -209,6 +211,67 @@ function instanceOfBF(object) {
 function isStructObj(obj) {
     return 'name' in obj && 'target' in obj && 'editing' in obj && 'dirTag' in obj;
 }
+/**
+ * NOT COMPLETE CHECKER OF A TRUECONDITION FOR A COMPFUNC
+ *
+ * TODO: COMPLETE
+ * @param element The element to check
+ * @param trueCondition The appropriate truth condition
+ * @returns bool
+ */
+function trueConditionCheck(element, trueCondition) {
+    if (trueCondition.dir == "im") {
+        return false;
+    }
+    else {
+        switch (trueCondition.type) {
+            case "number":
+                switch (trueCondition.dir) {
+                    case "e":
+                        return pf(element) == trueCondition.value;
+                    case "g":
+                        return pf(element) > trueCondition.value;
+                    case "ge":
+                        return pf(element) >= trueCondition.value;
+                    case "s":
+                        return pf(element) < trueCondition.value;
+                    case "se":
+                        return pf(element) <= trueCondition.value;
+                }
+            case "string":
+                switch (trueCondition.dir) {
+                    case "e":
+                        return element == trueCondition.value;
+                }
+                break;
+        }
+        console.error("trueConditionCheck$ No case catched");
+        return false;
+    }
+}
+/**
+ * - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ *
+ * INCOMPLETE FUNCTION, DO NOT USE
+ */
+function applyStrOperator(firstEl, secondEl, operator) {
+    console.error("DO NOT CALL THIS FUNCTION, STILL WORK IN PROGRESS");
+    return "";
+}
+function applyNumOperator(firstEl, secondEl, operator) {
+    switch (operator) {
+        case "+":
+            return firstEl + secondEl;
+        case "-":
+            return firstEl - secondEl;
+        case "*":
+            return firstEl * secondEl;
+        case "i":
+            console.error("Trying to operate on two numbers with an ignore operator");
+            return 0;
+    }
+}
+//
 let darkenedScreenElement = null;
 let darkenedScreenIndex = 0;
 //Gather backend data
@@ -270,6 +333,54 @@ function spawnBtn() {
     res.memory = {};
     return res;
 }
+/**
+ *
+ * @param text The text to prompt
+ * @param options CURRENTLY NOT OPERATIONAL
+ * @returns
+ */
+async function trueFalsePrompt(text, options = { trueTxt: "Yes", falseTxt: "Cancel" }) {
+    const prompt = spawnDiv();
+    document.body.append(prompt);
+    prompt.agd("promptBox");
+    const closeBtn = spawnBtn();
+    closeBtn.innerHTML = "✕";
+    closeBtn.agd("closeWindowBtn");
+    const trueBtn = spawnBtn();
+    const falseBtn = spawnBtn();
+    falseBtn.agd("deleteBtn");
+    trueBtn.agd("saveBtn");
+    const description = spawnDiv();
+    description.agd("h3");
+    description.innerHTML = text;
+    trueBtn.innerHTML = options.trueTxt;
+    falseBtn.innerHTML = options.falseTxt;
+    prompt.append(closeBtn);
+    prompt.append(description);
+    prompt.append(trueBtn);
+    prompt.append(falseBtn);
+    const result = await new Promise(function (resolve) {
+        window.addEventListener("mousedown", function (e) {
+            if (e.target != prompt && e.target != trueBtn && e.target != falseBtn) {
+                prompt.remove();
+                resolve(false);
+            }
+        });
+        closeBtn.addEventListener("click", function () {
+            prompt.remove();
+            resolve(false);
+        });
+        falseBtn.addEventListener("click", function () {
+            prompt.remove();
+            resolve(false);
+        });
+        trueBtn.addEventListener("click", function () {
+            prompt.remove();
+            resolve(true);
+        });
+    });
+    return result;
+}
 //TODO: Increase capabilities of this function using keymatching, iterating through the object, checking for hollow elements.
 /**
  * Function to compare objects
@@ -317,12 +428,20 @@ const simpleHash = (str) => {
     }
     return new Uint32Array([hash])[0].toString(36);
 };
+const isN = (el) => {
+    return !isNaN(parseFloat(el));
+};
+function getFuncName() {
+    return getFuncName.caller.name;
+}
+//For ease of writing where multiple conversion are needed
+const pf = parseFloat;
 /**
  * Function that darkens the screen at a given zindex. Moves it up if the current index is below the argument, or deletes it if remove is true
  * @param {int} index At what z-index to spawn it
  * @param {true|false} remove Whether it should be removed
  */
-function zDarkner(index, remove = false) {
+function zDarkner(index, remove = false, opacity = "0.35", pointerEvents = false) {
     if (!remove) {
         if (darkenedScreenElement == null) {
             const darkener = document.createElement("div");
@@ -330,23 +449,25 @@ function zDarkner(index, remove = false) {
             darkener.agd("darkener");
             darkenedScreenElement = darkener;
             //Style it
-            darkener.style.opacity = "0.35";
+            darkener.style.opacity = opacity;
             darkener.style.zIndex = index;
-            darkener.style.pointerEvents = "none";
+            darkener.style.pointerEvents = pointerEvents ? "all" : "none";
         }
         else {
             //Only do something if the index is bigger than the current one
             if (darkenedScreenIndex < parseFloat(index)) {
                 darkenedScreenElement.style.zIndex = index;
             }
-            darkenedScreenElement.style.opacity = "0.35";
+            darkenedScreenElement.style.opacity = opacity;
         }
+        return darkenedScreenElement;
     }
     else {
         if (darkenedScreenElement != undefined) {
             darkenedScreenElement.style.opacity = "0";
             darkenedScreenIndex = 0;
         }
+        return null;
     }
 }
 /**
@@ -426,17 +547,19 @@ const userPrefs = {
                         //Which elements get rendered? Check "availableFields"
                         //If fixed is true, then the size 
                         default: [
-                            { fixed: true, size: "20%", elements: ["1", "2", "3"], nElements: [] },
+                            { fixed: true, size: "20%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] },
                             {
                                 fixed: false,
-                                size: "80%",
-                                elements: ["7", "6", "9", "8", "11", "12", "4", "13", "5", "14", "u1", "15"],
+                                size: "75%",
+                                elements: ["7", "6", "9", "8", "10", "11", "12", "4", "13", "5", "14", "u1", "15"],
+                                activeFormulas: ["totalCost"],
                                 nElements: []
                             },
                             {
                                 fixed: true,
-                                size: "10%",
+                                size: "15%",
                                 elements: ["b1", "b2", "b3"],
+                                activeFormulas: [],
                                 nElements: []
                             },
                             //0 layouts are holding all the not displayed fields till now
@@ -445,6 +568,7 @@ const userPrefs = {
                             {
                                 fixed: true,
                                 size: "0",
+                                activeFormulas: [],
                                 //This is a list of all the element NOT to include - Made up from all the elements included in the other parts of the row
                                 nElements: [
                                     "1",
@@ -454,6 +578,7 @@ const userPrefs = {
                                     "6",
                                     "9",
                                     "8",
+                                    "10",
                                     "11",
                                     "12",
                                     "4",
@@ -488,17 +613,19 @@ const userPrefs = {
                         //Which elements get rendered? Check "availableFields"
                         //If fixed is true, then the size 
                         default: [
-                            { fixed: true, size: "10%", elements: ["1", "2", "3"], nElements: [] },
+                            { fixed: true, size: "10%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] },
                             {
                                 fixed: false,
                                 size: "80%",
-                                elements: ["12", "6", "9", "8", "11", "7", "4", "13", "5", "14", "u1", "15"],
+                                elements: ["17", "18", "10", "19", "20", "11", "12"],
+                                activeFormulas: ["totalCost"],
                                 nElements: []
                             },
                             {
                                 fixed: true,
                                 size: "10%",
                                 elements: ["b1", "b2", "b3"],
+                                activeFormulas: [],
                                 nElements: []
                             },
                             //0 layouts are holding all the not displayed fields till now
@@ -507,21 +634,19 @@ const userPrefs = {
                             {
                                 fixed: true,
                                 size: "0",
+                                activeFormulas: [],
                                 //This is a list of all the element NOT to include - Made up from all the elements included in the other parts of the row
                                 nElements: [
                                     "1",
                                     "2",
                                     "3",
-                                    "7",
-                                    "6",
-                                    "9",
-                                    "8",
+                                    "17",
+                                    "18",
+                                    "10",
+                                    "19",
+                                    "20",
                                     "11",
                                     "12",
-                                    "4",
-                                    "13",
-                                    "5",
-                                    "14",
                                     "u1",
                                     "15",
                                     "b1",
@@ -630,9 +755,127 @@ const userPrefs = {
     },
     formulas: {
         fields: {
-            totalCost: (row, directive) => {
+            totalCost: {
+                targets: "10",
+                underlyingType: "number",
+                overwrite: 0,
+                overwriteCond: "",
+                topics: [
+                    {
+                        defaults: "0",
+                        directives: [
+                            //Ignore the first if true and calculate with the others
+                            {
+                                dp: "27",
+                                defaults: -1,
+                                trueCondition: {
+                                    type: "string",
+                                    dir: "e",
+                                    value: "option_buy",
+                                }
+                            },
+                            {
+                                dp: "18",
+                                defaults: -1,
+                                trueCondition: {
+                                    type: "number",
+                                    dir: "ge",
+                                    value: 0,
+                                }
+                            },
+                            {
+                                dp: "17",
+                                defaults: -1,
+                                trueCondition: {
+                                    type: "number",
+                                    dir: "ge",
+                                    value: 0,
+                                }
+                            },
+                            //100x premium multiplier
+                            {
+                                dp: "0",
+                                defaults: "100",
+                                trueCondition: {
+                                    type: "number",
+                                    dir: "im",
+                                    value: 0,
+                                }
+                            },
+                        ]
+                    },
+                    {
+                        defaults: "0",
+                        directives: [
+                            //Ignore the first if true and calculate with the others
+                            {
+                                dp: "27",
+                                defaults: -1,
+                                trueCondition: {
+                                    type: "string",
+                                    dir: "e",
+                                    value: "equity",
+                                }
+                            },
+                            {
+                                dp: "6",
+                                defaults: -1,
+                                trueCondition: {
+                                    type: "number",
+                                    dir: "ge",
+                                    value: 0,
+                                }
+                            },
+                            {
+                                dp: "7",
+                                defaults: -1,
+                                trueCondition: {
+                                    type: "number",
+                                    dir: "ge",
+                                    value: 0,
+                                }
+                            },
+                        ]
+                    },
+                    {
+                        defaults: "0",
+                        directives: [
+                            {
+                                dp: "31",
+                                defaults: -1,
+                                trueCondition: {
+                                    type: "number",
+                                    dir: "ge",
+                                    value: 0,
+                                }
+                            },
+                            {
+                                dp: "32",
+                                defaults: -1,
+                                trueCondition: {
+                                    type: "number",
+                                    dir: "ge",
+                                    value: 0,
+                                }
+                            },
+                            {
+                                dp: "34",
+                                defaults: -1,
+                                trueCondition: {
+                                    type: "number",
+                                    dir: "ge",
+                                    value: 0,
+                                }
+                            },
+                        ]
+                    },
+                ],
+                operator: {
+                    mainOperationStreak: ["+"],
+                    subTopicOperation: [[["i"], "+", "*", "*"], [["i"], "+", "*"], ["+"]]
+                }
             }
-        },
+        }
     },
     walletList: [...walletList],
     symbolList: [...symbolList],
@@ -1169,6 +1412,31 @@ const defaultFields = {
         placeholder: "",
         columnName: "Current Price",
     },
+    "34": {
+        name: "position_holding_fees",
+        render: "true",
+        default: "",
+        type: "input",
+        subtype: "number",
+        modifiers: ["closed_reduce"],
+        computed: [],
+        description: "Fees that accumulate through overnight or other sort of means",
+        placeholder: "",
+        columnName: "Ownership Fees",
+    },
+    "sif": {
+        name: "stats_interpolated_fields",
+        //Default synced with List match function and list builder
+        render: "false",
+        default: "{}",
+        type: "input",
+        subtype: "JSON",
+        modifiers: [],
+        computed: [],
+        description: "Holds the fields which are currently controlled by the stats attribute. Becomes a set in the row object",
+        placeholder: "",
+        columnName: "Stats interpolated fields",
+    },
     "juf": {
         name: "json_user_fields",
         //Default synced with List match function and list builder
@@ -1295,7 +1563,7 @@ class Table {
         });
         for (let i = 0; i < childArray.length; i++) {
             const children = childArray[i];
-            byIdObj[children.origin[gin('00p')]] = children;
+            byIdObj[children.current[gin('00p')]] = children;
             children.changeTableReference(this);
         }
         return [sortedArr, byIdObj];
@@ -1305,7 +1573,7 @@ class Table {
         this.sortedChildren = this.c_sortChildren(this.sortedChildren)[0];
         this.sortedChildren.forEach(mainRow => {
             if (mainRow.state.container != "") {
-                mainRow.state.container.style.order = mainRow.state.currentSorting.toLocaleString();
+                mainRow.state.container.style.order = mainRow.state.currentSorting.toString();
             }
             else {
                 console.error("Impossible to reorder given row: its container is undefined");
@@ -1339,7 +1607,7 @@ class Table {
             const moveBackward = spawnBtn();
             moveBackward.innerHTML = "&larr;";
             const currentPage = spawnInput();
-            currentPage.value = this.currentPage.toLocaleString();
+            currentPage.value = this.currentPage.toString();
             holder.append(moveBackward, currentPage, moveForward);
             this.controllerBox.pageMover = {
                 holder,
@@ -1401,7 +1669,6 @@ class Table {
     }
     hideTable() {
         if (!!this.target) {
-            //??? this.classList.add("hideThis");
             this.target.style.display = "none";
         }
     }
@@ -1490,9 +1757,9 @@ class Table {
             const newMin = 1;
             this.currentPageMin = newMin;
             this.currentPageMax = newMax;
-            currentPage.value = this.currentPage.toLocaleString();
-            currentPage.min = newMin.toLocaleString();
-            currentPage.max = newMax.toLocaleString();
+            currentPage.value = this.currentPage.toString();
+            currentPage.min = newMin.toString();
+            currentPage.max = newMax.toString();
             if (this.currentPage == newMin) {
                 if (this.controllerBox.pageMover.moveBackward != "") {
                     this.controllerBox.pageMover.moveBackward.classList.add("disabled");
@@ -1528,7 +1795,7 @@ class Table {
     updateLegendPosition() {
         if (this.activeLegend != "" && this.activeLegend.state.container != "") {
             this.activeLegend.state.currentSorting = this.tradeWindowRef.biggestSorting + 1;
-            this.activeLegend.state.container.style.order = this.activeLegend.state.currentSorting.toLocaleString();
+            this.activeLegend.state.container.style.order = this.activeLegend.state.currentSorting.toString();
         }
     }
     pageForward(numberOfPages = 1) {
@@ -1580,11 +1847,9 @@ class Table {
      * @param {boolean} fresh Whether the element is new (has the highest id) or older (has a lower id)
      */
     pushChildren(children) {
-        //STYLEME 
-        //?? I don't know whether I need to change the order here or somewhere else.
         children.forEach((child) => {
             child.changeTableReference(this);
-            this.children[child.origin[gin("00p")]] = child;
+            this.children[child.current[gin("00p")]] = child;
             //Sort only mainRows. If empty, unshift in the increasing order array. Otherwise find the first row it's bigger of
             if (child.current[gin("29")] == "-1") {
                 //SORTING
@@ -1616,7 +1881,7 @@ class Table {
                 child.renderRow();
                 //The state.paged is handled by the page manager because this row is in the sorted list
                 if (child.state.container != "") {
-                    child.state.container.style.order = child.state.currentSorting.toLocaleString();
+                    child.state.container.style.order = child.state.currentSorting.toString();
                     if (child.current[gin("30")] != "[]") {
                         const partialCloses = JSON.parse(child.current[gin("30")]);
                         partialCloses.forEach(pseudoId => {
@@ -1651,16 +1916,20 @@ class Table {
         });
         this.refreshPages();
     }
-    //! Incomplete function - doesn't de-render rows.
-    dropChildren(children) {
+    /**
+     * ATTENTION: This function is used to clean data about the row from the table, not to do anything to the actual row. The row is the main caller of the tradewindow function which then calls this
+     * @param children The rows to cleanUp
+     */
+    dropdownChildren(children) {
         children.forEach((child) => {
             //When the db is called, the pseudoids vanish, and also get edited
-            delete this.children[child.origin[gin("00p")]];
+            delete this.children[child.current[gin("00p")]];
             this.currentPageMax = Math.floor(this.sortedChildren.length / userPrefs.rowsPerPage) + 1;
             //todo: optimize this, could be moved below
-            this.sortedChildren.filter((element) => {
-                element.origin[gin("00p")] != child.origin[gin("00p")];
-            });
+            this.sortedChildren = this.sortedChildren.filter(element => element.current[gin("00p")] != child.current[gin("00p")]);
+            if (this.children.hasOwnProperty(child.current[gin("00p")])) {
+                delete this.children[child.current[gin("00p")]];
+            }
         });
         this.refreshPages();
     }
@@ -1734,13 +2003,14 @@ class TradeWindow {
      * Also adds trades to o(n) object array - used ALI partial close rows rendering to find the parent trade
      *
      * ATTENTION: Closed rows are part of the main row, hence if they don't meet the criteria of the filtering they asre still pushed with the main row in the respective object
+     *
+     * ! Set/Map refactoring absolutely needed. As we have to include an unsafe paramether to have a specific function work properly
+     * ( The solution includes not needing to check whether the object already exists to avoid duplicates)
      * @param {{tag: string, logical: string, trades: Row[] }} tagObj
-     * @returns
      */
-    filterTrades(tagObj, rows) {
+    filterTrades(tagObj, rows, unsafe = false) {
         const copiedRows = [...rows];
         const entireList = [];
-        const delayedRenderStack = [];
         switch (tagObj.logical) {
             //TODO add other cases
             case "equal":
@@ -1751,7 +2021,7 @@ class TradeWindow {
                     //THIS IS USED FOR ROWS THAT GET INCLUDE AFTER THEIR CLOSED PARENT COMES IN
                     if (row.current[gin("29")] != "-1") {
                         //Check if the tagObj already has this row
-                        if (tagObj.trades.filter((otherRow) => otherRow.current[gin("00p")] == row.current[gin("00p")]).length == 0) {
+                        if (tagObj.trades.filter((otherRow) => otherRow.current[gin("00p")] == row.current[gin("00p")]).length == 0 || unsafe) {
                             //Forward check
                             if (this.allRowsObj.hasOwnProperty(row.current[gin("29")])) {
                                 if (this.allRowsObj[row.current[gin("29")]].origin[this.columnTarget] == tagObj.tag) {
@@ -1766,7 +2036,6 @@ class TradeWindow {
                             //Gather all those rows and get them in here too
                             const list = JSON.parse(row.current[gin("30")]);
                             //We don't have only db rows, as in the current we keep the pseudoIds as well
-                            ////Here we only have db rows, so we can compare ids rather than pseudos
                             list.forEach(partialRowPId => {
                                 //Check that it's not already in there. 
                                 if (tagObj.trades.filter((otherRow) => otherRow.current[gin("00p")] == partialRowPId).length == 0) {
@@ -1786,7 +2055,7 @@ class TradeWindow {
         //We need to push this here to
         this.allRows = this.allRows.concat(trades);
         trades.forEach(row => {
-            this.allRowsObj[row.origin[gin("00p")]] = row;
+            this.allRowsObj[row.current[gin("00p")]] = row;
             if (row.state.currentSorting > this.biggestSorting) {
                 this.biggestSorting = row.state.currentSorting;
             }
@@ -1797,7 +2066,38 @@ class TradeWindow {
             this.tables[tagObj.tag].pushChildren(correctTrades);
         });
     }
+    /**
+     * ATTENTION: This function removes the trades from view but it's not used to CLEAN the dom of the trade. The row is the one that invokes this function
+     * @param trades
+     */
     dropTrades(trades) {
+        trades.forEach(trade => {
+            //We check if the property still exist but don't care, because parent trades are going to take care of eliminating childr
+            if (this.allRowsObj.hasOwnProperty(trade.current[gin("00p")])) {
+                //Trade window cleaning
+                delete this.allRowsObj[trade.current[gin("00p")]];
+                this.allRows = this.allRows.filter(otherTrade => otherTrade.current[gin("00p")] != trade.current[gin("00p")]);
+                //If a main row is deleted, she will take care of all the yet existing subrows
+                if (trade.current[gin("29")] != "-1") {
+                    if (this.allRowsObj.hasOwnProperty(trade.current[gin("29")])) {
+                        const oldList = JSON.parse(this.allRowsObj[trade.current[gin("29")]].current[gin("30")]);
+                        const newList = oldList
+                            .filter(pId => pId != trade.current[gin("00p")]);
+                        this.allRowsObj[trade.current[gin("29")]].current[gin("30")] = JSON.stringify(newList);
+                    }
+                }
+            }
+        });
+        //TradeOBJ + table cleaning
+        this.refSortingTags.forEach((tagObj) => {
+            let correctTrades = this.filterTrades(tagObj, trades, true);
+            correctTrades.forEach(trade => {
+                tagObj.trades = tagObj.trades.filter(tagTrade => {
+                    return tagTrade.current[gin("00p")] != trade.current[gin("00p")];
+                });
+            });
+            this.tables[tagObj.tag].dropdownChildren(trades);
+        });
     }
     saveAll() {
         this.allRows.forEach(row => {
@@ -1944,7 +2244,6 @@ class Expander {
                             const selected = directive.variations[directive.selected];
                             //Not empty checking
                             selected.forEach(element => {
-                                //@ts-ignore
                                 selectedButtons.push(userPrefs.promptDefaults[directive.templateName][element]);
                             });
                         }
@@ -2023,11 +2322,9 @@ class Row2 {
                 if (isStructObj(this.structure[changedField])) {
                     const fieldStruct = this.structure[changedField];
                     //Use the predefined reset function for each field
-                    // @ts-ignore
                     fieldStruct.reset();
                     //We let it change the close value no matter what
                     //Drops field from array & sets all the states to the right "Position"
-                    // @ts-ignore
                     this.removeEditing(fieldStruct.name);
                 }
                 else {
@@ -2042,30 +2339,125 @@ class Row2 {
         };
         this.d_saveChanges = async () => {
             try {
-                // Put user field changes into the json_user_fields field
+                //dbObject acts as a save of the previous version
                 const dbObject = Object.assign({}, this.current);
+                // Put user field changes into the json_user_fields field
+                const jsUF = {};
+                Object.values(userPrefs.customFields).forEach(customField => {
+                    jsUF[customField.name] = this.current[customField.name];
+                });
+                dbObject[gin("juf")] = JSON.stringify(jsUF);
+                dbObject[gin("sif")] = JSON.stringify(Array.from(this.state.statsChangedList));
+                let tag = "New";
+                if (dbObject[gin("00i")] == dbObject[gin("00p")]) {
+                    tag = "Edit";
+                }
+                console.log(dbObject);
                 //DB
                 // PseudoId implementation: when a trade with a pseaudoid is saved, get him a real id. Then this id gets changed in the frontend both in the actual row and in all of the linearObjs in tables and tradewindows referring to it (including closed_ref and other)
                 // Closed_list: when a trade with a closed reference is saved, update the closed list of the parent trade in the frontend and backend. 
                 //! The closed list must be updated based on this trade refernece, because the main trade doesn't have any actual contents in the current closedList
                 //Async save changes
-                //Edit the pseudoid and other db fields (like the id)
-                //Refresh the origin object to mirror the (just modified) current one
-                this.updateCurrent("", 1);
-                //Cancelchanges will removeEditing, then run the cancelSaveToggler to fix any still active button
-                this.cancelChanges();
-                //Upward Save Propagation
-                if (this.current[gin("29")] != "-1") {
-                    if (this.state.table != "") {
-                        this.state.table.tradeWindowRef.allRowsObj[this.current[gin("29")]].d_saveChanges();
+                let link = debug ? "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager" : "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager";
+                const request = await fetch(link, {
+                    method: "POST",
+                    credentials: "same-origin",
+                    body: JSON.stringify({ tag, trade: dbObject }),
+                    headers: { "Content-Type": "application/json" },
+                });
+                const data = await request.json();
+                if (data.status == "success") {
+                    //Edit the pseudoid and other db fields (like the id)
+                    const updatedTrade = JSON.parse(data.message);
+                    for (const key of Object.keys(updatedTrade)) {
+                        if (!this.current.hasOwnProperty(key)) {
+                            throw ({ message: "One key coming from the db object was not defined in the current object", obj: JSON.parse(data.message) });
+                        }
                     }
-                    else {
-                        console.error("d_saveChanges$ Couldn't propagate changes upwards because this row has no table reference", this);
+                    this.current = Object.assign(Object.assign({}, this.current), updatedTrade);
+                    //* All of the below could be done "easily" in the backend too. But this method works fine for now
+                    //Upward Save Propagation
+                    if (this.current[gin("29")] != "-1") {
+                        if (this.state.table != "") {
+                            const mainTrade = this.state.table.tradeWindowRef
+                                .allRowsObj[this.current[gin("29")]];
+                            const mainTradeList = JSON.parse(mainTrade.current[gin("30")]);
+                            //We have updated the pseuodId of this trade to be exactly like the id
+                            //Now we update it here
+                            if (mainTradeList.indexOf(dbObject[gin("00p")]) != -1) {
+                                mainTradeList[mainTradeList.indexOf(dbObject[gin("00p")])] = this.current[gin("00p")];
+                                mainTradeList.push(this.current[gin("00p")]);
+                                mainTrade.current[gin("30")] = JSON.stringify(mainTradeList);
+                                mainTrade.d_saveChanges();
+                            }
+                            else {
+                                console.error("d_saveChanges$ pId of this childrenRow not found in the mainRow list");
+                            }
+                        }
+                        else {
+                            console.error("d_saveChanges$ Couldn't propagate changes upwards because this row has no table reference", this);
+                        }
                     }
+                    if (tag == "New") {
+                        //Fix childRows references
+                        if (this.current[gin("30")] != "[]") {
+                            const childList = JSON.parse(this.current[gin("30")]);
+                            childList.forEach(childRowPId => {
+                                if (this.state.table != "") {
+                                    if (this.state.table.tradeWindowRef.allRowsObj.hasOwnProperty(childRowPId)) {
+                                        const childTrade = this.state.table.tradeWindowRef.allRowsObj[childRowPId];
+                                        //The backend will handle the updating of the childFields.
+                                        //? Should the backend manage it? Should I also save the main trade? Or just maybe a part of it?
+                                        //? Should I integrate 29 and 30 into the state of each row and update them just when necessary? This would make it easier to manage as a data structure and do stuff with it rather than parsing. Also, could use a set.
+                                        childTrade.current[gin("29")] = this.current[gin("00p")];
+                                        childTrade.origin[gin("29")] = this.current[gin("00p")];
+                                    }
+                                    else {
+                                        console.error("d_saveChanges$ Couldn't propagate changes downwards because the tradeWindow doesn't have the childRow saved", this.state.table.tradeWindowRef.allRowsObj);
+                                    }
+                                }
+                                else {
+                                    console.error("d_saveChanges$ Couldn't propagate changes downwards because this mainRow has no table reference", this);
+                                }
+                            });
+                        }
+                        //Fix tables/tradeWindows byKeyObj (in the future, maps)
+                        if (this.state.table != "") {
+                            //Delete the reference in the object above
+                            const thisTableRow = Object.getOwnPropertyDescriptor(this.state.table.children, dbObject[gin("00p")]);
+                            if (thisTableRow != undefined) {
+                                Object.defineProperty(this.state.table.children, this.current[gin("00p")], thisTableRow);
+                                delete this.state.table.children[dbObject[gin("00p")]];
+                            }
+                            else {
+                                console.error("d_saveChanges$ Couldn't find said property in the table reference");
+                            }
+                            const thisTradeWindowRow = Object.getOwnPropertyDescriptor(this.state.table.tradeWindowRef.allRowsObj, dbObject[gin("00p")]);
+                            if (thisTradeWindowRow != undefined) {
+                                Object.defineProperty(this.state.table.tradeWindowRef.allRowsObj, this.current[gin("00p")], thisTradeWindowRow);
+                                delete this.state.table.tradeWindowRef.allRowsObj[dbObject[gin("00p")]];
+                            }
+                            else {
+                                console.error("d_saveChanges$ Couldn't find said property in the tradeWindow reference");
+                            }
+                        }
+                        else {
+                            console.error("d_saveChanges$ Trouble Propagating table/tradeWindow changes, missing table reference", this);
+                        }
+                    }
+                    //Refresh the origin object to mirror the (just modified) current one
+                    this.updateCurrent("", 1);
+                    //Cancelchanges will removeEditing, then run the cancelSaveToggler to fix any still active button
+                    this.cancelChanges();
+                }
+                else {
+                    newAlert({ status: "error", message: "Saving the trade was unsuccessfull" });
+                    console.error("d_saveChanges$ returned an API error:", data.message);
                 }
             }
             catch (error) {
-                //Let the user know something was wrong
+                newAlert({ status: "error", message: "Saving the trade was unsuccessfull" });
+                console.error("d_saveChanges$ catched general error:", error);
             }
         };
         /**
@@ -2074,7 +2466,7 @@ class Row2 {
          * @param {*} value The value to change it to
          * @param {string| -1} target If -1 makes the current object identical to the origin one, if 1 the opposite
          */
-        this.updateCurrent = (value = "", target) => {
+        this.updateCurrent = (value = "", target, fromStats = false) => {
             if (target == -1) {
                 this.current = Object.assign({}, this.origin);
             }
@@ -2083,15 +2475,21 @@ class Row2 {
             }
             else {
                 this.current[target] = value;
+                if (fromStats) {
+                    this.structure[target].target.agd("autoCalculated");
+                    this.state.statsChangedList.add(target);
+                }
+                else {
+                    this.state.statsChangedList.delete(target);
+                    this.structure[target].target.rgd("autoCalculated");
+                }
             }
             //DEBUG
             if (debug) {
                 // Prints the current objects for the "test" row clearly in another div
                 const curPrint = document.querySelector(".current");
                 const oriPrint = document.querySelector(".origin");
-                // @ts-ignore
                 curPrint.innerHTML = JSON.stringify(this.current);
-                // @ts-ignore
                 oriPrint.innerHTML = JSON.stringify(this.origin);
                 //DEBUG
             }
@@ -2131,10 +2529,10 @@ class Row2 {
                 button.innerHTML = value.text;
                 //Onclick edit the input field
                 button.onclick = function () {
-                    inputBox.value = value.attachedNumber.toLocaleString();
+                    inputBox.value = value.attachedNumber.toString();
                 };
                 //STYLEME Just be cautious with this order property
-                button.style.order = value.attachedNumber.toLocaleString();
+                button.style.order = value.attachedNumber.toString();
                 //Append it
                 inputButtonArray.append(button);
             }
@@ -2164,8 +2562,7 @@ class Row2 {
                 //We are adding an error on input because the UX feels better that way. The error comes up only if they submit something wrong.
             };
             enterButton.onclick = submitClose;
-            //Function below runs function above
-            window.addEventListener("keyup", function (event) {
+            function windowCloseKeyFunc(event) {
                 // Number 13 is the "Enter" key on the keyboard
                 if (event.key === "Enter") {
                     // Cancel the default action, if needed
@@ -2177,7 +2574,9 @@ class Row2 {
                     event.preventDefault();
                     closeBtn.click();
                 }
-            });
+            }
+            //Function below runs function above
+            window.addEventListener("keyup", windowCloseKeyFunc);
             // window.addEventListener("click", function (event) {
             // 	if (promptBox.dataset.visible == "true" && event.target != promptBox) {
             // 		closeBtn.click();
@@ -2218,32 +2617,80 @@ class Row2 {
                 closeBtn.remove();
                 errorBox.remove();
                 infoBox.remove();
+                window.removeEventListener("keyup", windowCloseKeyFunc);
             }
         };
-        this.deletePrompt = () => {
-            //TODO: Actually prompt
-            return true;
-        };
-        this.d_delete = (definitive = this.state.isLegend) => {
-            if (definitive == false) {
-                if (this.deletePrompt() == true) {
-                    //TODO - COMPLETE
-                    //Database stuff
-                    const fetch = true;
-                    //...
-                    //Drop from every list, then remove
-                    if (fetch) {
-                        //SAY THAT IF IT HAS CLOSED FIELDS ALSO THOSE WILL BE DELETED
-                        if (JSON.parse(this.current[gin("31")]))
-                            tradeWindow.allRowsObj; //Continue
+        /**
+         *
+         * @param consequential Whether it has to be deleted (from the db) without asking
+         * @param legend Whether to not care about the db
+         */
+        this.d_delete = async (consequential = false, legend = this.state.isLegend) => {
+            if (legend == false) {
+                try {
+                    if (consequential == true || await trueFalsePrompt("Are you sure you want to permanently delete this row?")) {
+                        if (this.current[gin("30")] != "[]") {
+                            if (consequential != true && !await trueFalsePrompt("Deleting this trade will also delete all of its closed children. Proceed?")) {
+                                return;
+                            }
+                        }
+                        const tag = "Delete";
+                        const dbObject = Object.assign({}, this.current);
+                        //! Remember to also delete the linked properties when deleting a row. So if this has a linked ref, go delete this from the set (reverse save)
+                        const request = await fetch("https://www.mymiwallet.com/Trade-Tracker/Trade-Manager", {
+                            method: "POST",
+                            credentials: "same-origin",
+                            body: JSON.stringify({ tag, trade: dbObject }),
+                            headers: { "Content-Type": "application/json" },
+                        });
+                        const data = await request.json();
+                        //Drop from every list, then remove
+                        //Debug if
+                        if (data.status == "success") {
+                            //SAY THAT IF IT HAS CLOSED FIELDS ALSO THOSE WILL BE DELETED
+                            if (this.current[gin("30")] != "[]") {
+                                //Delete all sub fields
+                                const theRows = [];
+                                const linkedRows = JSON.parse(this.current[gin("30")]);
+                                linkedRows.forEach(pId => {
+                                    if (this.state.table != "") {
+                                        if (this.state.table.tradeWindowRef.allRowsObj.hasOwnProperty(pId)) {
+                                            this.state.table.tradeWindowRef.allRowsObj[pId].d_delete(true);
+                                        }
+                                        else {
+                                            console.error("d_delete$ A linked id is not present in the trade window ref allRowsObj", this, this.state.table.tradeWindowRef.allRowsObj);
+                                            throw ({ message: "d_delete$ Couldn't delete one of the childRows", obj: this });
+                                        }
+                                    }
+                                    else {
+                                        console.error("d_delete$ The given main row has no table reference:", this);
+                                    }
+                                });
+                            }
+                            else {
+                                if (this.state.table != "") {
+                                    this.state.table.tradeWindowRef.dropTrades([this]);
+                                    this.cleanupDom();
+                                }
+                                else {
+                                    console.error("d_delete$ Trying to delete row that has no table ref:", this);
+                                }
+                            }
+                        }
+                        else {
+                            newAlert({ status: "error", message: "Deleting the trade was unsuccessfull" });
+                            console.error("d_saveChanges$ returned an API error:", data.message);
+                        }
                     }
-                    else {
-                        newAlert({ status: "error", message: "Deleting the trade was unsuccessfull" });
-                    }
+                }
+                catch (error) {
+                    newAlert({ status: "error", message: "Deleting the trade was unsuccessfull" });
+                    console.error("d_delete$ catched general error:", error);
                 }
             }
             else {
-                //Wipe it out of existence
+                this.cleanupDom(true);
+                //Apparently the garbage collector takes care here *shrug*
             }
         };
         /**
@@ -2378,8 +2825,8 @@ class Row2 {
                                 //Add this property to the editing tab
                                 this.addEditingOnStdInput({ target: { name: field.name } });
                                 newPartialCloseRow.addEditingOnStdInput({ target: { name: field.name } });
-                                this.changeValue(field.name, this.structure[field.name].target);
-                                newPartialCloseRow.changeValue(field.name, newPartialCloseRow.structure[field.name].target);
+                                this.changeValue(field.name);
+                                newPartialCloseRow.changeValue(field.name);
                                 //Change the field visually
                             }
                         }
@@ -2391,7 +2838,7 @@ class Row2 {
                                     (100 - parseFloat(this.current[field.name])) * percentage / 100;
                                 //Add this property to the editing tab
                                 this.addEditingOnStdInput({ target: { name: field.name } });
-                                this.changeValue(field.name, this.structure[field.name].target);
+                                this.changeValue(field.name);
                             }
                         }
                     });
@@ -2425,12 +2872,18 @@ class Row2 {
             parent: "",
             //Keep track of the trade conatiner dom object
             container: "",
+            dropDown: {
+                target: "",
+                expanded: false,
+            },
             //Keep track of the row itself
             mainRow: "",
             editing: false,
             //For o(1) access of how many elements are being "edited"
             editingList: [],
-            manuallyChangedList: this.c_generateManuallyChangedList(this.origin),
+            statsChangedList: this.c_statsManipulatedInterpolate(this.origin),
+            childRows: new Set([]),
+            parentRow: "",
             //Used for raising the zindex of a row. The raiser is the element which is currently raising that specific row.
             //Deprecated after change in expander structure
             raiser: "",
@@ -2452,21 +2905,14 @@ class Row2 {
         }
         return originObject;
     }
-    c_generateManuallyChangedList(comparingObj, basicObj = new TradeObj({})) {
-        const result = [];
-        for (const [key, value] of Object.entries(comparingObj)) {
-            if (value != basicObj[key]) {
-                if (result.indexOf(key) == -1) {
-                    result.push(key);
-                }
-            }
-            else {
-                if (result.indexOf(key) != -1) {
-                    result.splice(result.indexOf(key), 1);
-                }
-            }
+    c_statsManipulatedInterpolate(originObject) {
+        if (originObject.hasOwnProperty(gin("sif"))) {
+            return new Set(JSON.parse(originObject[gin("sif")]));
         }
-        return result;
+        else {
+            console.error("c_statsManipulatedInterpolate$ Given object was missing the sif property", originObject);
+            return new Set([]);
+        }
     }
     /**
      *  To run when assigned to a table. Changes this.state.table and this.parent
@@ -2502,13 +2948,91 @@ class Row2 {
     }
     /**
      * * Function that creates a new container and assigns the object the container property
+     *
+     * Also adds the dropdown button to toggle visibility of the closed rows
      * @returns {domElement} Returns the container object
      */
     createContainer() {
         const container = document.createElement("div");
         this.state.container = container;
         container.agd("tradeContainer");
+        this.refreshDropdown();
         return container;
+    }
+    dropdownChildren(expand = !this.state.dropDown.expanded) {
+        const childList = JSON.parse(this.current[gin("30")]);
+        const theTable = this.state.table;
+        if (theTable != "") {
+            childList.forEach(pId => {
+                if (theTable.tradeWindowRef.allRowsObj.hasOwnProperty(pId)) {
+                    const mainRow = theTable.tradeWindowRef.allRowsObj[pId].state.mainRow;
+                    if (mainRow != "") {
+                        changeVisible(mainRow, expand);
+                        this.state.dropDown.expanded = expand;
+                        if (this.state.dropDown.target != "")
+                            this.state.dropDown.target.innerHTML = this.state.dropDown.expanded ? "^" : "˅";
+                    }
+                }
+            });
+        }
+        else {
+            console.error("dropdownChildren$ This row's table is not yet defined.", this);
+        }
+    }
+    /**
+     * Creates the dropdown and hides child rows in case they must not be displayed
+     * @param secondCall
+     * @returns
+     */
+    refreshDropdown(secondCall = false) {
+        if (this.state.container != "") {
+            if (this.state.dropDown.target != "" || this.current[gin("29")] != "-1") {
+                //Backwards check
+                //If this row has children then it can't have a reference, hence the target must be an htmlelement
+                if (this.current[gin("30")] != "[]") {
+                    changeVisible(this.state.dropDown.target, true);
+                    //DEFAULT EXPANSION
+                    this.dropdownChildren(false);
+                }
+                //Forward check
+                if (this.current[gin("29")] != "-1") {
+                    console.log("Going into the partial row: ", this.structure.cancel);
+                    const theTable = this.state.table;
+                    if (theTable != "") {
+                        if (theTable.tradeWindowRef.allRowsObj.hasOwnProperty(this.current[gin("29")])) {
+                            console.log("- Calling Mom");
+                            theTable.tradeWindowRef.allRowsObj[this.current[gin("29")]].refreshDropdown(true);
+                            console.log("- Called Mom");
+                            if (this.state.mainRow != "") {
+                                changeVisible(this.state.mainRow, theTable.tradeWindowRef.allRowsObj[this.current[gin("29")]].state.dropDown.expanded);
+                            }
+                        }
+                        //Bad/Old implementation that requires even more checking.
+                        //changeVisible(theTable.tradeWindowRef.allRowsObj[this.current[gin("29")]].state.dropDown.target, true)
+                    }
+                }
+            }
+            else {
+                if (secondCall) {
+                    console.error("refreshDropdown$ Second call failed: the dropdown has not been assigned correctly");
+                    return;
+                }
+                console.log("Creating a new dropdown!!!");
+                const dropdown = document.createElement("button");
+                dropdown.innerHTML = this.state.dropDown.expanded ? "^" : "˅";
+                this.state.dropDown.target = dropdown;
+                console.log("Created the dropdown", this.state.dropDown.target);
+                dropdown.agd("containerDropdown");
+                this.state.container.append(dropdown);
+                changeVisible(dropdown, false);
+                //The dropdown is disabled on spawn (see the Row2 constructor)
+                dropdown.addEventListener("click", (e) => { this.dropdownChildren(); });
+                this.refreshDropdown(true);
+            }
+        }
+        else {
+            console.error("refreshDropdown$ Trying to refresh dropdown without a defined container");
+        }
     }
     /**
      * Function that replaces the given field with a cloned one. Useful for removing event listeners
@@ -2634,12 +3158,10 @@ class Row2 {
             : { value: "", has: false };
     }
     //Value and current object are never not linked. So to update the value of a fieald you must update the current object first
-    changeValue(property, target, origin = "current") {
+    changeValue(property, origin = "current") {
         const availableFields = availableFieldsGen();
-        const propertyFieldInstructions = Object.values(availableFields).filter(
-        //The lenght of this should be 1
-        (field) => field.name == property);
-        switch (propertyFieldInstructions[0].type) {
+        const propertyFieldInstructions = availableFields[this.structure[property].dirTag];
+        switch (propertyFieldInstructions.type) {
             //Closed will
             case "closed":
                 //Sort of test to generalise the "close"/"open" change, but only currently used in the reset function
@@ -2658,9 +3180,30 @@ class Row2 {
                 }
                 break;
             default:
-                target.value = this.getValue(property, origin).value;
-                //					field.value = this.getValue(field.name, "origin").value;
+                this.structure[property].target.value = this.getValue(property, origin).value;
                 break;
+        }
+    }
+    /**
+     * Brutal cleanup of the given row.
+     */
+    cleanupDom(cleanContainer = false) {
+        this.structure = {};
+        if (this.state.mainRow != "") {
+            this.state.mainRow.remove();
+            this.state.mainRow = "";
+        }
+        else {
+            console.error("cleanumDom$ mainRow of given row doesn't exist");
+        }
+        if (cleanContainer) {
+            if (this.state.container != "") {
+                this.state.container.remove();
+                this.state.container = "";
+            }
+            else {
+                console.error("cleanumDom$ container of given row doesn't exist");
+            }
         }
     }
     /**
@@ -2679,6 +3222,7 @@ class Row2 {
          */
         const updateOnStdInput = (event) => {
             this.updateCurrent(event.target.value, event.target.name);
+            this.formulaRun();
         };
         //Pass the two functions from the parent object
         const addEditingOnStdInput = this.addEditingOnStdInput;
@@ -2688,13 +3232,13 @@ class Row2 {
          * @param {domElemeent} field
          * @param {{name: string, render: boolean,default:any,objLinked: [] | string[],"//And more fields which can be found above the defaultfields delcaration"}} directive
          */
-        const createStructure = (field, directive) => {
+        const createStructure = (field, ginDir) => {
             this.structure[field.name] = {
                 target: field,
                 editing: false,
                 name: field.name,
                 //Used for understanding whether it's a button, an user generated element or a normal input
-                dirTag: Object.keys(availableFields).find((key) => availableFields[key] === directive),
+                dirTag: ginDir,
                 hasCancelListener: false,
                 //Attributes which this edits as well in the current object
                 objLinked: [],
@@ -2702,10 +3246,11 @@ class Row2 {
                  * Function that resets the field to its origin value. Changes based on directive type
                  */
                 reset: () => {
-                    this.changeValue(field.name, field, "origin");
+                    this.changeValue(field.name, "origin");
                 },
             };
             //If the field is linked to others, save it here
+            const directive = availableFieldsGen()[ginDir];
             if (directive.hasOwnProperty("objLinked") && directive.objLinked != undefined &&
                 directive.objLinked.length != 0) {
                 //If there are linked properties, push them in here so that they can be "edited" and checked accordingly
@@ -2741,6 +3286,7 @@ class Row2 {
                     this.updateCurrent(matchedInput.value, targetValue);
                     this.updateCurrent(matchedInput.id, `${targetValue}_id`);
                     this.updateCurrent(matchedInput.tag, `${targetValue}_tag`);
+                    this.formulaRun();
                 };
                 /**
                  * - For list inputs
@@ -2790,7 +3336,6 @@ class Row2 {
                 }
                 targetInputHolder.memory.field.addEventListener("input", function (e) {
                     //RUNTIME
-                    //@ts-ignore
                     if (e.target != null) {
                         const input = targetInputHolder.memory.field.value;
                         //UPDATE
@@ -2821,7 +3366,6 @@ class Row2 {
                     else {
                         console.error("Target is null");
                     }
-                    //? To be tested: "clickaway method" on the entire holder
                 });
                 targetInputHolder.memory.field.addEventListener("newInput", ((e) => {
                     listingExpander.hide();
@@ -2902,8 +3446,8 @@ class Row2 {
                         field.discriminator = "SELECT-FIELD";
                         //STYLEME
                         if (dirProperties.options != undefined) {
-                            //@ts-ignore
-                            dirProperties.options[this.current[gin(27)]].forEach((option) => {
+                            const actualOptions = dirProperties.options[this.current[gin("27")]];
+                            actualOptions.forEach((option) => {
                                 const optionSelect = document.createElement("option");
                                 optionSelect.value = option.value;
                                 optionSelect.innerText = option.text;
@@ -2956,7 +3500,7 @@ class Row2 {
                         break;
                     case "delete":
                         field.agd("deleteBtn");
-                        field.onclick = this.deletePrompt;
+                        field.onclick = () => this.d_delete();
                         break;
                 }
                 fieldHolder.memory.field = field;
@@ -2975,7 +3519,7 @@ class Row2 {
         field.setAttribute("name", dirProperties.name);
         field.classList.add(dirProperties.name);
         //Here we make it easy to access the fields for future changes
-        createStructure(field, dirProperties);
+        createStructure(field, directive);
         //Easier access when referencing things in the aftermath (2/2)
         //Re-setting the memory.field here to the field itself, for places where I don't need to do it before this line, like listers
         fieldHolder.memory.field = field;
@@ -3022,8 +3566,7 @@ class Row2 {
                     console.error("Table has been assigned, but its container is empty (renderRow) (closed-row)", this, this.state.table.tradeWindowRef.allRowsObj[this.origin[gin("29")]].state.container);
                 }
                 else {
-                    //@ts-ignore
-                    container.append(mainRow);
+                    this.state.container.append(mainRow);
                     //Addin the row to the state of the trade for easier access in the future
                 }
             }
@@ -3134,7 +3677,135 @@ class Row2 {
         if (!this.state.isLegend) {
             //Run the cancel toggler thingy, to disable  (or enable, up to future implementations) the cancel button
             this.cancelSaveToggler();
+            this.formulaRun();
+            this.refreshDropdown();
         }
+    }
+    /**
+     * Runs field-specific compute functions
+     *
+     * NB: Each one of these functions acts solely on the field itself. It can pull data from others but can't update them.
+     */
+    formulaRun() {
+        const currentLayout = this.getLayout();
+        let formulaSet = new Set();
+        currentLayout.forEach(block => {
+            formulaSet = new Set([...formulaSet, ...block.activeFormulas]);
+        });
+        Array.from(formulaSet).forEach(formulaName => {
+            //Things named with op are referred to the operator sets
+            const formula = userPrefs.formulas.fields[formulaName];
+            //Overwrite checker here
+            switch (formula.overwrite) {
+                case 0:
+                    if (this.current[gin(formula.targets)] != formula.overwriteCond && !this.state.statsChangedList.has(gin(formula.targets))) {
+                        return;
+                    }
+                //No break to continue to the next case
+                case 1:
+                    const opSubTopicLenght = formula.operator.subTopicOperation.length;
+                    const opMainStreaklLenght = formula.operator.mainOperationStreak.length;
+                    let funcValid = true;
+                    let numResult = 0;
+                    let strResult = "";
+                    //The topic position is also used to index the current operation
+                    for (let topicPosition = 0; topicPosition < formula.topics.length; topicPosition++) {
+                        const topic = formula.topics[topicPosition];
+                        let topicValid = true;
+                        if (formula.underlyingType == "number") {
+                            strResult = false;
+                            let topicResult = 0;
+                            const opTopicStreak = formula.operator.subTopicOperation[topicPosition % opSubTopicLenght];
+                            const opTopicStreakLenght = opTopicStreak.length;
+                            //After the first cycle use this array instead.
+                            const repeatableOperations = [...opTopicStreak]
+                                .filter(operator => {
+                                //Filter out single use elements
+                                return !Array.isArray(operator);
+                            });
+                            //ITERATE THROUGH THE ELEMENTS
+                            for (let subTopicIndex = 0; subTopicIndex < topic.directives.length; subTopicIndex++) {
+                                const topicDirective = topic.directives[subTopicIndex];
+                                //Decide which streak to use depending on whether we are positioned in the first cycle or cycles ahead
+                                let currentOperator;
+                                if (subTopicIndex >= opTopicStreakLenght) {
+                                    //Second operation cycle
+                                    //Remove the lenght of the operators which are not going to be repeated and index on base lenght of these operators.
+                                    currentOperator = repeatableOperations[(subTopicIndex - opTopicStreakLenght) % repeatableOperations.length];
+                                }
+                                else {
+                                    //First operation cycle
+                                    //Single directive check.
+                                    //Had to infer types because typescript is ideotic
+                                    currentOperator = Array.isArray(opTopicStreak[subTopicIndex]) ? opTopicStreak[subTopicIndex][0] : opTopicStreak[subTopicIndex];
+                                }
+                                const uValidValue = this.current[gin(topicDirective.dp)];
+                                const valid = trueConditionCheck(uValidValue, topicDirective.trueCondition);
+                                //Ignore?
+                                if (currentOperator == "i") {
+                                    if (!valid) {
+                                        topicValid = false;
+                                        //Close cycle
+                                        subTopicIndex = topic.directives.length;
+                                    }
+                                }
+                                else { //Now the operator is one to make work on the actual result
+                                    if (valid) {
+                                        topicResult = applyNumOperator(topicResult, pf(uValidValue), currentOperator);
+                                    }
+                                    else if (!valid && topicDirective.defaults != -1) {
+                                        topicResult = applyNumOperator(topicResult, pf(topicDirective.defaults), currentOperator);
+                                    }
+                                    else if (!valid && topicDirective.defaults == -1) {
+                                        topicValid = false;
+                                        //Close cycle
+                                        subTopicIndex = topic.directives.length;
+                                    }
+                                    else {
+                                        console.error("formulaRun$ During directive check, none of the truthCondition circumstances was catched", topicDirective);
+                                        topicValid = false;
+                                        subTopicIndex = topic.directives.length;
+                                    }
+                                }
+                            }
+                            if (topicValid == true) {
+                                if (topicPosition == 0) {
+                                    numResult = topicResult;
+                                }
+                                else {
+                                    const currentOperation = formula.operator.mainOperationStreak[(topicPosition - 1) % opMainStreaklLenght];
+                                    numResult = applyNumOperator(numResult, topicResult, currentOperation);
+                                }
+                            }
+                            else if (topic.defaults != -1 && topicValid == false) {
+                                if (topicPosition == 0) {
+                                    numResult = pf(topic.defaults);
+                                }
+                                else {
+                                    const currentOperation = formula.operator.mainOperationStreak[(topicPosition - 1) % opMainStreaklLenght];
+                                    numResult = applyNumOperator(numResult, pf(topic.defaults), currentOperation);
+                                }
+                            }
+                            else if (topic.defaults == -1 && topicValid == false) {
+                                //Complete the whole cycle and stop running for loops
+                                funcValid = false;
+                                topicPosition = formula.topics.length;
+                            }
+                        }
+                        else {
+                        }
+                    }
+                    if (funcValid) {
+                        //Overwrite property checked before calculation
+                        this.updateCurrent(strResult == false ? numResult.toString() : strResult, gin(formula.targets), true);
+                        this.changeValue(gin(formula.targets));
+                        this.addEditingOnStdInput({ target: this.structure[gin(formula.targets)].target });
+                    }
+                    else {
+                        return; //Skip this cycle and move to the next one. We are at the end but this signifies better
+                    }
+            }
+        });
     }
 }
 ////////////
@@ -3145,7 +3816,7 @@ function createNewRow(startingObj = new TradeObj({}), options = { separator: "n"
         const tradeObj = new TradeObj(startingObj);
         if (tradeWindow.allRows.length != 0 && !startingObj.hasOwnProperty(gin("00i"))) {
             //! Needs map fixing because this is highly stupid
-            let copiedId = (tradeWindow.biggestSorting + 1).toLocaleString();
+            let copiedId = (tradeWindow.biggestSorting + 1).toString();
             let index = 1;
             let newPseudoId = `${copiedId}${options.separator}${index}`;
             while (tradeWindow.allRowsObj.hasOwnProperty(newPseudoId)) {
@@ -3157,7 +3828,7 @@ function createNewRow(startingObj = new TradeObj({}), options = { separator: "n"
         }
         //! Needs map fixing because this is highly stupid
         if (tradeObj[gin("s")] == "0" && tradeObj[gin("00p")] != tradeObj[gin("00i")]) {
-            tradeObj.saved_sorting = (tradeWindow.biggestSorting + 1).toLocaleString();
+            tradeObj.saved_sorting = (tradeWindow.biggestSorting + 1).toString();
         }
         for (const [key, value] of Object.entries(options.forcedProperties)) {
             tradeObj[key] = value;
@@ -3308,7 +3979,7 @@ if (mainEditPrefsWindow != null) {
     });
 }
 else {
-    console.error("COuldn't find the user preferences menu box");
+    console.error("Couldn't find the user preferences menu box");
 }
 //Notifications
 function newAlert(message) {
@@ -3328,15 +3999,4 @@ function newAlert(message) {
         console.error("Alert box is undefined: Appending new message is impossible");
     }
 }
-///* Styling blocks
-// Main Rows
-document.querySelectorAll(".trade-container .main-row").forEach(mainRow => {
-    //Add classes
-});
-//Closed Rows
-document.querySelectorAll(".trade-container .closed-row").forEach(mainRow => {
-    //Add classes
-});
-//Fields
-//Field Holders
 //# sourceMappingURL=script.js.map

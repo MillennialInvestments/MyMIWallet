@@ -68,8 +68,7 @@ if ($registerType 	=== 'Investor') {
 				<div class="card">
 					<div class="card-body py-5 px-0">
                         <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-12 col-sm-12 col-md-7">
+                            <div class="col-12 col-sm-9 pr-5">
                                 <h1 class="mbr-section-title mbr-bold mb-1 pb-3 mbr-fonts-style card-title display-7"><?php echo $title; ?></h1>	
                                 <?php echo form_open('Account-Information/' . $cuID, array('class' => "form-horizontal", 'autocomplete' => 'off')); ?>
                                     <fieldset>
@@ -91,8 +90,7 @@ if ($registerType 	=== 'Investor') {
                                     </fieldset>
                                 <?php echo form_close(); ?>	    
                             </div>
-                            <div class="col-md-1 border-right px-5"></div>		
-                            <div class="col-12 col-sm-12 col-md-3 pl-5">                    
+                            <div class="d-none d-sm-block col-sm-3 border-left pl-5">                    
                                 <h2 class="mbr-section-title mb-5 pb-3 mbr-fonts-style card-title display-7">My Progress</h2>
                                 <div class="stepper d-flex flex-column mt-5 ml-2">
                                     <?php

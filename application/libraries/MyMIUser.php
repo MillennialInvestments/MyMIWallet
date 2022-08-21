@@ -27,7 +27,7 @@ class MyMIUser
         $userInfo                           = $this->get_user_information($cuID);
         $cuEmail                            = $userInfo['cuEmail'];
         $userExchangeInfo					= $this->get_user_exchange_info($cuID);
-        $userDefaultWallet                  = $this->get_user_default_wallet($cuID);
+        $userDefaultWallet                  = $this->get_user_default_wallet_for_existing($cuID);
         $userAssetSummary                   = $this->get_user_asset_summary($cuID);
         $userSocialInfo                     = $this->get_user_social_info($cuEmail);
         $userAccount	                    = array(
@@ -45,6 +45,7 @@ class MyMIUser
             'cuNameSuffix'                	=> $userInfo['cuNameSuffix'],
             'cuKYC'                			=> $userInfo['cuKYC'],
             'cuKYCVerified'                 => $userInfo['cuKYCVerified'],
+            // 'cuDOB'                 		=> $userInfo['cuDOB'],
             'cuPhone'                 		=> $userInfo['cuPhone'],
             'cuCompany'                		=> $userInfo['cuCompany'],
             'cuAddress'                 	=> $userInfo['cuAddress'],
@@ -109,7 +110,6 @@ class MyMIUser
         return $userAccount;
     }
         
-        
     public function get_user_information($cuID)
     {
         $getUserData                        = $this->CI->investor_model->get_user_data($cuID);
@@ -126,6 +126,7 @@ class MyMIUser
             $cuReferrer  					= $userData['referrer'];
             $cuKYC							= $userData['kyc'];
             $cuKYCVerified					= $userData['kyc_verified'];
+            // $cuDOB						    = $userData['dob'];
             $cuPhone						= $userData['phone'];
             $cuCompany						= $userData['organization'];
             $cuAddress						= $userData['address'];
@@ -143,9 +144,10 @@ class MyMIUser
         };
         $getDefaultWallet                   = $this->CI->investor_model->get_user_default_wallet_id($cuID);
         foreach ($getDefaultWallet->result_array() as $defaultWallet) {
-            $walletID                     = $defaultWallet['id'];
+            $walletID                       = $defaultWallet['id'];
         }
         $userInfo                           = array(
+            'cuID'                          => $cuID,
             'cuRole'                        => $cuRole,
             'cuEmail'                       => $cuEmail,
             'cuUsername'                    => $cuUsername,
@@ -158,6 +160,7 @@ class MyMIUser
             'cuReferrer'                    => $cuReferrer,
             'cuKYC'                			=> $cuKYC,
             'cuKYCVerified'                	=> $cuKYCVerified,
+            // 'cuDOB'                 		=> $cuDOB,
             'cuPhone'                 		=> $cuPhone,
             'cuCompany'                 	=> $cuCompany,
             'cuAddress'                 	=> $cuAddress,
@@ -177,45 +180,9 @@ class MyMIUser
         return $userInfo;
     }
 
-    public function get_user_social_info($cuEmail) 
-    {
-        $getSocialInfo						= $this->CI->investor_model->get_user_social_media($cuEmail);
-        foreach($getSocialInfo->result_array() as $socialInfo) {
-            if ($socialInfo['coverart'] === 'N/A') {
-                $userData['coverart'] 		= 'Blue-Stock-Charts5.jpg';
-            } else {
-                $cuCoverart			        = $socialInfo['coverart'];
-            }
-            $cuProfilePic                   = $socialInfo['profile_pic'];
-            $cuFollowers                    = $socialInfo['followers'];
-            $cuViews                        = $socialInfo['views'];
-            $cuWebsite                      = $socialInfo['website'];
-            $cuFacebook                     = $socialInfo['facebook'];
-            $cuTwitter                      = $socialInfo['twitter'];
-            $cuStocktwits                   = $socialInfo['stocktwits'];
-            $cuYoutube                      = $socialInfo['youtube'];
-            $cuDiscord                      = $socialInfo['discord'];
-        }
-        
-        $userSocialInfo                     = array(
-            'cuCoverart'                    => $cuCoverart,
-            'cuProfilePic'                  => $cuProfilePic,
-            'cuFollowers'                   => $cuFollowers,
-            'cuViews'                       => $cuViews,
-            'cuWebsite'                     => $cuWebsite,
-            'cuFacebook'                    => $cuFacebook,
-            'cuTwitter'                     => $cuTwitter,
-            'cuStocktwits'                  => $cuStocktwits,
-            'cuYoutube'                     => $cuYoutube,
-            'cuDiscord'                     => $cuDiscord,
-        );
-        
-        return $userSocialInfo;         
-    }
-    
     public function get_user_default_wallet($cuID)
     {
-        $getUserData                        = $this->get_user_information($cuID);
+        $userInfo                           = $this->get_user_information($cuID); 
         $userDefaultWalletInfo              = $this->CI->mymiwallet->get_default_wallet_info($cuID);
         $walletID	                        = $userDefaultWalletInfo['walletID'];
         $walletTitle                        = $userDefaultWalletInfo['walletTitle'];
@@ -236,13 +203,13 @@ class MyMIUser
         $walletWithdrawAmount               = $userDefaultWalletInfo['walletWithdrawAmount'];
         $MyMICoinValue                      = $userDefaultWalletInfo['MyMICoinValue'];
         $MyMICCurrentValue                  = $userDefaultWalletInfo['MyMICCurrentValue'];
-        $MyMICCoinSum						= $userDefaultWalletInfo['MyMICCoinSum'];
-        $coinsExchanged						= $userDefaultWalletInfo['coinsExchanged'];
-        $MyMIGoldValue						= $userDefaultWalletInfo['MyMIGoldValue'];
-        $MyMIGCurrentValue					= $userDefaultWalletInfo['MyMIGCurrentValue'];
-        $MyMIGCoinSum						= $userDefaultWalletInfo['MyMIGCoinSum'];
-        $getWallets							= $userDefaultWalletInfo['getWallets'];
-        $getWalletCount 					= $this->CI->wallet_model->get_nondefault_wallet_count($cuID);
+        $MyMICCoinSum					    = $userDefaultWalletInfo['MyMICCoinSum'];
+        $coinsExchanged					    = $userDefaultWalletInfo['coinsExchanged'];
+        $MyMIGoldValue					    = $userDefaultWalletInfo['MyMIGoldValue'];
+        $MyMIGCurrentValue				    = $userDefaultWalletInfo['MyMIGCurrentValue'];
+        $MyMIGCoinSum					    = $userDefaultWalletInfo['MyMIGCoinSum'];
+        $getWallets						    = $userDefaultWalletInfo['getWallets'];
+        $getWalletCount 				    = $this->CI->wallet_model->get_nondefault_wallet_count($cuID);
         $getWalletCount                     = $this->CI->wallet_model->get_wallet_count($cuID);
         if ($MyMICCoinSum > 0) {
             $cuTotalWalletCount             = $getWalletCount + 2;
@@ -255,55 +222,273 @@ class MyMIUser
         }
         
         // User Last Activity
-        $userLastActivity					= $this->CI->mymiwallet->get_last_activity($cuID, $walletID);
-        // $lastTradeActivity				 	= $userLastActivity['$lastTradeActivity'];
-        // $depositActivity				 	= $userLastActivity['$depositActivity'];
-        // $withdrawActivity				 	= $userLastActivity['$withdrawActivity'];
-        $lastTradeActivity				 	= 'N/A';
-        $depositActivity				 	= 'N/A';
-        $withdrawActivity				 	= 'N/A';
+        $userLastActivity				    = $this->CI->mymiwallet->get_last_activity($cuID, $walletID);
+        // $lastTradeActivity				 = $userLastActivity['$lastTradeActivity'];
+        // $depositActivity				    = $userLastActivity['$depositActivity'];
+        // $withdrawActivity				 = $userLastActivity['$withdrawActivity'];
+        $lastTradeActivity				    = 'N/A';
+        $depositActivity				    = 'N/A';
+        $withdrawActivity				    = 'N/A';
         
         // Set Array Definitions
-        $userDefaultData					= array(
+        $userDefaultData				    = array(
             'cuID'                          => $cuID,
-            'cuEmail'                       => $getUserData['cuEmail'],
-            'cuUsername'					=> $getUserData['cuUsername'],
-            'cuDisplayName'					=> $getUserData['cuDisplayName'],
-            'cuUserType'					=> $getUserData['cuUserType'],
-            'cuWalletID'					=> $getUserData['cuWalletID'],
-            'walletID'                      => $getUserData['walletID'],
-            'getWallets'					=> $getWallets,
-            'cuWalletCount'					=> $getWalletCount,
+            'cuEmail'                       => $userInfo['cuEmail'],
+            'cuUsername'				    => $userInfo['cuUsername'],
+            'cuDisplayName'				    => $userInfo['cuDisplayName'],
+            'cuUserType'				    => $userInfo['cuUserType'],
+            'cuWalletID'				    => $userInfo['cuWalletID'],
+            'walletID'                      => $userInfo['walletID'],
+            'getWallets'				    => $getWallets,
+            'cuWalletCount'				    => $getWalletCount,
             'cuTotalWalletCount'            => $cuTotalWalletCount,
-            'lastTradeActivity'				=> $lastTradeActivity,
-            'depositActivity'				=> $depositActivity,
-            'withdrawActivity'				=> $withdrawActivity,
+            'lastTradeActivity'			    => $lastTradeActivity,
+            'depositActivity'			    => $depositActivity,
+            'withdrawActivity'			    => $withdrawActivity,
             'walletID'                      => $userDefaultWalletInfo['walletID'],
-            'walletTitle'					=> $walletTitle,
-            'walletBroker'					=> $walletBroker,
-            'walletNickname'				=> $walletNickname,
-            'walletDefault'					=> $walletDefault,
-            'walletExchange'				=> $walletExchange,
-            'walletMarketPair'				=> $walletMarketPair,
-            'walletMarket'					=> $walletMarket,
-            'walletFunds'					=> $walletFunds,
+            'walletTitle'				    => $walletTitle,
+            'walletBroker'				    => $walletBroker,
+            'walletNickname'			    => $walletNickname,
+            'walletDefault'				    => $walletDefault,
+            'walletExchange'			    => $walletExchange,
+            'walletMarketPair'			    => $walletMarketPair,
+            'walletMarket'				    => $walletMarket,
+            'walletFunds'				    => $walletFunds,
             'walletInitialAmount'           => $walletInitialAmount,
-            'walletAmount'					=> $walletAmount,
+            'walletAmount'				    => $walletAmount,
             'walletPercentChange'           => $walletPercentChange,
-            'walletGains'					=> $walletGains,
-            'depositAmount'					=> $depositAmount,
-            'withdrawAmount'				=> $withdrawAmount,
+            'walletGains'				    => $walletGains,
+            'depositAmount'				    => $depositAmount,
+            'withdrawAmount'			    => $withdrawAmount,
             'walletDepositAmount'           => $walletDepositAmount,
             'walletWithdrawAmount'          => $walletWithdrawAmount,
-            'MyMICoinValue'					=> $MyMICoinValue,
-            'MyMICCurrentValue'				=> $MyMICCurrentValue,
-            'MyMICCoinSum'					=> $MyMICCoinSum,
-            'coinsExchanged'				=> $coinsExchanged,
-            'MyMIGoldValue'					=> $MyMIGoldValue,
-            'MyMIGCurrentValue'				=> $MyMIGCurrentValue,
-            'MyMIGCoinSum'					=> $MyMIGCoinSum,
+            'MyMICoinValue'			        => $MyMICoinValue,
+            'MyMICCurrentValue'		        => $MyMICCurrentValue,
+            'MyMICCoinSum'			        => $MyMICCoinSum,
+            'coinsExchanged'		        => $coinsExchanged,
+            'MyMIGoldValue'				    => $MyMIGoldValue,
+            'MyMIGCurrentValue'			    => $MyMIGCurrentValue,
+            'MyMIGCoinSum'				    => $MyMIGCoinSum,
         );
         return $userDefaultData;
+    }
+    
+    public function get_user_default_wallet_for_existing($cuID)
+    {
+        $userInfo                           = $this->get_user_information($cuID); 
+        $userDefaultWalletInfo              = $this->CI->mymiwallet->get_default_wallet_info($cuID);
+        if (empty($userDefaultWalletInfo)) {
+            $userInfo                       = $this->get_user_information($cuID);
+            $active				            = 'Yes';
+            $beta                           = 'Yes'; 
+            $default_wallet		            = 'Yes';
+            $exchange_wallet	            = 'Yes';
+            $market_pair		            = 'USD';
+            $market				            = 'MYMI';
+            $cuID                           = $userInfo['cuID'];
+            $username                       = $userInfo['cuUsername'];
+            $email                          = $userInfo['cuEmail']; 
+            $broker				            = 'Default';
+            $nickname			            = 'MyMI Funds';
+            $wallet_type		            = 'Fiat';
+            $amount				            = '0.00';
+
+            $newWalletData                  = array(
+                'active'                    => $active,
+                'beta'                      => $beta,
+                'default_wallet'            => $default_wallet,
+                'exchange_wallet'           => $exchange_wallet,
+                'market_pair'               => $market_pair,
+                'market'                    => $market,
+                'user_id'                   => $cuID,
+                'username'                  => $username,
+                'user_email'                => $email,
+                'broker'                    => $broker,
+                'nickname'                  => $nickname,
+                'wallet_type'               => $wallet_type,
+                'amount'                    => $amount,
+            );          
+
+            $this->CI->db->insert('bf_users_wallet', $newWalletData); 
+
+            $userDefaultWalletInfo          = $this->CI->mymiwallet->get_default_wallet_info($cuID);
+            $walletID	                    = $userDefaultWalletInfo['walletID'];
+            $walletTitle                    = $userDefaultWalletInfo['walletTitle'];
+            $walletBroker                   = $userDefaultWalletInfo['walletBroker'];
+            $walletNickname                 = $userDefaultWalletInfo['walletNickname'];
+            $walletDefault                  = $userDefaultWalletInfo['walletDefault'];
+            $walletExchange                 = $userDefaultWalletInfo['walletExchange'];
+            $walletMarketPair               = $userDefaultWalletInfo['walletMarketPair'];
+            $walletMarket                   = $userDefaultWalletInfo['walletMarket'];
+            $walletFunds                    = $userDefaultWalletInfo['walletFunds'];
+            $walletInitialAmount            = $userDefaultWalletInfo['walletInitialAmount'];
+            $walletAmount                   = $userDefaultWalletInfo['walletAmount'];
+            $walletPercentChange            = $userDefaultWalletInfo['walletPercentChange'];
+            $walletGains                    = $userDefaultWalletInfo['walletGains'];
+            $depositAmount                  = $userDefaultWalletInfo['depositAmount'];
+            $withdrawAmount                 = $userDefaultWalletInfo['withdrawAmount'];
+            $walletDepositAmount            = $userDefaultWalletInfo['walletDepositAmount'];
+            $walletWithdrawAmount           = $userDefaultWalletInfo['walletWithdrawAmount'];
+            $MyMICoinValue                  = $userDefaultWalletInfo['MyMICoinValue'];
+            $MyMICCurrentValue              = $userDefaultWalletInfo['MyMICCurrentValue'];
+            $MyMICCoinSum					= $userDefaultWalletInfo['MyMICCoinSum'];
+            $coinsExchanged					= $userDefaultWalletInfo['coinsExchanged'];
+            $MyMIGoldValue					= $userDefaultWalletInfo['MyMIGoldValue'];
+            $MyMIGCurrentValue				= $userDefaultWalletInfo['MyMIGCurrentValue'];
+            $MyMIGCoinSum					= $userDefaultWalletInfo['MyMIGCoinSum'];
+            $getWallets						= $userDefaultWalletInfo['getWallets'];
+            $getWalletCount 				= $this->CI->wallet_model->get_nondefault_wallet_count($cuID);
+            $getWalletCount                 = $this->CI->wallet_model->get_wallet_count($cuID);
+            if ($MyMICCoinSum > 0) {
+                $cuTotalWalletCount         = $getWalletCount + 2;
+            } elseif ($MyMIGCoinSum > 0) {
+                $cuTotalWalletCount         = $getWalletCount + 2;
+            } elseif ($MyMICCoinSum > 0 || $MyMIGCoinSum > 0) {
+                $cuTotalWalletCount         = $getWalletCount + 3;
+            } else {
+                $cuTotalWalletCount         = $getWalletCount;
+            }
+            
+            // User Last Activity
+            $userLastActivity				= $this->CI->mymiwallet->get_last_activity($cuID, $walletID);
+            // $lastTradeActivity			= $userLastActivity['$lastTradeActivity'];
+            // $depositActivity				= $userLastActivity['$depositActivity'];
+            // $withdrawActivity			= $userLastActivity['$withdrawActivity'];
+            $lastTradeActivity				= 'N/A';
+            $depositActivity				= 'N/A';
+            $withdrawActivity				= 'N/A';
+            
+            // Set Array Definitions
+            $userDefaultData				= array(
+                'cuID'                      => $cuID,
+                'cuEmail'                   => $userInfo['cuEmail'],
+                'cuUsername'				=> $userInfo['cuUsername'],
+                'cuDisplayName'				=> $userInfo['cuDisplayName'],
+                'cuUserType'				=> $userInfo['cuUserType'],
+                'cuWalletID'				=> $userInfo['cuWalletID'],
+                'walletID'                  => $userInfo['walletID'],
+                'getWallets'				=> $getWallets,
+                'cuWalletCount'				=> $getWalletCount,
+                'cuTotalWalletCount'        => $cuTotalWalletCount,
+                'lastTradeActivity'			=> $lastTradeActivity,
+                'depositActivity'			=> $depositActivity,
+                'withdrawActivity'			=> $withdrawActivity,
+                'walletID'                  => $userDefaultWalletInfo['walletID'],
+                'walletTitle'				=> $walletTitle,
+                'walletBroker'				=> $walletBroker,
+                'walletNickname'			=> $walletNickname,
+                'walletDefault'				=> $walletDefault,
+                'walletExchange'			=> $walletExchange,
+                'walletMarketPair'			=> $walletMarketPair,
+                'walletMarket'				=> $walletMarket,
+                'walletFunds'				=> $walletFunds,
+                'walletInitialAmount'       => $walletInitialAmount,
+                'walletAmount'				=> $walletAmount,
+                'walletPercentChange'       => $walletPercentChange,
+                'walletGains'				=> $walletGains,
+                'depositAmount'				=> $depositAmount,
+                'withdrawAmount'			=> $withdrawAmount,
+                'walletDepositAmount'       => $walletDepositAmount,
+                'walletWithdrawAmount'      => $walletWithdrawAmount,
+                'MyMICoinValue'				=> $MyMICoinValue,
+                'MyMICCurrentValue'			=> $MyMICCurrentValue,
+                'MyMICCoinSum'				=> $MyMICCoinSum,
+                'coinsExchanged'			=> $coinsExchanged,
+                'MyMIGoldValue'				=> $MyMIGoldValue,
+                'MyMIGCurrentValue'			=> $MyMIGCurrentValue,
+                'MyMIGCoinSum'				=> $MyMIGCoinSum,
+            );
+            return $userDefaultData;
+        } else {
+            $walletID	                    = $userDefaultWalletInfo['walletID'];
+            $walletTitle                    = $userDefaultWalletInfo['walletTitle'];
+            $walletBroker                   = $userDefaultWalletInfo['walletBroker'];
+            $walletNickname                 = $userDefaultWalletInfo['walletNickname'];
+            $walletDefault                  = $userDefaultWalletInfo['walletDefault'];
+            $walletExchange                 = $userDefaultWalletInfo['walletExchange'];
+            $walletMarketPair               = $userDefaultWalletInfo['walletMarketPair'];
+            $walletMarket                   = $userDefaultWalletInfo['walletMarket'];
+            $walletFunds                    = $userDefaultWalletInfo['walletFunds'];
+            $walletInitialAmount            = $userDefaultWalletInfo['walletInitialAmount'];
+            $walletAmount                   = $userDefaultWalletInfo['walletAmount'];
+            $walletPercentChange            = $userDefaultWalletInfo['walletPercentChange'];
+            $walletGains                    = $userDefaultWalletInfo['walletGains'];
+            $depositAmount                  = $userDefaultWalletInfo['depositAmount'];
+            $withdrawAmount                 = $userDefaultWalletInfo['withdrawAmount'];
+            $walletDepositAmount            = $userDefaultWalletInfo['walletDepositAmount'];
+            $walletWithdrawAmount           = $userDefaultWalletInfo['walletWithdrawAmount'];
+            $MyMICoinValue                  = $userDefaultWalletInfo['MyMICoinValue'];
+            $MyMICCurrentValue              = $userDefaultWalletInfo['MyMICCurrentValue'];
+            $MyMICCoinSum					= $userDefaultWalletInfo['MyMICCoinSum'];
+            $coinsExchanged					= $userDefaultWalletInfo['coinsExchanged'];
+            $MyMIGoldValue					= $userDefaultWalletInfo['MyMIGoldValue'];
+            $MyMIGCurrentValue				= $userDefaultWalletInfo['MyMIGCurrentValue'];
+            $MyMIGCoinSum					= $userDefaultWalletInfo['MyMIGCoinSum'];
+            $getWallets						= $userDefaultWalletInfo['getWallets'];
+            $getWalletCount 				= $this->CI->wallet_model->get_nondefault_wallet_count($cuID);
+            $getWalletCount                 = $this->CI->wallet_model->get_wallet_count($cuID);
+            if ($MyMICCoinSum > 0) {
+                $cuTotalWalletCount         = $getWalletCount + 2;
+            } elseif ($MyMIGCoinSum > 0) {
+                $cuTotalWalletCount         = $getWalletCount + 2;
+            } elseif ($MyMICCoinSum > 0 || $MyMIGCoinSum > 0) {
+                $cuTotalWalletCount         = $getWalletCount + 3;
+            } else {
+                $cuTotalWalletCount         = $getWalletCount;
+            }
+            
+            // User Last Activity
+            $userLastActivity				= $this->CI->mymiwallet->get_last_activity($cuID, $walletID);
+            // $lastTradeActivity				 = $userLastActivity['$lastTradeActivity'];
+            // $depositActivity				 = $userLastActivity['$depositActivity'];
+            // $withdrawActivity				 = $userLastActivity['$withdrawActivity'];
+            $lastTradeActivity				= 'N/A';
+            $depositActivity				= 'N/A';
+            $withdrawActivity				= 'N/A';
+            
+            // Set Array Definitions
+            $userDefaultData				= array(
+                'cuID'                      => $cuID,
+                'cuEmail'                   => $userInfo['cuEmail'],
+                'cuUsername'				=> $userInfo['cuUsername'],
+                'cuDisplayName'				=> $userInfo['cuDisplayName'],
+                'cuUserType'				=> $userInfo['cuUserType'],
+                'cuWalletID'				=> $userInfo['cuWalletID'],
+                'walletID'                  => $userInfo['walletID'],
+                'getWallets'				=> $getWallets,
+                'cuWalletCount'				=> $getWalletCount,
+                'cuTotalWalletCount'        => $cuTotalWalletCount,
+                'lastTradeActivity'			=> $lastTradeActivity,
+                'depositActivity'			=> $depositActivity,
+                'withdrawActivity'			=> $withdrawActivity,
+                'walletID'                  => $userDefaultWalletInfo['walletID'],
+                'walletTitle'				=> $walletTitle,
+                'walletBroker'				=> $walletBroker,
+                'walletNickname'			=> $walletNickname,
+                'walletDefault'				=> $walletDefault,
+                'walletExchange'			=> $walletExchange,
+                'walletMarketPair'			=> $walletMarketPair,
+                'walletMarket'				=> $walletMarket,
+                'walletFunds'				=> $walletFunds,
+                'walletInitialAmount'       => $walletInitialAmount,
+                'walletAmount'				=> $walletAmount,
+                'walletPercentChange'       => $walletPercentChange,
+                'walletGains'				=> $walletGains,
+                'depositAmount'				=> $depositAmount,
+                'withdrawAmount'			=> $withdrawAmount,
+                'walletDepositAmount'       => $walletDepositAmount,
+                'walletWithdrawAmount'      => $walletWithdrawAmount,
+                'MyMICoinValue'			    => $MyMICoinValue,
+                'MyMICCurrentValue'		    => $MyMICCurrentValue,
+                'MyMICCoinSum'			    => $MyMICCoinSum,
+                'coinsExchanged'		    => $coinsExchanged,
+                'MyMIGoldValue'				=> $MyMIGoldValue,
+                'MyMIGCurrentValue'			=> $MyMIGCurrentValue,
+                'MyMIGCoinSum'				=> $MyMIGCoinSum,
+            );
+            return $userDefaultData;
+
+        }
     }
 
     public function user_default_wallet($cuID)
@@ -397,14 +582,14 @@ class MyMIUser
     {
         $this->CI->db->from('bf_exchanges_listing_request');
         $this->CI->db->where('user_id', $cuID);
-        $getAppInfo                             = $this->CI->db->get()->result_array();
+        $getAppInfo                         = $this->CI->db->get()->result_array();
         if (empty($getAppInfo[0]['id'])) {
-            $open_listing_app                   = 0;
+            $open_listing_app               = 0;
         } else {
-            $open_listing_app                   = $getAppInfo[0]['id'];
+            $open_listing_app               = $getAppInfo[0]['id'];
         }
-        $userExchangeInfo                       = array(
-            'open_listing_app'                  => $open_listing_app,
+        $userExchangeInfo                   = array(
+            'open_listing_app'              => $open_listing_app,
         );
         return $userExchangeInfo;
     }
@@ -441,6 +626,43 @@ class MyMIUser
             return $userAssetSummary;
         }
     }
+
+    public function get_user_social_info($cuEmail) 
+    {
+        $getSocialInfo						= $this->CI->investor_model->get_user_social_media($cuEmail);
+        foreach($getSocialInfo->result_array() as $socialInfo) {
+            if ($socialInfo['coverart'] === 'N/A') {
+                $userData['coverart'] 		= 'Blue-Stock-Charts5.jpg';
+            } else {
+                $cuCoverart			        = $socialInfo['coverart'];
+            }
+            $cuProfilePic                   = $socialInfo['profile_pic'];
+            $cuFollowers                    = $socialInfo['followers'];
+            $cuViews                        = $socialInfo['views'];
+            $cuWebsite                      = $socialInfo['website'];
+            $cuFacebook                     = $socialInfo['facebook'];
+            $cuTwitter                      = $socialInfo['twitter'];
+            $cuStocktwits                   = $socialInfo['stocktwits'];
+            $cuYoutube                      = $socialInfo['youtube'];
+            $cuDiscord                      = $socialInfo['discord'];
+        }
+        
+        $userSocialInfo                     = array(
+            'cuCoverart'                    => $cuCoverart,
+            'cuProfilePic'                  => $cuProfilePic,
+            'cuFollowers'                   => $cuFollowers,
+            'cuViews'                       => $cuViews,
+            'cuWebsite'                     => $cuWebsite,
+            'cuFacebook'                    => $cuFacebook,
+            'cuTwitter'                     => $cuTwitter,
+            'cuStocktwits'                  => $cuStocktwits,
+            'cuYoutube'                     => $cuYoutube,
+            'cuDiscord'                     => $cuDiscord,
+        );
+        
+        return $userSocialInfo;         
+    }
+    
 
     // public function get_last_account() {
     //     $getLastAccount                         = $this->investor_model->get_last_account(); 

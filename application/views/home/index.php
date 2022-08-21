@@ -49,7 +49,7 @@ $totalApprovedAssets    = $_SESSION['reporting']['totalApprovedAssets'];
                                     <h2 class="subttitle text-white pt-3 pb-3">Investment Accounting/Analytical Software<br>Crypto Asset Marketplace &amp; Exchange</h2>
                                     <p class="text-light">
                                         A powerful Investment Accounting/Analytical Software and Crypto Asset Marketplace & Exchange for Retail & Institutional Investors alike. 
-                                        <strong class="text-white">MyMI Wallet</strong> comes with a variety of <a href="">Premium Features</a>, necessary to provide Investors with the Accounting & Analytical Tools and our <strong class="text-primary">Asset Marketplace & Exchanges</strong> that helps you to create your own <a href="">Digital Assets</a> to sell to intereseted potential investors.
+                                        <strong class="text-white">MyMI Wallet</strong> comes with a variety of <a href="">Premium Features</a>, necessary to provide Investors with the Accounting & Analytical Tools and our <strong class="text-primary">Asset Marketplace & Exchanges</strong> that helps you to create your own <a href="">Digital Assets</a> to sell to intereseted potential investors. HI
                                     </p>
                                 </div>
                             </div>

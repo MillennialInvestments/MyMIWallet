@@ -31,7 +31,8 @@
                         </ul>
                     </div>
                 </div>
-            </div><!-- .card-inner -->
+            </div>-->
+            <!-- .card-inner -->
             <div class="card-inner">
                 <div class="between-center flex-wrap g-3">
                     <div class="nk-block-text">
@@ -60,7 +61,8 @@
                         <a href="#" class="btn btn-primary">Disable</a>
                     </div>
                 </div>
-            </div><!-- .card-inner -->
+            </div>-->
+            <!-- .card-inner -->
         </div><!-- .card-inner-group -->
     </div><!-- .card -->
 </div><!-- .nk-block -->

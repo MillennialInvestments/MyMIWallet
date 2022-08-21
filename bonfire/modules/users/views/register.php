@@ -56,8 +56,8 @@ if ($registerType === 'Investor') {
 						<?php echo form_open($registerType . '/register', array('class' => "form-horizontal", 'autocomplete' => 'off')); ?>
 							<fieldset>
 								<div class="row">
-									<div class="col-md-1"></div>
-									<div class="col-12 col-sm-12 col-md-7 pl-5">
+									<div class="col-sm-1"></div>
+									<div class="col-12 col-sm-7 col-md-7 pl-5">
 										<h1 class="mbr-section-title mbr-bold mb-1 pb-3 mbr-fonts-style card-title display-7"><?php echo $title; ?></h1>			
 										<?php Template::block('user_fields', 'user_fields', $fieldData); ?>	
 										<div class="control-group form-row pt-3">
@@ -72,8 +72,8 @@ if ($registerType === 'Investor') {
 											</div>
 										</div>	
 									</div>
-									<div class="col-md-1 border-right px-5"></div>		
-									<div class="d-none col-sm-12 col-md-3 pl-5">         
+									<div class="col-sm-1 border-right px-5"></div>		
+									<div class="d-none d-sm-block col-sm-3 col-md-3 pl-5">         
 										<h2 class="mbr-section-title mb-5 pb-3 mbr-fonts-style card-title display-7">My Progress</h2>
 										<div class="stepper d-flex flex-column mt-5 ml-2">
 											<?php
@@ -160,75 +160,3 @@ if ($registerType === 'Investor') {
         </div>
     </div>
 </div>
-<script>
-$(document).ready(function(){
-
-var current_fs, next_fs, previous_fs;
-
-// No BACK button on first screen
-if($(".show").hasClass("first-screen")) {
-$(".prev").css({ 'display' : 'none' });
-}
-
-// Next button
-$(".next-button").click(function(){
-
-current_fs = $(this).parent().parent();
-next_fs = $(this).parent().parent().next();
-
-$(".prev").css({ 'display' : 'block' });
-
-$(current_fs).removeClass("show");
-$(next_fs).addClass("show");
-
-$("#progressbar li").eq($(".card2").index(next_fs)).addClass("active");
-
-current_fs.animate({}, {
-step: function() {
-
-current_fs.css({
-'display': 'none',
-'position': 'relative'
-});
-
-next_fs.css({
-'display': 'block'
-});
-}
-});
-});
-
-// Previous button
-$(".prev").click(function(){
-
-current_fs = $(".show");
-previous_fs = $(".show").prev();
-
-$(current_fs).removeClass("show");
-$(previous_fs).addClass("show");
-
-$(".prev").css({ 'display' : 'block' });
-
-if($(".show").hasClass("first-screen")) {
-$(".prev").css({ 'display' : 'none' });
-}
-
-$("#progressbar li").eq($(".card2").index(current_fs)).removeClass("active");
-
-current_fs.animate({}, {
-step: function() {
-
-current_fs.css({
-'display': 'none',
-'position': 'relative'
-});
-
-previous_fs.css({
-'display': 'block'
-});
-}
-});
-});
-
-});
-</script>

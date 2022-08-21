@@ -116,6 +116,8 @@ Route::any('Announcements/Post', 'Management/Announcements/Post');
 
 // User - Dashboard
 Route::any('Dashboard', 'User/Dashboard/index');
+Route::any('Budget', 'User/Dashboard/Budget');
+Route::any('Budget/Income', 'User/Dashboard/Budget_Income');
 Route::any('Markets/(:any)', 'User/Dashboard/Markets');
 
 // User - Accounts
@@ -158,8 +160,10 @@ Route::any('My-Referrals', 'User/Referral_Program/My_Referrals');
 Route::any('Trade-Tracker', 'User/Trade_Tracker/Overview');
 Route::any('Trade-Tracker/Trade-Manager', 'User/Trade_Tracker/Trade_Manager');
 
+
 // User - Wallets
 Route::any('Wallets', 'User/Wallets/index');
+Route::any('Wallets/Connect-Bank-Account', 'User/Wallets/Create_Bank_Account');
 Route::any('MyMI-Wallet', 'User/Wallets/MyMI_Wallet');
 Route::any('Link-Account/TD-Ameritrade/(:any)', 'User/Brokerages/TD_Ameritrade/$1');
 Route::any('Wallets/Link-Account', 'User/Wallets/Link_Account');
@@ -233,6 +237,7 @@ Route::any('Management/Assets/Distribute', 'Management/Assets/Distribute');
 
 // Management - Support 
 Route::any('Management/Support', 'Management/Support/Reporting'); 
+Route::any('Management/Support/Logs', 'Management/Support/Logs'); 
 Route::any('Management/(:any)/Support', 'Management/Support/Reporting'); 
 Route::any('Management/(:any)/Support/Requests', 'Management/Support/Requests'); 
 Route::any('Management/(:any)/Support/Requests/(:any)', 'Management/Support/Requests'); 

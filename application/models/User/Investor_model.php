@@ -401,9 +401,9 @@ class Investor_model extends BF_Model
     }
     
     public function get_user_activity($cuID) {
-        $this->db->from('bf_activities'); 
-        $this->db->where('user_id', $cuID); 
-        $this->db->order_by('activity_id', 'DESC'); 
+        $this->db->from('bf_act_logger'); 
+        $this->db->where('created_by', $cuID); 
+        $this->db->order_by('id', 'DESC'); 
         $this->db->limit(20); 
         $getUserActivities               = $this->db->get();
         return $getUserActivities;

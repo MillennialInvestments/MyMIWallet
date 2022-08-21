@@ -153,6 +153,34 @@ class CI_Exceptions
      */
     public function show_error($heading, $message, $template = 'error_general', $status_code = 500)
     {
+        // $this->load->library('MyMILogger'); 
+                
+        // if (!empty($_SESSION['user_id'])) {
+        //     $cuID 					    = $_SESSION['user_id'];
+        // } else {
+        //     $cuID                       = $this->input->ip_address();
+        // }
+        // $betaStatus                     = $this->config->item('beta');
+        // if ($betaStatus === 0) {
+        //     $beta                       = 'No';
+        // } else {
+        //     $beta                       = 'Yes';
+        // }
+        // $thisController                 = $this->router->fetch_class();
+        // $thisMethod                     = $this->router->fetch_method();
+        // $thisURL                        = $this->uri->uri_string();
+        // $thisFullURL                    = current_url();
+        // $thisComment                    = 'User (' . $cuID . ') successfully viewed the following page: ' . $thisURL;
+        // $this->mymilogger
+        //     ->user($cuID) //Set UserID, who created this  Action
+        //     ->beta($beta) //Set whether in Beta or nto
+        //     ->type('Page Visit') //Entry type like, Post, Page, Entry
+        //     ->controller($thisController)
+        //     ->method($thisMethod)
+        //     ->url($thisURL)
+        //     ->full_url($thisFullURL)
+        //     ->comment($thisComment) //Token identify Action
+        //     ->log(); //Add Database Entry
         $templates_path = config_item('error_views_path');
         if (empty($templates_path)) {
             $templates_path = VIEWPATH.'errors'.DIRECTORY_SEPARATOR;

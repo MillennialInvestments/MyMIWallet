@@ -57,6 +57,31 @@ class Dashboard extends Admin_Controller
         Template::render();
     }
 
+    public function Budget()
+    {
+        $pageType = 'Standard';
+        $pageName = 'User_Budget';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+
+    public function Budget_Income()
+    {
+        $pageType = 'Standard';
+        $pageName = 'User_Budget_Income';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::set_view('User/Dashboard/Budget/Income'); 
+        Template::render();
+    }
+
     public function Investor_Profile()
     {
         $pageType = 'Standard';
@@ -76,7 +101,7 @@ class Dashboard extends Admin_Controller
         
         $this->set_current_user();
         
-        $this->load->view('User/Wallets/Feature_Manager');
+        $this->load->view('User/Dashboard/Profile_Manager');
     }
 
     // -------------------------------------------------------------------------

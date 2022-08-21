@@ -28,5 +28,6 @@ return array(
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'Codenixsv\\BittrexApi\\' => array($vendorDir . '/codenix-sv/bittrex-api/src'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
+    'CILogViewer\\' => array($vendorDir . '/seunmatt/codeigniter-log-viewer/src'),
     'Bonfire\\' => array($baseDir . '/bonfire'),
 );

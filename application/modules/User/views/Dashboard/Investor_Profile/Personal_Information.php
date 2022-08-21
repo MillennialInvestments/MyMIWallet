@@ -1,6 +1,14 @@
-<style>
-.data-item .icon{color: white !important;}
-</style>
+<?php
+// Set Form Config
+$formGroup				= $this->config->item('form_container') . ' input-group';
+$formLabel				= $this->config->item('form_label');
+$formConCol				= $this->config->item('form_control_column');
+$formControl			= $this->config->item('form_control');
+$formSelect				= $this->config->item('form_select');
+$formSelectPicker		= $this->config->item('form_selectpicker');
+$formText				= $this->config->item('form_text');
+$formCustomText			= $this->config->item('form_custom_text');
+?>
 <div class="nk-block-head nk-block-head-lg">
     <div class="nk-block-between">
         <div class="nk-block-head-content">
@@ -15,609 +23,577 @@
     </div>
 </div><!-- .nk-block-head -->
 <div class="nk-block">
-    <div class="nk-data data-list">
-        <div class="data-head">
-            <h6 class="overline-title">Basics</h6>
-        </div>
-        <div class="data-item">
-            <div class="data-col" id="col_email">
-                <span class="data-label">Email</span>
-                <span class="data-value" id="email"><?php echo $cuEmail; ?></span>
-                <span class="d-none" id="email_inputType">email</span>
+    <form class="form-horizontal" id="updateInvestorProfileForm">
+        <div class="nk-data data-list">
+            <div class="data-head">
+                <h6 class="overline-title">Basic Contact Information</h6>
             </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="email_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- Email data-item -->
-        <script>
-            function email_Switch(e) {
-                let txt                 = document.getElementById('email').innerText;
-                let input               = document.getElementById('email_inputType').innerText;
-                let element             = document.getElementById('col_email');
+            <input type="hidden" name="user_id" id="user_id" value="<?php echo set_value('user_id', isset($user) ? $user->user_id : $cuID); ?>">	
+            <div class="data-item">
+                <div class="data-col" id="col_email">
+                    <span class="data-label w-25">Email</span>
+                    <span class="data-value w-100" id="email"><?php echo $cuEmail; ?></span>
+                    <input type="hidden" name="email" id="email" value="<?php echo set_value('email', isset($user) ? $user->email : $cuEmail); ?>">	
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="email_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- Email data-item -->
+            <script>
+                function email_Switch(e) {
+                    let txt                 = document.getElementById('email').innerText;
+                    let input               = document.getElementById('email').innerText;
+                    let element             = document.getElementById('col_email');
 
-                element.innerHTML       = `
-                    <span class="data-label">Email</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}" value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='email_Reset(this)'><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">Email</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="email" id="email" placeholder="Enter Email" value="<?php echo set_value('email', isset($user) ? $user->email : $cuEmail); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function email_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_email');
+                function email_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_email');
 
-                element.innerHTML = `
-                <span class="data-label">Email</span>
-                <span class="data-value" id="email"><?php echo $cuEmail; ?></span>
-                <span class="d-none" id="email_inputType">email</span>
-                `;
-            }
-        </script>
-        <div class="data-item">
-            <div class="data-col" id="col_display_name">
-                <span class="data-label">Display Name</span>
-                <span class="data-value" id="display_name"><?php echo $cuDisplayName; ?></span>
-                <span class="d-none" id="display_name_inputType">display_name</span>
-            </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="display_name_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- Display data-item -->
-        <script>
-            function display_name_Switch(e) {
-                let txt                 = document.getElementById('display_name').innerText;
-                let input               = document.getElementById('display_name_inputType').innerText;
-                let element             = document.getElementById('col_display_name');
+                    element.innerHTML = `
+                    <span class="data-label w-25">Email</span>
+                    <span class="data-value w-100" id="email"><?php echo $cuEmail; ?></span>
+                    <input type="hidden" name="email" id="email" value="<?php echo set_value('email', isset($user) ? $user->email : $cuEmail); ?>">	
+                    `;
+                }
+            </script>
+            <div class="data-item">
+                <div class="data-col" id="col_username">
+                    <span class="data-label w-25">Display Name</span>
+                    <span class="data-value w-100" id="username"><?php echo $cuUsername; ?></span>
+                    <input type="hidden" name="username" id="username" value="<?php echo set_value('username', isset($user) ? $user->username : $cuUsername); ?>">	
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="username_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- Display data-item -->
+            <script>
+                function username_Switch(e) {
+                    let txt                 = document.getElementById('username').innerText;
+                    let input               = document.getElementById('username').innerText;
+                    let element             = document.getElementById('col_username');
 
-                element.innerHTML       = `
-                    <span class="data-label">Display Name</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}" value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='display_name_Reset(this)'><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">Display Name</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="username" id="username" placeholder="Enter Display Name" value="<?php echo set_value('username', isset($user) ? $user->username : $cuUsername); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function display_name_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_display_name');
+                function username_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_username');
 
-                element.innerHTML = `
-                <span class="data-label">Display Name</span>
-                <span class="data-value" id="display_name"><?php echo $cuDisplayName; ?></span>
-                <span class="d-none" id="display_name_inputType">display_name</span>
-                `;
-            }
-        </script>
-        <div class="data-item">
-            <div class="data-col" id="col_first_name">
-                <span class="data-label">First Name</span>
-                <span class="data-value" id="first_name"><?php echo $cuFirstName; ?></span>
-                <span class="d-none" id="first_name_inputType">first_name</span>
-            </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="first_name_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- First Name data-item -->
-        <script>
-            function first_name_Switch(e) {
-                let txt                 = document.getElementById('first_name').innerText;
-                let input               = document.getElementById('first_name_inputType').innerText;
-                let element             = document.getElementById('col_first_name');
+                    element.innerHTML = `
+                    <span class="data-label w-25">Display Name</span>
+                    <span class="data-value w-100" id="username"><?php echo $cuUsername; ?></span>
+                    <input type="hidden" name="username" id="username" value="<?php echo set_value('username', isset($user) ? $user->username : $cuUsername); ?>">	
+                    `;
+                }
+            </script>
+            <div class="data-item">
+                <div class="data-col" id="col_first_name">
+                    <span class="data-label w-25">First Name</span>
+                    <span class="data-value w-100" id="first_name"><?php echo $cuFirstName; ?></span>
+                    <input type="hidden" name="first_name" id="first_name" value="<?php echo set_value('first_name', isset($user) ? $user->first_name : $cuFirstName); ?>">	
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="first_name_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- First Name data-item -->
+            <script>
+                function first_name_Switch(e) {
+                    let txt                 = document.getElementById('first_name').innerText;
+                    let input               = document.getElementById('first_name').innerText;
+                    let element             = document.getElementById('col_first_name');
 
-                element.innerHTML       = `
-                    <span class="data-label">First Name</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}" value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='first_name_Reset(this)'><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">First Name</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="first_name" id="first_name" placeholder="Enter Display Name" value="<?php echo set_value('first_name', isset($user) ? $user->first_name : $cuFirstName); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function first_name_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_first_name');
+                function first_name_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_first_name');
 
-                element.innerHTML = `
-                <span class="data-label">First Name</span>
-                <span class="data-value" id="first_name"><?php echo $cuFirstName; ?></span>
-                <span class="d-none" id="first_name_inputType">first_name</span>
-                `;
-            }
-        </script>
-        <div class="data-item">
-            <div class="data-col" id="col_middle_name">
-                <span class="data-label">Middle Name</span>
-                <span class="data-value" id="middle_name"><?php echo $cuMiddleName; ?></span>
-                <span class="d-none" id="middle_name_inputType">middle_name</span>
-            </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="middle_name_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- Middle Name data-item -->
-        <script>
-            function middle_name_Switch(e) {
-                let txt                 = document.getElementById('middle_name').innerText;
-                let input               = document.getElementById('middle_name_inputType').innerText;
-                let element             = document.getElementById('col_middle_name');
+                    element.innerHTML = `
+                    <span class="data-label w-25">First Name</span>
+                    <span class="data-value w-100" id="first_name"><?php echo $cuFirstName; ?></span>
+                    <input type="hidden" name="first_name" id="first_name" value="<?php echo set_value('first_name', isset($user) ? $user->first_name : $cuFirstName); ?>">	
+                    `;
+                }
+            </script>
+            <div class="data-item">
+                <div class="data-col" id="col_middle_name">
+                    <span class="data-label w-25">Middle Name</span>
+                    <span class="data-value w-100" id="middle_name"><?php echo $cuMiddleName; ?></span>
+                    <span class="d-none" id="middle_name">middle_name</span>
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="middle_name_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- Middle Name data-item -->
+            <script>
+                function middle_name_Switch(e) {
+                    let txt                 = document.getElementById('middle_name').innerText;
+                    let input               = document.getElementById('middle_name').innerText;
+                    let element             = document.getElementById('col_middle_name');
 
-                element.innerHTML       = `
-                    <span class="data-label">Middle Name</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}" value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='middle_name_Reset(this)'><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">Middle Name</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="middle_name" id="middle_name" placeholder="Enter Display Name" value="<?php echo set_value('middle_name', isset($user) ? $user->middle_name : $cuMiddleName); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function middle_name_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_middle_name');
+                function middle_name_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_middle_name');
 
-                element.innerHTML = `
-                <span class="data-label">Middle Name</span>
-                <span class="data-value" id="middle_name"><?php echo $cuMiddleName; ?></span>
-                <span class="d-none" id="middle_name_inputType">middle_name</span>
-                `;
-            }
-        </script>
-        <div class="data-item">
-            <div class="data-col" id="col_last_name">
-                <span class="data-label">Last Name</span>
-                <span class="data-value" id="last_name"><?php echo $cuLastName; ?></span>
-                <span class="d-none" id="last_name_inputType">last_name</span>
-            </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="last_name_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- Last Name data-item -->
-        <script>
-            function last_name_Switch(e) {
-                let txt                 = document.getElementById('last_name').innerText;
-                let input               = document.getElementById('last_name_inputType').innerText;
-                let element             = document.getElementById('col_last_name');
+                    element.innerHTML = `
+                    <span class="data-label w-25">Middle Name</span>
+                    <span class="data-value w-100" id="middle_name"><?php echo $cuMiddleName; ?></span>
+                    <input type="hidden" name="middle_name" id="middle_name" value="<?php echo set_value('middle_name', isset($user) ? $user->middle_name : $cuMiddleName); ?>">	
+                    `;
+                }
+            </script>
+            <div class="data-item">
+                <div class="data-col" id="col_last_name">
+                    <span class="data-label w-25">Last Name</span>
+                    <span class="data-value w-100" id="last_name"><?php echo $cuLastName; ?></span>
+                    <input type="hidden" name="last_name" id="last_name" value="<?php echo set_value('last_name', isset($user) ? $user->last_name : $cuLastName); ?>">	
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="last_name_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- Last Name data-item -->
+            <script>
+                function last_name_Switch(e) {
+                    let txt                 = document.getElementById('last_name').innerText;
+                    let input               = document.getElementById('last_name').innerText;
+                    let element             = document.getElementById('col_last_name');
 
-                element.innerHTML       = `
-                    <span class="data-label">Last Name</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}" value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='last_name_Reset(this)'><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">Last Name</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="last_name" id="last_name" placeholder="Enter Display Name" value="<?php echo set_value('last_name', isset($user) ? $user->last_name : $cuLastName); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function last_name_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_last_name');
+                function last_name_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_last_name');
 
-                element.innerHTML = `
-                <span class="data-label">Last Name</span>
-                <span class="data-value" id="last_name"><?php echo $cuLastName; ?></span>
-                <span class="d-none" id="last_name_inputType">last_name</span>
-                `;
-            }
-        </script>
-        <div class="data-item">
-            <div class="data-col" id="col_name_suffix">
-                <span class="data-label">Suffix</span>
-                <span class="data-value" id="name_suffix"><?php echo $cuNameSuffix; ?></span>
-                <span class="d-none" id="name_suffix_inputType">name_suffix</span>
-            </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="name_suffix_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- Name Suffix data-item -->
-        <script>
-            function name_suffix_Switch(e) {
-                let txt                 = document.getElementById('name_suffix').innerText;
-                let input               = document.getElementById('name_suffix_inputType').innerText;
-                let element             = document.getElementById('col_name_suffix');
+                    element.innerHTML = `
+                    <span class="data-label w-25">Last Name</span>
+                    <span class="data-value w-100" id="last_name"><?php echo $cuLastName; ?></span>
+                    <input type="hidden" name="last_name" id="last_name" value="<?php echo set_value('last_name', isset($user) ? $user->last_name : $cuLastName); ?>">	
+                    `;
+                }
+            </script>
+            <div class="data-item">
+                <div class="data-col" id="col_name_suffix">
+                    <span class="data-label w-25">Suffix</span>
+                    <span class="data-value w-100" id="name_suffix"><?php echo $cuNameSuffix; ?></span>
+                    <input type="hidden" name="name_suffix" id="name_suffix" value="<?php echo set_value('name_suffix', isset($user) ? $user->name_suffix : $cuNameSuffix); ?>">	
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="name_suffix_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- Name Suffix data-item -->
+            <script>
+                function name_suffix_Switch(e) {
+                    let txt                 = document.getElementById('name_suffix').innerText;
+                    let input               = document.getElementById('name_suffix').innerText;
+                    let element             = document.getElementById('col_name_suffix');
 
-                element.innerHTML       = `
-                    <span class="data-label">Suffix</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}" value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='name_suffix_Reset(this)'><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">Name Suffix</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="name_suffix" id="name_suffix" placeholder="Enter Name Suffix" value="<?php echo set_value('name_suffix', isset($user) ? $user->name_suffix : $cuNameSuffix); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function name_suffix_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_name_suffix');
+                function name_suffix_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_name_suffix');
 
-                element.innerHTML = `
-                <span class="data-label">Suffix</span>
-                <span class="data-value" id="name_suffix"><?php echo $cuNameSuffix; ?></span>
-                <span class="d-none" id="name_suffix_inputType">name_suffix</span>
-                `;
-            }
-        </script>
-        <div class="data-item">
-            <div class="data-col" id="col_phone">
-                <span class="data-label">Phone</span>
-                <span class="data-value" id="phone"><?php echo $cuPhone; ?></span>
-                <span class="d-none" id="phone_inputType">phone</span>
-            </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="phone_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- Phone data-item -->
-        <script>
-            function phone_Switch(e) {
-                let txt                 = document.getElementById('phone').innerText;
-                let input               = document.getElementById('phone_inputType').innerText;
-                let element             = document.getElementById('col_phone');
+                    element.innerHTML = `
+                    <span class="data-label w-25">Suffix</span>
+                    <span class="data-value w-100" id="name_suffix"><?php echo $cuNameSuffix; ?></span>
+                    <input type="hidden" name="name_suffix" id="name_suffix" value="<?php echo set_value('name_suffix', isset($user) ? $user->name_suffix : $cuNameSuffix); ?>">	
+                    `;
+                }
+            </script>
+            <div class="data-item">
+                <div class="data-col" id="col_phone">
+                    <span class="data-label w-25">Phone</span>
+                    <span class="data-value w-100" id="phone"><?php echo $cuPhone; ?></span>
+                    <input type="hidden" name="phone" id="phone" value="<?php echo set_value('phone', isset($user) ? $user->phone : $cuPhone); ?>">	
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="phone_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- Phone data-item -->
+            <script>
+                function phone_Switch(e) {
+                    let txt                 = document.getElementById('phone').innerText;
+                    let input               = document.getElementById('phone').innerText;
+                    let element             = document.getElementById('col_phone');
 
-                element.innerHTML       = `
-                    <span class="data-label">Phone</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}" value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='phone_Reset(this)'><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">Phone</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="phone" id="phone" placeholder="Enter Phone" value="<?php echo set_value('phone', isset($user) ? $user->phone : $cuPhone); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function phone_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_phone');
+                function phone_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_phone');
 
-                element.innerHTML = `
-                <span class="data-label">Phone</span>
-                <span class="data-value" id="phone"><?php echo $cuPhone; ?></span>
-                <span class="d-none" id="phone_inputType">phone</span>
-                `;
-            }
-        </script>
-        <div class="data-item">
-            <div class="data-col" id="col_dob">
-                <span class="data-label">Date of Birth</span>
-                <span class="data-value" id="dob"><?php //echo $cuPhone; ?></span>
-                <span class="d-none" id="dob_inputType">dob</span>
-            </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="dob_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- Address data-item -->
-        <script>
-            function dob_Switch(e) {
-                let txt                 = document.getElementById('dob').innerText;
-                let input               = document.getElementById('dob_inputType').innerText;
-                let element             = document.getElementById('col_dob');
+                    element.innerHTML = `
+                    <span class="data-label w-25">Phone</span>
+                    <span class="data-value w-100" id="phone"><?php echo $cuPhone; ?></span>
+                    <input type="hidden" name="phone" id="phone" value="<?php echo set_value('phone', isset($user) ? $user->phone : $cuPhone); ?>">	
+                    `;
+                }
+            </script>
+            <?php 
+            /**
+            <div class="data-item">
+                <div class="data-col" id="col_dob">
+                    <span class="data-label w-25">Date of Birth</span>
+                    <span class="data-value w-100" id="dob"><?php //echo $cuPhone; ?></span>
+                    <span class="d-none" id="dob">dob</span>
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="dob_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- Address data-item -->
+            <script>
+                function dob_Switch(e) {
+                    let txt                 = document.getElementById('dob').innerText;
+                    let input               = document.getElementById('dob').innerText;
+                    let element             = document.getElementById('col_dob');
 
-                element.innerHTML       = `
-                    <span class="data-label">Date of Birth</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}" value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='dob_Reset(this)'><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">Date of Birth</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="dob" id="dob" placeholder="Enter Date of Birth" value="<?php echo set_value('dob', isset($user) ? $user->dob : $cuDOB); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function dob_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_dob');
+                function dob_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_dob');
 
-                element.innerHTML = `
-                <span class="data-label">Date of Birth</span>
-                <span class="data-value" id="dob"><?php //echo $cuPhone; ?></span>
-                <span class="d-none" id="dob_inputType">dob</span>
-                `;
-            }
-        </script>
-        <div class="data-item">
-            <div class="data-col" id="col_address">
-                <span class="data-label">Address</span>
-                <span class="data-value" id="address"><?php echo $cuAddress; ?></span>
-                <span class="d-none" id="address_inputType">address</span>
-            </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="address_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- Street Address data-item -->
-        <script>
-            function address_Switch(e) {
-                let txt                 = document.getElementById('address').innerText;
-                let input               = document.getElementById('address_inputType').innerText;
-                let element             = document.getElementById('col_address');
+                    element.innerHTML = `
+                    <span class="data-label w-25">Date of Birth</span>
+                    <span class="data-value w-100" id="dob"><?php //echo $cuPhone; ?></span>
+                    <span class="d-none" id="dob">dob</span>
+                    `;
+                }
+            </script>
+            */
+            ?>
+            <div class="data-item">
+                <div class="data-col" id="col_address">
+                    <span class="data-label w-25">Address</span>
+                    <span class="data-value w-100" id="address"><?php echo $cuAddress; ?></span>
+                    <input type="hidden" name="address" id="address" value="<?php echo set_value('address', isset($user) ? $user->address : $cuAddress); ?>">	
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="address_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- Street Address data-item -->
+            <script>
+                function address_Switch(e) {
+                    let txt                 = document.getElementById('address').innerText;
+                    let input               = document.getElementById('address').innerText;
+                    let element             = document.getElementById('col_address');
 
-                element.innerHTML       = `
-                    <span class="data-label">Address</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}"' value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='address_Reset(this)><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">Address</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="address" id="address" placeholder="Enter Address" value="<?php echo set_value('address', isset($user) ? $user->address : $cuAddress); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function address_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_address');
+                function address_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_address');
 
-                element.innerHTML = `
-                <span class="data-label">Address</span>
-                <span class="data-value" id="address"><?php echo $cuAddress; ?></span>
-                <span class="d-none" id="address_inputType">address</span>
-                `;
-            }
-        </script>
-        <div class="data-item">
-            <div class="data-col" id="col_city">
-                <span class="data-label">City</span>
-                <span class="data-value" id="city"><?php echo $cuCity; ?></span>
-                <span class="d-none" id="city_inputType">city</span>
-            </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="city_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- City data-item -->
-        <script>
-            function city_Switch(e) {
-                let txt                 = document.getElementById('city').innerText;
-                let input               = document.getElementById('city_inputType').innerText;
-                let element             = document.getElementById('col_city');
+                    element.innerHTML = `
+                    <span class="data-label w-25">Address</span>
+                    <span class="data-value w-100" id="address"><?php echo $cuAddress; ?></span>
+                    <input type="hidden" name="address" id="address" value="<?php echo set_value('address', isset($user) ? $user->address : $cuAddress); ?>">	
+                    `;
+                }
+            </script>
+            <div class="data-item">
+                <div class="data-col" id="col_city">
+                    <span class="data-label w-25">City</span>
+                    <span class="data-value w-100" id="city"><?php echo $cuCity; ?></span>
+                    <input type="hidden" name="city" id="city" value="<?php echo set_value('city', isset($user) ? $user->city : $cuCity); ?>">	
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="city_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- City data-item -->
+            <script>
+                function city_Switch(e) {
+                    let txt                 = document.getElementById('city').innerText;
+                    let input               = document.getElementById('city').innerText;
+                    let element             = document.getElementById('col_city');
 
-                element.innerHTML       = `
-                    <span class="data-label">City</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}" value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='city_Reset(this)'><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">City</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="city" id="city" placeholder="Enter City" value="<?php echo set_value('city', isset($user) ? $user->city : $cuCity); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function city_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_city');
+                function city_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_city');
 
-                element.innerHTML = `
-                <span class="data-label">City</span>
-                <span class="data-value" id="city"><?php echo $cuCity; ?></span>
-                <span class="d-none" id="city_inputType">city</span>
-                `;
-            }
-        </script>
-        <div class="data-item">
-            <div class="data-col" id="col_state">
-                <span class="data-label">State</span>
-                <span class="data-value" id="state"><?php echo $cuState; ?></span>
-                <span class="d-none" id="state_inputType">state</span>
-            </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="state_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- State data-item -->
-        <script>
-            function state_Switch(e) {
-                let txt                 = document.getElementById('state').innerText;
-                let input               = document.getElementById('state_inputType').innerText;
-                let element             = document.getElementById('col_state');
+                    element.innerHTML = `
+                    <span class="data-label w-25">City</span>
+                    <span class="data-value w-100" id="city"><?php echo $cuCity; ?></span>
+                    <input type="hidden" name="city" id="city" value="<?php echo set_value('city', isset($user) ? $user->city : $cuCity); ?>">	
+                    `;
+                }
+            </script>
+            <div class="data-item">
+                <div class="data-col" id="col_state">
+                    <span class="data-label w-25">State</span>
+                    <span class="data-value w-100" id="state"><?php echo $cuState; ?></span>
+                    <input type="hidden" name="state" id="state" value="<?php echo set_value('state', isset($user) ? $user->state : $cuState); ?>">	
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="state_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- State data-item -->
+            <script>
+                function state_Switch(e) {
+                    let txt                 = document.getElementById('state').innerText;
+                    let input               = document.getElementById('state').innerText;
+                    let element             = document.getElementById('col_state');
 
-                element.innerHTML       = `
-                    <span class="data-label">State</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}" value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='state_Reset(this)'><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">State</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="state" id="state" placeholder="Enter State" value="<?php echo set_value('state', isset($user) ? $user->state : $cuState); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function state_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_state');
+                function state_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_state');
 
-                element.innerHTML = `
-                <span class="data-label">State</span>
-                <span class="data-value" id="state"><?php echo $cuState; ?></span>
-                <span class="d-none" id="state_inputType">state</span>
-                `;
-            }
-        </script>
-        <div class="data-item">
-            <div class="data-col" id="col_country">
-                <span class="data-label">Country</span>
-                <span class="data-value" id="country"><?php echo $cuCountry; ?></span>
-                <span class="d-none" id="country_inputType">country</span>
-            </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="country_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- Country data-item -->
-        <script>
-            function country_Switch(e) {
-                let txt                 = document.getElementById('country').innerText;
-                let input               = document.getElementById('country_inputType').innerText;
-                let element             = document.getElementById('col_country');
+                    element.innerHTML = `
+                    <span class="data-label w-25">State</span>
+                    <span class="data-value w-100" id="state"><?php echo $cuState; ?></span>
+                    <input type="hidden" name="state" id="state" value="<?php echo set_value('state', isset($user) ? $user->state : $cuState); ?>">	
+                    `;
+                }
+            </script>
+            <div class="data-item">
+                <div class="data-col" id="col_country">
+                    <span class="data-label w-25">Country</span>
+                    <span class="data-value w-100" id="country"><?php echo $cuCountry; ?></span>
+                    <input type="hidden" name="country" id="country" value="<?php echo set_value('country', isset($user) ? $user->country : $cuCountry); ?>">	
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="country_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- Country data-item -->
+            <script>
+                function country_Switch(e) {
+                    let txt                 = document.getElementById('country').innerText;
+                    let input               = document.getElementById('country').innerText;
+                    let element             = document.getElementById('col_country');
 
-                element.innerHTML       = `
-                    <span class="data-label">Country</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}" value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='country_Reset(this)'><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">Country</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="country" id="country" placeholder="Enter Country" value="<?php echo set_value('country', isset($user) ? $user->country : $cuCountry); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function country_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_country');
+                function country_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_country');
 
-                element.innerHTML = `
-                <span class="data-label">Country</span>
-                <span class="data-value" id="country"><?php echo $cuCountry; ?></span>
-                <span class="d-none" id="country_inputType">country</span>
-                `;
-            }
-        </script>
-        <div class="data-item">
-            <div class="data-col" id="col_zipcode">
-                <span class="data-label">Zip Code</span>
-                <span class="data-value" id="zipcode"><?php echo $cuZipCode; ?></span>
-                <span class="d-none" id="zipcode_inputType">zipcode</span>
-            </div>
-            <div class="data-col data-col-end">
-                <span class="data-more" onClick="zipcode_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
-            </div>
-        </div><!-- Zip Code data-item -->
-        <script>
-            function zipcode_Switch(e) {
-                let txt                 = document.getElementById('zipcode').innerText;
-                let input               = document.getElementById('zipcode_inputType').innerText;
-                let element             = document.getElementById('col_zipcode');
+                    element.innerHTML = `
+                    <span class="data-label w-25">Country</span>
+                    <span class="data-value w-100" id="country"><?php echo $cuCountry; ?></span>
+                    <input type="hidden" name="country" id="country" value="<?php echo set_value('country', isset($user) ? $user->country : $cuCountry); ?>">	
+                    `;
+                }
+            </script>
+            <div class="data-item">
+                <div class="data-col" id="col_zipcode">
+                    <span class="data-label w-25">Zip Code</span>
+                    <span class="data-value w-100" id="zipcode"><?php echo $cuZipCode; ?></span>
+                    <input type="hidden" name="zipcode" id="zipcode" value="<?php echo set_value('zipcode', isset($user) ? $user->zipcode : $cuZipCode); ?>">	
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <span class="data-more" onClick="zipcode_Switch(this)"><em class="icon ni ni-forward-ios"></em></span>
+                </div>
+            </div><!-- Zip Code data-item -->
+            <script>
+                function zipcode_Switch(e) {
+                    let txt                 = document.getElementById('zipcode').innerText;
+                    let input               = document.getElementById('zipcode').innerText;
+                    let element             = document.getElementById('col_zipcode');
 
-                element.innerHTML       = `
-                    <span class="data-label">Zip Code</span>
-                    <form class="data-value" id="editPersonalInfo">
-                        <span class="d-none" id="old-text">${txt}</span>
-                        <span class="d-none" id="${input}_inputType">${input}</span>
-                        <div class="input-group">
-                            <input type="hidden" name="id" id="id" value="<?php echo set_value('id', isset($user) ? $user->id : $cuID); ?>" />
-                            <input class="form-control" name="${input}" id="${input}" value='${txt}' />
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" type="submit" name="register" id="submitUserInfo" value="Submit" />
-                                <button class="btn btn-sm btn-danger text-white" type="button" onblur='zipcode_Reset(this)'><i class="icon ni ni-cross-circle"></i></button>
-                            </div> 
-                        </div>
-                        <?php Events::trigger('render_user_form'); ?>
-                    </form>
-                `;
-                document.getElementsByTagName('input')[0].focus();
-            }
+                    element.innerHTML       = `
+                        <span class="data-label w-25">Zip Code</span>
+                        <span class="data-value w-100">
+                            <span class="d-none" id="old-text">${txt}</span>
+                            <span class="d-none" id="${input}">${input}</span>
+                            <div class="<?php echo $formGroup; ?>">      
+                                <div class="<?php echo $formConCol; ?>">       
+                                    <input type="text" class="<?php echo $formControl; ?>" name="zipcode" id="zipcode" placeholder="Enter Zip Code" value="<?php echo set_value('zipcode', isset($user) ? $user->zipcode : 'cuZipCode'); ?>">	
+                                </div>
+                            </div>
+                        </span>
+                    `;
+                    document.getElementsByTagName('input')[0].focus();
+                }
 
-            function zipcode_Reset(e) {
-                let txt                 = document.getElementById('old-text').innerHTML;
-                let element             = document.getElementById('col_zipcode');
+                function zipcode_Reset(e) {
+                    let txt                 = document.getElementById('old-text').innerHTML;
+                    let element             = document.getElementById('col_zipcode');
 
-                element.innerHTML = `
-                <span class="data-label">Zip Code</span>
-                <span class="data-value" id="zipcode"><?php echo $cuZipCode; ?></span>
-                <span class="d-none" id="zipcode_inputType">zipcode</span>
-                `;
-            }
-        </script>
-    </div><!-- data-list -->
+                    element.innerHTML = `
+                    <span class="data-label w-25">Zip Code</span>
+                    <span class="data-value w-100" id="zipcode"><?php echo $cuZipCode; ?></span>
+                    <span class="d-none" id="zipcode">zipcode</span>
+                    `;
+                }
+            </script>
+            <div class="data-item">
+                <div class="data-col" id="col_zipcode">
+                    <span class="data-label w-25"></span>
+                    <span class="data-value w-100" id="zipcode"></span>
+                    <input type="hidden" name="zipcode" id="zipcode" value="<?php echo set_value('zipcode', isset($user) ? $user->zipcode : $cuZipCode); ?>">	
+                </div>
+                <div class="data-col data-col-end w-15">
+                    <input class="btn btn-primary btn-sm" type="submit" name="submit" id="submit" value="Submit" />
+                </div>
+            </div><!-- Zip Code data-item -->
+        </div><!-- data-list -->
+        <?php 
+            Events::trigger('render_user_form');
+        ?>
+    </form>
     <?php 
     /** 
     <div class="nk-data data-list">
@@ -626,32 +602,32 @@
         </div>
         <div class="data-item">
             <div class="data-col">
-                <span class="data-label">Language</span>
-                <span class="data-value">English (United State)</span>
+                <span class="data-label w-25">Language</span>
+                <span class="data-value w-100">English (United State)</span>
             </div>
-            <div class="data-col data-col-end"><a href="#" class="link link-primary">Change Language</a></div>
+            <div class="data-col data-col-end w-15"><a href="#" class="link link-primary">Change Language</a></div>
         </div><!-- data-item -->
         <div class="data-item">
             <div class="data-col">
-                <span class="data-label">Date Format</span>
-                <span class="data-value">M d, YYYY</span>
+                <span class="data-label w-25">Date Format</span>
+                <span class="data-value w-100">M d, YYYY</span>
             </div>
-            <div class="data-col data-col-end"><a href="#" class="link link-primary">Change</a></div>
+            <div class="data-col data-col-end w-15"><a href="#" class="link link-primary">Change</a></div>
         </div><!-- data-item -->
         <div class="data-item">
             <div class="data-col">
-                <span class="data-label">Timezone</span>
-                <span class="data-value">Bangladesh (GMT +6)</span>
+                <span class="data-label w-25">Timezone</span>
+                <span class="data-value w-100">Bangladesh (GMT +6)</span>
             </div>
-            <div class="data-col data-col-end"><a href="#" class="link link-primary">Change</a></div>
+            <div class="data-col data-col-end w-15"><a href="#" class="link link-primary">Change</a></div>
         </div><!-- data-item -->
     </div><!-- data-list -->
     */
     ?>
 </div><!-- .nk-block -->
 <script type="text/javascript"> 
-const userInfoForm		    = document.querySelector("#editPersonalInfo");
-const submitUserInfo	    = {};
+const userInfoForm		    = document.querySelector("#updateInvestorProfileForm");
+const userInfoSubmit	    = {};
 if (userInfoForm) { 
     userInfoForm.addEventListener("submit", async (e) => {
         //Do no refresh

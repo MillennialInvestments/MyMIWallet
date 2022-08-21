@@ -86,7 +86,8 @@ $dashboardData							= array(
             ?>
 		</div>
 		<div class="col-12 col-md-9">
-			<?php $this->load->view('User/Dashboard/index/Announcements'); ?>
+			<?php //$this->load->view('User/Dashboard/index/Announcements'); ?>
+			<?php $this->load->view('User/Dashboard/index/Balances', $dashboardData); ?>
 		</div>
 	</div>
 </div>

@@ -7,7 +7,7 @@
  * SUBMISSION PROCEDURES
  *      - Response Setup
  *      - Bug/Report Conversions within Response Form
- *      - Adjustment to topic, subject Database Fields
+ *      - Adjustment to topic, subject Database Fields[\jm ]
  *      - Further development of Communications Manager for other functionality in one manager
  *      - FAQ Development
  */

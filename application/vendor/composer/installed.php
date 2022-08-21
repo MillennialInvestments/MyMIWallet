@@ -196,6 +196,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'seunmatt/codeigniter-log-viewer' => array(
+            'pretty_version' => '1.1.2',
+            'version' => '1.1.2.0',
+            'reference' => '94bfe30c9172522352b39b64a85d007028381b5c',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../seunmatt/codeigniter-log-viewer',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'symfony/css-selector' => array(
             'pretty_version' => 'v5.4.3',
             'version' => '5.4.3.0',

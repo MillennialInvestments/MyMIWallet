@@ -61,9 +61,9 @@ if (empty($currentUserID)) {
                         <a href="<?php echo site_url('Customer-Support'); ?>" target="_blank" class="nav-link intro-nav-link">Need Help?</a>
                     </li>
                 </ul>
-                <div class="intro-action">
+                <div class="intro-action pt-1">
                     <a href="<?php echo site_url('/login'); ?>" class="btn btn-primary">
-                        <span>Login</span>
+                        <span>LOGIN</span>
                     </a>
                 </div>
             </div>

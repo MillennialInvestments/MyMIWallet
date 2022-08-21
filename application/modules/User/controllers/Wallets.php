@@ -666,12 +666,45 @@ class Wallets extends Admin_Controller
             $account_number					= $this->input->post('account_number');
             $verify_account					= $this->input->post('verify_account');
             $nickname						= $this->input->post('nickname');
+            // User Activity Logger Configuration
+            $cuID                           = $user_id;
+            $thisController                 = $this->router->fetch_class();
+            $thisMethod                     = $this->router->fetch_method();
+            $thisURL                        = $this->uri->uri_string();
+            $thisFullURL                    = current_url();
+            $betaStatus                     = $this->config->item('beta');
+            if ($betaStatus === 0) {
+                $beta                       = 'No';
+            } else {
+                $beta                       = 'Yes';
+            }
             
             if ($this->wallet_model->connect_bank_account($date, $time, $user_id, $user_email, $wallet_id, $account_type, $bank_account_owner, $bank_name, $routing_number, $account_number, $verify_account, $nickname)) {
+                $thisComment                = 'User (' . $cuID . ') added bank account successfully: ' . $thisURL;
+                $this->mymilogger
+                    ->user($cuID) //Set UserID, who created this  Action
+                    ->beta($beta) //Set whether in Beta or nto
+                    ->type('User: Bank Account') //Entry type like, Post, Page, Entry
+                    ->controller($thisController)
+                    ->method($thisMethod)
+                    ->url($thisURL)
+                    ->full_url($thisFullURL)
+                    ->comment($thisComment) //Token identify Action
+                    ->log(); //Add Database Entry
                 Template::set_message('Bank Account Connected Successfully', 'success');
                 redirect($redirectURL);
             } else {
-                
+                $thisComment                = 'ERROR: Failed to add User (' . $cuID . ') bank account successfully: ' . $thisURL;
+                $this->mymilogger
+                    ->user($cuID) //Set UserID, who created this  Action
+                    ->beta($beta) //Set whether in Beta or nto
+                    ->type('ERROR: Added Bank Account') //Entry type like, Post, Page, Entry
+                    ->controller($thisController)
+                    ->method($thisMethod)
+                    ->url($thisURL)
+                    ->full_url($thisFullURL)
+                    ->comment($thisComment) //Token identify Action
+                    ->log(); //Add Database Entry                
                 // user creation failed, this should never happen
                 $data->error = 'There was a problem submitting your request. Please try again.';
                 

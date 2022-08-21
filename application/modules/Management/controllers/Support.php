@@ -29,6 +29,8 @@ class Support extends Admin_Controller
     /** @var array Site's settings to be passed to the view. */
     private $siteSettings;
 
+    private $logViewer;
+
     /**
      * Setup the required libraries etc.
      *
@@ -48,6 +50,8 @@ class Support extends Admin_Controller
         //~ $this->load->module('\'' . $testModule . '\'');
 
         //$this->lang->load('Blog_lang');
+        $this->logViewer = new \CILogViewer\CILogViewer();
+
         $this->siteSettings = $this->settings_lib->find_all();
         if ($this->siteSettings['auth.password_show_labels'] == 1) {
             add_module_js('users', 'password_strength.js');
@@ -68,6 +72,20 @@ class Support extends Admin_Controller
         
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
+        Template::render();
+    }
+
+    public function Logs()
+    {
+        $errorLogs  = $this->logViewer->showLogs();
+        $pageType   = 'Standard';
+        $pageName   = 'Management_Support_Logs';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::set('errorLogs', $errorLogs);
         Template::render();
     }
 

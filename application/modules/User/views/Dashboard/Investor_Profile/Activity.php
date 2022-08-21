@@ -16,18 +16,23 @@
     <table class="table table-ulogs">
         <thead class="table-light">
             <tr>
-                <th class="tb-col-os"><span class="overline-title">Activity</span></th>
                 <th class="tb-col-ip"><span class="overline-title">Date</span></th>
+                <th class="tb-col-os"><span class="overline-title">Activity</span></th>
             </tr>
         </thead>
         <tbody>
             <?php 
-            $getUserActivity            = $this->investor_model->get_user_activity($cuID); 
-            foreach ($getUserActivity->result_array() as $userActivity) {
+            $this->db->from('bf_act_logger'); 
+            $this->db->where('created_by', $cuID); 
+            $this->db->order_by('id', 'DESC'); 
+            $this->db->limit(20); 
+            $getUserActivities               = $this->db->get();
+            // print_r($getUserActivities->result_array()); 
+            foreach ($getUserActivities->result_array() as $userActivity) {
                 echo '
             <tr>
-                <td class="tb-col-os">' . $userActivity['activity'] . '</td>
                 <td class="tb-col-ip"><span class="sub-text">' . $userActivity['created_on'] . '</span></td>
+                <td class="tb-col-os">' . $userActivity['comment'] . '</td>
             </tr>
                 ';
             }
