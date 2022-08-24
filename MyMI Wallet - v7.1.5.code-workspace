@@ -1,13 +1,16 @@
 {
 	"folders": [
         {
-            "path": "."
+            "name": "Dashlite",
+            "path": "..\\..\\..\\Dashlite"
         },
         {
-            "path": "../../../Dashlite"
-        },
-        {
+            "name": "RealizeFi",
             "path": "RealizeFi"
+        },
+        {
+            "name": "MyMi-v1.5",
+            "path": "."
         }
     ],
     "settings": {
