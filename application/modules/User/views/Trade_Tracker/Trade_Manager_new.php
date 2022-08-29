@@ -26,13 +26,14 @@ $message = '';
  */
 $status = '0';
 
-$response = array('status' => $status, 'message' => $message);
 
-function throwMsg($errMsg)
+function throwMsg($errMsg, $status)
 {
-    global $status, $response;
+
+    $response = array('status' => $status, 'message' => '');
 
     $response['message'] = $errMsg;
+    $response['status'] = $status;
     header('Content-Type: application/json');
     if ($status == '0') http_response_code(400);
     else http_response_code(200);
@@ -67,9 +68,10 @@ function strIsStrArray($str)
 
 function checkAndPrepTrade($trade)
 {
+    $status = '0';
     //LINE BELOW FIXES A PRINCIPE IN FRONTEND TRADES
     //* REFER TO RULES#1
-    if ($trade['closed_ref'] != "-1" && $trade['closed_ref'] != "[]") throwMsg('The trade has meaningless presence of both a closed_ref and a closed_list');
+    if ($trade['closed_ref'] != "-1" && $trade['closed_ref'] != "[]") throwMsg('The trade has meaningless presence of both a closed_ref and a closed_list', $status);
 
     $checkedTrade = [];
 
@@ -78,23 +80,23 @@ function checkAndPrepTrade($trade)
         if (empty($trade[$key])) {
             $checkedTrade['key'] = '';
         } else {
-            if (gettype($value) != 'string') throwMsg('The ' + $key + ' field does not hold a string value');
+            if (gettype($value) != 'string') throwMsg('The ' + $key + ' field does not hold a string value', $status);
 
             switch ($key) {
                 case 'json_user_fields':
-                    if (json_decode($value) == null) throwMsg('The juf field is not valid json');
+                    if (json_decode($value) == null) throwMsg('The juf field is not valid json', $status);
                     break;
                 case 'saved_sorting':
-                    if (intval($value) == 0) throwMsg('The saved sorting is not a valid integer or is 0');
+                    if (intval($value) == 0) throwMsg('The saved sorting is not a valid integer or is 0', $status);
                     break;
                 case 'closed_ref':
-                    if (intval($value) != 0 && intval($value) < -1) throwMsg('The closed ref is a negative integer');
+                    if (intval($value) != 0 && intval($value) < -1) throwMsg('The closed ref is a negative integer', $status);
                     break;
                 case 'closed_list':
-                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array');
+                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array', $status);
                     break;
                 case 'stats_interpolated_fields':
-                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array');
+                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array', $status);
                     break;
 
                     /*
@@ -120,15 +122,15 @@ function checkAndPrepTrade($trade)
 }
 
 if (empty($tradeForm)) {
-    throwMsg('The received obj was empty');
+    throwMsg('The received obj was empty', $status);
 } else {
     switch ($tradeForm['tag']) {
         case 'New':
             if (count($this->db->get_where('bf_users_trades', array('id' => $trade['id']))->result_array()) != 0)
-                throwMsg('Trade with ' + $trade['id'] + ' already exists');
+                throwMsg('Trade with ' + $trade['id'] + ' already exists', $status);
 
             if ($trade['pseudo_id'] == $trade['id'])
-                throwMsg('New trade contained equal id and pseudoId');
+                throwMsg('New trade contained equal id and pseudoId', $status);
             //Clean all the unnecessary elements
             unset($trade['id']);
 
@@ -207,13 +209,13 @@ if (empty($tradeForm)) {
             }
 
             $status = '1';
-            throwMsg(json_encode($newTrade));
+            throwMsg(json_encode($newTrade), $status);
 
             break;
         case 'Edit':
-            if ($trade['id'] == '') throwMsg('Received to-edit trade with no id');
-            if ($trade['id'] != $trade['pseudo_id']) throwMsg('Received to-edit trade with no id');
-            if ($trade['id'] != $trade['pseudo_id']) throwMsg('Editing non-saved trade');
+            if ($trade['id'] == '') throwMsg('Received to-edit trade with no id', $status);
+            if ($trade['id'] != $trade['pseudo_id']) throwMsg('Received to-edit trade with no id', $status);
+            if ($trade['id'] != $trade['pseudo_id']) throwMsg('Editing non-saved trade', $status);
 
 
             $postedTrade = checkAndPrepTrade($trade);
@@ -223,10 +225,10 @@ if (empty($tradeForm)) {
 
             //Edit the trade with the given id in the database
             $this->db->where('id', $trade['id']);
-            if (!$this->db->update('bf_users_trades', $postedTrade)) throwMsg('Failed updating the trade in the DB');
+            if (!$this->db->update('bf_users_trades', $postedTrade)) throwMsg('Failed updating the trade in the DB', $status);
 
             $status = '1';
-            throwMsg(json_encode($newTrade));
+            throwMsg(json_encode($newTrade), $status);
             break;
         case 'Delete':
             //TODO: Move to archived db
@@ -234,7 +236,7 @@ if (empty($tradeForm)) {
             $walkingDead = $this->db->get_where('bf_users_trades', array('id' => $trade['id']))->result_array();
             if (count($walkingDead) == 0) {
                 $status = '2';
-                throwMsg('Called trade did not exist anymore: id-' + $trade['id']);
+                throwMsg('Called trade did not exist anymore: id-' + $trade['id'], $status);
             }
 
             $this->db->delete('bf_userrs_trades', array('id' => $trade['id']));
@@ -292,9 +294,9 @@ if (empty($tradeForm)) {
             }
 
             $status = '1';
-            throwMsg('Trade and relatives deleted/updated succesfully');
+            throwMsg('Trade and relatives deleted/updated succesfully', $status);
             break;
         default:
-            throwMsg('The tag obj was not of type New|Edit|Delete');
+            throwMsg('The tag obj was not of type New|Edit|Delete', $status);
     }
 }
