@@ -57,6 +57,11 @@ Instead, if a parent comes AFTER the children, which means that the children hav
 then we only want the right ids of those children, which are saved in the origin object (and get updated only on succesful db updates)
 
 
+RULES:
+
+-#1
+The trade cannot have both a closed_ref != -1 and a closed list != []
+
 */
 //START OF THE PROGRAM
 let debug = true;
@@ -2596,13 +2601,17 @@ class Row2 {
                     closeBtn.click();
                 }
             }
+            function windowClickAwayFunc(event) {
+                const target = event.target;
+                if (promptBox.dataset.visible == "true"
+                    && target != null
+                    && !promptBox.contains(target)) {
+                    closeBtn.click();
+                }
+            }
             //Function below runs function above
             window.addEventListener("keyup", windowCloseKeyFunc);
-            // window.addEventListener("click", function (event) {
-            // 	if (promptBox.dataset.visible == "true" && event.target != promptBox) {
-            // 		closeBtn.click();
-            // 	}
-            // });
+            window.addEventListener("mouseup", windowClickAwayFunc);
             function submitClose() {
                 const closeValue = inputBox.value;
                 //Error checking
@@ -2639,6 +2648,7 @@ class Row2 {
                 errorBox.remove();
                 infoBox.remove();
                 window.removeEventListener("keyup", windowCloseKeyFunc);
+                window.removeEventListener("mouseup", windowClickAwayFunc);
             }
         };
         /**
@@ -2655,9 +2665,12 @@ class Row2 {
                                 return;
                             }
                         }
+                        //We don't need to "paint" the dbObject because the check function in the backend will take care of it
                         const tag = "Delete";
                         const dbObject = Object.assign({}, this.current);
                         //! Remember to also delete the linked properties when deleting a row. So if this has a linked ref, go delete this from the set (reverse save)
+                        //* We expect a PARENT trade to also delete the childs in the backend before anything else happens.
+                        // When we delete child, we expect the status to come back as 2
                         const request = await fetch("https://www.mymiwallet.com/Trade-Tracker/Trade-Manager", {
                             method: "POST",
                             credentials: "same-origin",
@@ -2667,7 +2680,7 @@ class Row2 {
                         const data = await request.json();
                         //Drop from every list, then remove
                         //Debug if
-                        if (data.status == "success") {
+                        if (data.status == "1" || (data.status == "2" && consequential)) {
                             //SAY THAT IF IT HAS CLOSED FIELDS ALSO THOSE WILL BE DELETED
                             if (this.current[gin("30")] != "[]") {
                                 //Delete all sub fields
@@ -3014,7 +3027,7 @@ class Row2 {
                 if (this.current[gin("30")] != "[]") {
                     changeVisible(this.state.dropDown.target, true);
                     //DEFAULT EXPANSION
-                    this.dropdownChildren(false);
+                    this.dropdownChildren(this.state.dropDown.expanded);
                 }
                 //Forward check
                 if (this.current[gin("29")] != "-1") {

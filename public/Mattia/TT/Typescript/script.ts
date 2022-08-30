@@ -43,8 +43,6 @@ SMALLER
 
 ACTIVE
 - Database Integration
-- Close prompt double opening bug (zdarkener or event listener)
-- ! When you close a trade the dropdown hides itself (BUG)
 
 
 WEIRDS:
@@ -3017,7 +3015,7 @@ class Row2 {
 				if (this.current[gin("30")] != "[]") {
 					changeVisible(this.state.dropDown.target as HTMLElement, true)
 					//DEFAULT EXPANSION
-					this.dropdownChildren(false);
+					this.dropdownChildren(this.state.dropDown.expanded);
 				}
 				//Forward check
 				if (this.current[gin("29")] != "-1") {
@@ -3511,13 +3509,18 @@ class Row2 {
 				closeBtn.click();
 			}
 		}
+		function windowClickAwayFunc(event: MouseEvent) {
+			const target = event.target as Node;
+			if (promptBox.dataset.visible == "true"
+				&& target != null
+				&& !promptBox.contains(target)
+			) {
+				closeBtn.click();
+			}
+		}
 		//Function below runs function above
 		window.addEventListener("keyup", windowCloseKeyFunc);
-		// window.addEventListener("click", function (event) {
-		// 	if (promptBox.dataset.visible == "true" && event.target != promptBox) {
-		// 		closeBtn.click();
-		// 	}
-		// });
+		window.addEventListener("mouseup", windowClickAwayFunc);
 		function submitClose() {
 			const closeValue = inputBox.value;
 
@@ -3554,6 +3557,7 @@ class Row2 {
 			errorBox.remove();
 			infoBox.remove();
 			window.removeEventListener("keyup", windowCloseKeyFunc);
+			window.removeEventListener("mouseup", windowClickAwayFunc);
 		}
 	};
 
