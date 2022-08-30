@@ -15,7 +15,6 @@ $tradeForm                                    = json_decode($tradeForm, true);
 
 $trade = $tradeForm['trade'];
 
-$message = '';
 /**
  * What the response of this api will look like;
  * 
@@ -24,16 +23,13 @@ $message = '';
  * - 2: Alternative
  * @var '1' | '0' | '2'
  */
-$status = '0';
 
 
-function throwMsg($errMsg, $status)
+function throwMsg($msg, $status = '0')
 {
 
-    $response = array('status' => $status, 'message' => '');
+    $response = array('status' => $status, 'message' => $msg);
 
-    $response['message'] = $errMsg;
-    $response['status'] = $status;
     header('Content-Type: application/json');
     if ($status == '0') http_response_code(400);
     else http_response_code(200);
@@ -68,10 +64,10 @@ function strIsStrArray($str)
 
 function checkAndPrepTrade($trade)
 {
-    $status = '0';
+
     //LINE BELOW FIXES A PRINCIPE IN FRONTEND TRADES
     //* REFER TO RULES#1
-    if ($trade['closed_ref'] != "-1" && $trade['closed_ref'] != "[]") throwMsg('The trade has meaningless presence of both a closed_ref and a closed_list', $status);
+    if ($trade['closed_ref'] != "-1" && $trade['closed_ref'] != "[]") throwMsg('The trade has meaningless presence of both a closed_ref and a closed_list');
 
     $checkedTrade = [];
 
@@ -80,23 +76,23 @@ function checkAndPrepTrade($trade)
         if (empty($trade[$key])) {
             $checkedTrade['key'] = '';
         } else {
-            if (gettype($value) != 'string') throwMsg('The ' + $key + ' field does not hold a string value', $status);
+            if (gettype($value) != 'string') throwMsg('The ' + $key + ' field does not hold a string value');
 
             switch ($key) {
                 case 'json_user_fields':
-                    if (json_decode($value) == null) throwMsg('The juf field is not valid json', $status);
+                    if (json_decode($value) == null) throwMsg('The juf field is not valid json');
                     break;
                 case 'saved_sorting':
-                    if (intval($value) == 0) throwMsg('The saved sorting is not a valid integer or is 0', $status);
+                    if (intval($value) == 0) throwMsg('The saved sorting is not a valid integer or is 0');
                     break;
                 case 'closed_ref':
-                    if (intval($value) != 0 && intval($value) < -1) throwMsg('The closed ref is a negative integer', $status);
+                    if (intval($value) != 0 && intval($value) < -1) throwMsg('The closed ref is a negative integer');
                     break;
                 case 'closed_list':
-                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array', $status);
+                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array');
                     break;
                 case 'stats_interpolated_fields':
-                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array', $status);
+                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array');
                     break;
 
                     /*
@@ -122,15 +118,15 @@ function checkAndPrepTrade($trade)
 }
 
 if (empty($tradeForm)) {
-    throwMsg('The received obj was empty', $status);
+    throwMsg('The received obj was empty');
 } else {
     switch ($tradeForm['tag']) {
         case 'New':
             if (count($this->db->get_where('bf_users_trades', array('id' => $trade['id']))->result_array()) != 0)
-                throwMsg('Trade with ' + $trade['id'] + ' already exists', $status);
+                throwMsg('Trade with ' + $trade['id'] + ' already exists');
 
             if ($trade['pseudo_id'] == $trade['id'])
-                throwMsg('New trade contained equal id and pseudoId', $status);
+                throwMsg('New trade contained equal id and pseudoId');
             //Clean all the unnecessary elements
             unset($trade['id']);
 
@@ -208,14 +204,13 @@ if (empty($tradeForm)) {
                 }
             }
 
-            $status = '1';
-            throwMsg(json_encode($newTrade), $status);
+            throwMsg(json_encode($newTrade), '1');
 
             break;
         case 'Edit':
-            if ($trade['id'] == '') throwMsg('Received to-edit trade with no id', $status);
-            if ($trade['id'] != $trade['pseudo_id']) throwMsg('Received to-edit trade with no id', $status);
-            if ($trade['id'] != $trade['pseudo_id']) throwMsg('Editing non-saved trade', $status);
+            if ($trade['id'] == '') throwMsg('Received to-edit trade with no id');
+            if ($trade['id'] != $trade['pseudo_id']) throwMsg('Received to-edit trade with no id');
+            if ($trade['id'] != $trade['pseudo_id']) throwMsg('Editing non-saved trade');
 
 
             $postedTrade = checkAndPrepTrade($trade);
@@ -225,18 +220,16 @@ if (empty($tradeForm)) {
 
             //Edit the trade with the given id in the database
             $this->db->where('id', $trade['id']);
-            if (!$this->db->update('bf_users_trades', $postedTrade)) throwMsg('Failed updating the trade in the DB', $status);
+            if (!$this->db->update('bf_users_trades', $postedTrade)) throwMsg('Failed updating the trade in the DB');
 
-            $status = '1';
-            throwMsg(json_encode($newTrade), $status);
+            throwMsg(json_encode($newTrade), '1');
             break;
         case 'Delete':
             //TODO: Move to archived db
 
             $walkingDead = $this->db->get_where('bf_users_trades', array('id' => $trade['id']))->result_array();
             if (count($walkingDead) == 0) {
-                $status = '2';
-                throwMsg('Called trade did not exist anymore: id-' + $trade['id'], $status);
+                throwMsg('Called trade did not exist anymore: id-' + $trade['id'], '2');
             }
 
             $this->db->delete('bf_userrs_trades', array('id' => $trade['id']));
@@ -293,10 +286,9 @@ if (empty($tradeForm)) {
                 }
             }
 
-            $status = '1';
-            throwMsg('Trade and relatives deleted/updated succesfully', $status);
+            throwMsg('Trade and relatives deleted/updated succesfully', '1');
             break;
         default:
-            throwMsg('The tag obj was not of type New|Edit|Delete', $status);
+            throwMsg('The tag obj was not of type New|Edit|Delete');
     }
 }
