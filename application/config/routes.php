@@ -118,6 +118,7 @@ Route::any('Announcements/Post', 'Management/Announcements/Post');
 Route::any('Dashboard', 'User/Dashboard/index');
 Route::any('Budget', 'User/Dashboard/Budget');
 Route::any('Budget/Income', 'User/Dashboard/Budget_Income');
+Route::any('Budget/Income/Add', 'User/Dashboard/Budget_Add_Account');
 Route::any('Markets/(:any)', 'User/Dashboard/Markets');
 
 // User - Accounts

@@ -40,9 +40,25 @@ SMALLER
 - Multiple newRow setup
 - Share trades
 - Export/Import User Preferences
+- Seach Box
 
 ACTIVE
+- Database Integration
 
+
+WEIRDS:
+
+-#1
+In the backend we only do a "parent check".
+This means that if a parent comes in with pseudoIds of children, they will be able to change those.
+Instead, if a parent comes AFTER the children, which means that the children have already been saved on the db
+then we only want the right ids of those children, which are saved in the origin object (and get updated only on succesful db updates)
+
+
+RULES:
+
+-#1
+The trade cannot have both a closed_ref != -1 and a closed list != []
 
 */
 //START OF THE PROGRAM
@@ -2339,44 +2355,57 @@ class Row2 {
         };
         this.d_saveChanges = async () => {
             try {
+                console.log("begging d_saveChanges - try");
                 //dbObject acts as a save of the previous version
                 const dbObject = Object.assign({}, this.current);
+                console.log(dbObject, this.current);
                 // Put user field changes into the json_user_fields field
                 const jsUF = {};
                 Object.values(userPrefs.customFields).forEach(customField => {
                     jsUF[customField.name] = this.current[customField.name];
                 });
-                dbObject[gin("juf")] = JSON.stringify(jsUF);
+                console.log(jsUF);
+                dbObject[gin("juf")] = jsUF != undefined ? JSON.stringify(jsUF) : "{}";
                 dbObject[gin("sif")] = JSON.stringify(Array.from(this.state.statsChangedList));
+                //WEIRD#1
+                dbObject[gin("30")] = this.origin[gin("30")];
+                console.log(dbObject);
                 let tag = "New";
                 if (dbObject[gin("00i")] == dbObject[gin("00p")]) {
                     tag = "Edit";
                 }
-                console.log(dbObject);
+                console.log(tag);
                 //DB
                 // PseudoId implementation: when a trade with a pseaudoid is saved, get him a real id. Then this id gets changed in the frontend both in the actual row and in all of the linearObjs in tables and tradewindows referring to it (including closed_ref and other)
                 // Closed_list: when a trade with a closed reference is saved, update the closed list of the parent trade in the frontend and backend. 
                 //! The closed list must be updated based on this trade refernece, because the main trade doesn't have any actual contents in the current closedList
                 //Async save changes
-                let link = debug ? "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager" : "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager";
-                const request = await fetch(link, {
+                console.log("Hi, we made it this far, A");
+                const request = await fetch("http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+                , {
                     method: "POST",
                     credentials: "same-origin",
                     body: JSON.stringify({ tag, trade: dbObject }),
                     headers: { "Content-Type": "application/json" },
                 });
+                console.log("2nd request text");
+                // console.log(await request.text()); 
                 const data = await request.json();
-                if (data.status == "success") {
+                console.log(data);
+                console.log(data.status);
+                if (data.status == "1") {
                     //Edit the pseudoid and other db fields (like the id)
                     const updatedTrade = JSON.parse(data.message);
                     for (const key of Object.keys(updatedTrade)) {
                         if (!this.current.hasOwnProperty(key)) {
-                            throw ({ message: "One key coming from the db object was not defined in the current object", obj: JSON.parse(data.message) });
+                            //Throwing here would impact other factors
+                            console.log({ message: "One key coming from the db object was not defined in the current object", key: key, obj: JSON.parse(data.message) });
                         }
                     }
                     this.current = Object.assign(Object.assign({}, this.current), updatedTrade);
                     //* All of the below could be done "easily" in the backend too. But this method works fine for now
-                    //Upward Save Propagation
                     if (this.current[gin("29")] != "-1") {
                         if (this.state.table != "") {
                             const mainTrade = this.state.table.tradeWindowRef
@@ -2388,7 +2417,11 @@ class Row2 {
                                 mainTradeList[mainTradeList.indexOf(dbObject[gin("00p")])] = this.current[gin("00p")];
                                 mainTradeList.push(this.current[gin("00p")]);
                                 mainTrade.current[gin("30")] = JSON.stringify(mainTradeList);
-                                mainTrade.d_saveChanges();
+                                mainTrade.origin[gin("30")] = JSON.stringify(mainTradeList);
+                                if (!(await mainTrade.d_saveChanges())) {
+                                    console.error("d_saveChanges$ Child row failed to save the main row", this, mainTrade);
+                                }
+                                ;
                             }
                             else {
                                 console.error("d_saveChanges$ pId of this childrenRow not found in the mainRow list");
@@ -2398,6 +2431,7 @@ class Row2 {
                             console.error("d_saveChanges$ Couldn't propagate changes upwards because this row has no table reference", this);
                         }
                     }
+                    //Upward Save Propagation
                     if (tag == "New") {
                         //Fix childRows references
                         if (this.current[gin("30")] != "[]") {
@@ -2453,11 +2487,14 @@ class Row2 {
                 else {
                     newAlert({ status: "error", message: "Saving the trade was unsuccessfull" });
                     console.error("d_saveChanges$ returned an API error:", data.message);
+                    return false;
                 }
+                return true;
             }
             catch (error) {
                 newAlert({ status: "error", message: "Saving the trade was unsuccessfull" });
                 console.error("d_saveChanges$ catched general error:", error);
+                return false;
             }
         };
         /**
@@ -2575,13 +2612,17 @@ class Row2 {
                     closeBtn.click();
                 }
             }
+            function windowClickAwayFunc(event) {
+                const target = event.target;
+                if (promptBox.dataset.visible == "true"
+                    && target != null
+                    && !promptBox.contains(target)) {
+                    closeBtn.click();
+                }
+            }
             //Function below runs function above
             window.addEventListener("keyup", windowCloseKeyFunc);
-            // window.addEventListener("click", function (event) {
-            // 	if (promptBox.dataset.visible == "true" && event.target != promptBox) {
-            // 		closeBtn.click();
-            // 	}
-            // });
+            window.addEventListener("mouseup", windowClickAwayFunc);
             function submitClose() {
                 const closeValue = inputBox.value;
                 //Error checking
@@ -2618,6 +2659,7 @@ class Row2 {
                 errorBox.remove();
                 infoBox.remove();
                 window.removeEventListener("keyup", windowCloseKeyFunc);
+                window.removeEventListener("mouseup", windowClickAwayFunc);
             }
         };
         /**
@@ -2634,19 +2676,27 @@ class Row2 {
                                 return;
                             }
                         }
+                        //We don't need to "paint" the dbObject because the check function in the backend will take care of it
                         const tag = "Delete";
                         const dbObject = Object.assign({}, this.current);
                         //! Remember to also delete the linked properties when deleting a row. So if this has a linked ref, go delete this from the set (reverse save)
-                        const request = await fetch("https://www.mymiwallet.com/Trade-Tracker/Trade-Manager", {
+                        //* We expect a PARENT trade to also delete the childs in the backend before anything else happens.
+                        // When we delete child, we expect the status to come back as 2
+                        console.log("Hi, we made it this far, B");
+                        const request = await fetch("http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                        // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                        // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+                        , {
                             method: "POST",
                             credentials: "same-origin",
                             body: JSON.stringify({ tag, trade: dbObject }),
                             headers: { "Content-Type": "application/json" },
                         });
+                        console.log(request.text());
                         const data = await request.json();
                         //Drop from every list, then remove
                         //Debug if
-                        if (data.status == "success") {
+                        if (data.status == "1" || (data.status == "2" && consequential)) {
                             //SAY THAT IF IT HAS CLOSED FIELDS ALSO THOSE WILL BE DELETED
                             if (this.current[gin("30")] != "[]") {
                                 //Delete all sub fields
@@ -2807,6 +2857,7 @@ class Row2 {
                     }
                     //Closed
                     percentedNewTrade[gin("1")] = "true";
+                    percentedNewTrade[gin("30")] = "[]";
                     //Change the values of the current trade and of the percented one following the modifiers directions
                     //Add editing to all of these properties
                     //- We create the new row here, to give the attributes which remove from the main row the 0 value on the origin, so that people are prompted to save them.
@@ -2950,7 +3001,7 @@ class Row2 {
      * * Function that creates a new container and assigns the object the container property
      *
      * Also adds the dropdown button to toggle visibility of the closed rows
-     * @returns {domElement} Returns the container object
+     * @returns {domElement} Returns the container objetc
      */
     createContainer() {
         const container = document.createElement("div");
@@ -2961,6 +3012,7 @@ class Row2 {
     }
     dropdownChildren(expand = !this.state.dropDown.expanded) {
         const childList = JSON.parse(this.current[gin("30")]);
+        console.log(expand);
         const theTable = this.state.table;
         if (theTable != "") {
             childList.forEach(pId => {
@@ -2970,7 +3022,7 @@ class Row2 {
                         changeVisible(mainRow, expand);
                         this.state.dropDown.expanded = expand;
                         if (this.state.dropDown.target != "")
-                            this.state.dropDown.target.innerHTML = this.state.dropDown.expanded ? "^" : "˅";
+                            this.state.dropDown.target.innerHTML = this.state.dropDown.expanded ? "˄" : "˅";
                     }
                 }
             });
@@ -2992,17 +3044,14 @@ class Row2 {
                 if (this.current[gin("30")] != "[]") {
                     changeVisible(this.state.dropDown.target, true);
                     //DEFAULT EXPANSION
-                    this.dropdownChildren(false);
+                    this.dropdownChildren(this.state.dropDown.expanded);
                 }
                 //Forward check
                 if (this.current[gin("29")] != "-1") {
-                    console.log("Going into the partial row: ", this.structure.cancel);
                     const theTable = this.state.table;
                     if (theTable != "") {
                         if (theTable.tradeWindowRef.allRowsObj.hasOwnProperty(this.current[gin("29")])) {
-                            console.log("- Calling Mom");
                             theTable.tradeWindowRef.allRowsObj[this.current[gin("29")]].refreshDropdown(true);
-                            console.log("- Called Mom");
                             if (this.state.mainRow != "") {
                                 changeVisible(this.state.mainRow, theTable.tradeWindowRef.allRowsObj[this.current[gin("29")]].state.dropDown.expanded);
                             }
@@ -3017,11 +3066,9 @@ class Row2 {
                     console.error("refreshDropdown$ Second call failed: the dropdown has not been assigned correctly");
                     return;
                 }
-                console.log("Creating a new dropdown!!!");
                 const dropdown = document.createElement("button");
-                dropdown.innerHTML = this.state.dropDown.expanded ? "^" : "˅";
+                dropdown.innerHTML = this.state.dropDown.expanded ? "˄" : "˅";
                 this.state.dropDown.target = dropdown;
-                console.log("Created the dropdown", this.state.dropDown.target);
                 dropdown.agd("containerDropdown");
                 this.state.container.append(dropdown);
                 changeVisible(dropdown, false);
