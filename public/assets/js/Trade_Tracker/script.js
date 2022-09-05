@@ -2375,11 +2375,6 @@ class Row2 {
                     tag = "Edit";
                 }
                 console.log(tag);
-                //DB
-                // PseudoId implementation: when a trade with a pseaudoid is saved, get him a real id. Then this id gets changed in the frontend both in the actual row and in all of the linearObjs in tables and tradewindows referring to it (including closed_ref and other)
-                // Closed_list: when a trade with a closed reference is saved, update the closed list of the parent trade in the frontend and backend. 
-                //! The closed list must be updated based on this trade refernece, because the main trade doesn't have any actual contents in the current closedList
-                //Async save changes
                 console.log("Hi, we made it this far, A");
                 const request = await fetch("http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
                 // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"

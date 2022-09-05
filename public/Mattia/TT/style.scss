@@ -10,6 +10,15 @@ $one_darker_background: rgb(243, 243, 243);
 $selected_color: rgb(0, 191, 255);
 $selected_background: whitesmoke;
 $editing_border: rgb(255, 185, 64);
+$darker_contrast: rgb(152, 152, 152);
+
+.hidden {
+	display: none !important;
+}
+
+.visible {
+	display: initial !important;
+}
 
 @mixin viewSys {
 	&.hidden {
@@ -34,6 +43,7 @@ $editing_border: rgb(255, 185, 64);
 		align-items: center;
 		justify-content: start;
 		position: relative;
+		width: 100%;
 
 
 		input {
@@ -53,11 +63,7 @@ $editing_border: rgb(255, 185, 64);
 		}
 
 		select {
-			border: none;
-			background: none;
-		}
-
-		button {
+			width: 100%;
 			border: none;
 			background: none;
 		}
@@ -92,6 +98,8 @@ $editing_border: rgb(255, 185, 64);
 	width: 100%;
 	border-bottom: $lines_color 1px solid;
 
+	&.editing {}
+
 	//In scrollable sections the elements have a predefined size. 
 	.scrollable-section {
 		@include section;
@@ -124,6 +132,17 @@ $editing_border: rgb(255, 185, 64);
 	}
 }
 
+@mixin close-button {
+	position: absolute;
+	border: none;
+	background: none;
+	color: $lines_color;
+	top: 5%;
+	left: 95%;
+	font-size: 2rem;
+	transform: translate(-50%, -50%)
+}
+
 //The main trade window object
 .tt-trade-window {
 	display: flex;
@@ -135,12 +154,11 @@ $editing_border: rgb(255, 185, 64);
 	//The table holding the rows
 	.trade-table {
 		display: flex;
-		flex-direction: column;
-		background: #d4d4d4;
+		flex-direction: column-reverse;
 		margin-bottom: 2rem;
 
 		.table-bottom-controller {
-			order: 10;
+			order: -1;
 
 			//Forward and backward buttons
 			button {
@@ -148,16 +166,38 @@ $editing_border: rgb(255, 185, 64);
 			}
 
 			//The page number input
-			input {}
+
+			.page-mover-holder {
+				display: flex;
+				flex-direction: row;
+
+				input {
+
+					max-width: 10%;
+				}
+			}
 		}
 
 		.trade-container {
-			display: flex;
+			@include viewSys;
+
 			flex-direction: column;
 			position: relative;
+			padding-left: 1.5rem;
+
+			.dropdown-btn {
+				position: absolute;
+				left: 0;
+				width: 1.5rem;
+				background: none;
+				border: none;
+				font-size: 1.2rem;
+				color: $darker_contrast;
+				transform: translateY(25%)
+			}
 
 			&.legendary {
-				order: -1;
+				//Order managed from javascript
 			}
 
 			.main-row {
@@ -175,6 +215,8 @@ $editing_border: rgb(255, 185, 64);
 			.legend-row {
 				@include row;
 			}
+
+			&.editing {}
 		}
 	}
 
@@ -201,7 +243,7 @@ $editing_border: rgb(255, 185, 64);
 	}
 
 	&.moreOptions {
-		.new-button {
+		.spawner-new-button {
 
 			//Quick spanw butons are plain and are a simple mean to add a row to the table
 			&.quick-spawn {}
@@ -218,6 +260,13 @@ $editing_border: rgb(255, 185, 64);
 	left: 50%;
 	background: white;
 	transform: translate(-50%, -50%);
+	box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.21);
+
+	z-index: 4;
+
+	.close-button {
+		@include close-button;
+	}
 }
 
 .tt-edit-user-preferences {
@@ -243,14 +292,7 @@ $editing_border: rgb(255, 185, 64);
 	height: 60vh;
 
 	.close-button {
-		position: absolute;
-		border: none;
-		background: none;
-		color: $lines_color;
-		top: 5%;
-		left: 95%;
-		font-size: 2rem;
-		transform: translate(-50%, -50%)
+		@include close-button;
 	}
 
 	.menu-bar {
@@ -269,6 +311,8 @@ $editing_border: rgb(255, 185, 64);
 		}
 	}
 }
+
+.tt-controller-box {}
 
 .tt-darkener {
 	width: 100vw;
