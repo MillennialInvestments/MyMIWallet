@@ -29,6 +29,28 @@ if ($pageURIA === 'Management') {
 	</script>
 <?php
 }
+if ($pageURIA === 'Budget') {
+    ?>
+	<script>
+	$(document).ready(function() {
+		$('#userBudgetingIncomeDatatable').DataTable( {
+			"order": [[ 0, "asc" ]],     
+			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+		}	
+		);
+	} );
+	</script>
+	<script>
+	$(document).ready(function() {
+		$('#userBudgetingExpenseDatatable').DataTable( {
+			"order": [[ 0, "asc" ]],     
+			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+		}	
+		);
+	} );
+	</script>
+<?php
+}
 if ($pageURIA === 'Swing-Trades') {
     ?>
 	<script>

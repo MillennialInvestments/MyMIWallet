@@ -2970,7 +2970,7 @@ class Row2 {
 	 * * Function that creates a new container and assigns the object the container property
 	 * 
 	 * Also adds the dropdown button to toggle visibility of the closed rows
-	 * @returns {domElement} Returns the container object
+	 * @returns {domElement} Returns the container objetc
 	 */
 	createContainer() {
 		const container = document.createElement("div");
@@ -2982,6 +2982,7 @@ class Row2 {
 	}
 	dropdownChildren(expand = !this.state.dropDown.expanded) {
 		const childList: string[] = JSON.parse(this.current[gin("30")]);
+        console.log(expand); 
 		const theTable = this.state.table;
 		if (theTable != "") {
 			childList.forEach(pId => {
@@ -3112,23 +3113,28 @@ class Row2 {
 	};
 	d_saveChanges = async () => {
 		try {
+            console.log("begging d_saveChanges - try"); 
 			//dbObject acts as a save of the previous version
 			const dbObject = { ...this.current };
+            console.log(dbObject, this.current); 
 
 			// Put user field changes into the json_user_fields field
 			const jsUF: { [key: string]: string } = {};
 			Object.values(userPrefs.customFields).forEach(customField => {
 				jsUF[customField.name] = this.current[customField.name as keyof TradeObj];
 			});
-			dbObject[gin("juf")] = JSON.stringify(jsUF);
+            console.log(jsUF);
+
+			dbObject[gin("juf")] = jsUF != undefined ? JSON.stringify(jsUF) : "{}";
 			dbObject[gin("sif")] = JSON.stringify(Array.from(this.state.statsChangedList));
 			//WEIRD#1
 			dbObject[gin("30")] = this.origin[gin("30")];
-
+            console.log(dbObject);
 			let tag: dbTag = "New";
 			if (dbObject[gin("00i")] == dbObject[gin("00p")]) {
 				tag = "Edit";
 			}
+            console.log(tag); 
 
 
 			//DB
@@ -3136,8 +3142,11 @@ class Row2 {
 			// Closed_list: when a trade with a closed reference is saved, update the closed list of the parent trade in the frontend and backend. 
 			//! The closed list must be updated based on this trade refernece, because the main trade doesn't have any actual contents in the current closedList
 			//Async save changes
+                    console.log("Hi, we made it this far, A"); 
 			const request = await fetch(
-				"https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+				"http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+				// "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+				// "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
 				,
 				{
 					method: "POST",
@@ -3148,7 +3157,12 @@ class Row2 {
 
 
 			);
+            console.log("2nd request text"); 
+            // console.log(await request.text()); 
+            
 			const data: tableApiResponse = await request.json();
+            console.log(data); 
+            console.log(data.status);
 			if (data.status == "1") {
 
 				//Edit the pseudoid and other db fields (like the id)
@@ -3156,7 +3170,7 @@ class Row2 {
 				for (const key of Object.keys(updatedTrade)) {
 					if (!this.current.hasOwnProperty(key)) {
 						//Throwing here would impact other factors
-						console.log({ message: "One key coming from the db object was not defined in the current object", obj: JSON.parse(data.message) })
+						console.log({ message: "One key coming from the db object was not defined in the current object", key: key, obj: JSON.parse(data.message) })
 					}
 				}
 				this.current = { ...this.current, ...updatedTrade };
@@ -3587,8 +3601,11 @@ class Row2 {
 					
 					//* We expect a PARENT trade to also delete the childs in the backend before anything else happens.
 					// When we delete child, we expect the status to come back as 2
+                    console.log("Hi, we made it this far, B"); 
 					const request = await fetch(
-						"https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+                        "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                        // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                        // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
 						,
 						{
 							method: "POST",
@@ -3599,6 +3616,7 @@ class Row2 {
 
 
 					);
+                    console.log(request.text()); 
 					const data: tableApiResponse = await request.json();
 
 

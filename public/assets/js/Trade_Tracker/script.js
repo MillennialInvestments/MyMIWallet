@@ -44,8 +44,6 @@ SMALLER
 
 ACTIVE
 - Database Integration
-- Close prompt double opening bug (zdarkener or event listener)
-- ! When you close a trade the dropdown hides itself (BUG)
 
 
 WEIRDS:
@@ -2357,40 +2355,53 @@ class Row2 {
         };
         this.d_saveChanges = async () => {
             try {
+                console.log("begging d_saveChanges - try");
                 //dbObject acts as a save of the previous version
                 const dbObject = Object.assign({}, this.current);
+                console.log(dbObject, this.current);
                 // Put user field changes into the json_user_fields field
                 const jsUF = {};
                 Object.values(userPrefs.customFields).forEach(customField => {
                     jsUF[customField.name] = this.current[customField.name];
                 });
-                dbObject[gin("juf")] = JSON.stringify(jsUF);
+                console.log(jsUF);
+                dbObject[gin("juf")] = jsUF != undefined ? JSON.stringify(jsUF) : "{}";
                 dbObject[gin("sif")] = JSON.stringify(Array.from(this.state.statsChangedList));
                 //WEIRD#1
                 dbObject[gin("30")] = this.origin[gin("30")];
+                console.log(dbObject);
                 let tag = "New";
                 if (dbObject[gin("00i")] == dbObject[gin("00p")]) {
                     tag = "Edit";
                 }
+                console.log(tag);
                 //DB
                 // PseudoId implementation: when a trade with a pseaudoid is saved, get him a real id. Then this id gets changed in the frontend both in the actual row and in all of the linearObjs in tables and tradewindows referring to it (including closed_ref and other)
                 // Closed_list: when a trade with a closed reference is saved, update the closed list of the parent trade in the frontend and backend. 
                 //! The closed list must be updated based on this trade refernece, because the main trade doesn't have any actual contents in the current closedList
                 //Async save changes
-                const request = await fetch("https://www.mymiwallet.com/Trade-Tracker/Trade-Manager", {
+                console.log("Hi, we made it this far, A");
+                const request = await fetch("http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+                , {
                     method: "POST",
                     credentials: "same-origin",
                     body: JSON.stringify({ tag, trade: dbObject }),
                     headers: { "Content-Type": "application/json" },
                 });
+                console.log("2nd request text");
+                // console.log(await request.text()); 
                 const data = await request.json();
+                console.log(data);
+                console.log(data.status);
                 if (data.status == "1") {
                     //Edit the pseudoid and other db fields (like the id)
                     const updatedTrade = JSON.parse(data.message);
                     for (const key of Object.keys(updatedTrade)) {
                         if (!this.current.hasOwnProperty(key)) {
                             //Throwing here would impact other factors
-                            console.log({ message: "One key coming from the db object was not defined in the current object", obj: JSON.parse(data.message) });
+                            console.log({ message: "One key coming from the db object was not defined in the current object", key: key, obj: JSON.parse(data.message) });
                         }
                     }
                     this.current = Object.assign(Object.assign({}, this.current), updatedTrade);
@@ -2671,12 +2682,17 @@ class Row2 {
                         //! Remember to also delete the linked properties when deleting a row. So if this has a linked ref, go delete this from the set (reverse save)
                         //* We expect a PARENT trade to also delete the childs in the backend before anything else happens.
                         // When we delete child, we expect the status to come back as 2
-                        const request = await fetch("https://www.mymiwallet.com/Trade-Tracker/Trade-Manager", {
+                        console.log("Hi, we made it this far, B");
+                        const request = await fetch("http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                        // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                        // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+                        , {
                             method: "POST",
                             credentials: "same-origin",
                             body: JSON.stringify({ tag, trade: dbObject }),
                             headers: { "Content-Type": "application/json" },
                         });
+                        console.log(request.text());
                         const data = await request.json();
                         //Drop from every list, then remove
                         //Debug if
@@ -2985,7 +3001,7 @@ class Row2 {
      * * Function that creates a new container and assigns the object the container property
      *
      * Also adds the dropdown button to toggle visibility of the closed rows
-     * @returns {domElement} Returns the container object
+     * @returns {domElement} Returns the container objetc
      */
     createContainer() {
         const container = document.createElement("div");
@@ -2996,6 +3012,7 @@ class Row2 {
     }
     dropdownChildren(expand = !this.state.dropDown.expanded) {
         const childList = JSON.parse(this.current[gin("30")]);
+        console.log(expand);
         const theTable = this.state.table;
         if (theTable != "") {
             childList.forEach(pId => {

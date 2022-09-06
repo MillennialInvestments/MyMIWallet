@@ -82,6 +82,19 @@ class Dashboard extends Admin_Controller
         Template::render();
     }
 
+    public function Budget_Add_Account()
+    {
+        $pageType = 'Standard';
+        $pageName = 'User_Budget_Income';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::set_view('User/Dashboard/Budget/Add_Account'); 
+        Template::render();
+    }
+
     public function Investor_Profile()
     {
         $pageType = 'Standard';

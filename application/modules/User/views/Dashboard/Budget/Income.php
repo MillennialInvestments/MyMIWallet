@@ -25,7 +25,7 @@ $totalLastDailyIncome               = 0;
     }
 </style>
 <div class="nk-block">
-    <div class="row"></div>
+    <div class="row">
         <div class="col-lg-4">
             <div class="card card-bordered h-100">
                 <div class="card-inner-group">
@@ -62,7 +62,7 @@ $totalLastDailyIncome               = 0;
                             <div class="nk-wg-action-content">
                                 <em class="icon ni ni-help-fill"></em>
                                 <div class="title">Income Settings</div>
-                                <p><a href="<?php echo site_url('/Budget/Income/Settings'); ?>"><strong>Adjust Income Settings</strong></a> to configure your Income Accounts.</p>
+                                <p><a href="<?php echo site_url('/Budget/Income/Settings'); ?>"><strong>Adjust Income Settings</strong></a> to configure your accounts.</p>
                             </div>
                             <a href="<?php echo site_url('/Budget/Income/Settings'); ?>" class="btn btn-icon btn-trigger me-n2"><em class="icon ni ni-forward-ios"></em></a>
                         </div>
@@ -71,8 +71,8 @@ $totalLastDailyIncome               = 0;
                         <div class="nk-wg-action">
                             <div class="nk-wg-action-content">
                                 <em class="icon ni ni-wallet-fill"></em>
-                                <div class="title">Transaction Totals</div>
-                                <p>We have reached <a href="<?php echo site_url('Management/Assets/Transactions'); ?>"><strong><?php //echo $totalTransactions; ?> Total Transactions</strong></a>, <a href="<?php echo site_url('Management/Assets/Transactions'); ?>"><strong><?php //echo $totalTransTotals; ?> Total Spend</strong></a>, and <a href="<?php echo site_url('Management/Assets/Transactions'); ?>"><strong><?php //echo $totalTransFees; ?> Total</strong></a> in Transactional Fees.</p>
+                                <div class="title">Need Support?</div>
+                                <p>View and Manage your <a href="<?php echo site_url('Management/Assets/Transactions'); ?>"><strong><?php //echo $totalTransactions; ?>Active Support Requests</strong></a>.</p>
                             </div>
                             <a href="<?php echo site_url('Management/Assets/Transactions'); ?>" class="btn btn-icon btn-trigger me-n2"><em class="icon ni ni-forward-ios"></em></a>
                         </div>
@@ -158,51 +158,36 @@ $totalLastDailyIncome               = 0;
                     </div><!-- .card-title-group -->
                     <div class="nk-order-ovwg">
                         <div class="row g-4 align-end">
-                            <div class="col-xxl-8">
-                                <div class="nk-order-ovwg-ck">
-                                    <canvas class="order-overview-chart" id="orderOverview"></canvas>
-                                </div>
-                            </div><!-- .col -->
-                            <div class="col-xxl-4">
-                                <div class="row g-4">
-                                    <div class="col-6 col-sm-3">
-                                        <a href="<?php echo site_url('Budget/Income'); ?>">
-                                            <div class="nk-order-ovwg-data surplus">
-                                                <div class="amount"><?php echo $totalAnnualIncome; ?> <small class="currenct currency-usd">USD</small></div>
-                                                <div class="info">Last month <strong><?php echo $totalLastAnnualIncome; ?> <span class="currenct currency-usd">USD</span></strong></div>
-                                                <div class="title"><em class="icon ni ni-arrow-down-left"></em> Annual Income</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-6 col-sm-3">
-                                        <a href="<?php echo site_url('Budget/Expenses'); ?>">
-                                            <div class="nk-order-ovwg-data surplus">
-                                                <div class="amount"><?php echo $totalMontlhyIncome; ?> <small class="currenct currency-usd">USD</small></div>
-                                                <div class="info">Last month <strong><?php echo $totalMontlhyLastIncome; ?> <span class="currenct currency-usd">USD</span></strong></div>
-                                                <div class="title"><em class="icon ni ni-arrow-up-left"></em> Monthly Expenses</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-6 col-sm-3">
-                                        <a href="">
-                                            <div class="nk-order-ovwg-data surplus">
-                                                <div class="amount"><?php echo $totalWeeklyIncome; ?> <small class="currenct currency-usd">USD</small></div>
-                                                <div class="info">Last month <strong><?php echo $totalWeeklyLastIncome; ?> <span class="currenct currency-usd">USD</span></strong></div>
-                                                <div class="title"><em class="icon ni ni-arrow-down-left"></em> Weekly Income</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-6 col-sm-3">
-                                        <a href="">
-                                            <div class="nk-order-ovwg-data surplus">
-                                                <div class="amount"><?php echo $totalDailyIncome; ?> <small class="currenct currency-usd">USD</small></div>
-                                                <div class="info">Last month <strong><?php echo $totalDailyLastIncome; ?> <span class="currenct currency-usd">USD</span></strong></div>
-                                                <div class="title"><em class="icon ni ni-arrow-up-left"></em> Daily Income</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div><!-- .col -->
+                            <div class="col-12">
+                                <table class="table default" id="userBudgetingIncomeDatatable">
+                                    <thead>
+                                        <tr>
+                                            <th>Account Name</th>
+                                            <th>Source</th>
+                                            <th>Pay Schedule</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $this->db->from('bf_users_budgeting');
+                                        $this->db->where('status', 'Active');
+                                        $this->db->where('account_type', 'Income'); 
+                                        $getAccounts        = $this->db->get();
+                                        foreach($getAccounts->result_array() as $account) {
+                                            echo '
+                                        <tr>
+                                            <td>' . $account['name'] . '</td>
+                                            <td>' . $account['source_type'] . '</td>
+                                            <td>' . $account['intervals'] . '</td>
+                                            <td>' . $account['amount'] . '</td>
+                                        </tr>
+                                            ';
+                                        }; 
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div><!-- .nk-order-ovwg -->
                 </div><!-- .card-inner -->

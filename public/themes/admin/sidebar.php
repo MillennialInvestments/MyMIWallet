@@ -146,14 +146,14 @@ if ($this->agent->is_mobile()) {
 								<span class="nk-menu-icon"><em class="icon ni ni-pie"></em></span><span class="nk-menu-text">My Budget</span>
 							</a>
 						</li> 
-                        <li class="nk-menu-item">
-							<a href="<?php echo site_url('/Wallets'); ?>" class="nk-menu-link">
-								<span class="nk-menu-icon"><em class="icon ni ni-wallet"></em></span><span class="nk-menu-text">My Wallets</span>
-							</a>
-						</li> 
 						<li class="nk-menu-item">
 							<a href="<?php echo site_url('/Trade-Tracker'); ?>" class="nk-menu-link">
 								<span class="nk-menu-icon"><i class="icon-graph menu-icon"></i></span><span class="nk-menu-text">My Trades</span>
+							</a>
+						</li> 
+                        <li class="nk-menu-item">
+							<a href="<?php echo site_url('/Wallets'); ?>" class="nk-menu-link">
+								<span class="nk-menu-icon"><em class="icon ni ni-wallet"></em></span><span class="nk-menu-text">My Wallets</span>
 							</a>
 						</li> 
                         <?php 
