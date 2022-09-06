@@ -2852,7 +2852,7 @@ class Row2 {
 		//* Row2 keeps the empty fields empty rather than deleting them
 		//Fields used to compare changes.
 		//TOBETESTED: Depends on the way the database stores the user fields data
-		const interpolatedData = this.c_userFieldsInterpolate(data);
+		const interpolatedData = this.c_userFieldsInterpolate(new TradeObj(data));
 		this.origin = { ...interpolatedData };
 		this.current = { ...interpolatedData };
 		//State information
