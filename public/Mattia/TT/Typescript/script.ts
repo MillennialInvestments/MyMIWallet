@@ -3131,59 +3131,8 @@ class Row2 {
             }
 
 
-
-            //Not needed anymore due to new implementation
-            // //* All of the below could be done "easily" in the backend too. But this method works fine for now
-            // if (this.current[gin("29")] != "-1") {
-            //     if (this.state.table != "") {
-            //         const mainTrade = this.state.table.tradeWindowRef.allRowsObj[this.current[gin("29")]];
-            //         const mainTradeList = JSON.parse(mainTrade.current[gin("30")]);
-            //         //We have updated the pseuodId of this trade to be exactly like the id
-            //         //Now we update it here
-            //         if (mainTradeList.indexOf(dbObject[gin("00p")]) != -1) {
-            //             mainTradeList[mainTradeList.indexOf(dbObject[gin("00p")])] = this.current[gin("00p")];
-            //             mainTradeList.push(this.current[gin("00p")]);
-            //             mainTrade.current[gin("30")] = JSON.stringify(mainTradeList);
-            //             mainTrade.origin[gin("30")] = JSON.stringify(mainTradeList);
-
-            //             if (!(await mainTrade.d_saveChanges())) {
-            //                 console.error("d_saveChanges$ Child row failed to save the main row", this, mainTrade);
-            //             }
-            //         } else {
-            //             console.error("d_saveChanges$ pId of this childrenRow not found in the mainRow list");
-            //         }
-            //     } else {
-            //         console.error("d_saveChanges$ Couldn't propagate changes upwards because this row has no table reference", this);
-            //     }
-            // }
-
             //Upward Save Propagation
             if (tag == "New") {
-
-                //Handled by new integration above
-                // //Fix childRows references
-                // if (this.current[gin("30")] != "[]") {
-                //     const childList: string[] = JSON.parse(this.current[gin("30")]);
-                //     childList.forEach((childRowPId) => {
-                //         if (this.state.table != "") {
-                //             if (this.state.table.tradeWindowRef.allRowsObj.hasOwnProperty(childRowPId)) {
-                //                 const childTrade = this.state.table.tradeWindowRef.allRowsObj[childRowPId];
-                //                 //The backend will handle the updating of the childFields.
-                //                 //? Should the backend manage it? Should I also save the main trade? Or just maybe a part of it?
-                //                 //? Should I integrate 29 and 30 into the state of each row and update them just when necessary? This would make it easier to manage as a data structure and do stuff with it rather than parsing. Also, could use a set.
-                //                 childTrade.current[gin("29")] = this.current[gin("00p")];
-                //                 childTrade.origin[gin("29")] = this.current[gin("00p")];
-                //             } else {
-                //                 console.error(
-                //                     "d_saveChanges$ Couldn't propagate changes downwards because the tradeWindow doesn't have the childRow saved",
-                //                     this.state.table.tradeWindowRef.allRowsObj
-                //                 );
-                //             }
-                //         } else {
-                //             console.error("d_saveChanges$ Couldn't propagate changes downwards because this mainRow has no table reference", this);
-                //         }
-                //     });
-                // }
 
                 //Fix tables/tradeWindows byKeyObj (in the future, maps)
 
