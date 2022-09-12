@@ -2084,6 +2084,7 @@ class TradeWindow {
                 else
                     console.error("dropTrades$ The parent of this trade doesn't have it anymore in its reference (child then parent)", trade, this.allRowsObj[trade.current[gin("29")]]);
                 this.allRowsObj[trade.current[gin("29")]].current[gin("30")] = JSON.stringify(oldList);
+                this.allRowsObj[trade.current[gin("29")]].origin[gin("30")] = JSON.stringify(oldList);
             }
             //Go down to the table
             if (table == "") {
@@ -2330,9 +2331,17 @@ class Row2 {
             //Run an iteration of the toggler to "remove" the clickability from the cancel field
             this.cancelSaveToggler();
         };
+        /**
+         * When the child is saved, the parent is saved too.
+         * When the parent is saved, the closed list does not get updated in the backend
+         * When the parent is saved, its new id gets put in all the children
+         * When the child is saved, we change the current and origin closed list property on the frontend and in the backend.
+         *
+         * When the child is deleted, the backend removes from the backend the property in the parent, then the frontend does it.
+         * @returns
+         */
         this.d_saveChanges = async () => {
             try {
-                console.log("begging d_saveChanges - try");
                 //dbObject acts as a save of the previous version
                 const dbObject = Object.assign({}, this.current);
                 console.log(dbObject, this.current);
@@ -2340,24 +2349,33 @@ class Row2 {
                 const jsUF = {};
                 Object.values(userPrefs.customFields).forEach((customField) => {
                     jsUF[customField.name] = this.current[customField.name];
+                    //Remove the given field from the dbobject
+                    delete dbObject[customField.name];
                 });
-                console.log(jsUF);
-                dbObject[gin("juf")] = jsUF != undefined ? JSON.stringify(jsUF) : "{}";
+                dbObject[gin("juf")] = (jsUF != undefined && JSON.stringify(jsUF) != "") ? JSON.stringify(jsUF) : "{}";
                 dbObject[gin("sif")] = JSON.stringify(Array.from(this.state.statsChangedList));
-                //WEIRD#1
-                dbObject[gin("30")] = this.origin[gin("30")];
-                console.log(dbObject);
+                const isParent = this.current[gin("30")] != "[]";
+                const isChild = this.current[gin("29")] != "-1";
+                const tradeWindow = this.state.tradeWindow;
+                if (tradeWindow == "")
+                    throw ({ msg: "Trade window is not defined for this row", obj: this });
+                if (this.state.table == "")
+                    throw ({ msg: "Table is not defined for this row", obj: this });
+                if (isParent && isChild)
+                    throw ({ msg: "Trade is both parent and child", obj: this });
+                //Save the parent first. The child will then update the parent with its new data
+                //When the parent is saved, each child already gets the reference updated
+                if (isChild) {
+                    if (!tradeWindow.allRowsObj.hasOwnProperty(this.current[gin("29")]))
+                        throw (`The trade window doesn't contain the parent  (${this.current[gin("29")]})of this trade, aborting`);
+                    const parent = tradeWindow.allRowsObj[this.current[gin("29")]];
+                    if (!await parent.d_saveChanges())
+                        throw ({ mag: "Failed to save the parent of this child trade [this, parent]", obj: [this, parent] });
+                }
                 let tag = "New";
                 if (dbObject[gin("00i")] == dbObject[gin("00p")]) {
                     tag = "Edit";
                 }
-                console.log(tag);
-                //DB
-                // PseudoId implementation: when a trade with a pseaudoid is saved, get him a real id. Then this id gets changed in the frontend both in the actual row and in all of the linearObjs in tables and tradewindows referring to it (including closed_ref and other)
-                // Closed_list: when a trade with a closed reference is saved, update the closed list of the parent trade in the frontend and backend.
-                //! The closed list must be updated based on this trade refernece, because the main trade doesn't have any actual contents in the current closedList
-                //Async save changes
-                console.log("Hi, we made it this far, A");
                 const request = await fetch("http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager", 
                 // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
                 // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
@@ -2367,103 +2385,127 @@ class Row2 {
                     body: JSON.stringify({ tag, trade: dbObject }),
                     headers: { "Content-Type": "application/json" },
                 });
-                console.log("2nd request text");
-                // console.log(await request.text());
                 const data = await request.json();
-                console.log(data);
-                console.log(data.status);
-                if (data.status == "1") {
-                    //Edit the pseudoid and other db fields (like the id)
-                    const updatedTrade = JSON.parse(data.message);
-                    for (const key of Object.keys(updatedTrade)) {
-                        if (!this.current.hasOwnProperty(key)) {
-                            //Throwing here would impact other factors
-                            console.log({ message: "One key coming from the db object was not defined in the current object", key: key, obj: JSON.parse(data.message) });
-                        }
-                    }
-                    this.current = Object.assign(Object.assign({}, this.current), updatedTrade);
-                    //* All of the below could be done "easily" in the backend too. But this method works fine for now
-                    if (this.current[gin("29")] != "-1") {
-                        if (this.state.table != "") {
-                            const mainTrade = this.state.table.tradeWindowRef.allRowsObj[this.current[gin("29")]];
-                            const mainTradeList = JSON.parse(mainTrade.current[gin("30")]);
-                            //We have updated the pseuodId of this trade to be exactly like the id
-                            //Now we update it here
-                            if (mainTradeList.indexOf(dbObject[gin("00p")]) != -1) {
-                                mainTradeList[mainTradeList.indexOf(dbObject[gin("00p")])] = this.current[gin("00p")];
-                                mainTradeList.push(this.current[gin("00p")]);
-                                mainTrade.current[gin("30")] = JSON.stringify(mainTradeList);
-                                mainTrade.origin[gin("30")] = JSON.stringify(mainTradeList);
-                                if (!(await mainTrade.d_saveChanges())) {
-                                    console.error("d_saveChanges$ Child row failed to save the main row", this, mainTrade);
-                                }
-                            }
-                            else {
-                                console.error("d_saveChanges$ pId of this childrenRow not found in the mainRow list");
-                            }
-                        }
-                        else {
-                            console.error("d_saveChanges$ Couldn't propagate changes upwards because this row has no table reference", this);
-                        }
-                    }
-                    //Upward Save Propagation
-                    if (tag == "New") {
-                        //Fix childRows references
-                        if (this.current[gin("30")] != "[]") {
-                            const childList = JSON.parse(this.current[gin("30")]);
-                            childList.forEach((childRowPId) => {
-                                if (this.state.table != "") {
-                                    if (this.state.table.tradeWindowRef.allRowsObj.hasOwnProperty(childRowPId)) {
-                                        const childTrade = this.state.table.tradeWindowRef.allRowsObj[childRowPId];
-                                        //The backend will handle the updating of the childFields.
-                                        //? Should the backend manage it? Should I also save the main trade? Or just maybe a part of it?
-                                        //? Should I integrate 29 and 30 into the state of each row and update them just when necessary? This would make it easier to manage as a data structure and do stuff with it rather than parsing. Also, could use a set.
-                                        childTrade.current[gin("29")] = this.current[gin("00p")];
-                                        childTrade.origin[gin("29")] = this.current[gin("00p")];
-                                    }
-                                    else {
-                                        console.error("d_saveChanges$ Couldn't propagate changes downwards because the tradeWindow doesn't have the childRow saved", this.state.table.tradeWindowRef.allRowsObj);
-                                    }
-                                }
-                                else {
-                                    console.error("d_saveChanges$ Couldn't propagate changes downwards because this mainRow has no table reference", this);
-                                }
-                            });
-                        }
-                        //Fix tables/tradeWindows byKeyObj (in the future, maps)
-                        if (this.state.table != "") {
-                            //Delete the reference in the object above
-                            const thisTableRow = Object.getOwnPropertyDescriptor(this.state.table.children, dbObject[gin("00p")]);
-                            if (thisTableRow != undefined) {
-                                Object.defineProperty(this.state.table.children, this.current[gin("00p")], thisTableRow);
-                                delete this.state.table.children[dbObject[gin("00p")]];
-                            }
-                            else {
-                                console.error("d_saveChanges$ Couldn't find said property in the table reference");
-                            }
-                            const thisTradeWindowRow = Object.getOwnPropertyDescriptor(this.state.table.tradeWindowRef.allRowsObj, dbObject[gin("00p")]);
-                            if (thisTradeWindowRow != undefined) {
-                                Object.defineProperty(this.state.table.tradeWindowRef.allRowsObj, this.current[gin("00p")], thisTradeWindowRow);
-                                delete this.state.table.tradeWindowRef.allRowsObj[dbObject[gin("00p")]];
-                            }
-                            else {
-                                console.error("d_saveChanges$ Couldn't find said property in the tradeWindow reference");
-                            }
-                        }
-                        else {
-                            console.error("d_saveChanges$ Trouble Propagating table/tradeWindow changes, missing table reference", this);
-                        }
-                    }
-                    //Refresh the origin object to mirror the (just modified) current one
-                    this.updateCurrent("", 1);
-                    //Cancelchanges will removeEditing, then run the cancelSaveToggler to fix any still active button
-                    this.cancelChanges();
+                if (data.status == "0")
+                    throw ("API: Error sending the data to the database");
+                //Edit the pseudoid and other db fields (like the id)
+                const updatedTrade = JSON.parse(data.message);
+                //Clean the response from properties that  
+                for (const key of Object.keys(updatedTrade)) {
+                    if (this.current.hasOwnProperty(key))
+                        continue;
+                    //Throwing here would impact other factors
+                    console.log({ message: "One key coming from the db object was not defined in the current object", key: key, obj: JSON.parse(data.message) });
+                    delete updatedTrade[key];
                 }
-                else {
-                    newAlert({ status: "error", message: "Saving the trade was unsuccessfull" });
-                    console.error("d_saveChanges$ returned an API error:", data.message);
-                    return false;
+                delete updatedTrade[gin("30")]; //Here we are deleting the incoming closed list because it's not updated. We could send it to the origin but it would make no difference. Refer to the standard api schema
+                this.current = Object.assign(Object.assign({}, this.current), updatedTrade);
+                //The pseudo id doesn't exist in the database, so we have to refresh it like this
+                this.current[gin('00p')] = this.current[gin('00i')];
+                if (isParent) //Propagate new id
+                 {
+                    const childIdList = JSON.parse(this.current[gin("30")]);
+                    childIdList.forEach(pId => {
+                        if (!tradeWindow.allRowsObj.hasOwnProperty(pId)) {
+                            console.error("Missing row", pId, "in allrows list. Couldn't propagate");
+                            return;
+                        }
+                        tradeWindow.allRowsObj[pId].current[gin("29")] = this.current[gin('00p')];
+                        tradeWindow.allRowsObj[pId].origin[gin("29")] = this.current[gin('00p')];
+                    });
                 }
+                if (isChild) //Swap and add the new id in the closed lists
+                 {
+                    //We checked above whether the parent exists or not.
+                    const parent = tradeWindow.allRowsObj[gin("29")];
+                    const childIdCurrentL = JSON.parse(parent.current[gin("30")]);
+                    const childIdOriginL = JSON.parse(parent.origin[gin("30")]);
+                    //No way it was updated otherwise
+                    childIdOriginL.push(this.current[gin("00p")]);
+                    parent.origin[gin("30")] = JSON.stringify(childIdOriginL);
+                    //dbobject still holds the old pseudoid
+                    if (childIdCurrentL.indexOf(this.current[gin("00p")]) < 0) {
+                        if (childIdCurrentL.indexOf(dbObject[gin("00p")]) < 0)
+                            console.error("d_saveChanges$ for some reason the old pseuoid doesn't appear in the parent list. Pushing the new one anyways");
+                        else
+                            childIdCurrentL.splice(childIdCurrentL.indexOf(dbObject[gin("00p")]), 1);
+                        childIdCurrentL.push(this.current[gin('00p')]);
+                    }
+                    parent.current[gin("30")] = JSON.stringify(childIdCurrentL);
+                }
+                //Not needed anymore due to new implementation
+                // //* All of the below could be done "easily" in the backend too. But this method works fine for now
+                // if (this.current[gin("29")] != "-1") {
+                //     if (this.state.table != "") {
+                //         const mainTrade = this.state.table.tradeWindowRef.allRowsObj[this.current[gin("29")]];
+                //         const mainTradeList = JSON.parse(mainTrade.current[gin("30")]);
+                //         //We have updated the pseuodId of this trade to be exactly like the id
+                //         //Now we update it here
+                //         if (mainTradeList.indexOf(dbObject[gin("00p")]) != -1) {
+                //             mainTradeList[mainTradeList.indexOf(dbObject[gin("00p")])] = this.current[gin("00p")];
+                //             mainTradeList.push(this.current[gin("00p")]);
+                //             mainTrade.current[gin("30")] = JSON.stringify(mainTradeList);
+                //             mainTrade.origin[gin("30")] = JSON.stringify(mainTradeList);
+                //             if (!(await mainTrade.d_saveChanges())) {
+                //                 console.error("d_saveChanges$ Child row failed to save the main row", this, mainTrade);
+                //             }
+                //         } else {
+                //             console.error("d_saveChanges$ pId of this childrenRow not found in the mainRow list");
+                //         }
+                //     } else {
+                //         console.error("d_saveChanges$ Couldn't propagate changes upwards because this row has no table reference", this);
+                //     }
+                // }
+                //Upward Save Propagation
+                if (tag == "New") {
+                    //Handled by new integration above
+                    // //Fix childRows references
+                    // if (this.current[gin("30")] != "[]") {
+                    //     const childList: string[] = JSON.parse(this.current[gin("30")]);
+                    //     childList.forEach((childRowPId) => {
+                    //         if (this.state.table != "") {
+                    //             if (this.state.table.tradeWindowRef.allRowsObj.hasOwnProperty(childRowPId)) {
+                    //                 const childTrade = this.state.table.tradeWindowRef.allRowsObj[childRowPId];
+                    //                 //The backend will handle the updating of the childFields.
+                    //                 //? Should the backend manage it? Should I also save the main trade? Or just maybe a part of it?
+                    //                 //? Should I integrate 29 and 30 into the state of each row and update them just when necessary? This would make it easier to manage as a data structure and do stuff with it rather than parsing. Also, could use a set.
+                    //                 childTrade.current[gin("29")] = this.current[gin("00p")];
+                    //                 childTrade.origin[gin("29")] = this.current[gin("00p")];
+                    //             } else {
+                    //                 console.error(
+                    //                     "d_saveChanges$ Couldn't propagate changes downwards because the tradeWindow doesn't have the childRow saved",
+                    //                     this.state.table.tradeWindowRef.allRowsObj
+                    //                 );
+                    //             }
+                    //         } else {
+                    //             console.error("d_saveChanges$ Couldn't propagate changes downwards because this mainRow has no table reference", this);
+                    //         }
+                    //     });
+                    // }
+                    //Fix tables/tradeWindows byKeyObj (in the future, maps)
+                    //Delete the reference in the object above
+                    //Sorted rows is an array of references to these objects, so the ids are already fixed.
+                    const thisTableRow = Object.getOwnPropertyDescriptor(this.state.table.children, dbObject[gin("00p")]);
+                    if (thisTableRow != undefined) {
+                        Object.defineProperty(this.state.table.children, this.current[gin("00p")], thisTableRow);
+                        delete this.state.table.children[dbObject[gin("00p")]];
+                    }
+                    else {
+                        console.error("d_saveChanges$ Couldn't find said property in the table reference");
+                    }
+                    const thisTradeWindowRow = Object.getOwnPropertyDescriptor(tradeWindow, dbObject[gin("00p")]);
+                    if (thisTradeWindowRow != undefined) {
+                        Object.defineProperty(tradeWindow.allRowsObj, this.current[gin("00p")], thisTradeWindowRow);
+                        delete tradeWindow.allRowsObj[dbObject[gin("00p")]];
+                    }
+                    else {
+                        console.error("d_saveChanges$ Couldn't find said property in the tradeWindow reference");
+                    }
+                }
+                //Refresh the origin object to mirror the (just modified) current one
+                this.updateCurrent("", 1);
+                //Cancelchanges will removeEditing, then run the cancelSaveToggler to fix any still active button
+                this.cancelChanges();
                 return true;
             }
             catch (error) {
@@ -2636,6 +2678,7 @@ class Row2 {
             }
         };
         /**
+         * When the child is deleted, the backend removes from the backend the property in the parent, then the frontend does it.
          *
          * @param consequential Whether it has to be deleted (from the db) without asking
          * @param legend Whether to not care about the db
@@ -2688,6 +2731,7 @@ class Row2 {
                                 console.error("d_delete$ The given trade didn't exist anymore in the database:", this);
                             if (this.current[gin("29")] != "-1" && !tradeWindowRef.allRowsObj.hasOwnProperty(this.current[gin("29")]))
                                 console.error(`d_delete$ The tradewindow doesn't contain the parent anymore: ${this.current[gin("29")]}`, this);
+                            //Droptrades cleans the reference in the other trades.
                             tradeWindowRef.dropTrades([this]);
                             this.cleanupDom();
                             return true;
