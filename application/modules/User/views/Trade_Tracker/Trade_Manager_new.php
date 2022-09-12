@@ -240,34 +240,35 @@ if (empty($tradeForm)) {
             //TODO: Move to archived db
 
             $walkingDead = $this->db->get_where('bf_users_trades', array('id' => $trade['id']))->result_array();
-            if (count($walkingDead) == 0) {
-                throwMsg('Called trade did not exist anymore: id-' + $trade['id'], '2');
-            }
 
-            $this->db->delete('bf_userrs_trades', array('id' => $trade['id']));
+            if (count($walkingDead) == 0) throwMsg('Called trade did not exist anymore: id-' + $trade['id'], '2');
+            if ($walkingDead[0]['closed_list'] != '[]') throwMsg("Trying to delete parent trade without having eliminated all of its children");
+
+            $this->db->delete('bf_users_trades', array('id' => $trade['id']));
             $parentList = [];
             if ($trade['closed_ref'] != '-1') {
                 $parentList = $this->db->get_where('bf_users_trades', array('id' => $trade['closed_ref']))->result_array();
             }
 
-            //! ERROR PRONE, CHECK CAREFULLY
-            $childList = [];
-            //The check already knows that this is an actual json array
-            if ($trade['closed_list'] != '[]') {
+            //The parent can't be deleted before the child
+            // // //! ERROR PRONE, CHECK CAREFULLY
+            // // $childList = [];
+            // // //The check already knows that this is an actual json array
+            // // if ($trade['closed_list'] != '[]') {
 
-                $query = $this->db->get('bf_users_trades');
+            // //     $query = $this->db->get('bf_users_trades');
 
-                //Build the query
-                for ($i = 0; $i < count(json_decode($trade['closed_list'])); ++$i) {
-                    if ($i == 0) {
-                        $this->db->where('id =', json_decode($trade['closed_list'])[0]);
-                    } else {
-                        $this->db->or_where('id =', json_decode($trade['closed_list'])[$i]);
-                    }
-                }
+            // //     //Build the query
+            // //     for ($i = 0; $i < count(json_decode($trade['closed_list'])); ++$i) {
+            // //         if ($i == 0) {
+            // //             $this->db->where('id =', json_decode($trade['closed_list'])[0]);
+            // //         } else {
+            // //             $this->db->or_where('id =', json_decode($trade['closed_list'])[$i]);
+            // //         }
+            // //     }
 
-                $childList = $query->result_array();
-            }
+            // //     $childList = $query->result_array();
+            // // }
 
 
             //The parent trade will have either already appeared or still have to come up.
@@ -275,6 +276,8 @@ if (empty($tradeForm)) {
 
                 //We can expect the list to be in the right format because we don't allow otherwise - FUTUREBUG
                 $childList = json_decode($parentList[0]['closed_list']);
+
+                //! This if should be always true if everything goes as expected
                 if (array_search($trade['pseudo_id'], $childList))
                     array_splice(
                         $childList,
@@ -290,15 +293,15 @@ if (empty($tradeForm)) {
                 //! Log error
             }
 
-            //Delete all the kids :(
-            if (count($childList) != 0) {
-                foreach ($childList as $dbChild) {
-                    $this->db->where('id', $dbChild['id']);
-                    $this->db->delete('bf_users_trades');
-                }
-            }
+            // //Delete all the kids :(
+            // // if (count($childList) != 0) {
+            // //     foreach ($childList as $dbChild) {
+            // //         $this->db->where('id', $dbChild['id']);
+            // //         $this->db->delete('bf_users_trades');
+            // //     }
+            // // }
 
-            throwMsg('Trade and relatives deleted/updated succesfully', '1');
+            throwMsg('Trade deleted succesfully', '1');
             break;
         default:
             throwMsg('The tag obj was not of type New|Edit|Delete');
