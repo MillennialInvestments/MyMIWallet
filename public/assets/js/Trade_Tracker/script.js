@@ -2387,7 +2387,7 @@ class Row2 {
                 });
                 const data = await request.json();
                 if (data.status == "0")
-                    throw ("API: Error sending the data to the database");
+                    throw ("API: Error processing this data");
                 //Edit the pseudoid and other db fields (like the id)
                 const updatedTrade = JSON.parse(data.message);
                 //Clean the response from properties that  
@@ -2407,7 +2407,7 @@ class Row2 {
                     const childIdList = JSON.parse(this.current[gin("30")]);
                     childIdList.forEach(pId => {
                         if (!tradeWindow.allRowsObj.hasOwnProperty(pId)) {
-                            console.error("Missing row", pId, "in allrows list. Couldn't propagate");
+                            console.error("d_saveChanges$ Missing row", pId, "in allrows list. Couldn't propagate");
                             return;
                         }
                         tradeWindow.allRowsObj[pId].current[gin("29")] = this.current[gin('00p')];

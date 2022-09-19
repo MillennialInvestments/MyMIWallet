@@ -224,14 +224,6 @@ if (empty($tradeForm)) {
                 //! Log error
             }
 
-            // //Delete all the kids :(
-            // // if (count($childList) != 0) {
-            // //     foreach ($childList as $dbChild) {
-            // //         $this->db->where('id', $dbChild['id']);
-            // //         $this->db->delete('bf_users_trades');
-            // //     }
-            // // }
-
             throwMsg('Trade deleted succesfully', '1');
             break;
         default:
