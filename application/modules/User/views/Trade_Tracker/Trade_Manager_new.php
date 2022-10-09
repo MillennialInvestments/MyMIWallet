@@ -32,8 +32,11 @@ function throwMsg($msg, $status = '0')
     $response = array('status' => $status, 'message' => $msg);
 
     header('Content-Type: application/json');
-    if ($status == '0') http_response_code(400);
-    else http_response_code(200);
+    if ($status == '0') {
+        http_response_code(400);
+    } else {
+        http_response_code(200);
+    }
     echo json_encode($response);
     ob_flush();
     flush();

@@ -45,48 +45,50 @@ $fee_coins								= round(($MyMICoinValue), 8);
 $walletCoins							= ($walletCost / $MyMICoinValue) + $fee_coins;
 $remainingCoins							= $MyMICCoinSum - $walletCoins;
 $dashboardData							= array(
-    'getWallets'						=> $getWallets,
-    'cuID'								=> $cuID,
-    'cuWalletCount'						=> $cuWalletCount,
-    'cuTotalWalletCount'				=> $cuTotalWalletCount,
-    'walletID'							=> $walletID,
-    'walletTitle'						=> $walletTitle,
-    'walletAmount'						=> $walletAmount,
-    'walletFunds'						=> $walletFunds,
-    'walletGains'						=> $walletGains,
-    'MyMICCoinSum'						=> $MyMICCoinSum,
-    'MyMICCurrentValue'					=> $MyMICCurrentValue,
-    'MyMIGCoinSum'						=> $MyMIGCoinSum,
-    'MyMIGCurrentValue'					=> $MyMIGCurrentValue,
-    'lastTradeActivity'					=> $lastTradeActivity,
-    'walletCost'						=> $walletCost,
-    'walletCoins'						=> $walletCoins,
-    'walletSum'                         => $walletSum,
-    'assetNetValue'                     => $assetNetValue,
-    'assetTotalCount'                   => $assetTotalCount,
-    'assetTotalGains'                   => $assetTotalGains,
+	'getWallets'						=> $getWallets,
+	'cuID'								=> $cuID,
+	'cuWalletCount'						=> $cuWalletCount,
+	'cuTotalWalletCount'				=> $cuTotalWalletCount,
+	'walletID'							=> $walletID,
+	'walletTitle'						=> $walletTitle,
+	'walletAmount'						=> $walletAmount,
+	'walletFunds'						=> $walletFunds,
+	'walletGains'						=> $walletGains,
+	'MyMICCoinSum'						=> $MyMICCoinSum,
+	'MyMICCurrentValue'					=> $MyMICCurrentValue,
+	'MyMIGCoinSum'						=> $MyMIGCoinSum,
+	'MyMIGCurrentValue'					=> $MyMIGCurrentValue,
+	'lastTradeActivity'					=> $lastTradeActivity,
+	'walletCost'						=> $walletCost,
+	'walletCoins'						=> $walletCoins,
+	'walletSum'                         => $walletSum,
+	'assetNetValue'                     => $assetNetValue,
+	'assetTotalCount'                   => $assetTotalCount,
+	'assetTotalGains'                   => $assetTotalGains,
 );
-?>   
+?>
 <style>
-.tranx-amount .number {
-    font-size:0.87em; 
-}
+	.tranx-amount .number {
+		font-size: 0.87em;
+	}
 </style>
+<div>TESTTESTETSETTEST TEST</div>
 <div class="nk-block">
 	<div class="row gy-gs">
-		<div class="col-md-12 mb-3">  
+		<div class="col-md-12 mb-3">
 			<?php $this->load->view('User/Dashboard/index/header', $dashboardData); ?>
 		</div>
 		<div class="col-12 col-md-3">
 			<?php $this->load->view('User/Dashboard/index/financial_overview', $dashboardData); ?>
 			<?php
-            if (!empty($assetNetValue)) {
-                $this->load->view('User/Dashboard/index/asset_overview', $dashboardData);
-            }
-            ?>
+			if (!empty($assetNetValue)) {
+				$this->load->view('User/Dashboard/index/asset_overview', $dashboardData);
+			}
+			?>
 		</div>
 		<div class="col-12 col-md-9">
-			<?php //$this->load->view('User/Dashboard/index/Announcements'); ?>
+			<?php //$this->load->view('User/Dashboard/index/Announcements'); 
+			?>
 			<?php $this->load->view('User/Dashboard/index/Balances', $dashboardData); ?>
 		</div>
 	</div>
@@ -94,12 +96,12 @@ $dashboardData							= array(
 <hr class="my-5">
 <div class="nk-block">
 	<div class="row gy-gs">
-		<div class="col-md-12 mb-3">  
+		<div class="col-md-12 mb-3">
 			<?php $this->load->view('User/Dashboard/index/market-header', $dashboardData); ?>
 		</div>
 		<div class="col-12 col-md-3">
 			<?php $this->load->view('User/Dashboard/index/US_Market_Overview'); ?>
-		</div>	
+		</div>
 		<div class="col-12 col-md-3">
 			<?php $this->load->view('User/Dashboard/index/US_Additional_Overview'); ?>
 		</div>
@@ -111,5 +113,3 @@ $dashboardData							= array(
 		</div>
 	</div>
 </div>
-
-

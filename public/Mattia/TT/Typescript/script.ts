@@ -3075,7 +3075,11 @@ class Row2 {
             const data: tableApiResponse = await request.json();
 
 
-            if (data.status == "0") throw ("API: Error processing this data")
+            if (data.status == "0") {
+                newAlert({ status: "error", message: "Saving the trade was unsuccessfull" });
+                console.error("API: Error processing this data")
+                return false;
+            }
 
             //Edit the pseudoid and other db fields (like the id)
             const updatedTrade = JSON.parse(data.message);
@@ -3457,19 +3461,28 @@ class Row2 {
      * @param legend Whether to not care about the db
      */
     d_delete = async (consequential: boolean = false, legend: boolean = this.state.isLegend): Promise<boolean> => {
+        const tradeWindowRef = this.state.tradeWindow;
+        if (tradeWindowRef == "") {
+            newAlert({ status: "error", message: "Deleting the trade was unsuccessfull" });
+            console.error("d_delete$ This row doesn't have a tradeWindow reference");
+            return false;
+        };
         if (legend == false) {
             try {
 
                 if (consequential == true || (await trueFalsePrompt("Are you sure you want to permanently delete this row?"))) {
                     const parent = this.current[gin("30")] != "[]";
 
-                    if (consequential && parent) throw { msg: "This row is a parent even though a consequential has been fired, so not all child references have been cleared", obj: this.current };
+                    if (consequential && parent) {
+                        console.error({ msg: "d_delete$ This row is a parent even though a consequential has been fired, so not all child references have been cleared", obj: this.current });
+                        newAlert({ status: "error", message: "Deleting the trade was unsuccessfull" });
+                        return false;
+                    }
                     //If it's a parent:
                     if (parent) {
                         if (!(await trueFalsePrompt("Deleting this row will also delete all of its children, continue?"))) return false;
 
-                        const tradeWindowRef = this.state.tradeWindow;
-                        if (tradeWindowRef == "") throw "This row doesn't have a tradeWindow reference";
+
                         //First we delete the kids
                         const childIdList: string[] = JSON.parse(this.current[gin("30")]);
                         childIdList.forEach(async (childPseudoId) => {
@@ -3502,7 +3515,11 @@ class Row2 {
                         const tradeWindowRef = this.state.tradeWindow;
                         if (tradeWindowRef == "") throw "This row doesn't have a tradeWindow reference";
 
-                        if (data.status == '0') throw (data.message);
+                        if (data.status == '0') {
+                            newAlert({ status: "error", message: "Deleting the trade was unsuccessfull" });
+                            console.error("d_delete$ catched general error:", data.message);
+                            return false;
+                        }
                         if (data.status == '2') console.error("d_delete$ The given trade didn't exist anymore in the database:", this);
                         if (this.current[gin("29")] != "-1" && !tradeWindowRef.allRowsObj.hasOwnProperty(this.current[gin("29")]))
                             console.error(`d_delete$ The tradewindow doesn't contain the parent anymore: ${this.current[gin("29")]}`, this);
