@@ -80,20 +80,20 @@ function checkAndPrepTrade($trade)
         if (empty($trade[$key])) {
             $checkedTrade['key'] = '';
         } else {
-            if (gettype($value) != 'string') throwMsg('The ' + $key + ' field does not hold a string value');
+            if (gettype($value) != 'string') throwMsg('The ' + $key + ' field does not hold a string value: '+ value);
 
             switch ($key) {
                 case 'json_user_fields':
-                    if (json_decode($value) == null) throwMsg('The juf field is not valid json');
+                    if (json_decode($value) == null) throwMsg('The juf field is not valid json: '+ value);
                     break;
                 case 'saved_sorting':
-                    if (intval($value) == 0) throwMsg('The saved sorting is not a valid integer or is 0');
+                    if (intval($value) == 0) throwMsg('The saved sorting is not a valid integer or is 0: '+ value);
                     break;
                 case 'closed_ref':
-                    if (intval($value) != 0 && intval($value) < -1) throwMsg('The closed ref is a negative integer');
+                    if (intval($value) != 0 && intval($value) < -1) throwMsg('The closed ref is a negative integer: '+ value);
                     break;
                 case 'stats_interpolated_fields':
-                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array');
+                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array: '+ value);
                     break;
 
                     /*
@@ -154,7 +154,7 @@ if (empty($tradeForm)) {
 
             //The parent trade will have either already appeared or still have to come up.
             if (count($parentList) == 1) {
-                //The backend is the only one to update the closed list.
+                //The backend is the only one to up the closed list.
                 $childList = json_decode($parentList[0]['closed_list']);
                 //The child list won't include the child until this is has been saved to the db, so we can just push it.
                 array_push($childList, $newTrade['id']);

@@ -3077,7 +3077,7 @@ class Row2 {
 
             if (data.status == "0") {
                 newAlert({ status: "error", message: "Saving the trade was unsuccessfull" });
-                console.error("API: Error processing this data")
+                console.error("API: Error processing this data", data)
                 return false;
             }
 
