@@ -1,6 +1,6 @@
 <div class="nk-block nk-block-lg">
 	<div class="nk-block-head-sm">
-		<div class="nk-block-head-content"><h5 class="nk-block-title title">Crypto Accounts</h5></div>
+		<div class="nk-block-head-content"><h5 class="nk-block-title title">Crypto Investment Accounts</h5></div>
 	</div>
 </div>
 <div class="row">

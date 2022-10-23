@@ -27,10 +27,6 @@ $formCustomText			= $this->config->item('form_custom_text');
 <input type="hidden" class="form-control" name="user_id" id="user_id" value="<?php echo set_value('user_id', isset($user) ? $user->user_id : $cuID); ?>">	
 <input type="hidden" class="form-control" name="user_email" id="user_email" value="<?php echo set_value('user_email', isset($user) ? $user->user_email : $cuEmail); ?>">
 <input type="hidden" class="form-control" name="wallet_id" id="wallet_id" value="<?php echo set_value('wallet_id', isset($user) ? $user->wallet_id : $walletID); ?>">	
-<input type="hidden" class="form-control" name="wallet_sum" id="wallet_sum" value="<?php echo set_value('wallet_sum', isset($user) ? $user->wallet_sum : $walletFunds); ?>">	
-<input type="hidden" class="form-control" name="type" id="type" value="<?php echo set_value('type', isset($user) ? $user->type : 'Fiat'); ?>">
-<input type="hidden" class="form-control" name="broker" id="broker" value="<?php echo set_value('broker', isset($user) ? $user->broker : $walletBroker); ?>">
-<input type="hidden" class="form-control" name="nickname" id="nickname" value="<?php echo set_value('nickname', isset($user) ? $user->nickname : $walletNickname); ?>">
 <div class="<?php echo $formGroup; ?>">
 	<label class="col-12">Name of Bank</label>
 	<div class="col-12">        
@@ -74,13 +70,19 @@ $formCustomText			= $this->config->item('form_custom_text');
 <div class="<?php echo $formGroup; ?>">
 	<label class="col-12">Re-enter Account Number</label>
 	<div class="col-12">        
-		<input type="text" class="<?php echo $formControl; ?>" name="verify_account" id="verify_account" value="<?php echo set_value('verify_account', isset($user) ? $user->verify_account : ''); ?>">	
+		<input type="text" class="<?php echo $formControl; ?>" name="verify_account" id="verify_account" placeholder="Ex: 012345678910" value="<?php echo set_value('verify_account', isset($user) ? $user->verify_account : ''); ?>">	
 	</div>
 </div>
 <div class="<?php echo $formGroup; ?>">
 	<label class="col-12">Create Nickname for Account</label>
 	<div class="col-12">        
-		<input type="text" class="<?php echo $formControl; ?>" name="nickname" id="nickname" value="<?php echo set_value('nickname', isset($user) ? $user->nickname : ''); ?>">	
+		<input type="text" class="<?php echo $formControl; ?>" name="nickname" id="nickname" placeholder="Ex: Main Banking Account" value="<?php echo set_value('nickname', isset($user) ? $user->nickname : ''); ?>">	
+	</div>
+</div>
+<div class="<?php echo $formGroup; ?>">
+	<label class="col-12">Current Account Balance</label>
+	<div class="col-12">        
+		<input type="text" class="<?php echo $formControl; ?>" name="balance" id="balance" placeholder="Ex: 1500.00" value="<?php echo set_value('balance', isset($user) ? $user->balance : ''); ?>">	
 	</div>
 </div>
 <div class="<?php echo $formGroup; ?> pt-3">

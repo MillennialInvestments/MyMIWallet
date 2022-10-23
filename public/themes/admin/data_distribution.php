@@ -29,6 +29,7 @@ $this->mymilogger
      ->log(); //Add Database Entry
 $allSessionData                 = array();
 $userAccount	        		= $this->mymiuser->user_account_info($cuID);
+$userBudget                     = $this->mymibudget->user_budget_info($cuID); 
 $walletID                       = $userAccount['walletID'];
 // print_r($userAccount);
 // Template::set('userAccountInfo', $userAccountInfo);
@@ -65,6 +66,7 @@ if ($pageURIA === 'MyMI-Gold' || $pageURIB === 'Complete-Purchase') {
 // $userExchangeInfo				= $this->mymiuser->get_user_exchange_info($cuID);
 $allSessionData					= array(
     'userAccount'				=> $userAccount,
+    'userBudget'                => $userBudget,
     // 'userInfo'					=> $userInfo,
     'userCoinData'				=> $userCoinData,
     'userGoldData'				=> $userGoldData,

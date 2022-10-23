@@ -3,6 +3,10 @@
 <h3 class="intro-heading pt-5">Release Overview<br></h3>
 <div class="intro-content-entry text-black pt-3">
     <p>
+        With the release of MyMI Wallet - v7.1.5 Open Beta, we will be providing our dual-core investment toolset to assist our investors in <strong>(1) determining the current financial state and potential</strong>, while <strong>(2) capturing and analyzing their financial investment strategies and decisions to ensure our investors have a road map to meet their personal financial goals</strong>.
+        <br>
+        <br>
+        In order to ultimately accomplish that goal, we have implemented our <a href="<?php echo site_url('Budget'); ?>" target="_blank">Free Personal Financial Budgeting Tool</a>. By understanding current conditions of an individual's financial state, you can begin to visualize the next steps one can take to improve those conditions and ultimately create the road map to financial stability. 
         With this release, we will be enabling members to begin creating their new Investor Account or accessing an Existing Account to access our Renovated Investor Dashboard and Library of Tools that will be released in the <?php echo $releaseNumber; ?> Release. 
         After creating/accessing their Investor Dashboard, members can then access our MyMI Wallet Integration which allows each member to compile all of their Financial Investment Accounts into an All-In-One Dashboard. 
         By doing so, investors can currently utilize our Trade Tracker to review their trades to further track additional parameters and indicators that were identified in the process of their trades. 

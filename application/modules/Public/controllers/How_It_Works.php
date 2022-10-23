@@ -66,6 +66,18 @@ class How_It_Works extends Front_Controller
         Template::render();
     }
 
+    public function Why()
+    {
+        $pageType = 'Standard';
+        $pageName = 'Home';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+
     public function MyMI_Gold()
     {
         $pageType = 'Standard';

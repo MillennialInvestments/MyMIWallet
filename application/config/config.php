@@ -154,7 +154,7 @@ $config['composer_autoload'] = true;
 |
 | As a security measure you are STRONGLY encouraged to restrict URLs to
 | as few characters as possible.  By default only these are allowed: a-z 0-9~%.:_-
-|
+|  
 | Leave blank to allow all characters -- but only if you are insane.
 |
 | The configured value is actually a regular expression character group

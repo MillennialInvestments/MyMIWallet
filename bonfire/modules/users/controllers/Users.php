@@ -64,6 +64,9 @@ class Users extends Front_Controller
      */
     public function login()
     {
+        // session_destroy();
+        unset($_SESSION['allSessionData']);
+
         $pageName = 'Login';
         $pageType = 'Standard';
         Template::set('pageName', $pageName);
@@ -142,7 +145,7 @@ class Users extends Front_Controller
             //~ }
 
             // If there is nowhere else to go, go home.
-            Template::redirect('/Dashboard');
+            // Template::redirect('/Dashboard');
         }
 
         // Prompt the user to login.
@@ -292,7 +295,7 @@ class Users extends Front_Controller
         $account_type                   = $this->input->post('account_type');
         $email	 			            = $this->input->post('email');
         $username			            = $this->input->post('username');
-        $user_email	 		            = $em7ail;
+        $user_email	 		            = $email;
         $register_url 		            = $this->input->post('register_url') ?: REGISTER_URL;
         $login_url    		            = $this->input->post('login_url') ?: LOGIN_URL;
                 
@@ -780,7 +783,6 @@ class Users extends Front_Controller
             $user_id				= $this->input->post('user_id');
             $private_key            = $this->input->post('private_key');
             $wallet_id              = $this->input->post('public_key');
-            $realize_id             = $this->input->post('realize_id');
             $first_name				= $this->input->post('first_name');
             $middle_name			= $this->input->post('middle_name');
             $last_name				= $this->input->post('last_name');
@@ -795,7 +797,7 @@ class Users extends Front_Controller
             $language				= $this->input->post('language');
             $advertisement			= $this->input->post('advertisement');
             
-            if ($this->user_model->add_account_information($user_id, $private_key, $wallet_id, $realize_id, $first_name, $middle_name, $last_name, $name_suffix, $phone, $address, $city, $state, $country, $zipcode, $timezones, $language, $advertisement)) {
+            if ($this->user_model->add_account_information($user_id, $private_key, $wallet_id, $first_name, $middle_name, $last_name, $name_suffix, $phone, $address, $city, $state, $country, $zipcode, $timezones, $language, $advertisement)) {
                 // user creation ok
                 $thisComment                    = 'User (' . $cuID . ') has successfully updated their Account Information.';
                 $this->mymilogger

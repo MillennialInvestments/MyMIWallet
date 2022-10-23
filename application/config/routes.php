@@ -102,6 +102,9 @@ Route::any('Investor/Verify-Email/(:any)', 'users/Verify_Email/$1');
 Route::any('Investor/register/(:any)', 'users/investor_register');
 Route::any('Investor/Activate/(:any)', 'Public/Invest/Activate');
 
+// Public Pages - Marketing
+Route::any('Why-MyMI-Wallet', 'Public/Marketing/Why_MyMI_Wallet'); 
+
 // Public Pages - Rel
 Route::any('Releases/(:any)/(:any)', 'Public/Releases/Version_Template');
 
@@ -116,10 +119,20 @@ Route::any('Announcements/Post', 'Management/Announcements/Post');
 
 // User - Dashboard
 Route::any('Dashboard', 'User/Dashboard/index');
-Route::any('Budget', 'User/Dashboard/Budget');
-Route::any('Budget/Income', 'User/Dashboard/Budget_Income');
-Route::any('Budget/Income/Add', 'User/Dashboard/Budget_Add_Account');
 Route::any('Markets/(:any)', 'User/Dashboard/Markets');
+Route::any('Budget', 'User/Budget/index');
+Route::any('Budget/Add/(:any)', 'User/Budget/Add');
+Route::any('Budget/Edit/(:any)', 'User/Budget/Add');
+Route::any('Budget/Delete/(:any)', 'User/Budget/Delete/$1');
+Route::any('Budget/Paid/(:any)', 'User/Budget/Paid/$1');
+Route::any('Budget/Income', 'User/Budget/Account_Overview');
+Route::any('Budget/Expenses', 'User/Budget/Account_Overview');
+Route::any('Budget/Recurring-Account/Schedule', 'User/Budget/Recurring_Account_Schedule');
+Route::any('Budget/Recurring-Account/Schedule/(:any)', 'User/Budget/Recurring_Account_Schedule');
+Route::any('Budget/Approve-Recurring-Schedule/(:any)', 'User/Budget/Approve_Recurring_Schedule/$1');
+Route::any('Budget/Cancel-Account/(:any)', 'User/Budget/Cancel_Account/$1');
+Route::any('Budget/Delete-Account/(:any)', 'User/Budget/Delete_Account/$1');
+// Route::any('Budget/(:any)/Overview/(:any)', 'User/Budget/Account_Overview');
 
 // User - Accounts
 Route::any('Investor-Profile', 'User/Dashboard/Investor_Profile'); 
@@ -127,6 +140,13 @@ Route::any('Profile-Manager', 'User/Dashboard/Profile_Manager');
 
 // User - Assets
 Route::any('Assets', 'User/Asset_Management/index');
+
+// User - Budget
+// Route::any('Budget', 'User/Budget');
+// Route::any('Budget/Income', 'User/Budget/Type_Overview');
+// Route::any('Budget/Income/Add', 'User/Budget/Add_Account');
+// Route::any('Budget/Expense', 'User/Budget/Type_Overview');
+// Route::any('Budget/Expense/Add', 'User/Budget/Add_Account');
 
 // User - Exchange
 Route::any('Exchange', 'Exchange/index');
@@ -165,6 +185,7 @@ Route::any('Trade-Tracker/Trade-Manager', 'User/Trade_Tracker/Trade_Manager');
 // User - Wallets
 Route::any('Wallets', 'User/Wallets/index');
 Route::any('Wallets/Connect-Bank-Account', 'User/Wallets/Create_Bank_Account');
+Route::any('Wallets/Connect-Bank-Account/Modal', 'User/Wallets/Create_Bank_Account');
 Route::any('MyMI-Wallet', 'User/Wallets/MyMI_Wallet');
 Route::any('Link-Account/TD-Ameritrade/(:any)', 'User/Brokerages/TD_Ameritrade/$1');
 Route::any('Wallets/Link-Account', 'User/Wallets/Link_Account');
@@ -214,6 +235,7 @@ Route::any('Wallets/Purchase-Coins-Transaction', 'User/Wallets/Purchase_Coins_Tr
 Route::any('Support', 'User/Support'); 
 Route::any('Support/Communication-Manager', 'User/Support/Communication_Manager');
 Route::any('Support/My-Requests', 'User/Support/My_Requests');
+Route::any('Support/Requests/(:any)', 'User/Support/Requests'); 
 
 // User - Support Knowledgebase
 Route::any('Knowledge-Base', 'User/Knowledgebase/index'); 

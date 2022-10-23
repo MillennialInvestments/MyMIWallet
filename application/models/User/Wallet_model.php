@@ -413,9 +413,10 @@ class Wallet_model extends BF_Model
         return $this->db->insert('bf_users_wallet_transactions', $user);
     }
     
-    public function connect_bank_account($date, $time, $user_id, $user_email, $wallet_id, $account_type, $bank_account_owner, $bank_name, $routing_number, $account_number, $verify_account, $nickname)
+    public function connect_bank_account($date, $time, $user_id, $user_email, $wallet_id, $account_type, $bank_account_owner, $bank_name, $routing_number, $account_number, $verify_account, $nickname, $balance)
     {
         $user							= array(
+            'status'                    => 1,
             'date'						=> $date,
             'time'						=> $time,
             'user_id'					=> $user_id,
@@ -428,6 +429,7 @@ class Wallet_model extends BF_Model
             'account_number'			=> $account_number,
             'verify_account'			=> $verify_account,
             'nickname'					=> $nickname,
+            'balance'					=> $balance,
         );
         return $this->db->insert('bf_users_bank_accounts', $user);
     }
@@ -445,6 +447,7 @@ class Wallet_model extends BF_Model
     {
         $this->db->from('bf_users_bank_accounts');
         $this->db->where('user_id', $userID);
+        $this->db->where('status', 1); 
         $getBankAccounts				= $this->db->get();
         return $getBankAccounts;
     }

@@ -38,7 +38,7 @@ class MyMIUser
             'cuUserType'                    => $userInfo['cuUserType'],
             'cuEmail'                       => $userInfo['cuEmail'],
             'cuUsername'                    => $userInfo['cuUsername'],
-            'cuDisplayName'                 => $userInfo['cuDisplayName'],
+            'cuDisplayName'                 => $userInfo['cuUsername'],
             'cuFirstName'                 	=> $userInfo['cuFirstName'],
             'cuMiddleName'                 	=> $userInfo['cuMiddleName'],
             'cuLastName'                 	=> $userInfo['cuLastName'],
@@ -631,11 +631,7 @@ class MyMIUser
     {
         $getSocialInfo						= $this->CI->investor_model->get_user_social_media($cuEmail);
         foreach($getSocialInfo->result_array() as $socialInfo) {
-            if ($socialInfo['coverart'] === 'N/A') {
-                $userData['coverart'] 		= 'Blue-Stock-Charts5.jpg';
-            } else {
-                $cuCoverart			        = $socialInfo['coverart'];
-            }
+            $cuCoverart			            = $socialInfo['coverart'];
             $cuProfilePic                   = $socialInfo['profile_pic'];
             $cuFollowers                    = $socialInfo['followers'];
             $cuViews                        = $socialInfo['views'];
@@ -648,7 +644,7 @@ class MyMIUser
         }
         
         $userSocialInfo                     = array(
-            'cuCoverart'                    => $cuCoverart,
+            // 'cuCoverart'                    => $cuCoverart,
             'cuProfilePic'                  => $cuProfilePic,
             'cuFollowers'                   => $cuFollowers,
             'cuViews'                       => $cuViews,

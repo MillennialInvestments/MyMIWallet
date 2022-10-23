@@ -647,7 +647,7 @@ class Wallets extends Admin_Controller
         $this->form_validation->set_rules('url_link', 'URL Link', 'trim');
         
         if ($this->form_validation->run() === false) {
-            $this->load->view('Wallets/Create_Bank_Account');
+            $this->load->view('User/Wallets/Create_Bank_Account');
             Template::set('pageType', $pageType);
             Template::set('pageName', $pageName);
             Template::render();
@@ -666,6 +666,7 @@ class Wallets extends Admin_Controller
             $account_number					= $this->input->post('account_number');
             $verify_account					= $this->input->post('verify_account');
             $nickname						= $this->input->post('nickname');
+            $balance						= $this->input->post('balance');
             // User Activity Logger Configuration
             $cuID                           = $user_id;
             $thisController                 = $this->router->fetch_class();
@@ -679,7 +680,7 @@ class Wallets extends Admin_Controller
                 $beta                       = 'Yes';
             }
             
-            if ($this->wallet_model->connect_bank_account($date, $time, $user_id, $user_email, $wallet_id, $account_type, $bank_account_owner, $bank_name, $routing_number, $account_number, $verify_account, $nickname)) {
+            if ($this->wallet_model->connect_bank_account($date, $time, $user_id, $user_email, $wallet_id, $account_type, $bank_account_owner, $bank_name, $routing_number, $account_number, $verify_account, $nickname, $balance)) {
                 $thisComment                = 'User (' . $cuID . ') added bank account successfully: ' . $thisURL;
                 $this->mymilogger
                     ->user($cuID) //Set UserID, who created this  Action

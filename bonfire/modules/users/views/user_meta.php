@@ -22,7 +22,6 @@ $defaultTimezone    = isset($user->timezone) ? $user->timezone : strtoupper(sett
 <input type="hidden" id="user_id" name="user_id" value="<?php echo set_value('user_id', isset($user) ? $user->user_id : $cuID); ?>" />
 <input type="hidden" id="user_email" name="user_email" value="<?php echo set_value('user_email', isset($user) ? $user->user_email : $cuEmail); ?>" />
 <input type="hidden" id="user_username" name="user_username" value="<?php echo set_value('user_username', isset($user) ? $user->user_username : $cuUsername); ?>" />
-<input type="hidden" id="realize_id" name="realize_id" value="<?php echo set_value('realize_id', isset($user) ? $user->realize_id : $realizeID); ?>" />
 <div class="row">
 	<div class="col-12 col-md-3">
 		<div class="<?php e($controlGroup); ?> <?php echo form_error('id') ? $errorClass : ''; ?>">

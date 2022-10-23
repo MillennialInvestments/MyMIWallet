@@ -357,6 +357,32 @@ $cuID		= isset($current_user->id) && ! empty($current_user->id) ? $current_user-
 			}
 		});
 	});
+	$('.addBankAccount').click(function(e) {
+		// prevent the default action when a nav button link is clicked
+		e.preventDefault();
+
+		// ajax query to retrieve the HTML view without refreshing the page.
+		$('#loading-image').show();
+		$.ajax({
+			type: 'get',
+			url: <?php echo '\'' . site_url('Wallets/Connect-Bank-Account') . '\''; ?>,
+			dataType: 'html',
+			beforeSend: function() {
+				$('#loading-content').show(); 
+				$('#transactionContainer').hide(); 
+			},
+			// complete: function(){
+			// 	$('#loading-content').hide(); 
+			// },
+			success: function (html) {
+			// success callback -- replace the div's innerHTML with
+			// the response from the server.
+				$('#loading-content').hide(); 
+				$('#transactionContainer').show(); 
+				$('#transactionContainer').html(html);
+			}
+		});
+	});	
 	$('.walletSelectionFreeFiat').click(function(e) {
 		// prevent the default action when a nav button link is clicked
 		e.preventDefault();

@@ -75,7 +75,7 @@ $totalApprovedAssets    = $_SESSION['reporting']['totalApprovedAssets'];
                                 <strong class="text-white">MyMI Wallet</strong> comes with a variety of <a href="#features">Premium Features</a>, necessary to provide Investors with the Accounting & Analytical Tools and our <strong class="text-primary">Asset Marketplace & Exchanges</strong> that helps you to create your <a href="#features">Digital Assets</a> to sell to interested potential investors.</p>
                         </div>
                         <ul class="intro-action-group">
-                            <li><a href="<?php echo $btnURL; ?>" class="btn btn-lg btn-primary" target="_blank"><?php echo $btnText; ?></a></li>
+                            <li><a href="<?php echo $btnURL; ?>" class="btn btn-lg btn-primary"><?php echo $btnText; ?></a></li>
                             <li><a href="<?php echo site_url('/Knowledge-Base'); ?>" class="link-to btn btn-lg btn-light">Learn More</a></li>
                         </ul>
                     </div>

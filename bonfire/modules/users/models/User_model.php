@@ -308,12 +308,11 @@ class User_model extends BF_Model
         return $getUserInfo;
     }
     
-    public function add_account_information($user_id, $private_key, $wallet_id, $realize_id, $first_name, $middle_name, $last_name, $name_suffix, $phone, $address, $city, $state, $country, $zipcode, $timezones, $language, $advertisement)
+    public function add_account_information($user_id, $private_key, $wallet_id, $first_name, $middle_name, $last_name, $name_suffix, $phone, $address, $city, $state, $country, $zipcode, $timezones, $language, $advertisement)
     {
         $user  = array(
             'private_key'       => $private_key,
             'wallet_id'         => $wallet_id,
-            'realize_id'        => $realize_id,
             'first_name'		=> $first_name,
             'middle_name'		=> $middle_name,
             'last_name'			=> $last_name,

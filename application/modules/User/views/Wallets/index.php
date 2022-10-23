@@ -91,6 +91,9 @@ $fundAccountData						= array(
 			<?php $this->load->view('User/Wallets/index/header', $walletData); ?>
 		</div>
 		<div class="col-md-12 mb-3">
+			<?php $this->load->view('User/Wallets/index/plaid/financial_wallets', $walletData); ?>
+		</div>
+		<div class="col-md-12 mb-3">
 			<?php $this->load->view('User/Wallets/index/plaid/fiat_wallets', $walletData); ?>
 		</div>
         <div class="col-md-12 mb-3">

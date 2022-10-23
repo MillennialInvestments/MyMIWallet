@@ -61,7 +61,7 @@ $autoload['packages'] = array(
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('users/Auth', 'database', 'email', 'emailer/emailer', 'form_validation', 'MyMIAnalytics', 'MyMICoin', 'MyMIExchange', 'MyMIGold', 'MyMILogger', 'MyMIMarketing', 'MyMIWallet', 'MyMIUser', 'user_agent');
+$autoload['libraries'] = array('users/Auth', 'database', 'email', 'emailer/emailer', 'form_validation', 'MyMIAnalytics', 'MyMIBudget', 'MyMICoin', 'MyMIExchange', 'MyMIGold', 'MyMILogger', 'MyMIMarketing', 'MyMIWallet', 'MyMIUser', 'user_agent');
 
 
 /*

@@ -1,13 +1,4 @@
 <?php
-$client             = new \GuzzleHttp\Client();
-$userID             = $this->uri->segment(2); 
-$response           = $client->request('POST', 'https://www.realizefi.com/api/users', [
-  'headers'         => [
-    'Accept'        => 'application/json',
-    'Authorization' => 'Bearer sk_test_whXrPvWLNuzLTqzwsbF0wQUwlRQS1c9v5YqpDSUMwcVhwD4m7FZuO0Z1jbyJxBXVj1eOYTyQq5F5JWiC6CK8TnWlHPcd5hmHLbTONbsu4HTrB29gG8Dp2GcjGVodTnQk',
-  ],
-]);
-$realizeData        = json_decode($response->getBody(), true); 
 $errorClass  		= empty($errorClass) ? ' error' : $errorClass;
 $controlGroup       = 'control-group form-row pb-3';
 $controlLabel       = 'control-label col-sm-12 pt-2 mb-0';
@@ -19,7 +10,6 @@ $fieldData 			= array(
     'controlInput'  => $controlInput,
     'controlLabel'  => $controlLabel,
     'errorClass'    => $errorClass,
-    'realizeID'     => $realizeData['id'],
     'frontend_only' => true,
 );
 $registerType 		= $this->uri->segment(1);

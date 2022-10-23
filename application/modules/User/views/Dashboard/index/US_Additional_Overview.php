@@ -107,7 +107,7 @@
 		<div class="tranx-col">
 			<div class="tranx-info">
 				<div class="tranx-data">
-					<div class="tranx-label">US Additional Markets</div>
+					<div class="tranx-label">Additional Markets</div>
 					<div class="tranx-date">Score: <?php echo $usScoreCard; ?></div>
 				</div>
 			</div>

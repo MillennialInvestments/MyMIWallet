@@ -56,7 +56,7 @@ class Auth
      * by 'auth.log_failed_login_activity' in application config. Currently, this
      * only logs occurrences which would increase the login_attempts entry.
      */
-    protected $logFailedLogins = false;
+    protected $logFailedLogins = true;
 
     /** @var boolean Allow use of the "Remember Me" checkbox/cookie. */
     private $allowRemember;

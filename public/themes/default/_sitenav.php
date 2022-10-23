@@ -42,7 +42,7 @@ if (empty($currentUserID)) {
             </div>
             <div class="col-sm-2"></div>
             <div class="intro-nav align-items-right col-9 col-sm-6">
-                <ul class="nav mt-1 pl-5">
+                <ul class="nav mt-1 pl-1">
                     <!-- <li class="nav-item intro-nav-item">
                         <a href="#preview" class="link-to nav-link intro-nav-link">
                             <span class="d-none d-md-inline">All Preview</span> <span class="d-md-none">Preview</span> 
@@ -61,11 +61,31 @@ if (empty($currentUserID)) {
                         <a href="<?php echo site_url('Customer-Support'); ?>" target="_blank" class="nav-link intro-nav-link">Need Help?</a>
                     </li>
                 </ul>
-                <div class="intro-action pt-1">
-                    <a href="<?php echo site_url('/login'); ?>" class="btn btn-primary">
-                        <span>LOGIN</span>
-                    </a>
-                </div>
+                <?php 
+                if (!empty($currentUserID)) {
+                    echo '
+                    <div class="intro-action pt-1">
+                        <a href="' . site_url('/Dashboard') . '" class="btn btn-primary">
+                            <span>ACCOUNT</span>
+                        </a>
+                        <a href="' . site_url('/logout') . '" class="btn btn-primary">
+                            <span>LOGOUT</span>
+                        </a>
+                    </div>
+                    ';
+                } else {
+                    echo '
+                    <div class="intro-action pt-1">
+                        <a href="' . $btnURL . '" class="btn btn-primary">
+                            <span>JOIN</span>
+                        </a>
+                        <a href="' . site_url('/login') . '" class="btn btn-primary">
+                            <span>LOGIN</span>
+                        </a>
+                    </div>
+                    ';
+                }
+                ?>
             </div>
         </div>
     </div>
