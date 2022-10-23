@@ -3061,9 +3061,15 @@ class Row2 {
             }
 
             const request = await fetch(
+<<<<<<< HEAD
                 // "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
                 // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
                 "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager",
+=======
+                "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
+                // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
                 {
                     method: "POST",
                     credentials: "same-origin",
@@ -3501,9 +3507,15 @@ class Row2 {
 
                         //If there's an error, it will be thrown and the function will return false
                         const request = await fetch(
+<<<<<<< HEAD
                             // "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
                             // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
                             "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager",
+=======
+                            "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
+                            // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                            // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
                             {
                                 method: "POST",
                                 credentials: "same-origin",
@@ -4559,4 +4571,8 @@ function newAlert(message: { status: "error" | "success"; message: string }) {
     } else {
         console.error("Alert box is undefined: Appending new message is impossible");
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c

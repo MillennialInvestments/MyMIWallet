@@ -150,16 +150,18 @@ if ($accountRecAccount === 'Yes') {
                 $newDueDateSTB                  = DateTime::createFromFormat("m-d-Y", $newDate); 
                 $newDueDateMonth                = $newDueDateST->format("m");
                 $newDueDateDay                  = $newDueDateST->format("d");
-                $newDueDateDayB                 = $newDueDateSTB->format("d");
+                $newDueDateDayB                 = $newDueDateSTB->format("t");
                 $newDueDateYear                 = $newDueDateST->format("Y");
                 echo '<br>$i: ' . $i;
                 echo '<br>$thisI: ' . $thisI;
                 echo '<br>$thisTimeInterval: ' . $thisTimeInterval;
                 echo '<br>$newDate: ' . $newDate;
+                echo '<br>$newDateB: ' . $newDateB;
                 // echo '<br>' . $newDateB;
                 echo '<br>$newDueDate: ' . $newDueDate;
                 echo '<br>$newDueDateMonth: ' . $newDueDateMonth;
                 echo '<br>$newDueDateDay: ' . $newDueDateDay;
+                echo '<br>$newDueDateDayB: ' . $newDueDateDayB;
                 echo '<br>$newDueDateYear: ' . $newDueDateYear;
                 echo '<br><hr><br>';
             }
@@ -273,6 +275,7 @@ if ($accountRecAccount === 'Yes') {
             'day'                               => $newDueDateDay,
             'year'                              => $newDueDateYear,
         );
+        print_r($data[$i]); 
         $i++;
     }
     // echo '<br>' . print_r($data);

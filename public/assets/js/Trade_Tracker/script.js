@@ -2376,10 +2376,17 @@ class Row2 {
                 if (dbObject[gin("00i")] == dbObject[gin("00p")]) {
                     tag = "Edit";
                 }
+<<<<<<< HEAD
                 const request = await fetch(
                 // "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
                 // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
                 "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager", {
+=======
+                const request = await fetch("http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager", 
+                // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+                {
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
                     method: "POST",
                     credentials: "same-origin",
                     body: JSON.stringify({ tag, trade: dbObject }),
@@ -2675,10 +2682,17 @@ class Row2 {
                         //It's a child, it takes care of its parent and removes itself from the references
                         else {
                             //If there's an error, it will be thrown and the function will return false
+<<<<<<< HEAD
                             const request = await fetch(
                             // "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
                             // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
                             "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager", {
+=======
+                            const request = await fetch("http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager", 
+                            // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                            // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+                            {
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
                                 method: "POST",
                                 credentials: "same-origin",
                                 body: JSON.stringify({ tag: "Delete", trade: this.current }),

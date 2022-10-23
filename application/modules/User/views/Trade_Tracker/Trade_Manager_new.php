@@ -17,11 +17,12 @@ $trade = $tradeForm['trade'];
 
 /**
  * What the response of this api will look like;
- * 
+ * @var $msg string
+ * @var $status '1' | '0' | '2'
+ *
  * - 1: Success
  * - 0: Failure
  * - 2: Alternative
- * @var '1' | '0' | '2'
  */
 
 
@@ -31,8 +32,11 @@ function throwMsg($msg, $status = '0')
     $response = array('status' => $status, 'message' => $msg);
 
     header('Content-Type: application/json');
-    if ($status == '0') http_response_code(400);
-    else http_response_code(200);
+    if ($status == '0') {
+        http_response_code(400);
+    } else {
+        http_response_code(200);
+    }
     echo json_encode($response);
     ob_flush();
     flush();
@@ -76,23 +80,20 @@ function checkAndPrepTrade($trade)
         if (empty($trade[$key])) {
             $checkedTrade['key'] = '';
         } else {
-            if (gettype($value) != 'string') throwMsg('The ' + $key + ' field does not hold a string value');
+            if (gettype($value) != 'string') throwMsg('The ' + $key + ' field does not hold a string value: '+ value);
 
             switch ($key) {
                 case 'json_user_fields':
-                    if (json_decode($value) == null) throwMsg('The juf field is not valid json');
+                    if (json_decode($value) == null) throwMsg('The juf field is not valid json: '+ value);
                     break;
                 case 'saved_sorting':
-                    if (intval($value) == 0) throwMsg('The saved sorting is not a valid integer or is 0');
+                    if (intval($value) == 0) throwMsg('The saved sorting is not a valid integer or is 0: '+ value);
                     break;
                 case 'closed_ref':
-                    if (intval($value) != 0 && intval($value) < -1) throwMsg('The closed ref is a negative integer');
-                    break;
-                case 'closed_list':
-                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array');
+                    if (intval($value) != 0 && intval($value) < -1) throwMsg('The closed ref is a negative integer: '+ value);
                     break;
                 case 'stats_interpolated_fields':
-                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array');
+                    if (!strIsStrArray($value)) throwMsg('The closed list is not a valid array: '+ value);
                     break;
 
                     /*
@@ -104,10 +105,13 @@ function checkAndPrepTrade($trade)
             //Do not include useless keys in the object
             switch ($key) {
                 case 'legend':
+                case 'id':
                 case 'pseudo_id':
                 case 'save':
                 case 'cancel':
                 case 'delete':
+                case 'closed_list':
+                    //Only the child updates the closed list
                     break;
                 default:
                     $checkedTrade[$key] = $value;
@@ -121,16 +125,15 @@ if (empty($tradeForm)) {
     throwMsg('The received obj was empty');
 } else {
     switch ($tradeForm['tag']) {
+            //For edit and new we are receiving an object which is stripped of the extended juf, but still has irrelevant properties - or properties that should not exist in the db.
         case 'New':
             if (count($this->db->get_where('bf_users_trades', array('id' => $trade['id']))->result_array()) != 0)
                 throwMsg('Trade with ' + $trade['id'] + ' already exists');
 
             if ($trade['pseudo_id'] == $trade['id'])
                 throwMsg('New trade contained equal id and pseudoId');
-            //Clean all the unnecessary elements
-            unset($trade['id']);
 
-
+            //Clean all the unnecessary elements and
             //Check the validity of the given trade and create the db tradeobj
             $newTrade = checkAndPrepTrade($trade);
 
@@ -145,45 +148,17 @@ if (empty($tradeForm)) {
                 $parentList = $this->db->get_where('bf_users_trades', array('id' => $trade['closed_ref']))->result_array();
             }
 
-            //! ERROR PRONE, CHECK CAREFULLY
-            $childList = [];
-            //The check already knows that this is an actual json array
-            if ($trade['closed_list'] != '[]') {
-
-                $query = $this->db->get('bf_users_trades');
-
-                //Build the query
-                for ($i = 0; $i < count(json_decode($trade['closed_list'])); ++$i) {
-                    if ($i == 0) {
-                        $this->db->where('id =', json_decode($trade['closed_list'])[0]);
-                    } else {
-                        $this->db->or_where('id =', json_decode($trade['closed_list'])[$i]);
-                    }
-                }
-
-                $childList = $query->result_array();
-            }
-
             //Insert the row
             $this->db->insert('bf_users_trades', $tradeData);
             $newTrade['id'] = $newTrade['pseudo_id'] = $this->db->insert_id();
 
             //The parent trade will have either already appeared or still have to come up.
             if (count($parentList) == 1) {
-                //It already appeared
-                //It's going to be edited in the frontend and saved next. 
-                //-> The frontend WILL edit the closelist and send the change to the backend,
-                // here we assume this doesn't happen and change it anyways
-
-                //We can expect the list to be in the right format because we don't allow otherwise - FUTUREBUG
+                //The backend is the only one to up the closed list.
                 $childList = json_decode($parentList[0]['closed_list']);
-                if (array_search($trade['pseudo_id'], $childList)) array_splice(
-                    $childList,
-                    array_search($trade['pseudo_id'], $childList),
-                    1,
-                    [$newTrade['id']]
-                );
-                else array_push($childList, $newTrade['id']);
+                //The child list won't include the child until this is has been saved to the db, so we can just push it.
+                array_push($childList, $newTrade['id']);
+
 
                 $this->db->set('closed_list', json_encode($childList));
                 //We already know this yelds one result
@@ -193,16 +168,7 @@ if (empty($tradeForm)) {
                 //! Log error
             }
 
-            //If the parent comes afterward, it will already have been updated in the frontend with the necessary information
-            //If it comes before, then it either has no children, or they will 
-            //* REFER TO WEIRDS#1
-            if (count($childList) != 0) {
-                foreach ($childList as $dbChild) {
-                    $this->db->set('closed_ref', $newTrade['id']);
-                    $this->db->where('id', $dbChild['id']);
-                    $this->db->update('bf_users_trades');
-                }
-            }
+
 
             throwMsg(json_encode($newTrade), '1');
 
@@ -228,33 +194,14 @@ if (empty($tradeForm)) {
             //TODO: Move to archived db
 
             $walkingDead = $this->db->get_where('bf_users_trades', array('id' => $trade['id']))->result_array();
-            if (count($walkingDead) == 0) {
-                throwMsg('Called trade did not exist anymore: id-' + $trade['id'], '2');
-            }
 
-            $this->db->delete('bf_userrs_trades', array('id' => $trade['id']));
+            if (count($walkingDead) == 0) throwMsg('Called trade did not exist anymore: id-' + $trade['id'], '2');
+            if ($walkingDead[0]['closed_list'] != '[]') throwMsg("Trying to delete parent trade without having eliminated all of its children");
+
+            $this->db->delete('bf_users_trades', array('id' => $trade['id']));
             $parentList = [];
             if ($trade['closed_ref'] != '-1') {
                 $parentList = $this->db->get_where('bf_users_trades', array('id' => $trade['closed_ref']))->result_array();
-            }
-
-            //! ERROR PRONE, CHECK CAREFULLY
-            $childList = [];
-            //The check already knows that this is an actual json array
-            if ($trade['closed_list'] != '[]') {
-
-                $query = $this->db->get('bf_users_trades');
-
-                //Build the query
-                for ($i = 0; $i < count(json_decode($trade['closed_list'])); ++$i) {
-                    if ($i == 0) {
-                        $this->db->where('id =', json_decode($trade['closed_list'])[0]);
-                    } else {
-                        $this->db->or_where('id =', json_decode($trade['closed_list'])[$i]);
-                    }
-                }
-
-                $childList = $query->result_array();
             }
 
 
@@ -263,6 +210,8 @@ if (empty($tradeForm)) {
 
                 //We can expect the list to be in the right format because we don't allow otherwise - FUTUREBUG
                 $childList = json_decode($parentList[0]['closed_list']);
+
+                //! This if should be always true if everything goes as expected
                 if (array_search($trade['pseudo_id'], $childList))
                     array_splice(
                         $childList,
@@ -278,15 +227,7 @@ if (empty($tradeForm)) {
                 //! Log error
             }
 
-            //Delete all the kids :(
-            if (count($childList) != 0) {
-                foreach ($childList as $dbChild) {
-                    $this->db->where('id', $dbChild['id']);
-                    $this->db->delete('bf_users_trades');
-                }
-            }
-
-            throwMsg('Trade and relatives deleted/updated succesfully', '1');
+            throwMsg('Trade deleted succesfully', '1');
             break;
         default:
             throwMsg('The tag obj was not of type New|Edit|Delete');

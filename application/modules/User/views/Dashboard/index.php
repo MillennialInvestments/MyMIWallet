@@ -110,6 +110,7 @@ $activeInvestmentProfits                        = '0.00';
 $activeMonthlyInvestments                       = '0.00';
 $activeMonthyTrades                             = '0';
 
+<<<<<<< HEAD
 $emergencyFundTarget                            = $thisMonthExpenses * 6; 
 $emergencyFundPercentage                        = '0.00'; 
 $totalDebt                                      = $userBudget['debtAccountSummary']['totalDebt'];
@@ -168,11 +169,46 @@ $dashboardData							        = array(
 );
 print_r($dashboardData);
 ?>   
+=======
+$walletCost								= $this->config->item('wallet_cost');  			 		// $5
+$gas_fee								= $this->config->item('gas_fee');
+$trans_fee								= $this->config->item('trans_fee');
+$trans_percent							= $this->config->item('trans_percent');
+$expenses								= ($walletCost * $trans_percent) + $trans_fee;			// Total Fees
+$total_fees								= number_format($expenses, 2);
+$fee_coins								= round(($MyMICoinValue), 8);
+$walletCoins							= ($walletCost / $MyMICoinValue) + $fee_coins;
+$remainingCoins							= $MyMICCoinSum - $walletCoins;
+$dashboardData							= array(
+	'getWallets'						=> $getWallets,
+	'cuID'								=> $cuID,
+	'cuWalletCount'						=> $cuWalletCount,
+	'cuTotalWalletCount'				=> $cuTotalWalletCount,
+	'walletID'							=> $walletID,
+	'walletTitle'						=> $walletTitle,
+	'walletAmount'						=> $walletAmount,
+	'walletFunds'						=> $walletFunds,
+	'walletGains'						=> $walletGains,
+	'MyMICCoinSum'						=> $MyMICCoinSum,
+	'MyMICCurrentValue'					=> $MyMICCurrentValue,
+	'MyMIGCoinSum'						=> $MyMIGCoinSum,
+	'MyMIGCurrentValue'					=> $MyMIGCurrentValue,
+	'lastTradeActivity'					=> $lastTradeActivity,
+	'walletCost'						=> $walletCost,
+	'walletCoins'						=> $walletCoins,
+	'walletSum'                         => $walletSum,
+	'assetNetValue'                     => $assetNetValue,
+	'assetTotalCount'                   => $assetTotalCount,
+	'assetTotalGains'                   => $assetTotalGains,
+);
+?>
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
 <style>
-.tranx-amount .number {
-    font-size:0.87em; 
-}
+	.tranx-amount .number {
+		font-size: 0.87em;
+	}
 </style>
+<<<<<<< HEAD
 
 <div class="nk-block-head nk-block-head-sm">
     <div class="nk-block-between">
@@ -234,11 +270,38 @@ print_r($dashboardData);
             <?php $this->load->view('User/Dashboard/index-new/notifications', $dashboardData); ?>
         </div><!-- .col -->        
 		<div class="col-md-12 mb-3">  
+=======
+<div>TESTTESTETSETTEST TEST</div>
+<div class="nk-block">
+	<div class="row gy-gs">
+		<div class="col-md-12 mb-3">
+			<?php $this->load->view('User/Dashboard/index/header', $dashboardData); ?>
+		</div>
+		<div class="col-12 col-md-3">
+			<?php $this->load->view('User/Dashboard/index/financial_overview', $dashboardData); ?>
+			<?php
+			if (!empty($assetNetValue)) {
+				$this->load->view('User/Dashboard/index/asset_overview', $dashboardData);
+			}
+			?>
+		</div>
+		<div class="col-12 col-md-9">
+			<?php //$this->load->view('User/Dashboard/index/Announcements'); 
+			?>
+			<?php $this->load->view('User/Dashboard/index/Balances', $dashboardData); ?>
+		</div>
+	</div>
+</div>
+<hr class="my-5">
+<div class="nk-block">
+	<div class="row gy-gs">
+		<div class="col-md-12 mb-3">
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
 			<?php $this->load->view('User/Dashboard/index/market-header', $dashboardData); ?>
 		</div>
 		<div class="col-12 col-md-3">
 			<?php $this->load->view('User/Dashboard/index/US_Market_Overview'); ?>
-		</div>	
+		</div>
 		<div class="col-12 col-md-3">
 			<?php $this->load->view('User/Dashboard/index/US_Additional_Overview'); ?>
 		</div>
@@ -248,7 +311,12 @@ print_r($dashboardData);
 		<div class="col-12 col-md-3">
 			<?php $this->load->view('User/Dashboard/index/Crypto_Market_Overview'); ?>
 		</div>
+<<<<<<< HEAD
     </div>
 </div>
 
 
+=======
+	</div>
+</div>
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c

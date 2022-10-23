@@ -408,3 +408,31 @@ ERROR - 2022-10-23 08:08:22 --> Severity: Notice --> Undefined variable: cuCover
 ERROR - 2022-10-23 08:08:22 --> Severity: Notice --> Undefined variable: cuCoverart /home/mymiteam/mymiwallet/site/current/public/dev/application/third_party/libraries/MyMIUser.php 648
 ERROR - 2022-10-23 08:08:57 --> Severity: Notice --> Undefined variable: cuCoverart /home/mymiteam/mymiwallet/site/current/public/dev/application/third_party/libraries/MyMIUser.php 648
 ERROR - 2022-10-23 08:08:57 --> Severity: Notice --> Undefined variable: cuCoverart /home/mymiteam/mymiwallet/site/current/public/dev/application/third_party/libraries/MyMIUser.php 648
+ERROR - 2022-10-23 08:16:45 --> Severity: error --> Exception: Object of class DateTime could not be converted to string /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 161
+ERROR - 2022-10-23 08:17:19 --> Severity: error --> Exception: Call to a member function format() on bool /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 153
+ERROR - 2022-10-23 08:17:33 --> Severity: error --> Exception: Call to a member function format() on bool /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 153
+ERROR - 2022-10-23 08:17:52 --> Severity: error --> Exception: Call to a member function format() on bool /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 153
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 2 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 3 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 4 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 5 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 6 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 7 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 8 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 9 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 10 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 11 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 12 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 13 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 14 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 15 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 16 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 17 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 18 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 19 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 20 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 21 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 22 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 23 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 24 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
+ERROR - 2022-10-23 08:22:58 --> Severity: Notice --> Undefined offset: 25 /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/Recurring_Account_Schedule.php 279
