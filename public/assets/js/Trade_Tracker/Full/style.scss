@@ -1,0 +1,87 @@
+@mixin subRow {
+	display: flex;
+	flex-direction: column;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+.tt-block {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 2fr 8fr 1fr;
+}
+.tt-row {
+	border-bottom: 1px solid black;
+	margin: 0 1rem;
+	display: inline-block;
+	position: relative;
+	height: 2rem;
+	.tt-input {
+		cursor: pointer;
+		background: white;
+		border: 1px solid black;
+	}
+	.tt-legend-column {
+		display: inline;
+	}
+}
+.tt-legend-row {
+	order: 0;
+}
+.tt-trade-row {
+	order: 1;
+}
+.disabled-edt {
+	border: none;
+	background: none;
+}
+.tt-tag-detail {
+	background: wheat;
+	padding: 0.4em;
+	.x-button {
+		color: red;
+	}
+}
+.disabled-btn,
+.hidden-open {
+	pointer-events: none;
+	opacity: 0.2;
+}
+.tt-type-selector {
+	width: 5rem;
+	display: none;
+	flex-direction: column;
+	list-style: none;
+	background: whitesmoke;
+	h3,
+	li {
+		padding: 0.3rem 0.5rem;
+	}
+	h3 {
+		font-size: 0.8rem;
+	}
+	li:hover {
+		background: white;
+	}
+}
+//Divs to hold the information
+.first-block {
+	@include subRow();
+	background: white;
+}
+.scroll-block {
+	background: whitesmoke;
+	overflow-x: auto;
+	@include subRow();
+	white-space: nowrap;
+}
+.button-block {
+	@include subRow();
+}
+
+//disabled-edt is the class that makes inputs look like text
+//disabled-btn is the class that hides buttons
+//hidden-open is the class that hides elements only to account for when the trade is over.

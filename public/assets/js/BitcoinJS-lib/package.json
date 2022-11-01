@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "assert": "^1.5.0",
+    "bitcoinjs-lib": "^5.2.0",
+    "browserify": "^17.0.0",
+    "mocha": "^9.0.2",
+    "regtest": "^0.0.3",
+    "uglify-js": "^3.13.10"
+  }
+}

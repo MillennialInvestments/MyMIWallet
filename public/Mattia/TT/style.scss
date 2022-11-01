@@ -1,0 +1,393 @@
+// Imports
+@use "./checkbox.scss";
+@use "./include-media.scss";
+// EXPERIMENTAL
+// @use "./tt2.scss";
+//Everything with a tt prefix is children of the body. The rest is sub element
+$lines_color: gray;
+$table_background: rgb(255, 255, 255);
+$one_darker_background: rgb(243, 243, 243);
+$selected_color: rgb(0, 191, 255);
+$selected_background: whitesmoke;
+$editing_border: rgb(255, 185, 64);
+$darker_contrast: rgb(152, 152, 152);
+
+.hidden {
+	display: none !important;
+}
+
+.visible {
+	display: initial !important;
+}
+
+@mixin viewSys {
+	&.hidden {
+		display: none !important;
+	}
+
+	&.visible {
+		display: flex !important;
+	}
+}
+
+//Mixins for rows
+@mixin section {
+	display: flex;
+	flex-direction: row;
+
+	.field-holder {
+		background: $table_background;
+		border-right: $lines_color 1px solid;
+		flex-grow: 1;
+		display: flex;
+		align-items: center;
+		justify-content: start;
+		position: relative;
+		width: 100%;
+
+
+		input {
+			border: none;
+			transition: all 0.2s ease;
+			width: 100%;
+			background: $table_background;
+			padding: 0.8rem;
+
+			&:focus {
+				// z-index: 4; was used for expanders in-input
+				transition: all 0.2s ease;
+				outline: none;
+				// box-shadow: 0 0 0.3rem $selected_color inset;
+				background: $selected_background;
+			}
+		}
+
+		select {
+			width: 100%;
+			border: none;
+			background: none;
+		}
+
+		//The select part of listers
+		.listing-block {
+			position: absolute;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			bottom: 0;
+			transform: translateY(100%);
+			background: $selected_background;
+		}
+
+		textarea:focus,
+		select:focus {
+			outline: none;
+		}
+	}
+
+	.editing {
+		border-bottom: 2px solid $editing_border;
+	}
+}
+
+@mixin row {
+	@include viewSys;
+
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	border-bottom: $lines_color 1px solid;
+
+	&.editing {}
+
+	//In scrollable sections the elements have a predefined size. 
+	.scrollable-section {
+		@include section;
+
+		overflow-x: auto;
+		overflow-y: hidden;
+		/* Hide scrollbar for IE, Edge and Firefox */
+
+		-ms-overflow-style: none;
+		/* IE and Edge */
+		scrollbar-width: none;
+
+		/* Firefox */
+		/* Hide scrollbar for Chrome, Safari and Opera */
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+		.field-holder {
+			input {
+				width: 10rem;
+			}
+		}
+
+	}
+
+	//In fixed sections the element can grow to the size they need to fill the entire thing
+	.fixed-section {
+		@include section;
+	}
+}
+
+@mixin close-button {
+	position: absolute;
+	border: none;
+	background: none;
+	color: $lines_color;
+	top: 5%;
+	left: 95%;
+	font-size: 2rem;
+	transform: translate(-50%, -50%)
+}
+
+//The main trade window object
+.tt-trade-window {
+	display: flex;
+	flex-direction: column;
+	background: rgb(240, 240, 240);
+	//DEBUG
+	padding: 1rem;
+
+	//The table holding the rows
+	.trade-table {
+		display: flex;
+		flex-direction: column-reverse;
+		margin-bottom: 2rem;
+
+		.table-bottom-controller {
+			order: -1;
+
+			//Forward and backward buttons
+			button {
+				&.disabled {}
+			}
+
+			//The page number input
+
+			.page-mover-holder {
+				display: flex;
+				flex-direction: row;
+
+				input {
+
+					max-width: 10%;
+				}
+			}
+		}
+
+		.trade-container {
+			@include viewSys;
+
+			flex-direction: column;
+			position: relative;
+			padding-left: 1.5rem;
+
+			.dropdown-btn {
+				position: absolute;
+				left: 0;
+				width: 1.5rem;
+				background: none;
+				border: none;
+				font-size: 1.2rem;
+				color: $darker_contrast;
+				transform: translateY(25%)
+			}
+
+			&.legendary {
+				//Order managed from javascript
+			}
+
+			.main-row {
+				@include row;
+				order: 0;
+			}
+
+			.closed-row {
+				@include row;
+				background: red;
+				order: 1;
+				margin-left: 1rem;
+			}
+
+			.legend-row {
+				@include row;
+			}
+
+			&.editing {}
+		}
+	}
+
+}
+
+.tt-expander {
+	position: absolute;
+	z-index: 4;
+	background: white;
+
+	&.hidden {
+		display: none;
+	}
+
+	&.lister {
+		display: flex;
+		flex-direction: column;
+
+		.empty-block {}
+
+		.tag-separator {}
+
+		.clickable-value {}
+	}
+
+	&.moreOptions {
+		.spawner-new-button {
+
+			//Quick spanw butons are plain and are a simple mean to add a row to the table
+			&.quick-spawn {}
+
+			//Main buttons expand to a new purpose, and should be highlighted as the main interest of the prompt
+			&.main {}
+		}
+	}
+}
+
+.tt-prompt-box {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	background: white;
+	transform: translate(-50%, -50%);
+	box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.21);
+
+	z-index: 4;
+
+	.close-button {
+		@include close-button;
+	}
+}
+
+.tt-edit-user-preferences {
+	&.hidden {
+		display: none;
+	}
+
+	&.visible {
+		display: grid;
+	}
+
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 5;
+
+	grid-template-columns: 1fr 8fr;
+
+	background: $table_background;
+	box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.21);
+	width: 40vw;
+	height: 60vh;
+
+	.close-button {
+		@include close-button;
+	}
+
+	.menu-bar {
+		height: 100%;
+		grid-column: 1/2;
+
+		background: $one_darker_background;
+	}
+
+	.page-section {
+		height: 100%;
+		grid-column: 2 /3;
+
+		.page {
+			@include viewSys;
+		}
+	}
+}
+
+.tt-controller-box {}
+
+.tt-darkener {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: black;
+	opacity: 0;
+	transition: 0.2s ease all;
+}
+
+
+
+//OLD Variables
+$smaller-column-width: 4vw;
+$standard-column-width: 6vw;
+$bigger-column-width: $standard-column-width * 2;
+$standard-column-height: 2.5rem;
+$mymiAzure: #97c7e7;
+$mymiBlue: #3c5fba;
+$success: rgb(164, 214, 151);
+$error: rgb(233, 151, 151);
+//Dialog box
+
+//Alerts
+.tt-alert-box {
+	position: fixed;
+	top: 0;
+	width: 80vw;
+	margin: 0 10vw;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	pointer-events: none;
+	z-index: 500;
+	padding-top: 5vh;
+
+	.tt-alert {
+		margin-bottom: 1rem;
+		padding: 0.6em 1rem;
+		width: 100%;
+		border-radius: 10px;
+	}
+}
+
+
+.tt-success {
+	background: $success;
+}
+
+.tt-error {
+	background: $error;
+}
+
+// Input
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+//date
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+	display: none;
+	-webkit-appearance: none;
+}
+
+/* Firefox */
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+//disabled-edt is the class that makes inputs look like text
+//disabled-btn is the class that hides buttons
+//hidden-open is the class that hides elements only to account for when the trade is over.
