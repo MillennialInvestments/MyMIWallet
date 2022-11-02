@@ -53,18 +53,27 @@
     <div class="new-target"></div>
     <div class="origin" style="width: 50%;"></div>
     <div class="current" style="width: 50%;"></div>
-    <div class="tt-edit-user-preferences">
-        <button class="close-button">✕</button>
-        <div class="menu-bar"></div>
+    <div class="tt-edit-user-preferences container-fluid px-0">
+        <button class="close-button" style="z-index:10 ;">✕</button>
+        <div class="menu-bar">
+
+        </div>
         <div class="page-section">
 
-            <div class="page columns-editor">
-
-
+            <div class="page columns-editor flex-column">
 
             </div>
 
-            <div class="page custom-columns"> </div>
+            <div class="page custom-columns flex-column">
+                <h1>Custom columns</h1>
+            </div>
+            <div class="save-slide ">
+
+                <button type="button" class="btn btn-primary" id="saveBtn" disabled>Save</button>
+                <button type="button" class="btn btn-primary" id="resetBtn" disabled>Reset</button>
+                <button type="button" class="btn btn-primary" id="exportBtn" disabled>⭳</button>
+                <button type="button" class="btn btn-primary" id="importBtn" disabled>⭱</button>
+            </div>
         </div>
     </div>
     <div class="tt-alert-box">

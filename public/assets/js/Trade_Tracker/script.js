@@ -61,8 +61,7 @@ RULES:
 The trade cannot have both a closed_ref != -1 and a closed list != []
 
 */
-//START OF THE PROGRAM
-let debug = true;
+let debug = false;
 class TradeObj {
     constructor(row) {
         this.legend = row.legend || "false";
@@ -111,7 +110,7 @@ class TradeObj {
         this.delete = row.delete || "Delete";
     }
 }
-const debugGraphicsLibrary = {
+const graphicsLibrary = {
     h3: [],
     description: [],
     input: ["form-control"],
@@ -150,70 +149,21 @@ const debugGraphicsLibrary = {
     controllerBox: ["tt-controller-box", "pb-5"],
     alert: ["tt-alert", "alert", "alert-dimissable"],
     closeWindowBtn: ["close-button"],
-};
-const graphicsLibrary = {
-    h3: [],
-    description: [],
-    input: ["form-control"],
-    select: ["form-control"],
-    div: [],
-    button: ["btn"],
-    openedBtn: ["btn", "btn-light", "btn-block"],
-    closedBtn: ["btn", "btn-warning", "btn-block"],
-    cancelBtn: ["btn-warning", "btn-block"],
-    saveBtn: ["btn-primary", "btn-block"],
-    deleteBtn: ["btn-danger", "btn-block"],
-    darkener: ["tt-darkener", "btn-block"],
-    tradeTable: ["trade-table"],
-    tableBottomController: ["table-bottom-controller"],
-    pageMoverHolder: ["page-mover-holder"],
-    tradeWindow: ["tt-trade-window"],
-    expander: ["tt-expander", "hidden"],
-    expanderEmptyBlock: ["empty-block"],
-    expanderTagSeparator: ["tag-separator"],
-    expanderClickableValue: ["clickable-value"],
-    mainBtn: ["btn-primary", "mr-3"],
-    spawnerButton: ["spawner-new-button", "btn-primary", "mr-3"],
-    tradeContainer: ["trade-container", "pl-3"],
-    containerDropdown: ["dropdown-btn"],
-    disabledBtn: ["disabled-btn"],
-    promptBox: ["tt-prompt-box"],
-    fieldHolder: ["field-holder", "form-group", "custom-group-width", "mb-0"],
-    autoCalculated: [],
-    editing: ["editing"],
-    legendContainer: ["legendary"],
-    closedRow: ["closed-row"],
-    legendRow: ["legend-row"],
-    mainRow: ["main-row", "row"],
-    fixedSection: ["fixed-section", "col-3", "d-flex", "px-0"],
-    scrollableSection: ["scrollable-section", "col-6", "overflow-auto", "d-flex", "px-0"],
-    controllerBox: ["tt-controller-box", "pb-5"],
-    alert: ["tt-alert", "alert", "alert-dimissable"],
-    closeWindowBtn: ["close-button"],
+    elementsEditor: ["d-flex", "flex-column"],
+    sectionDiv: ["mt-5"],
+    selectedField: [],
+    availableField: ["available-field"],
+    blockedField: [],
 };
 HTMLElement.prototype.agd = function (...classSet) {
-    if (debug == true) {
-        classSet.forEach((index) => {
-            this.classList.add(...debugGraphicsLibrary[index]);
-        });
-    }
-    else {
-        classSet.forEach((index) => {
-            this.classList.add(...graphicsLibrary[index]);
-        });
-    }
+    classSet.forEach((index) => {
+        this.classList.add(...graphicsLibrary[index]);
+    });
 };
 HTMLElement.prototype.rgd = function (...classSet) {
-    if (debug == true) {
-        classSet.forEach((index) => {
-            this.classList.remove(...debugGraphicsLibrary[index]);
-        });
-    }
-    else {
-        classSet.forEach((index) => {
-            this.classList.remove(...graphicsLibrary[index]);
-        });
-    }
+    classSet.forEach((index) => {
+        this.classList.remove(...graphicsLibrary[index]);
+    });
 };
 function instanceOfIF(object) {
     return object.discriminator === "INPUT-FIELD";
@@ -355,6 +305,46 @@ function spawnBtn() {
  * @param options CURRENTLY NOT OPERATIONAL
  * @returns
  */
+async function truePrompt(text, options = { trueTxt: "Yes" }) {
+    const prompt = spawnDiv();
+    document.body.append(prompt);
+    prompt.agd("promptBox");
+    const closeBtn = spawnBtn();
+    closeBtn.innerHTML = "✕";
+    closeBtn.agd("closeWindowBtn");
+    const trueBtn = spawnBtn();
+    trueBtn.agd("saveBtn");
+    const description = spawnDiv();
+    description.agd("h3");
+    description.innerHTML = text;
+    trueBtn.innerHTML = options.trueTxt;
+    prompt.append(closeBtn);
+    prompt.append(description);
+    prompt.append(trueBtn);
+    const result = await new Promise(function (resolve) {
+        window.addEventListener("mousedown", function (e) {
+            if (e.target != prompt && e.target != trueBtn) {
+                prompt.remove();
+                resolve(true);
+            }
+        });
+        closeBtn.addEventListener("click", function () {
+            prompt.remove();
+            resolve(true);
+        });
+        trueBtn.addEventListener("click", function () {
+            prompt.remove();
+            resolve(true);
+        });
+    });
+    return result;
+}
+/**
+ *
+ * @param text The text to prompt
+ * @param options CURRENTLY NOT OPERATIONAL
+ * @returns
+ */
 async function trueFalsePrompt(text, options = { trueTxt: "Yes", falseTxt: "Cancel" }) {
     const prompt = spawnDiv();
     document.body.append(prompt);
@@ -393,6 +383,62 @@ async function trueFalsePrompt(text, options = { trueTxt: "Yes", falseTxt: "Canc
         trueBtn.addEventListener("click", function () {
             prompt.remove();
             resolve(true);
+        });
+    });
+    return result;
+}
+/**
+ *
+ * @param text
+ * @param options
+ * @returns 0 For "don't do anything", 1 For "Save changes", 2 For "Delete changes"
+ */
+async function trueFalseCancelPrompt(text, options = { trueTxt: "Yes", falseTxt: "No", cancelTxt: "Cancel" }) {
+    const prompt = spawnDiv();
+    document.body.append(prompt);
+    prompt.agd("promptBox");
+    const closeBtn = spawnBtn();
+    closeBtn.innerHTML = "✕";
+    closeBtn.agd("closeWindowBtn");
+    const trueBtn = spawnBtn();
+    const falseBtn = spawnBtn();
+    const cancelBtn = spawnBtn();
+    falseBtn.agd("deleteBtn");
+    trueBtn.agd("saveBtn");
+    cancelBtn.agd("cancelBtn");
+    const description = spawnDiv();
+    description.agd("h3");
+    description.innerHTML = text;
+    trueBtn.innerHTML = options.trueTxt;
+    falseBtn.innerHTML = options.falseTxt;
+    cancelBtn.innerHTML = options.cancelTxt;
+    prompt.append(closeBtn);
+    prompt.append(description);
+    prompt.append(trueBtn);
+    prompt.append(cancelBtn);
+    prompt.append(falseBtn);
+    const result = await new Promise(function (resolve) {
+        window.addEventListener("mousedown", function (e) {
+            if (e.target != prompt && e.target != trueBtn && e.target != falseBtn) {
+                prompt.remove();
+                resolve(0);
+            }
+        });
+        closeBtn.addEventListener("click", function () {
+            prompt.remove();
+            resolve(0);
+        });
+        cancelBtn.addEventListener("click", function () {
+            prompt.remove();
+            resolve(0);
+        });
+        falseBtn.addEventListener("click", function () {
+            prompt.remove();
+            resolve(2);
+        });
+        trueBtn.addEventListener("click", function () {
+            prompt.remove();
+            resolve(1);
         });
     });
     return result;
@@ -518,12 +564,10 @@ function validPerc(closeValue) {
  */
 function changeVisible(element, visible, stateProperties = []) {
     if (visible == true) {
-        element.classList.add("visible");
         element.classList.remove("hidden");
     }
     else {
         element.classList.add("hidden");
-        element.classList.remove("visible");
     }
     stateProperties.forEach((property) => {
         property = visible;
@@ -553,13 +597,69 @@ const userPrefs = {
                         { text: "Long", value: "long" },
                         { text: "Short", value: "short" },
                     ],
-                    selected: "default",
+                    selected: "E-Preset 1",
                     layouts: {
                         //If an element is not fixed, then it will be able to scroll
                         //Which elements get rendered? Check "availableFields"
                         //If fixed is true, then the size
-                        default: [
+                        "E-Preset 1": [
                             { fixed: true, size: "20%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] },
+                            {
+                                fixed: false,
+                                size: "75%",
+                                elements: ["7", "6", "9", "8", "10", "11", "12", "4", "13", "5", "14", "u1", "15"],
+                                activeFormulas: ["totalCost"],
+                                nElements: [],
+                            },
+                            {
+                                fixed: true,
+                                size: "15%",
+                                elements: ["b1", "b2", "b3"],
+                                activeFormulas: [],
+                                nElements: [],
+                            },
+                            //0 layouts are holding all the not displayed fields till now
+                            //The presence of 0 layouts makes all functions easier to manage since no exception has to be made for these fields.
+                            //0 layouts have to be used
+                            {
+                                fixed: true,
+                                size: "0",
+                                activeFormulas: [],
+                                //This is a list of all the element NOT to include - Made up from all the elements included in the other parts of the row
+                                nElements: ["1", "2", "3", "7", "6", "9", "8", "10", "11", "12", "4", "13", "5", "14", "u1", "15", "b1", "b2", "b3"],
+                                elements: [],
+                            },
+                        ],
+                        "E-Preset 2": [
+                            { fixed: true, size: "20%", elements: ["3", "2", "1"], activeFormulas: [], nElements: [] },
+                            {
+                                fixed: false,
+                                size: "75%",
+                                elements: ["7", "6", "9", "8", "10", "11", "12", "4", "13", "5", "14", "u1", "15"],
+                                activeFormulas: ["totalCost"],
+                                nElements: [],
+                            },
+                            {
+                                fixed: true,
+                                size: "15%",
+                                elements: ["b1", "b2", "b3"],
+                                activeFormulas: [],
+                                nElements: [],
+                            },
+                            //0 layouts are holding all the not displayed fields till now
+                            //The presence of 0 layouts makes all functions easier to manage since no exception has to be made for these fields.
+                            //0 layouts have to be used
+                            {
+                                fixed: true,
+                                size: "0",
+                                activeFormulas: [],
+                                //This is a list of all the element NOT to include - Made up from all the elements included in the other parts of the row
+                                nElements: ["1", "2", "3", "7", "6", "9", "8", "10", "11", "12", "4", "13", "5", "14", "u1", "15", "b1", "b2", "b3"],
+                                elements: [],
+                            },
+                        ],
+                        "E-Preset 3": [
+                            { fixed: true, size: "20%", elements: ["3", "2", "1"], activeFormulas: [], nElements: [] },
                             {
                                 fixed: false,
                                 size: "75%",
@@ -599,12 +699,12 @@ const userPrefs = {
                         { text: "Call", value: "call" },
                         { text: "Put", value: "put" },
                     ],
-                    selected: "default",
+                    selected: "OB-Preset 1",
                     layouts: {
                         //If an element is not fixed, then it will be able to scroll
                         //Which elements get rendered? Check "availableFields"
                         //If fixed is true, then the size
-                        default: [
+                        "OB-Preset 1": [
                             { fixed: true, size: "10%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] },
                             {
                                 fixed: false,
@@ -628,38 +728,68 @@ const userPrefs = {
                                 size: "0",
                                 activeFormulas: [],
                                 //This is a list of all the element NOT to include - Made up from all the elements included in the other parts of the row
-                                nElements: ["1", "2", "3", "17", "18", "10", "19", "20", "11", "12", "u1", "15", "b1", "b2", "b3"],
+                                nElements: ["1", "2", "3", "17", "18", "10", "19", "20", "11", "12", "b1", "b2", "b3"],
+                                elements: [],
+                            },
+                        ],
+                        "OB-Preset 2": [
+                            { fixed: true, size: "10%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] },
+                            {
+                                fixed: false,
+                                size: "80%",
+                                elements: ["17", "18", "10", "19", "20", "11", "12"],
+                                activeFormulas: ["totalCost"],
+                                nElements: [],
+                            },
+                            {
+                                fixed: true,
+                                size: "10%",
+                                elements: ["b1", "b2", "b3"],
+                                activeFormulas: [],
+                                nElements: [],
+                            },
+                            //0 layouts are holding all the not displayed fields till now
+                            //The presence of 0 layouts makes all functions easier to manage since no exception has to be made for these fields.
+                            //0 layouts have to be used
+                            {
+                                fixed: true,
+                                size: "0",
+                                activeFormulas: [],
+                                //This is a list of all the element NOT to include - Made up from all the elements included in the other parts of the row
+                                nElements: ["1", "2", "3", "17", "18", "10", "19", "20", "11", "12", "b1", "b2", "b3"],
+                                elements: [],
+                            },
+                        ],
+                        "OB-Preset 3": [
+                            { fixed: true, size: "10%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] },
+                            {
+                                fixed: false,
+                                size: "80%",
+                                elements: ["17", "18", "10", "19", "20", "11", "12"],
+                                activeFormulas: ["totalCost"],
+                                nElements: [],
+                            },
+                            {
+                                fixed: true,
+                                size: "10%",
+                                elements: ["b1", "b2", "b3"],
+                                activeFormulas: [],
+                                nElements: [],
+                            },
+                            //0 layouts are holding all the not displayed fields till now
+                            //The presence of 0 layouts makes all functions easier to manage since no exception has to be made for these fields.
+                            //0 layouts have to be used
+                            {
+                                fixed: true,
+                                size: "0",
+                                activeFormulas: [],
+                                //This is a list of all the element NOT to include - Made up from all the elements included in the other parts of the row
+                                nElements: ["1", "2", "3", "17", "18", "10", "19", "20", "11", "12", "b1", "b2", "b3"],
                                 elements: [],
                             },
                         ],
                     },
                 },
-                // option: {
-                // 	name: "Buy Options",
-                // 	tag: "option",
-                // 	tagLogical: "equal",
-                // 	variations: [
-                // 		{ text: "Call", value: "call" },
-                // 		{ text: "Putt", value: "put" },
-                // 	],
-                // 	selected: "default",
-                // 	layouts: {
-                // 		default: {},
-                // 	},
-                // },
-                // optionSell: {
-                // 	name: "Write options",
-                // 	tag: "optionSell",
-                // 	tagLogical: "equal",
-                // 	variations: [
-                // 		{ text: "Call", value: "call" },
-                // 		{ text: "Putt", value: "put" },
-                // 	],
-                // 	selected: "default",
-                // 	layouts: {
-                // 		default: {},
-                // 	},
-                // },
             },
         },
     },
@@ -678,12 +808,6 @@ const userPrefs = {
             columnName: "Test Text (Field!)",
         },
     },
-    /**
-     * These are common elements to be spawned in prompts (like standard close percentage and other stuff)
-     * - text usually refers to a displayed value
-     * - attachedNumber is a quick version of an attached object with various information inside of it
-     * - attachedObject contains any other required information, that will be handled by the handler of an expander
-     */
     promptDefaults: {
         //Default values to be shown when creating a new field - pending implementation
         // fieldDefaults: {
@@ -855,11 +979,6 @@ const userPrefs = {
     },
     walletList: [...walletList],
     symbolList: [...symbolList],
-    // [
-    // 	{ id: "01", value: "Personal Account", tag: "Schwab" },
-    // 	{ id: "02", value: "WALL2", tag: "Ungrouped" },
-    // 	{ id: "03", value: "WALL3", tag: "TD Ameritrade" },
-    // ],
 };
 function getTradeTypeVars() {
     const result = {};
@@ -967,7 +1086,7 @@ const defaultFields = {
         render: "true",
         default: "false",
         type: "closed",
-        subtype: "",
+        subtype: "close",
         modifiers: [],
         computed: [],
         description: "Toggles the trade status between open and closed",
@@ -1469,8 +1588,8 @@ const defaultFields = {
  * - Overlapping is not taken care of
  * @returns {{int:{}} }
  */
-const availableFieldsGen = () => {
-    const res = Object.assign(Object.assign({}, defaultFields), userPrefs.customFields);
+const availableFieldsGen = (prefObj = userPrefs) => {
+    const res = Object.assign(Object.assign({}, defaultFields), prefObj.customFields);
     return res;
 };
 /**
@@ -1531,7 +1650,7 @@ class Table {
     c_sortChildren(childArray) {
         const byIdObj = {};
         //Sort in INCREASING order
-        //The LOWEST sorting gets put first as of css convention.
+        //The LOWEST sorting gets put first
         //OTHERWISE
         //By sorting from smallest to greates, the smallest gets rendered as the first element, hence pushed to the end
         const mainTrades = [...childArray].filter((row) => row.current[gin("29")] == "-1");
@@ -1683,18 +1802,14 @@ class Table {
      *
      * Important note: When looking for specific trades, the pageVisibility stops being a matter of importance, then the searching function RE-runs this function to re-page the trades correctly
      */
-    //! Big optimization flaw
-    //TODO: Optimize this by working with reverse indexes instead of reversing the array
     refreshCurrentPageVisibility() {
-        //Spread to not reverse the sorted one
-        //Reference to objects is kept anyways
-        const reversedArray = [...this.sortedMainChildren].reverse();
+        const array = [...this.sortedMainChildren];
         const lowerBound = (this.currentPage - 1) * userPrefs.rowsPerPage;
         const upperBound = this.currentPage * userPrefs.rowsPerPage - 1;
-        for (let index = 0; index < reversedArray.length; index++) {
-            const element = reversedArray[index];
+        for (let index = array.length - 1; index >= 0; index--) {
+            const element = array[index];
             //TODO: Decide whether to hide the mainRow or the container.
-            if (index >= lowerBound && index <= upperBound) {
+            if (array.length - index - 1 >= lowerBound && array.length - index - 1 <= upperBound) {
                 if (element.state.container != "") {
                     element.state.paged = true;
                     const childTrades = JSON.parse(element.current[gin("30")]);
@@ -2163,7 +2278,7 @@ class Expander {
     /**
      *  In case of a moreOptions expander, the values are not going to be filtered (at least in this patch). So only a single element will be taken giving directions on which promptDefatults object to read from
      * */
-    fill(content) {
+    fill(content, maxLenght = 100) {
         // The content type determines how the listerObj list is interpreted
         if (this.currentFormat == "lister") {
             //Todo: Check that the content type matches the expander type
@@ -2178,7 +2293,7 @@ class Expander {
             else {
                 const orderedListByTag = [...content].sort((a, b) => a.tag.localeCompare(b.tag));
                 // Print a divider based on tag
-                for (let index = 0; index < orderedListByTag.length; index++) {
+                for (let index = 0; index < orderedListByTag.length && index < maxLenght; index++) {
                     //Separate the elements with different tags
                     /*ideas:
                         - Make the paragraph cliccable and show only the trades with that specific
@@ -2204,7 +2319,7 @@ class Expander {
                     this.element.append(clickableValue);
                     //Give it activation properties
                     clickableValue.innerHTML = orderedListByTag[index].value;
-                    clickableValue.realValue = Object.assign({}, orderedListByTag[index]);
+                    clickableValue.realValue = Object.create(orderedListByTag[index]);
                     //Click event
                     clickableValue.addEventListener("click", (e) => {
                         var _a;
@@ -2344,7 +2459,6 @@ class Row2 {
             try {
                 //dbObject acts as a save of the previous version
                 const dbObject = Object.assign({}, this.current);
-                console.log(dbObject, this.current);
                 // Put user field changes into the json_user_fields field
                 const jsUF = {};
                 Object.values(userPrefs.customFields).forEach((customField) => {
@@ -2376,17 +2490,10 @@ class Row2 {
                 if (dbObject[gin("00i")] == dbObject[gin("00p")]) {
                     tag = "Edit";
                 }
-<<<<<<< HEAD
-                const request = await fetch(
-                // "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
-                // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
-                "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager", {
-=======
                 const request = await fetch("http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager", 
                 // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
                 // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
                 {
->>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
                     method: "POST",
                     credentials: "same-origin",
                     body: JSON.stringify({ tag, trade: dbObject }),
@@ -2405,7 +2512,6 @@ class Row2 {
                     if (this.current.hasOwnProperty(key))
                         continue;
                     //Throwing here would impact other factors
-                    console.log({ message: "One key coming from the db object was not defined in the current object", key: key, obj: JSON.parse(data.message) });
                     delete updatedTrade[key];
                 }
                 delete updatedTrade[gin("30")]; //Here we are deleting the incoming closed list because it's not updated. We could send it to the origin but it would make no difference. Refer to the standard api schema
@@ -2682,17 +2788,10 @@ class Row2 {
                         //It's a child, it takes care of its parent and removes itself from the references
                         else {
                             //If there's an error, it will be thrown and the function will return false
-<<<<<<< HEAD
-                            const request = await fetch(
-                            // "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
-                            // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
-                            "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager", {
-=======
                             const request = await fetch("http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager", 
                             // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
                             // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
                             {
->>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
                                 method: "POST",
                                 credentials: "same-origin",
                                 body: JSON.stringify({ tag: "Delete", trade: this.current }),
@@ -2812,7 +2911,7 @@ class Row2 {
                 const availableFields = availableFieldsGen();
                 //Create the new trade object
                 //Create a new row "percenting" the numerical values of the current one and creating a relative different one
-                const percentedNewTrade = Object.assign({}, this.current);
+                const percentedNewTrade = Object.assign({}, this.origin);
                 let index = 1;
                 let newPseudoId = `${this.origin[gin("00i")]}c${index}`;
                 if (this.state.table == "") {
@@ -3002,7 +3101,6 @@ class Row2 {
     }
     dropdownChildren(expand = !this.state.dropDown.expanded) {
         const childList = JSON.parse(this.current[gin("30")]);
-        console.log(expand);
         const theTable = this.state.table;
         if (theTable != "") {
             childList.forEach((pId) => {
@@ -3383,7 +3481,7 @@ class Row2 {
                         const availableChoices = listBrowse(list, input);
                         //Show the listing block
                         listingExpander.moveAndResizeTo();
-                        listingExpander.fill(availableChoices);
+                        listingExpander.fill(availableChoices, 10);
                     }
                     else {
                         console.error("Target is null");
@@ -3396,7 +3494,7 @@ class Row2 {
                         //Now filter using that input
                         const availableChoices = listBrowse(list, input);
                         //Show the listing block
-                        listingExpander.fill(availableChoices);
+                        listingExpander.fill(availableChoices, 10);
                         listingExpander.show();
                     }
                     else {
@@ -3961,6 +4059,8 @@ if (mainEditPrefsWindow != null) {
         state: {
             visible: false,
             currentPage: "columnsEditor",
+            editing: new Set([]),
+            closing: false,
         },
         elements: {
             mainWindow: mainEditPrefsWindow,
@@ -3971,27 +4071,446 @@ if (mainEditPrefsWindow != null) {
                 columnsEditor: mainEditPrefsWindow.querySelector(".columns-editor"),
                 customColumns: mainEditPrefsWindow.querySelector(".custom-columns"),
             },
+            saveBtn: mainEditPrefsWindow.querySelector("#saveBtn"),
+            resetBtn: mainEditPrefsWindow.querySelector("#resetBtn")
+        },
+        addEdit(prop) {
+            this.state.editing.add(prop);
+            this.elements.saveBtn.disabled = false;
+            this.elements.resetBtn.disabled = false;
+        },
+        removeEdit(prop) {
+            this.state.editing.delete(prop);
+            if (this.state.editing.size == 0) {
+                this.elements.saveBtn.disabled = true;
+                this.elements.resetBtn.disabled = true;
+            }
+        },
+        clearEdit() {
+            this.state.editing.clear();
+            this.elements.saveBtn.disabled = true;
+            this.elements.resetBtn.disabled = true;
         },
         showMainTab() {
             changeVisible(this.elements.mainWindow, true, [this.state.visible]);
         },
-        hideMainTab() {
-            changeVisible(this.elements.mainWindow, false, [this.state.visible]);
-        },
-        switchPage(newPage) {
-            if (this.elements.pages.hasOwnProperty(newPage)) {
-                changeVisible(this.elements.pages[this.state.currentPage], false);
-                changeVisible(this.elements.pages[newPage], true);
-                this.state.currentPage = newPage;
+        async hideMainTab() {
+            if (this.state.closing == true) {
+                return;
             }
             else {
-                console.error("Trying to switch to non-existing preferences page");
+                this.state.closing = true;
+                if (await this.switchPage(this.state.currentPage) != false) {
+                    changeVisible(this.elements.mainWindow, false, [this.state.visible]);
+                }
+                this.state.closing = false;
             }
         },
+        /**
+         * Used to switch to a new page: Without switching
+         * @param newPage
+         * @returns
+         */
+        async switchPage(newPage, directive = -1) {
+            if (this.elements.pages.hasOwnProperty(newPage)) {
+                if (this.state.editing.size >= 1) {
+                    try {
+                        let actualDirective = 0;
+                        if (directive != -1) {
+                            actualDirective = directive;
+                        }
+                        else {
+                            actualDirective = await trueFalseCancelPrompt("Do you want to save these changes?");
+                        }
+                        switch (actualDirective) {
+                            case 0:
+                                return false;
+                            case 1:
+                                await this.saveNewPreferences();
+                                break;
+                            case 2:
+                                //Reset the object
+                                this.shadowUserPrefs = JSON.parse(JSON.stringify(this.mirroredUserPrefs));
+                                this.clearEdit();
+                        }
+                        changeVisible(this.elements.pages[this.state.currentPage], false);
+                        changeVisible(this.elements.pages[newPage], true);
+                        this.refreshPages();
+                        this.state.currentPage = newPage;
+                        return true;
+                    }
+                    catch (error) {
+                        console.error("editPrefsObj.switchPage$ There was an error:", error);
+                        return false;
+                    }
+                }
+                else {
+                    changeVisible(this.elements.pages[this.state.currentPage], false);
+                    changeVisible(this.elements.pages[newPage], true);
+                    this.state.currentPage = newPage;
+                    return true;
+                }
+            }
+            else {
+                console.error("editPrefsObj.switchPage$ Trying to switch to non-existing preferences page");
+                return false;
+            }
+        },
+        //TODO: Complete the function, and then pull the userprefs from the db
+        async saveNewPreferences() {
+            try {
+                //PUSH t he changePrefs
+                const result = await fetch("", {
+                    method: "POST",
+                    credentials: "same-origin",
+                    body: JSON.stringify({ tt_user_settings: this.shadowUserPrefs }),
+                    headers: { "Content-Type": "application/json" },
+                });
+                const data = await result.json();
+                if (data.success) {
+                    //do stuff
+                }
+                else {
+                    //do other stuff
+                }
+                //Update the mirrored user prefs
+                this.mirroredUserPrefs = JSON.parse(JSON.stringify(this.shadowUserPrefs));
+                this.clearEdit();
+                truePrompt("For changes to take effect you need to reload the page. You can keep editing preferences in the meantime", { trueTxt: "Ok" });
+            }
+            catch (e) {
+                throw (e);
+            }
+        },
+        mirroredUserPrefs: structuredClone(userPrefs),
+        shadowUserPrefs: structuredClone(userPrefs),
+        /**
+         * Brute force refresh of the insides of every settings page
+         *
+         * Called when an edit is made or when edits are cancelled
+         */
+        //TODO: Complete this function
+        refreshPages() {
+            /*
+            TODO:
+            - Change Size
+            */
+            //* Top level mirror and shadow have no difference. Difference gets born when a change can happen on the shadow that will impact how elements IN PAGE refresh
+            const columnsEditor = () => {
+                this.elements.pages.columnsEditor.innerHTML = "";
+                const pageTitle = document.createElement("h1");
+                pageTitle.innerHTML = "Edit the layout";
+                this.elements.pages.columnsEditor.append(pageTitle);
+                const desc0 = document.createElement("p");
+                desc0.innerHTML = "Here you can edit which columns and in which order they are displayed for each table.<br>Each of the tables' layouts is then divided in sections that compose the row (like the button section). Edit each layout individually and then save to see changes appear";
+                this.elements.pages.columnsEditor.append(desc0);
+                const sortingType = document.createElement("h7");
+                sortingType.innerHTML = this.shadowUserPrefs.selectedSorting == "none" ? "Table division: All the rows are sorted in the same table" : `Table division: ${this.mirroredUserPrefs.selectedSorting}`;
+                this.elements.pages.columnsEditor.append(sortingType);
+                const shadowSelectedSorting = this.shadowUserPrefs.sortings[this.shadowUserPrefs.selectedSorting];
+                //Here shadow and mirror have no difference between them
+                //* BUT: The mirrored will stay static, while the other will be dynamic. So
+                for (const [blockKey, blockProps] of Object.entries(this.mirroredUserPrefs.sortings[this.mirroredUserPrefs.selectedSorting].blocks)) {
+                    /**
+                     * Creates a described input, of any chosen type. Also gives back the input for event listening
+                     * @param label
+                     * @param type
+                     * @returns
+                     */
+                    const createBasicInput = (label, type) => {
+                        const holder = document.createElement("div");
+                        const desc = document.createElement("p");
+                        const input = document.createElement("input");
+                        input.setAttribute("type", type);
+                        desc.innerHTML = label;
+                        holder.append(desc, input);
+                        return [holder, input];
+                    };
+                    const spawnEditor = (layoutName, target) => {
+                        if (!blockProps.layouts.hasOwnProperty(layoutName)) {
+                            return false;
+                        }
+                        target.innerHTML = "";
+                        const layout = blockProps.layouts[layoutName];
+                        const availableFields = Object.assign({}, availableFieldsGen(this.mirroredUserPrefs));
+                        //Map the situation of fields
+                        /**
+                         * Valued at -1 if in no section
+                         *
+                         * Valued with the section index if present
+                         */
+                        const masterUsedFields = new Map();
+                        //If the elements are left empty, the nElements are used to generate them. This only happens if the layout is used, otherwise it remains empty
+                        //The active layout works EVEN WITHOUT this filler here, but it's the only one receiving a filling treatment
+                        for (const key of Object.keys(availableFields)) {
+                            masterUsedFields.set(key, -1);
+                        }
+                        for (let index = 0; index < layout.length; index++) {
+                            const section = layout[index];
+                            if (section.size != "0") {
+                                section.elements.forEach(element => {
+                                    masterUsedFields.set(element, index);
+                                });
+                            }
+                        }
+                        const sectionsRefreshers = [];
+                        for (let index = 0; index < layout.length; index++) {
+                            const section = layout[index];
+                            const fixedIndex = index;
+                            const fieldModifiers = new Map();
+                            if (section.size != "0") {
+                                //Create + Initialize
+                                //Functions
+                                //Event Listeners
+                                //Append
+                                /**
+                                 * The function is used to refresh the fieldEditors (selectors) to accomodate for changes in other layout parts
+                                 * When you work on ANY other part, it reloads and shrink back
+                                 * @param elementsEditor
+                                 * @param showHidden
+                                 */
+                                const refreshElementEditor = (elementsEditor, showHidden = false) => {
+                                    elementsEditor.innerHTML = "";
+                                    for (const [key, directive] of Object.entries(availableFields)) {
+                                        if (directive.render != "false" && key != "0") {
+                                            //Set the editing state - section comes from the mirrored, not the shadow. So it's fixed even in case of adding/removal
+                                            const tag = `sectionElementsOrder_${simpleHash(JSON.stringify(section) + JSON.stringify(index) + JSON.stringify(layoutName))}`;
+                                            //Used to not trigger this function again
+                                            const fieldSelector = document.createElement("div");
+                                            const fieldName = document.createElement("h5");
+                                            fieldName.innerHTML = directive.columnName;
+                                            const fieldSubType = document.createElement("p");
+                                            fieldSubType.innerHTML = directive.subtype;
+                                            const upButton = document.createElement("button");
+                                            upButton.setAttribute("id", "upButton");
+                                            const downButton = document.createElement("button");
+                                            downButton.setAttribute("id", "downButton");
+                                            upButton.innerHTML = "↑";
+                                            downButton.innerHTML = "↓";
+                                            const inUse = document.createElement("input");
+                                            inUse.setAttribute("type", "checkbox");
+                                            //Start out as a standard field. Remembering that the number of fields won't change while in this page here
+                                            fieldSelector.agd("availableField");
+                                            //classy, failed, try fieldSelector.style.order = (shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements.length + 1).toString();
+                                            fieldSelector.style.order = "600000";
+                                            if (!showHidden) {
+                                                fieldSelector.classList.add("d-none");
+                                            }
+                                            if (masterUsedFields.get(key) == index) {
+                                                inUse.checked = true;
+                                                fieldSelector.rgd("availableField", "blockedField");
+                                                fieldSelector.agd("selectedField");
+                                                fieldSelector.classList.remove("d-none");
+                                                fieldSelector.style.order = shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements.indexOf(key).toString();
+                                                fieldModifiers.set(key, fieldSelector);
+                                            }
+                                            else if (masterUsedFields.get(key) != -1) {
+                                                inUse.disabled = true;
+                                                fieldSelector.rgd("availableField", "selectedField");
+                                                fieldSelector.agd("blockedField");
+                                                fieldSelector.style.order = "1000000";
+                                            }
+                                            upButton.addEventListener("click", () => {
+                                                const currentIndexPrefs = shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements.indexOf(key);
+                                                if (currentIndexPrefs != 0) {
+                                                    const aboveKey = shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements[currentIndexPrefs - 1];
+                                                    const aboveElement = fieldModifiers.get(aboveKey);
+                                                    if (aboveElement !== undefined) {
+                                                        const aboveElementOrder = aboveElement.style.order;
+                                                        shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements[currentIndexPrefs] = aboveKey;
+                                                        shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements[currentIndexPrefs - 1] = key;
+                                                        aboveElement.style.order = fieldSelector.style.order;
+                                                        fieldSelector.style.order = aboveElementOrder;
+                                                        if (JSON.stringify(shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements) != JSON.stringify(layout[index].elements)) {
+                                                            console.log("The element order is different", shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements, JSON.stringify(layout[index].elements), tag);
+                                                            this.addEdit(tag);
+                                                        }
+                                                        else {
+                                                            this.removeEdit(tag);
+                                                        }
+                                                        ;
+                                                    }
+                                                    else {
+                                                        console.error("SETTINGS: There is no above element");
+                                                    }
+                                                }
+                                            });
+                                            downButton.addEventListener("click", () => {
+                                                const currentIndexPrefs = shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements.indexOf(key);
+                                                if (currentIndexPrefs < shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements.length - 1) {
+                                                    const belowKey = shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements[currentIndexPrefs + 1];
+                                                    const belowElement = fieldModifiers.get(belowKey);
+                                                    if (belowElement !== undefined) {
+                                                        const belowElementOrder = belowElement.style.order;
+                                                        shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements[currentIndexPrefs] = belowKey;
+                                                        shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements[currentIndexPrefs + 1] = key;
+                                                        belowElement.style.order = fieldSelector.style.order;
+                                                        fieldSelector.style.order = belowElementOrder;
+                                                        if (JSON.stringify(shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements) != JSON.stringify(layout[index].elements)) {
+                                                            console.log("The element order is different", shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements, JSON.stringify(layout[index].elements), tag);
+                                                            this.addEdit(tag);
+                                                        }
+                                                        else {
+                                                            this.removeEdit(tag);
+                                                        }
+                                                        ;
+                                                    }
+                                                    else {
+                                                        console.error("SETTINGS: There is no above element");
+                                                    }
+                                                }
+                                            });
+                                            inUse.addEventListener("click", () => {
+                                                if (masterUsedFields.get(key) == index) {
+                                                    //REMOVE
+                                                    const pointOfKilling = shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements.indexOf(key);
+                                                    if (pointOfKilling > -1) {
+                                                        masterUsedFields.set(key, -1);
+                                                        fieldModifiers.delete(key);
+                                                        shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements.splice(pointOfKilling, 1);
+                                                        fieldSelector.style.order = "600000";
+                                                        fieldSelector.rgd("selectedField");
+                                                        fieldSelector.agd("availableField");
+                                                        //Drop from the 0 size
+                                                        const pointOfNKilling = shadowSelectedSorting.blocks[blockKey].layouts[layoutName][shadowSelectedSorting.blocks[blockKey].layouts[layoutName].length - 1].nElements.indexOf(key);
+                                                        if (pointOfNKilling > -1) {
+                                                            shadowSelectedSorting.blocks[blockKey].layouts[layoutName][shadowSelectedSorting.blocks[blockKey].layouts[layoutName].length - 1].nElements.splice(pointOfNKilling, 1);
+                                                        }
+                                                        else {
+                                                            console.error("SETTINGS: Couldn't find index of key in nElements");
+                                                        }
+                                                    }
+                                                    else {
+                                                        console.error("SETTINGS: Element already doesn't exist in list");
+                                                    }
+                                                }
+                                                else {
+                                                    //ADD
+                                                    const lastElementKey = shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements[shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements.length - 1];
+                                                    const lastElement = fieldModifiers.get(lastElementKey) || { style: { order: "0" } };
+                                                    shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements.push(key);
+                                                    masterUsedFields.set(key, index);
+                                                    fieldModifiers.set(key, fieldSelector);
+                                                    fieldSelector.style.order = (parseInt(lastElement.style.order) + 1).toString();
+                                                    fieldSelector.rgd("availableField");
+                                                    fieldSelector.agd("selectedField");
+                                                    //Add to the 0 size
+                                                    shadowSelectedSorting.blocks[blockKey].layouts[layoutName][shadowSelectedSorting.blocks[blockKey].layouts[layoutName].length - 1].nElements.push(key);
+                                                }
+                                                //Set the editing state - section comes from the mirrored, not the shadow. So it's fixed even in case of adding/removal
+                                                if (JSON.stringify(shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements) != JSON.stringify(layout[index].elements)) {
+                                                    console.log("The element number is different", shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements, JSON.stringify(layout[index].elements), tag);
+                                                    console.log(fieldModifiers);
+                                                    this.addEdit(tag);
+                                                }
+                                                else {
+                                                    this.removeEdit(tag);
+                                                }
+                                                ;
+                                            });
+                                            fieldSelector.append(inUse, fieldName, fieldSubType, upButton, downButton);
+                                            elementsEditor.append(fieldSelector);
+                                        }
+                                    }
+                                    const showMore = document.createElement("button");
+                                    showMore.style.order = "599999";
+                                    let showingMore = showHidden;
+                                    showMore.innerHTML = showHidden ? "Hide all available fields ↑" : "Show all available fields ↓";
+                                    showMore.addEventListener("click", () => {
+                                        showingMore = !showingMore;
+                                        refreshElementEditor(elementsEditor, showingMore);
+                                        for (let x = 0; x < sectionsRefreshers.length; x++) {
+                                            const element = sectionsRefreshers[x];
+                                            if (x != fixedIndex) {
+                                                element.generator(element.block);
+                                            }
+                                        }
+                                    });
+                                    elementsEditor.append(showMore);
+                                };
+                                const sectionDiv = document.createElement("div");
+                                sectionDiv.agd("sectionDiv");
+                                const sectionTitle = document.createElement("h6");
+                                sectionTitle.innerHTML = `Section ${index + 1}`;
+                                const [scrollableHolder, scrollabelInput] = createBasicInput("Should this section be fixed?", "checkbox");
+                                scrollabelInput.checked = section.fixed;
+                                const scrollableInfo = document.createElement("p");
+                                scrollableInfo.innerHTML = "A fixed section will shrink its cells to make them fit in the size<br>A non fixed section will fix the size of the cells and make you scroll through them";
+                                const elementsEditor = document.createElement("div");
+                                elementsEditor.agd("elementsEditor");
+                                refreshElementEditor(elementsEditor);
+                                sectionsRefreshers[index] = { generator: refreshElementEditor, block: elementsEditor };
+                                //Listeners
+                                scrollabelInput.addEventListener("input", () => {
+                                    shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].fixed = scrollabelInput.checked;
+                                    const tag = `sectionFixed_${simpleHash(JSON.stringify(section) + JSON.stringify(index))}`;
+                                    if (section.fixed != scrollabelInput.checked) {
+                                        console.log("Different", tag);
+                                        this.addEdit(tag);
+                                    }
+                                    else {
+                                        console.log("Equal", tag);
+                                        this.removeEdit(tag);
+                                    }
+                                });
+                                sectionDiv.append(sectionTitle, scrollableHolder, scrollableInfo, elementsEditor);
+                                target.append(sectionDiv);
+                            }
+                        }
+                    };
+                    const blockTitle = document.createElement("h2");
+                    const desc1 = document.createElement("p");
+                    blockTitle.innerHTML = blockProps.name;
+                    desc1.innerHTML = "Select active layout";
+                    const selectedLayout = document.createElement("select");
+                    for (const layoutKey of Object.keys(blockProps.layouts)) {
+                        const layoutOption = document.createElement("option");
+                        layoutOption.value = layoutKey;
+                        layoutOption.innerHTML = layoutKey;
+                        if (layoutKey == blockProps.selected) {
+                            layoutOption.selected = true;
+                        }
+                        selectedLayout.append(layoutOption);
+                    }
+                    const desc2 = document.createElement("p");
+                    desc2.innerHTML = "Editing layout: ";
+                    const currentlyEditedLayout = document.createElement("select");
+                    for (const layoutKey of Object.keys(blockProps.layouts)) {
+                        const layoutOption = document.createElement("option");
+                        layoutOption.value = layoutKey;
+                        layoutOption.innerHTML = layoutKey;
+                        if (layoutKey == blockProps.selected) {
+                            layoutOption.selected = true;
+                        }
+                        currentlyEditedLayout.append(layoutOption);
+                    }
+                    const editor = document.createElement("div");
+                    //Functions
+                    spawnEditor(blockProps.selected, editor);
+                    //Listeners
+                    currentlyEditedLayout.addEventListener("input", () => {
+                        spawnEditor(currentlyEditedLayout.value, editor);
+                    });
+                    selectedLayout.addEventListener("input", () => {
+                        shadowSelectedSorting.blocks[blockKey].selected = selectedLayout.value;
+                        if (blockProps.selected != selectedLayout.value) {
+                            editPrefsObj.addEdit("selectedLayout_" + blockProps.name);
+                        }
+                        else {
+                            editPrefsObj.removeEdit("selectedLayout_" + blockProps.name);
+                        }
+                    });
+                    this.elements.pages.columnsEditor.append(blockTitle, desc1, selectedLayout, desc2, currentlyEditedLayout, editor);
+                }
+            };
+            columnsEditor();
+        }
     };
-    //Runtimes
     //Initializers
     editPrefsObj.hideMainTab();
+    editPrefsObj.refreshPages();
+    ///Pages:
+    ///columns editor
     //hide all pages
     Object.values(editPrefsObj.elements.pages).forEach((page) => {
         changeVisible(page, false);
@@ -3999,7 +4518,7 @@ if (mainEditPrefsWindow != null) {
     //make the first one show
     editPrefsObj.switchPage("columnsEditor");
     //Listeners
-    //main tab
+    ///main tab
     editPrefsBtn.addEventListener("click", function () {
         editPrefsObj.showMainTab();
     });
@@ -4011,6 +4530,18 @@ if (mainEditPrefsWindow != null) {
             if (event.target != editPrefsObj.elements.mainWindow) {
                 editPrefsObj.hideMainTab();
             }
+        }
+    });
+    ///Save
+    editPrefsObj.elements.saveBtn.addEventListener("click", function () {
+        if (editPrefsObj.state.editing.size != 0) {
+            editPrefsObj.switchPage(editPrefsObj.state.currentPage, 1);
+        }
+    });
+    //Reset
+    editPrefsObj.elements.resetBtn.addEventListener("click", async function () {
+        if (editPrefsObj.state.editing.size != 0 && await trueFalsePrompt("Do you want to delete the changes you just made?")) {
+            editPrefsObj.switchPage(editPrefsObj.state.currentPage, 2);
         }
     });
 }

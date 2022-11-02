@@ -569,7 +569,7 @@ input[type=radio] + label {
   background: white;
   transform: translate(-50%, -50%);
   box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.21);
-  z-index: 4;
+  z-index: 6;
 }
 .tt-prompt-box .close-button {
   position: absolute;
@@ -583,22 +583,16 @@ input[type=radio] + label {
 }
 
 .tt-edit-user-preferences {
+  display: grid;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 5;
-  grid-template-columns: 1fr 8fr;
   background: white;
   box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.21);
-  width: 40vw;
-  height: 60vh;
-}
-.tt-edit-user-preferences.hidden {
-  display: none;
-}
-.tt-edit-user-preferences.visible {
-  display: grid;
+  width: min(750px, 100vw);
+  max-height: 60vh;
 }
 .tt-edit-user-preferences .close-button {
   position: absolute;
@@ -611,19 +605,31 @@ input[type=radio] + label {
   transform: translate(-50%, -50%);
 }
 .tt-edit-user-preferences .menu-bar {
-  height: 100%;
+  height: 60vh;
   grid-column: 1/2;
+  overflow-y: auto;
   background: #f3f3f3;
 }
 .tt-edit-user-preferences .page-section {
-  height: 100%;
+  height: 60vh;
   grid-column: 2/3;
+}
+.tt-edit-user-preferences .page-section .page {
+  overflow-y: auto;
+  height: 90%;
 }
 .tt-edit-user-preferences .page-section .page.hidden {
   display: none !important;
 }
 .tt-edit-user-preferences .page-section .page.visible {
   display: flex !important;
+}
+.tt-edit-user-preferences .page-section .save-slide {
+  height: min(10%, 35px);
+}
+.tt-edit-user-preferences h7 {
+  color: grey;
+  font-size: 1rem;
 }
 
 .tt-darkener {
