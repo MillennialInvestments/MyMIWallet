@@ -1,0 +1,3 @@
+<?php
+    // Define Alert Categories
+    

@@ -1,0 +1,42 @@
+{
+    "name": "ci-bonfire/bonfire",
+    "description": "Kickstart your CodeIgniter-based web application development.",
+    "version": "0.9.0-dev",
+    "type": "project",
+    "homepage": "http://cibonfire.com",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Bonfire\\": "bonfire",
+            "TD-Ameritrade\\": ""
+        }
+    },
+    "config": {
+        "platform-check": false
+    },
+    "authors": [
+        {
+            "name": "Timothy Burks",
+            "email": "admin@timothyburks.com",
+            "homepage": "http://timothyburks.com",
+            "role": "Co-Founder | Programmer/Develop"
+        },
+        {
+            "name": "Mattia",
+            "email": "mattiapearl@gmail.com",
+            "homepage": "",
+            "role": "Co-Founder | Programmer/Develop"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/ci-bonfire/Bonfire/issues",
+        "forum": "http://forums.cibonfire.com/",
+        "source": "https://github.com/ci-bonfire/Bonfire"
+    },
+    "require": {
+        "php": "^7.4",
+        "guzzlehttp/guzzle": ">=7.4",
+        "codenix-sv/bittrex-api": "^1.0",
+        "td-ameritrade": "^0.1.13"
+    }
+}

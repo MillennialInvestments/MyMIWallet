@@ -1,0 +1,23 @@
+{
+    "name": "mymi-wallet/brokerage-api",
+    "type": "library",
+    "description": "Millennial Investments, LLC Financial API Integration Library",
+    "homepage": "https://mymiwallet.com/API/Brokerages",
+    "keywords": ["client", "api", "php", "mymiwallet", "rest", "mymi-wallet-api", "exchange"],
+    "license": "MIT",
+    "support": {
+        "issues": "https://www.mymiwallet.com/Customer-Support",
+        "source": "https://www.mymiwalet.com/API"
+    },
+    "authors": [
+        {
+            "name": "Timothy Burks Jr",
+            "email": "admin@timothyburks.com",
+            "role": "Founder | Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2|^8.1",
+        ""
+    }
+}

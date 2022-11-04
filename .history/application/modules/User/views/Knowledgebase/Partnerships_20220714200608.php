@@ -1,0 +1,14 @@
+<div class="nk-content nk-content-fluid">
+    <div class="nk-content-inner">
+        <div class="nk-content-body">
+            <div class="content-page">
+                <?php $this->load->view('User/Knowledgebase/includes/Partnerships/header'); ?>
+                <?php $this->load->view('User/Knowledgebase/includes/Partnerships/full_content'); ?>
+                <?php $this->load->view('User/Knowledgebase/includes/Assets/mymi_marketplace'); ?>
+                <?php $this->load->view('User/Knowledgebase/includes/Assets/mymi_exchange'); ?>                
+                <?php $this->load->view('User/Knowledgebase/includes/Customer_Support/ha'); ?>                
+                <?php $this->load->view('User/Knowledgebase/includes/Customer_Support/contact_support'); ?>                
+            </div>
+        </div>
+    </div>
+</div>

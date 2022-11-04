@@ -1,0 +1,19 @@
+{
+	"folders": [
+        {
+            "name": "Dashlite",
+            "path": "..\\..\..\\Dashlite"
+        },
+        {
+            "name": "RealizeFi",
+            "path": "RealizeFi"
+        },
+        {
+            "name": "MyMi-v1.5",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "git.ignoreLimitWarning": true
+    }
+}
