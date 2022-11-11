@@ -149,11 +149,24 @@ const graphicsLibrary = {
     controllerBox: ["tt-controller-box", "pb-5"],
     alert: ["tt-alert", "alert", "alert-dimissable"],
     closeWindowBtn: ["close-button"],
-    elementsEditor: ["d-flex", "flex-column"],
-    sectionDiv: ["mt-5"],
-    selectedField: [],
-    availableField: ["available-field"],
-    blockedField: [],
+    columnsEditorHolder: [],
+    columnsEditorElementsEditorHolder: ["d-flex", "flex-column"],
+    columnsEditorSectionDiv: ["mt-5"],
+    columnsEditorSelectedField: [],
+    columnsEditorAvailableField: ["available-field"],
+    columnsEditorBlockedField: [],
+    columnsEditorDescriptionText: [],
+    columnsEditorPageTitle: [],
+    columnsEditorSelectInput: [],
+    columnsEditorBlockTitle: [],
+    columnsEditorSectionTitle: [],
+    columnsEditorInformationText: [],
+    columnsEditorShowMoreFieldSelector: [],
+    columnsEditorFieldSelectorHolder: [],
+    columnsEditorFieldSelectorTitle: [],
+    columnsEditorFieldSelectorSubTitle: [],
+    columnsEditorFieldSelectorUpDownButton: [],
+    columnsEditorFieldSelectorInUse: [],
 };
 HTMLElement.prototype.agd = function (...classSet) {
     classSet.forEach((index) => {
@@ -4200,12 +4213,15 @@ if (mainEditPrefsWindow != null) {
                 this.elements.pages.columnsEditor.innerHTML = "";
                 const pageTitle = document.createElement("h1");
                 pageTitle.innerHTML = "Edit the layout";
+                pageTitle.agd("columnsEditorPageTitle");
                 this.elements.pages.columnsEditor.append(pageTitle);
                 const desc0 = document.createElement("p");
                 desc0.innerHTML = "Here you can edit which columns and in which order they are displayed for each table.<br>Each of the tables' layouts is then divided in sections that compose the row (like the button section). Edit each layout individually and then save to see changes appear";
+                desc0.agd("columnsEditorDescriptionText");
                 this.elements.pages.columnsEditor.append(desc0);
                 const sortingType = document.createElement("h7");
                 sortingType.innerHTML = this.shadowUserPrefs.selectedSorting == "none" ? "Table division: All the rows are sorted in the same table" : `Table division: ${this.mirroredUserPrefs.selectedSorting}`;
+                sortingType.agd("columnsEditorInformationText");
                 this.elements.pages.columnsEditor.append(sortingType);
                 const shadowSelectedSorting = this.shadowUserPrefs.sortings[this.shadowUserPrefs.selectedSorting];
                 //Here shadow and mirror have no difference between them
@@ -4277,20 +4293,26 @@ if (mainEditPrefsWindow != null) {
                                             const tag = `sectionElementsOrder_${simpleHash(JSON.stringify(section) + JSON.stringify(index) + JSON.stringify(layoutName))}`;
                                             //Used to not trigger this function again
                                             const fieldSelector = document.createElement("div");
+                                            fieldSelector.agd("columnsEditorFieldSelectorHolder");
                                             const fieldName = document.createElement("h5");
+                                            fieldName.agd("columnsEditorFieldSelectorTitle");
                                             fieldName.innerHTML = directive.columnName;
                                             const fieldSubType = document.createElement("p");
+                                            fieldSubType.agd("columnsEditorFieldSelectorSubTitle");
                                             fieldSubType.innerHTML = directive.subtype;
                                             const upButton = document.createElement("button");
                                             upButton.setAttribute("id", "upButton");
                                             const downButton = document.createElement("button");
                                             downButton.setAttribute("id", "downButton");
+                                            upButton.agd("columnsEditorFieldSelectorUpDownButton");
+                                            downButton.agd("columnsEditorFieldSelectorUpDownButton");
                                             upButton.innerHTML = "↑";
                                             downButton.innerHTML = "↓";
                                             const inUse = document.createElement("input");
                                             inUse.setAttribute("type", "checkbox");
+                                            inUse.agd("columnsEditorFieldSelectorInUse");
                                             //Start out as a standard field. Remembering that the number of fields won't change while in this page here
-                                            fieldSelector.agd("availableField");
+                                            fieldSelector.agd("columnsEditorAvailableField");
                                             //classy, failed, try fieldSelector.style.order = (shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements.length + 1).toString();
                                             fieldSelector.style.order = "600000";
                                             if (!showHidden) {
@@ -4298,16 +4320,16 @@ if (mainEditPrefsWindow != null) {
                                             }
                                             if (masterUsedFields.get(key) == index) {
                                                 inUse.checked = true;
-                                                fieldSelector.rgd("availableField", "blockedField");
-                                                fieldSelector.agd("selectedField");
+                                                fieldSelector.rgd("columnsEditorAvailableField", "columnsEditorBlockedField");
+                                                fieldSelector.agd("columnsEditorSelectedField");
                                                 fieldSelector.classList.remove("d-none");
                                                 fieldSelector.style.order = shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements.indexOf(key).toString();
                                                 fieldModifiers.set(key, fieldSelector);
                                             }
                                             else if (masterUsedFields.get(key) != -1) {
                                                 inUse.disabled = true;
-                                                fieldSelector.rgd("availableField", "selectedField");
-                                                fieldSelector.agd("blockedField");
+                                                fieldSelector.rgd("columnsEditorAvailableField", "columnsEditorSelectedField");
+                                                fieldSelector.agd("columnsEditorBlockedField");
                                                 fieldSelector.style.order = "1000000";
                                             }
                                             upButton.addEventListener("click", () => {
@@ -4369,8 +4391,8 @@ if (mainEditPrefsWindow != null) {
                                                         fieldModifiers.delete(key);
                                                         shadowSelectedSorting.blocks[blockKey].layouts[layoutName][index].elements.splice(pointOfKilling, 1);
                                                         fieldSelector.style.order = "600000";
-                                                        fieldSelector.rgd("selectedField");
-                                                        fieldSelector.agd("availableField");
+                                                        fieldSelector.rgd("columnsEditorSelectedField");
+                                                        fieldSelector.agd("columnsEditorAvailableField");
                                                         //Drop from the 0 size
                                                         const pointOfNKilling = shadowSelectedSorting.blocks[blockKey].layouts[layoutName][shadowSelectedSorting.blocks[blockKey].layouts[layoutName].length - 1].nElements.indexOf(key);
                                                         if (pointOfNKilling > -1) {
@@ -4392,8 +4414,8 @@ if (mainEditPrefsWindow != null) {
                                                     masterUsedFields.set(key, index);
                                                     fieldModifiers.set(key, fieldSelector);
                                                     fieldSelector.style.order = (parseInt(lastElement.style.order) + 1).toString();
-                                                    fieldSelector.rgd("availableField");
-                                                    fieldSelector.agd("selectedField");
+                                                    fieldSelector.rgd("columnsEditorAvailableField");
+                                                    fieldSelector.agd("columnsEditorSelectedField");
                                                     //Add to the 0 size
                                                     shadowSelectedSorting.blocks[blockKey].layouts[layoutName][shadowSelectedSorting.blocks[blockKey].layouts[layoutName].length - 1].nElements.push(key);
                                                 }
@@ -4416,6 +4438,7 @@ if (mainEditPrefsWindow != null) {
                                     showMore.style.order = "599999";
                                     let showingMore = showHidden;
                                     showMore.innerHTML = showHidden ? "Hide all available fields ↑" : "Show all available fields ↓";
+                                    showMore.agd("columnsEditorShowMoreFieldSelector");
                                     showMore.addEventListener("click", () => {
                                         showingMore = !showingMore;
                                         refreshElementEditor(elementsEditor, showingMore);
@@ -4429,15 +4452,17 @@ if (mainEditPrefsWindow != null) {
                                     elementsEditor.append(showMore);
                                 };
                                 const sectionDiv = document.createElement("div");
-                                sectionDiv.agd("sectionDiv");
+                                sectionDiv.agd("columnsEditorSectionDiv");
                                 const sectionTitle = document.createElement("h6");
                                 sectionTitle.innerHTML = `Section ${index + 1}`;
+                                sectionTitle.agd("columnsEditorSectionTitle");
                                 const [scrollableHolder, scrollabelInput] = createBasicInput("Should this section be fixed?", "checkbox");
                                 scrollabelInput.checked = section.fixed;
                                 const scrollableInfo = document.createElement("p");
                                 scrollableInfo.innerHTML = "A fixed section will shrink its cells to make them fit in the size<br>A non fixed section will fix the size of the cells and make you scroll through them";
+                                scrollableInfo.agd("columnsEditorBlockTitle");
                                 const elementsEditor = document.createElement("div");
-                                elementsEditor.agd("elementsEditor");
+                                elementsEditor.agd("columnsEditorElementsEditorHolder");
                                 refreshElementEditor(elementsEditor);
                                 sectionsRefreshers[index] = { generator: refreshElementEditor, block: elementsEditor };
                                 //Listeners
@@ -4459,10 +4484,13 @@ if (mainEditPrefsWindow != null) {
                         }
                     };
                     const blockTitle = document.createElement("h2");
+                    blockTitle.agd("columnsEditorBlockTitle");
                     const desc1 = document.createElement("p");
+                    desc1.agd("columnsEditorDescriptionText");
                     blockTitle.innerHTML = blockProps.name;
                     desc1.innerHTML = "Select active layout";
                     const selectedLayout = document.createElement("select");
+                    selectedLayout.agd("columnsEditorSelectInput");
                     for (const layoutKey of Object.keys(blockProps.layouts)) {
                         const layoutOption = document.createElement("option");
                         layoutOption.value = layoutKey;
@@ -4473,8 +4501,10 @@ if (mainEditPrefsWindow != null) {
                         selectedLayout.append(layoutOption);
                     }
                     const desc2 = document.createElement("p");
+                    desc2.agd("columnsEditorDescriptionText");
                     desc2.innerHTML = "Editing layout: ";
                     const currentlyEditedLayout = document.createElement("select");
+                    currentlyEditedLayout.agd("columnsEditorSelectInput");
                     for (const layoutKey of Object.keys(blockProps.layouts)) {
                         const layoutOption = document.createElement("option");
                         layoutOption.value = layoutKey;
@@ -4485,6 +4515,7 @@ if (mainEditPrefsWindow != null) {
                         currentlyEditedLayout.append(layoutOption);
                     }
                     const editor = document.createElement("div");
+                    editor.agd("columnsEditorHolder");
                     //Functions
                     spawnEditor(blockProps.selected, editor);
                     //Listeners
