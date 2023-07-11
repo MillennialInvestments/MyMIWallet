@@ -11,7 +11,10 @@
 
 namespace Carbon;
 
+<<<<<<< HEAD
 use Carbon\MessageFormatter\MessageFormatterMapper;
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 use Closure;
 use ReflectionException;
 use ReflectionFunction;
@@ -52,7 +55,11 @@ abstract class AbstractTranslator extends Translation\Translator
     /**
      * List of locales aliases.
      *
+<<<<<<< HEAD
      * @var array<string, string>
+=======
+     * @var string[]
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     protected $aliases = [
         'me' => 'sr_Latn_ME',
@@ -84,7 +91,11 @@ abstract class AbstractTranslator extends Translation\Translator
         $this->initializing = true;
         $this->directories = [__DIR__.'/Lang'];
         $this->addLoader('array', new ArrayLoader());
+<<<<<<< HEAD
         parent::__construct($locale, new MessageFormatterMapper($formatter), $cacheDir, $debug);
+=======
+        parent::__construct($locale, $formatter, $cacheDir, $debug);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->initializing = false;
     }
 
@@ -221,8 +232,13 @@ abstract class AbstractTranslator extends Translation\Translator
 
         $catalogue = $this->getCatalogue($locale);
         $format = $this instanceof TranslatorStrongTypeInterface
+<<<<<<< HEAD
             ? $this->getFromCatalogue($catalogue, (string) $id, $domain)
             : $this->getCatalogue($locale)->get((string) $id, $domain); // @codeCoverageIgnore
+=======
+            ? $this->getFromCatalogue($catalogue, (string) $id, $domain) // @codeCoverageIgnore
+            : $this->getCatalogue($locale)->get((string) $id, $domain);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         if ($format instanceof Closure) {
             // @codeCoverageIgnoreStart

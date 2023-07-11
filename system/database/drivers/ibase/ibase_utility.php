@@ -6,7 +6,11 @@
  *
  * This content is released under the MIT License (MIT)
  *
+<<<<<<< HEAD
  * Copyright (c) 2019 - 2022, CodeIgniter Foundation
+=======
+ * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,19 +34,27 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+<<<<<<< HEAD
  * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
+<<<<<<< HEAD
 defined('BASEPATH') OR exit('No direct script access allowed');
+=======
+defined('BASEPATH') or exit('No direct script access allowed');
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /**
  * Interbase/Firebird Utility Class
  *
  * @category	Database
  * @author		EllisLab Dev Team
+<<<<<<< HEAD
  * @link		https://codeigniter.com/userguide3/database/
  */
 class CI_DB_ibase_utility extends CI_DB_utility {
@@ -67,4 +79,29 @@ class CI_DB_ibase_utility extends CI_DB_utility {
 		return FALSE;
 	}
 
+=======
+ * @link		https://codeigniter.com/user_guide/database/
+ */
+class CI_DB_ibase_utility extends CI_DB_utility
+{
+
+    /**
+     * Export
+     *
+     * @param	string	$filename
+     * @return	mixed
+     */
+    protected function _backup($filename)
+    {
+        if ($service = ibase_service_attach($this->db->hostname, $this->db->username, $this->db->password)) {
+            $res = ibase_backup($service, $this->db->database, $filename.'.fbk');
+
+            // Close the service connection
+            ibase_service_detach($service);
+            return $res;
+        }
+
+        return false;
+    }
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

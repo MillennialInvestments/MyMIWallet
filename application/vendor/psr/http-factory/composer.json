@@ -15,12 +15,20 @@
     "authors": [
         {
             "name": "PHP-FIG",
+<<<<<<< HEAD
             "homepage": "https://www.php-fig.org/"
+=======
+            "homepage": "http://www.php-fig.org/"
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
     ],
     "require": {
         "php": ">=7.0.0",
+<<<<<<< HEAD
         "psr/http-message": "^1.0 || ^2.0"
+=======
+        "psr/http-message": "^1.0"
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     },
     "autoload": {
         "psr-4": {

@@ -62,6 +62,7 @@ The trade cannot have both a closed_ref != -1 and a closed list != []
 */
 
 //START OF THE PROGRAM
+<<<<<<< HEAD
 interface WindowOrWorkerGlobalScope {
     structuredClone(value: any, options?: StructuredSerializeOptions): any;
 }
@@ -70,6 +71,9 @@ declare function structuredClone(value: any, options?: StructuredSerializeOption
 
 
 let debug: boolean = false;
+=======
+let debug: boolean = true;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 interface listerObj {
     id: string;
@@ -241,13 +245,21 @@ class TradeObj {
 }
 
 type GraphicsDirective = Array<string>;
+<<<<<<< HEAD
 const graphicsLibrary: { [key: string]: GraphicsDirective } = {
+=======
+const debugGraphicsLibrary: { [key: string]: GraphicsDirective } = {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     h3: [],
     description: [],
     input: ["form-control"],
     select: ["form-control"],
     div: [],
+<<<<<<< HEAD
     button: ["btn", "btn-sm", "m-1"], // btn btn-sm btn-primary m-1
+=======
+    button: ["btn", "btn-sm", "h-100"],
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     openedBtn: ["btn", "btn-light", "h-100"],
     closedBtn: ["btn", "btn-warning", "h-100"],
     cancelBtn: ["btn-warning", "btn-block"],
@@ -262,8 +274,13 @@ const graphicsLibrary: { [key: string]: GraphicsDirective } = {
     expanderEmptyBlock: ["empty-block"],
     expanderTagSeparator: ["tag-separator"],
     expanderClickableValue: ["clickable-value"],
+<<<<<<< HEAD
     mainBtn: ["btn-primary"],
     spawnerButton: ["spawner-new-button", "btn-primary"],
+=======
+    mainBtn: ["btn-primary", "mr-3"],
+    spawnerButton: ["spawner-new-button", "btn-primary", "mr-3"],
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     tradeContainer: ["trade-container"],
     containerDropdown: ["dropdown-btn"],
     disabledBtn: ["disabled-btn"],
@@ -280,6 +297,7 @@ const graphicsLibrary: { [key: string]: GraphicsDirective } = {
     controllerBox: ["tt-controller-box", "pb-5"],
     alert: ["tt-alert", "alert", "alert-dimissable"],
     closeWindowBtn: ["close-button"],
+<<<<<<< HEAD
     columnsEditorHolder: [],
     columnsEditorElementsEditorHolder: ["d-flex", "flex-column"],
     columnsEditorSectionDiv: ["mt-5"],
@@ -298,6 +316,48 @@ const graphicsLibrary: { [key: string]: GraphicsDirective } = {
     columnsEditorFieldSelectorSubTitle: [],
     columnsEditorFieldSelectorUpDownButton: [],
     columnsEditorFieldSelectorInUse: [],
+=======
+};
+const graphicsLibrary: { [key: string]: GraphicsDirective } = {
+    h3: [],
+    description: [],
+    input: ["form-control"],
+    select: ["form-control"],
+    div: [],
+    button: ["btn"],
+    openedBtn: ["btn", "btn-light", "btn-block"],
+    closedBtn: ["btn", "btn-warning", "btn-block"],
+    cancelBtn: ["btn-warning", "btn-block"],
+    saveBtn: ["btn-primary", "btn-block"],
+    deleteBtn: ["btn-danger", "btn-block"],
+    darkener: ["tt-darkener", "btn-block"],
+    tradeTable: ["trade-table"],
+    tableBottomController: ["table-bottom-controller"],
+    pageMoverHolder: ["page-mover-holder"],
+    tradeWindow: ["tt-trade-window"],
+    expander: ["tt-expander", "hidden"],
+    expanderEmptyBlock: ["empty-block"],
+    expanderTagSeparator: ["tag-separator"],
+    expanderClickableValue: ["clickable-value"],
+    mainBtn: ["btn-primary", "mr-3"],
+    spawnerButton: ["spawner-new-button", "btn-primary", "mr-3"],
+    tradeContainer: ["trade-container", "pl-3"],
+    containerDropdown: ["dropdown-btn"],
+    disabledBtn: ["disabled-btn"],
+    promptBox: ["tt-prompt-box"],
+    fieldHolder: ["field-holder", "form-group", "custom-group-width", "mb-0"],
+    autoCalculated: [],
+    editing: ["editing"],
+    legendContainer: ["legendary"],
+    closedRow: ["closed-row"],
+    legendRow: ["legend-row"],
+    mainRow: ["main-row", "row"],
+    fixedSection: ["fixed-section", "col-3", "d-flex", "px-0"],
+    scrollableSection: ["scrollable-section", "col-6", "overflow-auto", "d-flex", "px-0"],
+    controllerBox: ["tt-controller-box", "pb-5"],
+    alert: ["tt-alert", "alert", "alert-dimissable"],
+    closeWindowBtn: ["close-button"],
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 };
 //Merged interfacte
 interface HTMLElement {
@@ -309,6 +369,7 @@ interface HTMLElement {
 }
 
 HTMLElement.prototype.agd = function (...classSet: Array<keyof typeof graphicsLibrary>) {
+<<<<<<< HEAD
 
     classSet.forEach((index) => {
         this.classList.add(...graphicsLibrary[index]);
@@ -321,6 +382,28 @@ HTMLElement.prototype.rgd = function (...classSet: Array<keyof typeof graphicsLi
         this.classList.remove(...graphicsLibrary[index]);
     });
 
+=======
+    if (debug == true) {
+        classSet.forEach((index) => {
+            this.classList.add(...debugGraphicsLibrary[index]);
+        });
+    } else {
+        classSet.forEach((index) => {
+            this.classList.add(...graphicsLibrary[index]);
+        });
+    }
+};
+HTMLElement.prototype.rgd = function (...classSet: Array<keyof typeof graphicsLibrary>) {
+    if (debug == true) {
+        classSet.forEach((index) => {
+            this.classList.remove(...debugGraphicsLibrary[index]);
+        });
+    } else {
+        classSet.forEach((index) => {
+            this.classList.remove(...graphicsLibrary[index]);
+        });
+    }
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 };
 
 //Html extended Input element
@@ -582,6 +665,7 @@ function spawnBtn() {
  * @param options CURRENTLY NOT OPERATIONAL
  * @returns
  */
+<<<<<<< HEAD
 async function truePrompt(text: string, options: { trueTxt: string; } = { trueTxt: "Yes" }): Promise<boolean> {
     const prompt = spawnDiv();
     document.body.append(prompt);
@@ -630,6 +714,8 @@ async function truePrompt(text: string, options: { trueTxt: string; } = { trueTx
  * @param options CURRENTLY NOT OPERATIONAL
  * @returns
  */
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 async function trueFalsePrompt(text: string, options: { trueTxt: string; falseTxt: string } = { trueTxt: "Yes", falseTxt: "Cancel" }): Promise<boolean> {
     const prompt = spawnDiv();
     document.body.append(prompt);
@@ -680,6 +766,7 @@ async function trueFalsePrompt(text: string, options: { trueTxt: string; falseTx
 
     return result;
 }
+<<<<<<< HEAD
 /**
  * 
  * @param text 
@@ -746,6 +833,8 @@ async function trueFalseCancelPrompt(text: string, options: { trueTxt: string; f
     return result;
 }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 //TODO: Increase capabilities of this function using keymatching, iterating through the object, checking for hollow elements.
 /**
@@ -871,9 +960,17 @@ function validPerc(closeValue: string) {
  */
 function changeVisible(element: HTMLElement, visible: boolean, stateProperties: boolean[] = []) {
     if (visible == true) {
+<<<<<<< HEAD
         element.classList.remove("hidden");
     } else {
         element.classList.add("hidden");
+=======
+        element.classList.add("visible");
+        element.classList.remove("hidden");
+    } else {
+        element.classList.add("hidden");
+        element.classList.remove("visible");
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
     stateProperties.forEach((property) => {
         property = visible;
@@ -883,14 +980,23 @@ function changeVisible(element: HTMLElement, visible: boolean, stateProperties: 
 type sectionsLayout = Array<{
     fixed: boolean;
     size: string;
+<<<<<<< HEAD
     /**If the elements are left empty, the nElements are used to generate them. This only happens if the layout is used, otherwise it remains empty*/
+=======
+    //elements: Array<keyof typeof defaultFields | keyof typeof userPrefs.customFields>,
+    //nElements: Array<keyof typeof defaultFields | keyof typeof userPrefs.customFields>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     elements: Array<string>;
     activeFormulas: Array<keyof UserPreferences["formulas"]["fields"]>;
     nElements: Array<string>;
 }>;
 interface UserPreferences {
     //selectedSorting: keyof UserPreferences["sortings"]
+<<<<<<< HEAD
     selectedSorting: "none" | string;
+=======
+    selectedSorting: string;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     sortings: {
         [key: string]: {
             targets: keyof TradeObj;
@@ -972,13 +1078,21 @@ const userPrefs: UserPreferences = {
                         { text: "Long", value: "long" },
                         { text: "Short", value: "short" },
                     ],
+<<<<<<< HEAD
                     selected: "E-Preset 1",
+=======
+                    selected: "default",
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
                     layouts: {
                         //If an element is not fixed, then it will be able to scroll
                         //Which elements get rendered? Check "availableFields"
                         //If fixed is true, then the size
+<<<<<<< HEAD
                         "E-Preset 1": [
+=======
+                        default: [
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                             { fixed: true, size: "20%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] as string[] },
                             {
                                 fixed: false,
@@ -1007,6 +1121,7 @@ const userPrefs: UserPreferences = {
                                 elements: [] as string[],
                             },
                         ],
+<<<<<<< HEAD
                         "E-Preset 2": [
                             { fixed: true, size: "20%", elements: ["3", "2", "1"], activeFormulas: [], nElements: [] as string[] },
                             {
@@ -1065,6 +1180,8 @@ const userPrefs: UserPreferences = {
                                 elements: [] as string[],
                             },
                         ],
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     },
                 },
                 option_buy: {
@@ -1078,11 +1195,16 @@ const userPrefs: UserPreferences = {
                         { text: "Call", value: "call" },
                         { text: "Put", value: "put" },
                     ],
+<<<<<<< HEAD
                     selected: "OB-Preset 1",
+=======
+                    selected: "default",
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     layouts: {
                         //If an element is not fixed, then it will be able to scroll
                         //Which elements get rendered? Check "availableFields"
                         //If fixed is true, then the size
+<<<<<<< HEAD
                         "OB-Preset 1": [
                             { fixed: true, size: "10%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] as string[] },
                             {
@@ -1142,6 +1264,9 @@ const userPrefs: UserPreferences = {
                             },
                         ],
                         "OB-Preset 3": [
+=======
+                        default: [
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                             { fixed: true, size: "10%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] as string[] },
                             {
                                 fixed: false,
@@ -1165,14 +1290,47 @@ const userPrefs: UserPreferences = {
                                 size: "0",
                                 activeFormulas: [],
                                 //This is a list of all the element NOT to include - Made up from all the elements included in the other parts of the row
+<<<<<<< HEAD
                                 nElements: ["1", "2", "3", "17", "18", "10", "19", "20", "11", "12", "b1", "b2", "b3"],
+=======
+                                nElements: ["1", "2", "3", "17", "18", "10", "19", "20", "11", "12", "u1", "15", "b1", "b2", "b3"],
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
                                 elements: [] as string[],
                             },
                         ],
                     },
                 },
+<<<<<<< HEAD
 
+=======
+                // option: {
+                // 	name: "Buy Options",
+                // 	tag: "option",
+                // 	tagLogical: "equal",
+                // 	variations: [
+                // 		{ text: "Call", value: "call" },
+                // 		{ text: "Putt", value: "put" },
+                // 	],
+                // 	selected: "default",
+                // 	layouts: {
+                // 		default: {},
+                // 	},
+                // },
+                // optionSell: {
+                // 	name: "Write options",
+                // 	tag: "optionSell",
+                // 	tagLogical: "equal",
+                // 	variations: [
+                // 		{ text: "Call", value: "call" },
+                // 		{ text: "Putt", value: "put" },
+                // 	],
+                // 	selected: "default",
+                // 	layouts: {
+                // 		default: {},
+                // 	},
+                // },
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             },
         },
     },
@@ -1191,7 +1349,16 @@ const userPrefs: UserPreferences = {
             columnName: "Test Text (Field!)",
         },
     },
+<<<<<<< HEAD
 
+=======
+    /**
+     * These are common elements to be spawned in prompts (like standard close percentage and other stuff)
+     * - text usually refers to a displayed value
+     * - attachedNumber is a quick version of an attached object with various information inside of it
+     * - attachedObject contains any other required information, that will be handled by the handler of an expander
+     */
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     promptDefaults: {
         //Default values to be shown when creating a new field - pending implementation
         // fieldDefaults: {
@@ -1364,6 +1531,14 @@ const userPrefs: UserPreferences = {
 
     walletList: [...walletList],
     symbolList: [...symbolList],
+<<<<<<< HEAD
+=======
+    // [
+    // 	{ id: "01", value: "Personal Account", tag: "Schwab" },
+    // 	{ id: "02", value: "WALL2", tag: "Ungrouped" },
+    // 	{ id: "03", value: "WALL3", tag: "TD Ameritrade" },
+    // ],
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 };
 function getTradeTypeVars() {
     const result: { [key: string]: Array<variation> } = {};
@@ -1477,7 +1652,11 @@ const defaultFields: { [key: string]: fieldDirective } = {
         render: "true",
         default: "false",
         type: "closed",
+<<<<<<< HEAD
         subtype: "close",
+=======
+        subtype: "",
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         modifiers: [] as string[],
         computed: [] as string[],
 
@@ -2017,8 +2196,13 @@ const defaultFields: { [key: string]: fieldDirective } = {
  * - Overlapping is not taken care of
  * @returns {{int:{}} }
  */
+<<<<<<< HEAD
 const availableFieldsGen = (prefObj: UserPreferences = userPrefs) => {
     const res = { ...defaultFields, ...prefObj.customFields } as { [key: string]: fieldDirective };
+=======
+const availableFieldsGen = () => {
+    const res = { ...defaultFields, ...userPrefs.customFields } as { [key: string]: fieldDirective };
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     return res;
 };
 /**
@@ -2104,7 +2288,11 @@ class Table {
     c_sortChildren(childArray: Array<Row2>): [Array<Row2>, { [key: string | number]: Row2 }] {
         const byIdObj: { [key: string]: Row2 } = {};
         //Sort in INCREASING order
+<<<<<<< HEAD
         //The LOWEST sorting gets put first
+=======
+        //The LOWEST sorting gets put first as of css convention.
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         //OTHERWISE
         //By sorting from smallest to greates, the smallest gets rendered as the first element, hence pushed to the end
         const mainTrades = [...childArray].filter((row) => row.current[gin("29")] == "-1");
@@ -2259,6 +2447,7 @@ class Table {
      *
      * Important note: When looking for specific trades, the pageVisibility stops being a matter of importance, then the searching function RE-runs this function to re-page the trades correctly
      */
+<<<<<<< HEAD
     refreshCurrentPageVisibility() {
         const array = [...this.sortedMainChildren];
         const lowerBound = (this.currentPage - 1) * userPrefs.rowsPerPage;
@@ -2268,6 +2457,21 @@ class Table {
             const element = array[index];
             //TODO: Decide whether to hide the mainRow or the container.
             if (array.length - index - 1 >= lowerBound && array.length - index - 1 <= upperBound) {
+=======
+    //! Big optimization flaw
+    //TODO: Optimize this by working with reverse indexes instead of reversing the array
+    refreshCurrentPageVisibility() {
+        //Spread to not reverse the sorted one
+        //Reference to objects is kept anyways
+        const reversedArray = [...this.sortedMainChildren].reverse();
+        const lowerBound = (this.currentPage - 1) * userPrefs.rowsPerPage;
+        const upperBound = this.currentPage * userPrefs.rowsPerPage - 1;
+
+        for (let index = 0; index < reversedArray.length; index++) {
+            const element = reversedArray[index];
+            //TODO: Decide whether to hide the mainRow or the container.
+            if (index >= lowerBound && index <= upperBound) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 if (element.state.container != "") {
                     element.state.paged = true;
                     const childTrades: string[] = JSON.parse(element.current[gin("30")]);
@@ -2768,7 +2972,11 @@ class Expander {
     /**
      *  In case of a moreOptions expander, the values are not going to be filtered (at least in this patch). So only a single element will be taken giving directions on which promptDefatults object to read from
      * */
+<<<<<<< HEAD
     fill(content: Array<listerObj>, maxLenght: number = 100) {
+=======
+    fill(content: Array<listerObj>) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         // The content type determines how the listerObj list is interpreted
         if (this.currentFormat == "lister") {
             //Todo: Check that the content type matches the expander type
@@ -2783,7 +2991,11 @@ class Expander {
             } else {
                 const orderedListByTag = [...content].sort((a, b) => a.tag.localeCompare(b.tag));
                 // Print a divider based on tag
+<<<<<<< HEAD
                 for (let index = 0; index < orderedListByTag.length && index < maxLenght; index++) {
+=======
+                for (let index = 0; index < orderedListByTag.length; index++) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     //Separate the elements with different tags
                     /*ideas:
                         - Make the paragraph cliccable and show only the trades with that specific 
@@ -2809,7 +3021,11 @@ class Expander {
                     this.element.append(clickableValue);
                     //Give it activation properties
                     clickableValue.innerHTML = orderedListByTag[index].value;
+<<<<<<< HEAD
                     clickableValue.realValue = Object.create(orderedListByTag[index]);
+=======
+                    clickableValue.realValue = { ...orderedListByTag[index] };
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     //Click event
                     clickableValue.addEventListener("click", (e) => {
                         //Dispatch an event to the field to edit everything
@@ -3046,6 +3262,10 @@ class Row2 {
     }
     dropdownChildren(expand = !this.state.dropDown.expanded) {
         const childList: string[] = JSON.parse(this.current[gin("30")]);
+<<<<<<< HEAD
+=======
+        console.log(expand);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         const theTable = this.state.table;
         if (theTable != "") {
             childList.forEach((pId) => {
@@ -3184,9 +3404,14 @@ class Row2 {
     d_saveChanges = async () => {
         try {
             //dbObject acts as a save of the previous version
+<<<<<<< HEAD
             const dbObject = {
                 ...this.current
             };
+=======
+            const dbObject = { ...this.current };
+            console.log(dbObject, this.current);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
             // Put user field changes into the json_user_fields field
             const jsUF: { [key: string]: string } = {};
@@ -3226,9 +3451,21 @@ class Row2 {
             }
 
             const request = await fetch(
+<<<<<<< HEAD
                 "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
                 // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
                 // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+=======
+<<<<<<< HEAD
+                // "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
+                // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
+                "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager",
+=======
+                "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
+                // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 {
                     method: "POST",
                     credentials: "same-origin",
@@ -3252,6 +3489,10 @@ class Row2 {
             for (const key of Object.keys(updatedTrade)) {
                 if (this.current.hasOwnProperty(key)) continue;
                 //Throwing here would impact other factors
+<<<<<<< HEAD
+=======
+                console.log({ message: "One key coming from the db object was not defined in the current object", key: key, obj: JSON.parse(data.message) });
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 delete updatedTrade[key as keyof typeof updatedTrade];
             }
 
@@ -3665,11 +3906,23 @@ class Row2 {
 
                         //If there's an error, it will be thrown and the function will return false
                         const request = await fetch(
+<<<<<<< HEAD
 
                             "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
                             // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
                             // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
 
+=======
+<<<<<<< HEAD
+                            // "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
+                            // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
+                            "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager",
+=======
+                            "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
+                            // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
+                            // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                             {
                                 method: "POST",
                                 credentials: "same-origin",
@@ -3810,7 +4063,11 @@ class Row2 {
             const availableFields = availableFieldsGen();
             //Create the new trade object
             //Create a new row "percenting" the numerical values of the current one and creating a relative different one
+<<<<<<< HEAD
             const percentedNewTrade = { ...this.origin };
+=======
+            const percentedNewTrade = { ...this.current };
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             let index = 1;
             let newPseudoId = `${this.origin[gin("00i")]}c${index}`;
             if (this.state.table == "") {
@@ -4043,7 +4300,11 @@ class Row2 {
                         const availableChoices = listBrowse(list, input);
                         //Show the listing block
                         listingExpander.moveAndResizeTo();
+<<<<<<< HEAD
                         listingExpander.fill(availableChoices, 10);
+=======
+                        listingExpander.fill(availableChoices);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     } else {
                         console.error("Target is null");
                     }
@@ -4055,7 +4316,11 @@ class Row2 {
                         //Now filter using that input
                         const availableChoices = listBrowse(list, input);
                         //Show the listing block
+<<<<<<< HEAD
                         listingExpander.fill(availableChoices, 10);
+=======
+                        listingExpander.fill(availableChoices);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         listingExpander.show();
                     } else {
                         console.error("Target is null");
@@ -4648,8 +4913,11 @@ if (mainEditPrefsWindow != null) {
         state: {
             visible: false,
             currentPage: "columnsEditor",
+<<<<<<< HEAD
             editing: new Set([] as string[]),
             closing: false,
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         },
         elements: {
             mainWindow: mainEditPrefsWindow,
@@ -4660,6 +4928,7 @@ if (mainEditPrefsWindow != null) {
                 columnsEditor: mainEditPrefsWindow.querySelector(".columns-editor") as HTMLDivElement,
                 customColumns: mainEditPrefsWindow.querySelector(".custom-columns") as HTMLDivElement,
             },
+<<<<<<< HEAD
             saveBtn: mainEditPrefsWindow.querySelector("#saveBtn") as HTMLButtonElement,
             resetBtn: mainEditPrefsWindow.querySelector("#resetBtn") as HTMLButtonElement
         },
@@ -4681,10 +4950,13 @@ if (mainEditPrefsWindow != null) {
             this.state.editing.clear();
             this.elements.saveBtn.disabled = true;
             this.elements.resetBtn.disabled = true;
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         },
         showMainTab() {
             changeVisible(this.elements.mainWindow, true, [this.state.visible]);
         },
+<<<<<<< HEAD
         async hideMainTab() {
             if (this.state.closing == true) {
                 return
@@ -5204,6 +5476,26 @@ if (mainEditPrefsWindow != null) {
     ///Pages:
     ///columns editor
 
+=======
+        hideMainTab() {
+            changeVisible(this.elements.mainWindow, false, [this.state.visible]);
+        },
+        switchPage(newPage: string) {
+            if (this.elements.pages.hasOwnProperty(newPage)) {
+                changeVisible(this.elements.pages[this.state.currentPage as keyof typeof this.elements.pages], false);
+                changeVisible(this.elements.pages[newPage as keyof typeof this.elements.pages], true);
+                this.state.currentPage = newPage;
+            } else {
+                console.error("Trying to switch to non-existing preferences page");
+            }
+        },
+    };
+
+    //Runtimes
+
+    //Initializers
+    editPrefsObj.hideMainTab();
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
     //hide all pages
     Object.values(editPrefsObj.elements.pages).forEach((page) => {
@@ -5214,7 +5506,11 @@ if (mainEditPrefsWindow != null) {
 
     //Listeners
 
+<<<<<<< HEAD
     ///main tab
+=======
+    //main tab
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     editPrefsBtn.addEventListener("click", function () {
         editPrefsObj.showMainTab();
     });
@@ -5228,6 +5524,7 @@ if (mainEditPrefsWindow != null) {
             }
         }
     });
+<<<<<<< HEAD
     ///Save
     editPrefsObj.elements.saveBtn.addEventListener("click", function () {
         if (editPrefsObj.state.editing.size != 0) {
@@ -5241,6 +5538,8 @@ if (mainEditPrefsWindow != null) {
         }
     })
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 } else {
     console.error("Couldn't find the user preferences menu box");
 }
@@ -5262,5 +5561,13 @@ function newAlert(message: { status: "error" | "success"; message: string }) {
     } else {
         console.error("Alert box is undefined: Appending new message is impossible");
     }
+<<<<<<< HEAD
 
 }
+=======
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

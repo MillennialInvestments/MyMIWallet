@@ -103,6 +103,7 @@ return [
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' e '],
+<<<<<<< HEAD
     'ordinal_words' => [
         'of' => 'di',
         'first' => 'primo',
@@ -112,4 +113,6 @@ return [
         'fifth' => 'quinto',
         'last' => 'ultimo',
     ],
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ];

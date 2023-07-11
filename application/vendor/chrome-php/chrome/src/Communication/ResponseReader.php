@@ -109,7 +109,12 @@ class ResponseReader
             return $this->getResponse();
         }
 
+<<<<<<< HEAD
         $timeout = $timeout ?? $this->connection->getSendSyncDefaultTimeout();
+=======
+        // default 2000ms
+        $timeout = $timeout ?? 2000;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         return Utils::tryWithTimeout($timeout * 1000, $this->waitForResponseGenerator());
     }

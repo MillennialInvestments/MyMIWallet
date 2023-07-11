@@ -1,0 +1,1 @@
+ERROR - 2022-10-16 13:22:19 --> Severity: error --> Exception: Call to undefined method Budget_model::get_last_month_income_account_summary() /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIBudget.php 65

@@ -1,4 +1,5 @@
 User-agent: *
+<<<<<<< HEAD
 Disallow: /application/
 Disallow: /system/
 Disallow: /vendor/
@@ -11,3 +12,9 @@ Disallow: /logs/
 Allow: /assets/js/
 Allow: /assets/css/
 Allow: /assets/img/
+=======
+Disallow: /index.html
+Disallow: /application
+Disallow: /bonfire
+Disallow: /public
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

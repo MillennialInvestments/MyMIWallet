@@ -47,7 +47,11 @@ class Budget extends Admin_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'User_Budget';
         
         $this->set_current_user();
@@ -57,10 +61,17 @@ class Budget extends Admin_Controller
         Template::render();
     }
 
+<<<<<<< HEAD
     public function Add()
     {
         $pageType = 'Automated';
         $pageName = 'User_Budget';
+=======
+    public function Account_Overview()
+    {
+        $pageType = 'Standard';
+        $pageName = 'User_Budget_Account_Overview';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         
         $this->set_current_user();
         
@@ -69,11 +80,18 @@ class Budget extends Admin_Controller
         Template::render();
     }
 
+<<<<<<< HEAD
     public function Copy()
     {
         $pageType = 'Automated';
         $pageName = 'User_Budget';
         // $pageName = 'User_Budget_Copy';
+=======
+    public function Add()
+    {
+        $pageType = 'Standard';
+        $pageName = 'User_Budget_Add_Account';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         
         $this->set_current_user();
         
@@ -84,6 +102,7 @@ class Budget extends Admin_Controller
 
     public function Account_Manager()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
         $pageName = 'User_Budget';
         
@@ -99,6 +118,20 @@ class Budget extends Admin_Controller
     {
         $pageType = 'Automated';
         $pageName = 'User_Budget';
+=======
+        $pageType = 'Standard';
+        $pageName = 'User_Budget_Account_Manager';
+        
+        $this->set_current_user();
+        
+        $this->load->view('User/Budget/Account_Manager');
+    }
+
+    public function Recurring_Account_Schedule()
+    {
+        $pageType = 'Standard';
+        $pageName = 'User_Budget_Recurring_Account_Schedule';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         
         $this->set_current_user();
         
@@ -155,6 +188,7 @@ class Budget extends Admin_Controller
         }
     }
 
+<<<<<<< HEAD
     public function Details()
     {
         $pageType = 'Automated';
@@ -203,6 +237,8 @@ class Budget extends Admin_Controller
         Template::render();
     }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public function Paid($accountID) {
         if ($this->budget_model->paid_account($accountID)) {
             Template::set_message('Account status changed to: "Paid"', 'success');
@@ -213,6 +249,7 @@ class Budget extends Admin_Controller
         }
     }
 
+<<<<<<< HEAD
     // public function Unpaid($accountID) {
     //     if ($this->budget_model->unpaid_account($accountID)) {
     //         Template::set_message('Account status changed to: "Paid"', 'success');
@@ -247,6 +284,8 @@ class Budget extends Admin_Controller
         Template::render();
     }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     private function saveData($type = 'insert', $id = 0)
     {
         if ($type != 'insert') {

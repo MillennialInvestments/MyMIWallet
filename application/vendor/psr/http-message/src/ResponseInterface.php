@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 namespace Psr\Http\Message;
 
 /**
@@ -51,7 +54,11 @@ interface ResponseInterface extends MessageInterface
      * @return static
      * @throws \InvalidArgumentException For invalid status code arguments.
      */
+<<<<<<< HEAD
     public function withStatus(int $code, string $reasonPhrase = '');
+=======
+    public function withStatus($code, $reasonPhrase = '');
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
     /**
      * Gets the response reason phrase associated with the status code.

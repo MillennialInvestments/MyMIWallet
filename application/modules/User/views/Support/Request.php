@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php
+<<<<<<< HEAD
 $errorClass                             = empty($errorClass) ? ' error' : $errorClass;
 $controlClass                           = empty($controlClass) ? 'span6' : $controlClass;
 $beta                                   = $this->config->item('beta');
@@ -23,6 +24,14 @@ $fieldData = array(
     'errorClass'                        => $errorClass,
     'controlClass'                      => $controlClass,
 );    
+=======
+    $errorClass                 = empty($errorClass) ? ' error' : $errorClass;
+    $controlClass               = empty($controlClass) ? 'span6' : $controlClass;
+    $fieldData = array(
+        'errorClass'            => $errorClass,
+        'controlClass'          => $controlClass,
+    );
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ?>
 
 <div class="nk-block-head nk-block-head-lg wide-md">

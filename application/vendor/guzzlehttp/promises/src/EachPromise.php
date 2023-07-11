@@ -1,14 +1,20 @@
 <?php
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 namespace GuzzleHttp\Promise;
 
 /**
  * Represents a promise that iterates over many promises and invokes
  * side-effect functions in the process.
+<<<<<<< HEAD
  *
  * @final
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  */
 class EachPromise implements PromisorInterface
 {
@@ -73,7 +79,11 @@ class EachPromise implements PromisorInterface
     }
 
     /** @psalm-suppress InvalidNullableReturnType */
+<<<<<<< HEAD
     public function promise(): PromiseInterface
+=======
+    public function promise()
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         if ($this->aggregate) {
             return $this->aggregate;
@@ -85,19 +95,43 @@ class EachPromise implements PromisorInterface
             $this->iterable->rewind();
             $this->refillPending();
         } catch (\Throwable $e) {
+<<<<<<< HEAD
+=======
+            /**
+             * @psalm-suppress NullReference
+             * @phpstan-ignore-next-line
+             */
+            $this->aggregate->reject($e);
+        } catch (\Exception $e) {
+            /**
+             * @psalm-suppress NullReference
+             * @phpstan-ignore-next-line
+             */
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             $this->aggregate->reject($e);
         }
 
         /**
          * @psalm-suppress NullableReturnStatement
+<<<<<<< HEAD
+=======
+         * @phpstan-ignore-next-line
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
          */
         return $this->aggregate;
     }
 
+<<<<<<< HEAD
     private function createPromise(): void
     {
         $this->mutex = false;
         $this->aggregate = new Promise(function (): void {
+=======
+    private function createPromise()
+    {
+        $this->mutex = false;
+        $this->aggregate = new Promise(function () {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             if ($this->checkIfFinished()) {
                 return;
             }
@@ -114,7 +148,11 @@ class EachPromise implements PromisorInterface
         });
 
         // Clear the references when the promise is resolved.
+<<<<<<< HEAD
         $clearFn = function (): void {
+=======
+        $clearFn = function () {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             $this->iterable = $this->concurrency = $this->pending = null;
             $this->onFulfilled = $this->onRejected = null;
             $this->nextPendingIndex = 0;
@@ -123,6 +161,7 @@ class EachPromise implements PromisorInterface
         $this->aggregate->then($clearFn, $clearFn);
     }
 
+<<<<<<< HEAD
     private function refillPending(): void
     {
         if (!$this->concurrency) {
@@ -130,6 +169,13 @@ class EachPromise implements PromisorInterface
             while ($this->addPending() && $this->advanceIterator()) {
             }
 
+=======
+    private function refillPending()
+    {
+        if (!$this->concurrency) {
+            // Add all pending promises.
+            while ($this->addPending() && $this->advanceIterator());
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return;
         }
 
@@ -150,11 +196,18 @@ class EachPromise implements PromisorInterface
         // next value to yield until promise callbacks are called.
         while (--$concurrency
             && $this->advanceIterator()
+<<<<<<< HEAD
             && $this->addPending()) {
         }
     }
 
     private function addPending(): bool
+=======
+            && $this->addPending());
+    }
+
+    private function addPending()
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         if (!$this->iterable || !$this->iterable->valid()) {
             return false;
@@ -168,7 +221,11 @@ class EachPromise implements PromisorInterface
         $idx = $this->nextPendingIndex++;
 
         $this->pending[$idx] = $promise->then(
+<<<<<<< HEAD
             function ($value) use ($idx, $key): void {
+=======
+            function ($value) use ($idx, $key) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 if ($this->onFulfilled) {
                     call_user_func(
                         $this->onFulfilled,
@@ -179,7 +236,11 @@ class EachPromise implements PromisorInterface
                 }
                 $this->step($idx);
             },
+<<<<<<< HEAD
             function ($reason) use ($idx, $key): void {
+=======
+            function ($reason) use ($idx, $key) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 if ($this->onRejected) {
                     call_user_func(
                         $this->onRejected,
@@ -195,7 +256,11 @@ class EachPromise implements PromisorInterface
         return true;
     }
 
+<<<<<<< HEAD
     private function advanceIterator(): bool
+=======
+    private function advanceIterator()
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         // Place a lock on the iterator so that we ensure to not recurse,
         // preventing fatal generator errors.
@@ -208,17 +273,31 @@ class EachPromise implements PromisorInterface
         try {
             $this->iterable->next();
             $this->mutex = false;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return true;
         } catch (\Throwable $e) {
             $this->aggregate->reject($e);
             $this->mutex = false;
+<<<<<<< HEAD
 
+=======
+            return false;
+        } catch (\Exception $e) {
+            $this->aggregate->reject($e);
+            $this->mutex = false;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return false;
         }
     }
 
+<<<<<<< HEAD
     private function step(int $idx): void
+=======
+    private function step($idx)
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         // If the promise was already resolved, then ignore this step.
         if (Is::settled($this->aggregate)) {
@@ -236,12 +315,19 @@ class EachPromise implements PromisorInterface
         }
     }
 
+<<<<<<< HEAD
     private function checkIfFinished(): bool
+=======
+    private function checkIfFinished()
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         if (!$this->pending && !$this->iterable->valid()) {
             // Resolve the promise if there's nothing left to do.
             $this->aggregate->resolve(null);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return true;
         }
 

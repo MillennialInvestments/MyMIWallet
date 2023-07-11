@@ -38,8 +38,12 @@ class Users extends Admin_Controller
     {
         parent::__construct();
         $this->load->helper(array('directory', 'form', 'file', 'url'));
+<<<<<<< HEAD
         $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'Users/auth'));
         $this->load->model('Management/analytical_model');
+=======
+        $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'user_agent', 'Users/auth'));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->load->model('Management/announcements_model');
         $this->load->model('Management/design_model');
         $this->load->model(array('API/api_model', 'User/exchange_model', 'User/mymigold_model', 'User/tracker_model'));
@@ -62,7 +66,11 @@ class Users extends Admin_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -74,7 +82,11 @@ class Users extends Admin_Controller
 
     public function Assets()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -94,7 +106,11 @@ class Users extends Admin_Controller
 
     public function Distribute()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -114,7 +130,11 @@ class Users extends Admin_Controller
 
     public function Orders($userID)
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Dashboard';
         $this->set_current_user();
         
@@ -125,7 +145,11 @@ class Users extends Admin_Controller
 
     public function Profile()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -135,6 +159,7 @@ class Users extends Admin_Controller
         Template::render();
     }
     
+<<<<<<< HEAD
     public function Export_Users() {
         $table_name = 'bf_users';
         $file_path = './public/assets/documents/Exports/Users/bf_users.csv';
@@ -143,6 +168,8 @@ class Users extends Admin_Controller
 
         $this->csvexport->export($file_path);
     }
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     /**
      * If the Auth lib is loaded, it will set the current user, since users
      * will never be needed if the Auth library is not loaded. By not requiring

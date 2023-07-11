@@ -60,7 +60,11 @@ $userData                   = array(
 										<div class="nk-wg5-amount">
 											<div class="amount"><?php echo $depositAmount; ?> <span class="currency currency-btc">USD</span></div>
 <!--
+<<<<<<< HEAD
 											<div class="amount-sm"><?php //echo $lastDepositAmount; ?> <span class="currency currency-usd">USD</span></div>
+=======
+											<div class="amount-sm"><?php echo $lastDepositAmount; ?> <span class="currency currency-usd">USD</span></div>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 -->
 										</div>
 									</div>
@@ -80,7 +84,11 @@ $userData                   = array(
 										<div class="nk-wg5-amount">
 											<div class="amount"><?php echo $withdrawAmount; ?> <span class="currency currency-btc">USD</span></div>
 <!--
+<<<<<<< HEAD
 											<div class="amount-sm"><?php //echo $lastWithdrawAmount; ?> <span class="currency currency-usd">USD</span></div>
+=======
+											<div class="amount-sm"><?php echo $lastWithdrawAmount; ?> <span class="currency currency-usd">USD</span></div>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 -->
 										</div>
 									</div>

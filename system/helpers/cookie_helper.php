@@ -6,7 +6,11 @@
  *
  * This content is released under the MIT License (MIT)
  *
+<<<<<<< HEAD
  * Copyright (c) 2019 - 2022, CodeIgniter Foundation
+=======
+ * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,13 +34,20 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+<<<<<<< HEAD
  * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
  * @filesource
  */
+<<<<<<< HEAD
 defined('BASEPATH') OR exit('No direct script access allowed');
+=======
+defined('BASEPATH') or exit('No direct script access allowed');
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /**
  * CodeIgniter Cookie Helpers
@@ -45,11 +56,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	Helpers
  * @category	Helpers
  * @author		EllisLab Dev Team
+<<<<<<< HEAD
  * @link		https://codeigniter.com/userguide3/helpers/cookie_helper.html
+=======
+ * @link		https://codeigniter.com/user_guide/helpers/cookie_helper.html
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  */
 
 // ------------------------------------------------------------------------
 
+<<<<<<< HEAD
 if ( ! function_exists('set_cookie'))
 {
 	/**
@@ -73,10 +89,35 @@ if ( ! function_exists('set_cookie'))
 		// Set the config file options
 		get_instance()->input->set_cookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly);
 	}
+=======
+if (! function_exists('set_cookie')) {
+    /**
+     * Set cookie
+     *
+     * Accepts seven parameters, or you can submit an associative
+     * array in the first parameter containing all the values.
+     *
+     * @param	mixed
+     * @param	string	the value of the cookie
+     * @param	string	the number of seconds until expiration
+     * @param	string	the cookie domain.  Usually:  .yourdomain.com
+     * @param	string	the cookie path
+     * @param	string	the cookie prefix
+     * @param	bool	true makes the cookie secure
+     * @param	bool	true makes the cookie accessible via http(s) only (no javascript)
+     * @return	void
+     */
+    function set_cookie($name, $value = '', $expire = '', $domain = '', $path = '/', $prefix = '', $secure = null, $httponly = null)
+    {
+        // Set the config file options
+        get_instance()->input->set_cookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly);
+    }
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 
 // --------------------------------------------------------------------
 
+<<<<<<< HEAD
 if ( ! function_exists('get_cookie'))
 {
 	/**
@@ -92,10 +133,27 @@ if ( ! function_exists('get_cookie'))
 		$prefix = isset($_COOKIE[$index]) ? '' : config_item('cookie_prefix');
 		return get_instance()->input->cookie($prefix.$index, $xss_clean);
 	}
+=======
+if (! function_exists('get_cookie')) {
+    /**
+     * Fetch an item from the COOKIE array
+     *
+     * @param	string
+     * @param	bool
+     * @return	mixed
+     */
+    function get_cookie($index, $xss_clean = null)
+    {
+        is_bool($xss_clean) or $xss_clean = (config_item('global_xss_filtering') === true);
+        $prefix = isset($_COOKIE[$index]) ? '' : config_item('cookie_prefix');
+        return get_instance()->input->cookie($prefix.$index, $xss_clean);
+    }
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 
 // --------------------------------------------------------------------
 
+<<<<<<< HEAD
 if ( ! function_exists('delete_cookie'))
 {
 	/**
@@ -111,4 +169,20 @@ if ( ! function_exists('delete_cookie'))
 	{
 		set_cookie($name, '', '', $domain, $path, $prefix);
 	}
+=======
+if (! function_exists('delete_cookie')) {
+    /**
+     * Delete a COOKIE
+     *
+     * @param	mixed
+     * @param	string	the cookie domain. Usually: .yourdomain.com
+     * @param	string	the cookie path
+     * @param	string	the cookie prefix
+     * @return	void
+     */
+    function delete_cookie($name, $domain = '', $path = '/', $prefix = '')
+    {
+        set_cookie($name, '', '', $domain, $path, $prefix);
+    }
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

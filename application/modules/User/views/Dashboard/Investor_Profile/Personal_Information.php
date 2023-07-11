@@ -560,7 +560,11 @@ $formCustomText			= $this->config->item('form_custom_text');
                             <span class="d-none" id="${input}">${input}</span>
                             <div class="<?php echo $formGroup; ?>">      
                                 <div class="<?php echo $formConCol; ?>">       
+<<<<<<< HEAD
                                     <input type="text" class="<?php echo $formControl; ?>" name="zipcode" id="zipcode" placeholder="Enter Zip Code" value="<?php echo set_value('zipcode', isset($user) ? $user->zipcode : $cuZipCode); ?>">	
+=======
+                                    <input type="text" class="<?php echo $formControl; ?>" name="zipcode" id="zipcode" placeholder="Enter Zip Code" value="<?php echo set_value('zipcode', isset($user) ? $user->zipcode : 'cuZipCode'); ?>">	
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                 </div>
                             </div>
                         </span>

@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 namespace Psr\Http\Message;
 
 /**
@@ -64,7 +67,11 @@ interface UploadedFileInterface
      * @throws \RuntimeException on any error during the move operation, or on
      *     the second or subsequent call to the method.
      */
+<<<<<<< HEAD
     public function moveTo(string $targetPath);
+=======
+    public function moveTo($targetPath);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     
     /**
      * Retrieve the file size.

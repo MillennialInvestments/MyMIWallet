@@ -1,6 +1,7 @@
 <?php
 // Plaid Integration
 $plaid                                  = 0;
+<<<<<<< HEAD
 $btnSizing                              = 'pr-2';
 $beta                                   = $this->config->item('beta');
 $debtOperations                         = $this->config->item('debtOperations');
@@ -46,6 +47,35 @@ if (number_format(($creditAvailable / $creditLimit) * -100, 2) > 30) {
     $creditLimitPercentage              = '<span>'. number_format(($creditAvailable / $creditLimit) * -100, 2) . '%</span>';
 }
 $debtSummaryFMT                         = $userBudget['debtSummaryFMT']; 
+=======
+// $plaid                                  = 1;
+$cuID									= $_SESSION['allSessionData']['userAccount']['cuID'];
+$cuRole									= $_SESSION['allSessionData']['userAccount']['cuRole'];
+$cuEmail								= $_SESSION['allSessionData']['userAccount']['cuEmail'];
+$cuWalletID								= $_SESSION['allSessionData']['userAccount']['cuWalletID'];
+$cuWalletCount							= $_SESSION['allSessionData']['userAccount']['cuWalletCount'];
+$walletID								= $_SESSION['allSessionData']['userAccount']['walletID'];
+$walletTitle							= $_SESSION['allSessionData']['userAccount']['walletTitle'];
+$walletBroker							= $_SESSION['allSessionData']['userAccount']['walletBroker'];
+$walletNickname							= $_SESSION['allSessionData']['userAccount']['walletNickname'];
+$walletDefault							= $_SESSION['allSessionData']['userAccount']['walletDefault'];
+$walletExchange							= $_SESSION['allSessionData']['userAccount']['walletExchange'];
+$walletMarketPair						= $_SESSION['allSessionData']['userAccount']['walletMarketPair'];
+$walletMarket							= $_SESSION['allSessionData']['userAccount']['walletMarket'];
+$walletFunds							= $_SESSION['allSessionData']['userAccount']['walletFunds'];
+$walletInitialAmount					= $_SESSION['allSessionData']['userAccount']['walletInitialAmount'];
+$walletAmount							= $_SESSION['allSessionData']['userAccount']['walletAmount'];
+$walletPercentChange					= $_SESSION['allSessionData']['userAccount']['walletPercentChange'];
+$walletGains							= $_SESSION['allSessionData']['userAccount']['walletGains'];
+$depositAmount							= $_SESSION['allSessionData']['userAccount']['depositAmount'];
+$withdrawAmount							= $_SESSION['allSessionData']['userAccount']['withdrawAmount'];
+$MyMICoinValue							= $_SESSION['allSessionData']['userAccount']['MyMICoinValue'];
+$MyMICCurrentValue						= $_SESSION['allSessionData']['userAccount']['MyMICCurrentValue'];
+$MyMICCoinSum							= $_SESSION['allSessionData']['userAccount']['MyMICCoinSum'];
+$MyMIGoldValue							= $_SESSION['allSessionData']['userAccount']['MyMIGoldValue'];
+$MyMIGCurrentValue						= $_SESSION['allSessionData']['userAccount']['MyMIGCurrentValue'];
+$MyMIGCoinSum							= $_SESSION['allSessionData']['userAccount']['MyMIGCoinSum'];
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         
 $walletCost								= $this->config->item('wallet_cost');  			 		// $5
@@ -86,6 +116,7 @@ $walletData								= array(
     'limit'                             => $limit,
     'purchaseFiatWalletName'			=> $purchaseFiatWalletName,
     'purchaseDigitalWalletName'			=> $purchaseDigitalWalletName,
+<<<<<<< HEAD
     'btnSizing'                         => $btnSizing,
     'checkingSummaryFMT'                => $checkingSummaryFMT,
     'creditAvailable'                   => $creditAvailable,
@@ -94,6 +125,8 @@ $walletData								= array(
     'creditLimitFMT'                    => $creditLimitFMT,
     'creditLimitPercentage'             => $creditLimitPercentage,
     'debtSummaryFMT'                    => $debtSummaryFMT,
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 );
 $fundAccountData						= array(
     'redirectURL'						=> $this->uri->uri_string(),
@@ -109,6 +142,7 @@ $fundAccountData						= array(
     'withdrawAmount'					=> $withdrawAmount,
     // 'nickname'							=> $walletInfo['nickname'],
 );
+<<<<<<< HEAD
 
 if (empty($this->uri->segment(2))) {
     $viewFileNameA                      = 'User/Wallets/index/financial_wallets';
@@ -184,6 +218,8 @@ $link_token                     = $response['link_token'];
 $request_id                     = $response['request_id'];
 $end_date                       = date('Y-m-d', strtotime('-1 day'));
 $start_date                     = date('Y-m-d', strtotime('-5 years -1 day', strtotime($end_date)));
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ?>
 
 <div class="nk-block">
@@ -191,6 +227,7 @@ $start_date                     = date('Y-m-d', strtotime('-5 years -1 day', str
 		<div class="col-md-12 mb-3">  
 			<?php $this->load->view('User/Wallets/index/header', $walletData); ?>
 		</div>
+<<<<<<< HEAD
         <?php 
             if (!empty($viewFileNameA)) { 
                 echo '
@@ -237,16 +274,56 @@ $start_date                     = date('Y-m-d', strtotime('-5 years -1 day', str
 	</div>
 </div>
 <div class="modal fade" id="deleteWalletModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+=======
+		<div class="col-md-12 mb-3">
+			<?php $this->load->view('User/Wallets/index/plaid/financial_wallets', $walletData); ?>
+		</div>
+		<div class="col-md-12 mb-3">
+			<?php $this->load->view('User/Wallets/index/plaid/fiat_wallets', $walletData); ?>
+		</div>
+        <div class="col-md-12 mb-3">
+			<?php $this->load->view('User/Wallets/index/plaid/crypto_wallets', $walletData); ?>
+		</div>
+	</div>
+</div>
+
+<?php
+foreach ($getWallets->result_array() as $wallets) {
+            if ($wallets['nickname'] !== null) {
+                $nickname					= ' - ' . $wallets['nickname'];
+            } else {
+                $nickname					= null;
+            }
+            echo '
+
+<div class="modal fade" id="deleteWalletModal' . $wallets['id'] . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h3 class="modal-title" id="exampleModalLabel">Delete This Wallet?</h3>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<<<<<<< HEAD
     				<span aria-hidden="true">&times;</span>
     			</button>
 			</div>
 			<div class="modal-body">
 				<p>Are you sure you want to delete this wallet? </p>
+=======
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to delete this wallet? </p>
+				<table class="table table-borderless pt-3">
+					<tbody>
+						<tr>
+							<th>Wallet Name:</th>
+							<td>' . $wallets['broker'] .  $nickname . '</td>
+						</tr>
+					</tbody>
+				</table>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 			</div>             
 			<div class="modal-footer">                                                    
 				<a type="button" class="btn btn-success" href="' . site_url('Delete-Wallet/' . $wallets['id']) . '">Yes</a>
@@ -255,6 +332,7 @@ $start_date                     = date('Y-m-d', strtotime('-5 years -1 day', str
 		</div>
 	</div>
 </div>
+<<<<<<< HEAD
 <script>
     const cuID                  =<?php echo '\''.$cuID.'\''; ?>; 
     const request_id            =<?php echo '\''.$request_id.'\''; ?>; 
@@ -372,3 +450,19 @@ $start_date                     = date('Y-m-d', strtotime('-5 years -1 day', str
         });
     })
 </script>
+=======
+	';
+        }
+?>
+<?php
+// if ($cuRole === '1') {
+// 	echo '<br><br>';
+// 	echo '<h2 class="nk-block-title fw-bold">User Data Transfer</h2>';
+//     print_r($_SESSION['allSessionData']);
+//     echo '<br><br>';
+//     print_r($walletData);
+//     echo '<br><br>';
+//     print_r($fundAccountData);
+// }
+?>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

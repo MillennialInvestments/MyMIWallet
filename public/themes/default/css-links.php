@@ -1,12 +1,19 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">    
+<<<<<<< HEAD
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css"> -->
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap-select.min.css'); ?>">    
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MillennialInvestments/v6/dist/admin/css/simple-line-icons.css">     
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MillennialInvestments/v6/dist/mobirise/socicon/css/styles.css">     
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MillennialInvestments/v6/dist/admin/css/flag-icon.min.css">    
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MillennialInvestments/v6/dist/admin/css/vendor.bundle.base.css">    -->
+<<<<<<< HEAD
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MillennialInvestments/v6/dist/admin/css/style.css">   -->
+=======
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MillennialInvestments/v6/dist/admin/css/style.css">  
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 <link rel="stylesheet" href="<?php echo base_url('assets/css/website.css'); ?>">      
 <link rel="stylesheet" href="<?php echo base_url('assets/css/dashlite.css'); ?>">      
 <link rel="stylesheet" href="<?php echo base_url('assets/css/dashlite3.css?ver=3.0.2'); ?>">

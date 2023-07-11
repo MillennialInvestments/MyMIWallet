@@ -1,4 +1,8 @@
 <?php /* /users/views/user_fields.php */
+<<<<<<< HEAD
+=======
+date_default_timezone_set('America/Chicago');
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $date                           = date("F jS, Y");
 $hostTime                       = date("g:i A");
 $time                           = date("g:i A", strtotime($hostTime) - 60 * 60 * 5);
@@ -42,7 +46,20 @@ if ($formMode === 'Add') {
     $accountID                  = $this->uri->segment(3);
 }
 
+<<<<<<< HEAD
 ?>        
+=======
+?>                              
+<!-- <h4 class="card-title"><?php //echo $integrationTitle; ?></h4>
+<p class="card-description"> Please fill out information below</p>	
+<p class="text-center py-3">	
+    <a class="btn btn-primary text-center" href="#">Integrate Account</a>
+</p>	
+<hr> -->
+<h4 class="card-title"><?php echo $formTitle; ?></h4>
+<p class="card-description"> Please fill out information below</p>			
+<hr>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 <?php
 if ($cuUserType === 'Beta') {
     ?>
@@ -93,8 +110,11 @@ if ($cuUserType === 'Beta') {
                         'Debt - Personal'	        => 'Debt - Personal',
                         'Debt - Student'	        => 'Debt - Student',
                         'Electricity - Utility'     => 'Electricity - Utility',
+<<<<<<< HEAD
                         'Expense - Business'        => 'Expense - Business',
                         'Expense - Personal'        => 'Expense - Personal',
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         'Food/Groceries'            => 'Food/Groceries',
                         'Gas - Transportation'      => 'Gas - Transportation',
                         'Gas - Utility'             => 'Gas - Utility',
@@ -110,18 +130,26 @@ if ($cuUserType === 'Beta') {
                         'Loan - Mortgage'           => 'Loan - Mortgage',
                         'Loan - Personal'	        => 'Loan - Personal',
                         'Loan - Student'	        => 'Loan - Student',
+<<<<<<< HEAD
                         'Medical - Dental'	        => 'Medical - Dental',
                         'Medical - Health'	        => 'Medical - Health',
                         'Medical - Vision'	        => 'Medical - Vision',
                         'Phone - Business'          => 'Phone - Business',  
                         'Phone - Personal'          => 'Phone - Personal',  
+=======
+                        'Medical'    		        => 'Medical',
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         'Rent'      		        => 'Rent',
                         'Taxes - Business'          => 'Taxes - Business',
                         'Taxes - Investments'       => 'Taxes - Investments',
                         'Taxes - Personal'          => 'Taxes - Personal',
                         'Travel'                    => 'Travel',
+<<<<<<< HEAD
                         'Warranty - Home'           => 'Warranty - Home',
                         'Water'                     => 'Water - Utility',
+=======
+                        'Water'                     => 'Water',
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         'Other'                     => 'Other...',
                     );
                 } else {
@@ -138,8 +166,11 @@ if ($cuUserType === 'Beta') {
                         'Debt - Personal'	        => 'Debt - Personal',
                         'Debt - Student'	        => 'Debt - Student',
                         'Electricity - Utility'     => 'Electricity - Utility',
+<<<<<<< HEAD
                         'Expense - Business'        => 'Expense - Business',
                         'Expense - Personal'        => 'Expense - Personal',
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         'Food/Groceries'            => 'Food/Groceries',
                         'Gas - Transportation'      => 'Gas - Transportation',
                         'Gas - Utility'             => 'Gas - Utility',
@@ -155,18 +186,27 @@ if ($cuUserType === 'Beta') {
                         'Loan - Mortgage'	        => 'Loan - Mortgage',
                         'Loan - Personal'	        => 'Loan - Personal',
                         'Loan - Student'	        => 'Loan - Student',
+<<<<<<< HEAD
                         'Medical - Dental'	        => 'Medical - Dental',
                         'Medical - Health'	        => 'Medical - Health',
                         'Medical - Vision'	        => 'Medical - Vision',
                         'Phone - Business'          => 'Phone - Business',  
                         'Phone - Personal'          => 'Phone - Personal',  
                         'Rent'      		        => 'Rent',  
+=======
+                        'Medical'    		        => 'Medical',
+                        'Rent'      		        => 'Rent',
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         'Taxes - Business'          => 'Taxes - Business',
                         'Taxes - Investments'       => 'Taxes - Investments',
                         'Taxes - Personal'          => 'Taxes - Personal',
                         'Travel'                    => 'Travel',
+<<<<<<< HEAD
                         'Warranty - Home'           => 'Warranty - Home',
                         'Water'                     => 'Water - Utility',
+=======
+                        'Water'                     => 'Water',
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         'Other'                     => 'Other...',
                     );
                 }
@@ -180,11 +220,16 @@ if ($cuUserType === 'Beta') {
 	</div>
 </div>
 <div class="<?php echo $formGroup; ?> mb-2">    
+<<<<<<< HEAD
 	<label class="col-6 form-label" for="default-01">Account Name</label>    
+=======
+	<label class="col-6 form-label" for="default-01"><?php echo $accountType; ?> Account Name <span class="text-muted">(Optional)</span></label>    
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	<div class="col-6">       
 		<input type="text" class="<?php echo $formControl; ?>" name="nickname" id="nickname" placeholder="Enter Account Nickname" value="<?php echo set_value('nickname', isset($user) ? $user->nickname : $accountName); ?>">	
 	</div>
 </div>
+<<<<<<< HEAD
 <?php if ($accountType === 'Expense') { ?>
 <div class="<?php echo $formGroup; ?> mb-2">    
 	<label class="col-6 form-label" for="default-01">Payment Amount</label>    
@@ -203,6 +248,12 @@ if ($cuUserType === 'Beta') {
 	<label class="col-6 form-label" for="default-01">Gross Amount</label>    
 	<div class="col-6">       
 		<input type="text" class="<?php echo $formControl; ?>" name="gross_amount" id="gross_amount" placeholder="(If Applicable)" value="<?php echo set_value('gross_amount', isset($user) ? $user->gross_amount : $accountNetAmount); ?>">	
+=======
+<div class="<?php echo $formGroup; ?> mb-2">    
+	<label class="col-6 form-label" for="default-01">Net Amount</label>    
+	<div class="col-6">       
+		<input type="text" class="<?php echo $formControl; ?>" name="net_amount" id="net_amount" placeholder="Enter Current Value of Wallet" value="<?php echo set_value('net_amount', isset($user) ? $user->net_amount : $accountNetAmount); ?>">	
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	</div>
 </div>
 <!-- <div class="<?php //echo $formGroup; ?> mb-2">    
@@ -212,6 +263,7 @@ if ($cuUserType === 'Beta') {
 	</div>
 </div> -->
 <div class="<?php echo $formGroup; ?> mb-2">    
+<<<<<<< HEAD
 	<label for="paid" class="col-6 form-label">Paid/Received?</label>
 	<div class="col-6">
 
@@ -237,6 +289,12 @@ if ($cuUserType === 'Beta') {
 	<div class="col-6">
 
         <select name="recurring_account" class="<?php echo $formSelectPicker; ?>" id="recurring_account" onchange="showDiv(this)" style="height: 40px; padding: 10px;">
+=======
+	<label for="recurring_account" class="col-6 form-label">Recurring Account?</label>
+	<div class="col-6">
+
+        <select name="recurring_account" class="<?php echo $formSelectPicker; ?>" id="recurring_account" onchange="showDiv(this)" required="required" style="height: 40px; padding: 10px;">
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             <?php
                 $recurring_account_values = array(
                     $accountRecurringAccount        => $accountRecurringAccount,
@@ -265,7 +323,11 @@ if (!empty($accountRecurringAccount) || $accountRecurringAccount === 'Yes') {
         <label for="intervals" class="col-6 form-label">Time Intervals</label>
         <div class="col-6">
 
+<<<<<<< HEAD
             <select name="intervals" class="<?php echo $formSelectPicker; ?>" id="intervals" style="height: 40px; padding: 10px;">
+=======
+            <select name="intervals" class="<?php echo $formSelectPicker; ?>" id="intervals" required="required" style="height: 40px; padding: 10px;">
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 <?php
                     if ($accountType === 'Income') {
                         $intervals_values = array(
@@ -320,4 +382,10 @@ if (!empty($accountRecurringAccount) || $accountRecurringAccount === 'Yes') {
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 <hr>
+=======
+<script type="text/javascript">
+
+</script>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

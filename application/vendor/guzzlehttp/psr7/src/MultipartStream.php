@@ -34,7 +34,11 @@ final class MultipartStream implements StreamInterface
      */
     public function __construct(array $elements = [], string $boundary = null)
     {
+<<<<<<< HEAD
         $this->boundary = $boundary ?: bin2hex(random_bytes(20));
+=======
+        $this->boundary = $boundary ?: sha1(uniqid('', true));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->stream = $this->createStream($elements);
     }
 

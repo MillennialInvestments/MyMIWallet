@@ -62,7 +62,11 @@ class CustomError extends MX_Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Home';
         $this->set_current_user();
         Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure

@@ -22,8 +22,12 @@
             <div class="intro-sticky-text d-flex align-items-center justify-content-center text-light"><span class="d-none d-sm-inline-block"><span>Are you looking for Advanced HYIP Investment Script?</span><span class="ps-1 fw-bold">Get Investorm<em class="ms-2 icon ni ni-arrow-long-right"></em></span></span><span class="d-sm-none"><span class="ps-1 fw-bold">Get Investorm - HYIP Investment Script<em class="ms-2 icon ni ni-arrow-long-right"></em></span></span></div>
         </div>
     </a>
+<<<<<<< HEAD
 </div> -->
 <?php
 echo theme_view('js-links');
 echo theme_view('custom-js');
 ?>
+=======
+</div> -->
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

@@ -3,6 +3,7 @@
 $errorClass   				= empty($errorClass) ? ' error' : $errorClass;
 $controlClass 				= empty($controlClass) ? 'span6' : $controlClass;
 $redirectURL                = 'Exchange';
+<<<<<<< HEAD
 $userAccount                = $_SESSION['allSessionData']['userAccount'];
 $cuID 					    = $userAccount['cuID'];
 $cuEmail 				    = $userAccount['cuEmail'];
@@ -29,10 +30,13 @@ $this->mymilogger
      ->full_url(current_url())
      ->comment('Deposit Funds') //Token identify Action
      ->log(); //Add Database Entry
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $fieldData = array(
     'errorClass'    		=> $errorClass,
     'controlClass'  		=> $controlClass,
     'redirectURL'			=> $redirectURL,
+<<<<<<< HEAD
     'cuID'					=> $cuID,
     'cuEmail'				=> $cuEmail,
     'walletID'				=> $walletID,
@@ -42,6 +46,17 @@ $fieldData = array(
     'withdrawAmount'		=> $withdrawAmount,
     'walletBroker'			=> $walletBroker,
     'walletNickname'		=> $walletNickname,
+=======
+    'cuID'					=> $_SESSION['allSessionData']['userAccount']['cuID'],
+    'cuEmail'				=> $_SESSION['allSessionData']['userAccount']['cuEmail'],
+    'walletID'				=> $_SESSION['allSessionData']['userAccount']['walletID'],
+    'walletAmount'			=> $_SESSION['allSessionData']['userAccount']['walletAmount'],
+    'walletInitialAmount'	=> $_SESSION['allSessionData']['userAccount']['walletInitialAmount'],
+    'depositAmount'			=> $_SESSION['allSessionData']['userAccount']['depositAmount'],
+    'withdrawAmount'		=> $_SESSION['allSessionData']['userAccount']['withdrawAmount'],
+    'walletBroker'			=> $_SESSION['allSessionData']['userAccount']['walletBroker'],
+    'walletNickname'		=> $_SESSION['allSessionData']['userAccount']['walletNickname'],
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 );
 ?>  
 <?php echo form_open('Deposit-Funds', array('class' => "form-horizontal", 'id' => "deposit-funds-form", 'autocomplete' => 'off')); ?>  

@@ -6,7 +6,11 @@
  *
  * This content is released under the MIT License (MIT)
  *
+<<<<<<< HEAD
  * Copyright (c) 2019 - 2022, CodeIgniter Foundation
+=======
+ * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,13 +34,20 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+<<<<<<< HEAD
  * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 2.1.0
  * @filesource
  */
+<<<<<<< HEAD
 defined('BASEPATH') OR exit('No direct script access allowed');
+=======
+defined('BASEPATH') or exit('No direct script access allowed');
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /**
  * PDO Result Class
@@ -47,6 +58,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	Drivers
  * @category	Database
  * @author		EllisLab Dev Team
+<<<<<<< HEAD
  * @link		https://codeigniter.com/userguide3/database/
  */
 class CI_DB_pdo_result extends CI_DB_result {
@@ -196,4 +208,141 @@ class CI_DB_pdo_result extends CI_DB_result {
 		return $this->result_id->fetchObject($class_name);
 	}
 
+=======
+ * @link		https://codeigniter.com/user_guide/database/
+ */
+class CI_DB_pdo_result extends CI_DB_result
+{
+
+    /**
+     * Number of rows in the result set
+     *
+     * @return	int
+     */
+    public function num_rows()
+    {
+        if (is_int($this->num_rows)) {
+            return $this->num_rows;
+        } elseif (count($this->result_array) > 0) {
+            return $this->num_rows = count($this->result_array);
+        } elseif (count($this->result_object) > 0) {
+            return $this->num_rows = count($this->result_object);
+        } elseif (($num_rows = $this->result_id->rowCount()) > 0) {
+            return $this->num_rows = $num_rows;
+        }
+
+        return $this->num_rows = count($this->result_array());
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Number of fields in the result set
+     *
+     * @return	int
+     */
+    public function num_fields()
+    {
+        return $this->result_id->columnCount();
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Fetch Field Names
+     *
+     * Generates an array of column names
+     *
+     * @return	bool
+     */
+    public function list_fields()
+    {
+        $field_names = array();
+        for ($i = 0, $c = $this->num_fields(); $i < $c; $i++) {
+            // Might trigger an E_WARNING due to not all subdrivers
+            // supporting getColumnMeta()
+            $field_names[$i] = @$this->result_id->getColumnMeta($i);
+            $field_names[$i] = $field_names[$i]['name'];
+        }
+
+        return $field_names;
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Field data
+     *
+     * Generates an array of objects containing field meta-data
+     *
+     * @return	array
+     */
+    public function field_data()
+    {
+        try {
+            $retval = array();
+
+            for ($i = 0, $c = $this->num_fields(); $i < $c; $i++) {
+                $field = $this->result_id->getColumnMeta($i);
+
+                $retval[$i]			= new stdClass();
+                $retval[$i]->name		= $field['name'];
+                $retval[$i]->type		= isset($field['native_type']) ? $field['native_type'] : null;
+                $retval[$i]->max_length		= ($field['len'] > 0) ? $field['len'] : null;
+                $retval[$i]->primary_key	= (int) (! empty($field['flags']) && in_array('primary_key', $field['flags'], true));
+            }
+
+            return $retval;
+        } catch (Exception $e) {
+            if ($this->db->db_debug) {
+                return $this->db->display_error('db_unsupported_feature');
+            }
+
+            return false;
+        }
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Free the result
+     *
+     * @return	void
+     */
+    public function free_result()
+    {
+        if (is_object($this->result_id)) {
+            $this->result_id = false;
+        }
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Result - associative array
+     *
+     * Returns the result set as an array
+     *
+     * @return	array
+     */
+    protected function _fetch_assoc()
+    {
+        return $this->result_id->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Result - object
+     *
+     * Returns the result set as an object
+     *
+     * @param	string	$class_name
+     * @return	object
+     */
+    protected function _fetch_object($class_name = 'stdClass')
+    {
+        return $this->result_id->fetchObject($class_name);
+    }
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

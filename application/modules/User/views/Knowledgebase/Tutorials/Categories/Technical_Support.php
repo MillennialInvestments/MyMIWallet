@@ -5,7 +5,11 @@
                 <div class="nk-block-head-content">
                     <div class="card">
                         <div class="card-inner text-center">
+<<<<<<< HEAD
                             <i class="icon ni ni-account-setting" style="font-size:2.5rem;"></i>
+=======
+                            <i class="icon icon-lg ni ni-account-setting"></i>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                             <h3 class="nk-block-title fw-normal">Technical Support</h3>
                             <div class="nk-block-des">
                                 <p class="lead">
@@ -18,32 +22,52 @@
         </div>
         <div class="col-lg-3 col-sm-6 mb-lg- mb-4">
             <div class="hover-bg-primary text-center position-relative px-4 py-5 rounded-lg shadow"> 
+<<<<<<< HEAD
                 <i class="icon ni ni-shield-check img-fluid" style="font-size:2.5rem;"></i>
                 <h5 class="py-3 text-capitalize card-title">Account Security</h5>
+=======
+                <i class="icon icon-lg ni ni-shield-check img-fluid"></i>
+                <h5 class="pt-5 pb-3 text-capitalize card-title">Account Security</h5>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 <p class="mb-4">For what reason would it be advisable for me to think about business content? That might be little bit risky to have crew member like them.</p> 
                 <a class="btn btn-outline-primary" href="<?php echo site_url('Knowledge-Base/Technical-Support'); ?>" data-abc="true">Read More</a>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6 mb-lg- mb-4">
             <div class="hover-bg-primary text-center position-relative px-4 py-5 rounded-lg shadow"> 
+<<<<<<< HEAD
                 <i class="icon ni ni-bugs img-fluid" style="font-size:2.5rem;"></i>
                 <h5 class="py-3 text-capitalize card-title">Bugs/Reports</h5>
+=======
+                <i class="icon icon-lg ni ni-bugs img-fluid"></i>
+                <h5 class="pt-5 pb-3 text-capitalize card-title">Bugs/Reports</h5>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 <p class="mb-4">For what reason would it be advisable for me to think about business content? That might be little bit risky to have crew member like them.</p> 
                 <a class="btn btn-outline-primary" href="<?php echo site_url('Knowledge-Base/Technical-Support#managing-account-security'); ?>" data-abc="true">Read More</a>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6 mb-lg- mb-4">
             <div class="hover-bg-primary text-center position-relative px-4 py-5 rounded-lg shadow"> 
+<<<<<<< HEAD
                 <i class="icon ni ni-reports-alt img-fluid" style="font-size:2.5rem;"></i>
                 <h5 class="py-3 text-capitalize card-title">Support History</h5>
+=======
+                <i class="icon icon-lg ni ni-reports-alt img-fluid"></i>
+                <h5 class="pt-5 pb-3 text-capitalize card-title">Support History</h5>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 <p class="mb-4">For what reason would it be advisable for me to think about business content? That might be little bit risky to have crew member like them.</p> 
                 <a class="btn btn-outline-primary" href="<?php echo site_url('Knowledge-Base/Technical-Support#reporting-bugs'); ?>" data-abc="true">Read More</a>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6 mb-lg- mb-4">
             <div class="hover-bg-primary text-center position-relative px-4 py-5 rounded-lg shadow"> 
+<<<<<<< HEAD
                 <i class="icon ni ni-help-alt img-fluid" style="font-size:2.5rem;"></i>
                 <h5 class="py-3 text-capitalize card-title">Tech Support</h5>
+=======
+                <i class="icon icon-lg ni ni-help-alt img-fluid"></i>
+                <h5 class="pt-5 pb-3 text-capitalize card-title">Tech Support</h5>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 <p class="mb-4">For what reason would it be advisable for me to think about business content? That might be little bit risky to have crew member like them.</p> 
                 <a class="btn btn-outline-primary" href="<?php echo site_url('Knowledge-Base/Technical-Support#managing-support-tickets'); ?>" data-abc="true">Read More</a>
             </div>

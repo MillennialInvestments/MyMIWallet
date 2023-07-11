@@ -1,5 +1,6 @@
 <?php
 // require_once 'vendor/autoload.php';
+<<<<<<< HEAD
 $testPage = $this->config->item('test_view_page');
 $cuID = $_SESSION['allSessionData']['userAccount']['cuID'];
 $cuEmail = $_SESSION['allSessionData']['userAccount']['cuEmail'];
@@ -7,6 +8,14 @@ $testInfo = array(
     'cuID' => $cuID,
 );
 ?> 
+=======
+$testPage						= $this->config->item('test_view_page');
+$cuID 							= $_SESSION['allSessionData']['userAccount']['cuID'];
+$testInfo						= array(
+    'cuID'						=> $cuID,
+);
+?>   
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 <div class="nk-block">
 	<div class="row gy-gs">
 		<div class="col-lg-12 col-xl-12">
@@ -14,6 +23,7 @@ $testInfo = array(
 				<div class="nk-block-head-xs">
 					<div class="nk-block-head-content">
 						<h1 class="nk-block-title title">Web Development - Content Creator</h1>
+<<<<<<< HEAD
                         <br>
                         <br>
                         <br>
@@ -56,3 +66,24 @@ $testInfo = array(
 		</div>
 	</div>
 </div>
+=======
+						<p id="private_key"></p>
+						<p id="address"></p>
+						<!-- <a href="<?php //echo site_url('/Trade-Tracker'); ?>">Test Page Environment</a>							 -->
+					</div>
+				</div>
+			</div>
+			<!-- <div class="nk-block">
+                <div class="card card-bordered">
+                    <div class="card-body">
+
+                    </div>
+                </div>
+			</div>     -->
+            <?php 
+            $this->load->view('User/Dashboard/Investor_Profile/Activity', $testInfo); 
+            ?>
+		</div>
+	</div>
+</div>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

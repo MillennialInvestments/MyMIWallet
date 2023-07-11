@@ -61,7 +61,12 @@ RULES:
 The trade cannot have both a closed_ref != -1 and a closed list != []
 
 */
+<<<<<<< HEAD
 let debug = false;
+=======
+//START OF THE PROGRAM
+let debug = true;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 class TradeObj {
     constructor(row) {
         this.legend = row.legend || "false";
@@ -110,13 +115,21 @@ class TradeObj {
         this.delete = row.delete || "Delete";
     }
 }
+<<<<<<< HEAD
 const graphicsLibrary = {
+=======
+const debugGraphicsLibrary = {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     h3: [],
     description: [],
     input: ["form-control"],
     select: ["form-control"],
     div: [],
+<<<<<<< HEAD
     button: ["btn", "btn-sm", "m-1"],
+=======
+    button: ["btn", "btn-sm", "h-100"],
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     openedBtn: ["btn", "btn-light", "h-100"],
     closedBtn: ["btn", "btn-warning", "h-100"],
     cancelBtn: ["btn-warning", "btn-block"],
@@ -131,8 +144,13 @@ const graphicsLibrary = {
     expanderEmptyBlock: ["empty-block"],
     expanderTagSeparator: ["tag-separator"],
     expanderClickableValue: ["clickable-value"],
+<<<<<<< HEAD
     mainBtn: ["btn-primary"],
     spawnerButton: ["spawner-new-button", "btn-primary"],
+=======
+    mainBtn: ["btn-primary", "mr-3"],
+    spawnerButton: ["spawner-new-button", "btn-primary", "mr-3"],
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     tradeContainer: ["trade-container"],
     containerDropdown: ["dropdown-btn"],
     disabledBtn: ["disabled-btn"],
@@ -149,6 +167,7 @@ const graphicsLibrary = {
     controllerBox: ["tt-controller-box", "pb-5"],
     alert: ["tt-alert", "alert", "alert-dimissable"],
     closeWindowBtn: ["close-button"],
+<<<<<<< HEAD
     columnsEditorHolder: ["card", "card-bordered", "pricing", "rounded"],
     columnsEditorElementsEditorHolder: ["d-flex", "flex-column"],
     columnsEditorSectionDiv: ["mt-5"],
@@ -177,6 +196,72 @@ HTMLElement.prototype.rgd = function (...classSet) {
     classSet.forEach((index) => {
         this.classList.remove(...graphicsLibrary[index]);
     });
+=======
+};
+const graphicsLibrary = {
+    h3: [],
+    description: [],
+    input: ["form-control"],
+    select: ["form-control"],
+    div: [],
+    button: ["btn"],
+    openedBtn: ["btn", "btn-light", "btn-block"],
+    closedBtn: ["btn", "btn-warning", "btn-block"],
+    cancelBtn: ["btn-warning", "btn-block"],
+    saveBtn: ["btn-primary", "btn-block"],
+    deleteBtn: ["btn-danger", "btn-block"],
+    darkener: ["tt-darkener", "btn-block"],
+    tradeTable: ["trade-table"],
+    tableBottomController: ["table-bottom-controller"],
+    pageMoverHolder: ["page-mover-holder"],
+    tradeWindow: ["tt-trade-window"],
+    expander: ["tt-expander", "hidden"],
+    expanderEmptyBlock: ["empty-block"],
+    expanderTagSeparator: ["tag-separator"],
+    expanderClickableValue: ["clickable-value"],
+    mainBtn: ["btn-primary", "mr-3"],
+    spawnerButton: ["spawner-new-button", "btn-primary", "mr-3"],
+    tradeContainer: ["trade-container", "pl-3"],
+    containerDropdown: ["dropdown-btn"],
+    disabledBtn: ["disabled-btn"],
+    promptBox: ["tt-prompt-box"],
+    fieldHolder: ["field-holder", "form-group", "custom-group-width", "mb-0"],
+    autoCalculated: [],
+    editing: ["editing"],
+    legendContainer: ["legendary"],
+    closedRow: ["closed-row"],
+    legendRow: ["legend-row"],
+    mainRow: ["main-row", "row"],
+    fixedSection: ["fixed-section", "col-3", "d-flex", "px-0"],
+    scrollableSection: ["scrollable-section", "col-6", "overflow-auto", "d-flex", "px-0"],
+    controllerBox: ["tt-controller-box", "pb-5"],
+    alert: ["tt-alert", "alert", "alert-dimissable"],
+    closeWindowBtn: ["close-button"],
+};
+HTMLElement.prototype.agd = function (...classSet) {
+    if (debug == true) {
+        classSet.forEach((index) => {
+            this.classList.add(...debugGraphicsLibrary[index]);
+        });
+    }
+    else {
+        classSet.forEach((index) => {
+            this.classList.add(...graphicsLibrary[index]);
+        });
+    }
+};
+HTMLElement.prototype.rgd = function (...classSet) {
+    if (debug == true) {
+        classSet.forEach((index) => {
+            this.classList.remove(...debugGraphicsLibrary[index]);
+        });
+    }
+    else {
+        classSet.forEach((index) => {
+            this.classList.remove(...graphicsLibrary[index]);
+        });
+    }
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 };
 function instanceOfIF(object) {
     return object.discriminator === "INPUT-FIELD";
@@ -318,6 +403,7 @@ function spawnBtn() {
  * @param options CURRENTLY NOT OPERATIONAL
  * @returns
  */
+<<<<<<< HEAD
 async function truePrompt(text, options = { trueTxt: "Yes" }) {
     const prompt = spawnDiv();
     document.body.append(prompt);
@@ -358,6 +444,8 @@ async function truePrompt(text, options = { trueTxt: "Yes" }) {
  * @param options CURRENTLY NOT OPERATIONAL
  * @returns
  */
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 async function trueFalsePrompt(text, options = { trueTxt: "Yes", falseTxt: "Cancel" }) {
     const prompt = spawnDiv();
     document.body.append(prompt);
@@ -400,6 +488,7 @@ async function trueFalsePrompt(text, options = { trueTxt: "Yes", falseTxt: "Canc
     });
     return result;
 }
+<<<<<<< HEAD
 /**
  *
  * @param text
@@ -456,6 +545,8 @@ async function trueFalseCancelPrompt(text, options = { trueTxt: "Yes", falseTxt:
     });
     return result;
 }
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 //TODO: Increase capabilities of this function using keymatching, iterating through the object, checking for hollow elements.
 /**
  * Function to compare objects
@@ -577,10 +668,19 @@ function validPerc(closeValue) {
  */
 function changeVisible(element, visible, stateProperties = []) {
     if (visible == true) {
+<<<<<<< HEAD
         element.classList.remove("d-none");
     }
     else {
         element.classList.add("d-none");
+=======
+        element.classList.add("visible");
+        element.classList.remove("hidden");
+    }
+    else {
+        element.classList.add("hidden");
+        element.classList.remove("visible");
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
     stateProperties.forEach((property) => {
         property = visible;
@@ -610,12 +710,20 @@ const userPrefs = {
                         { text: "Long", value: "long" },
                         { text: "Short", value: "short" },
                     ],
+<<<<<<< HEAD
                     selected: "E-Preset 1",
+=======
+                    selected: "default",
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     layouts: {
                         //If an element is not fixed, then it will be able to scroll
                         //Which elements get rendered? Check "availableFields"
                         //If fixed is true, then the size
+<<<<<<< HEAD
                         "E-Preset 1": [
+=======
+                        default: [
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                             { fixed: true, size: "20%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] },
                             {
                                 fixed: false,
@@ -643,6 +751,7 @@ const userPrefs = {
                                 elements: [],
                             },
                         ],
+<<<<<<< HEAD
                         "E-Preset 2": [
                             { fixed: true, size: "20%", elements: ["3", "2", "1"], activeFormulas: [], nElements: [] },
                             {
@@ -699,6 +808,8 @@ const userPrefs = {
                                 elements: [],
                             },
                         ],
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     },
                 },
                 option_buy: {
@@ -712,11 +823,16 @@ const userPrefs = {
                         { text: "Call", value: "call" },
                         { text: "Put", value: "put" },
                     ],
+<<<<<<< HEAD
                     selected: "OB-Preset 1",
+=======
+                    selected: "default",
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     layouts: {
                         //If an element is not fixed, then it will be able to scroll
                         //Which elements get rendered? Check "availableFields"
                         //If fixed is true, then the size
+<<<<<<< HEAD
                         "OB-Preset 1": [
                             { fixed: true, size: "10%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] },
                             {
@@ -774,6 +890,9 @@ const userPrefs = {
                             },
                         ],
                         "OB-Preset 3": [
+=======
+                        default: [
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                             { fixed: true, size: "10%", elements: ["1", "2", "3"], activeFormulas: [], nElements: [] },
                             {
                                 fixed: false,
@@ -797,12 +916,45 @@ const userPrefs = {
                                 size: "0",
                                 activeFormulas: [],
                                 //This is a list of all the element NOT to include - Made up from all the elements included in the other parts of the row
+<<<<<<< HEAD
                                 nElements: ["1", "2", "3", "17", "18", "10", "19", "20", "11", "12", "b1", "b2", "b3"],
+=======
+                                nElements: ["1", "2", "3", "17", "18", "10", "19", "20", "11", "12", "u1", "15", "b1", "b2", "b3"],
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                 elements: [],
                             },
                         ],
                     },
                 },
+<<<<<<< HEAD
+=======
+                // option: {
+                // 	name: "Buy Options",
+                // 	tag: "option",
+                // 	tagLogical: "equal",
+                // 	variations: [
+                // 		{ text: "Call", value: "call" },
+                // 		{ text: "Putt", value: "put" },
+                // 	],
+                // 	selected: "default",
+                // 	layouts: {
+                // 		default: {},
+                // 	},
+                // },
+                // optionSell: {
+                // 	name: "Write options",
+                // 	tag: "optionSell",
+                // 	tagLogical: "equal",
+                // 	variations: [
+                // 		{ text: "Call", value: "call" },
+                // 		{ text: "Putt", value: "put" },
+                // 	],
+                // 	selected: "default",
+                // 	layouts: {
+                // 		default: {},
+                // 	},
+                // },
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             },
         },
     },
@@ -821,6 +973,15 @@ const userPrefs = {
             columnName: "Test Text (Field!)",
         },
     },
+<<<<<<< HEAD
+=======
+    /**
+     * These are common elements to be spawned in prompts (like standard close percentage and other stuff)
+     * - text usually refers to a displayed value
+     * - attachedNumber is a quick version of an attached object with various information inside of it
+     * - attachedObject contains any other required information, that will be handled by the handler of an expander
+     */
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     promptDefaults: {
         //Default values to be shown when creating a new field - pending implementation
         // fieldDefaults: {
@@ -992,6 +1153,14 @@ const userPrefs = {
     },
     walletList: [...walletList],
     symbolList: [...symbolList],
+<<<<<<< HEAD
+=======
+    // [
+    // 	{ id: "01", value: "Personal Account", tag: "Schwab" },
+    // 	{ id: "02", value: "WALL2", tag: "Ungrouped" },
+    // 	{ id: "03", value: "WALL3", tag: "TD Ameritrade" },
+    // ],
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 };
 function getTradeTypeVars() {
     const result = {};
@@ -1099,7 +1268,11 @@ const defaultFields = {
         render: "true",
         default: "false",
         type: "closed",
+<<<<<<< HEAD
         subtype: "close",
+=======
+        subtype: "",
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         modifiers: [],
         computed: [],
         description: "Toggles the trade status between open and closed",
@@ -1601,8 +1774,13 @@ const defaultFields = {
  * - Overlapping is not taken care of
  * @returns {{int:{}} }
  */
+<<<<<<< HEAD
 const availableFieldsGen = (prefObj = userPrefs) => {
     const res = Object.assign(Object.assign({}, defaultFields), prefObj.customFields);
+=======
+const availableFieldsGen = () => {
+    const res = Object.assign(Object.assign({}, defaultFields), userPrefs.customFields);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     return res;
 };
 /**
@@ -1663,7 +1841,11 @@ class Table {
     c_sortChildren(childArray) {
         const byIdObj = {};
         //Sort in INCREASING order
+<<<<<<< HEAD
         //The LOWEST sorting gets put first
+=======
+        //The LOWEST sorting gets put first as of css convention.
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         //OTHERWISE
         //By sorting from smallest to greates, the smallest gets rendered as the first element, hence pushed to the end
         const mainTrades = [...childArray].filter((row) => row.current[gin("29")] == "-1");
@@ -1815,6 +1997,7 @@ class Table {
      *
      * Important note: When looking for specific trades, the pageVisibility stops being a matter of importance, then the searching function RE-runs this function to re-page the trades correctly
      */
+<<<<<<< HEAD
     refreshCurrentPageVisibility() {
         const array = [...this.sortedMainChildren];
         const lowerBound = (this.currentPage - 1) * userPrefs.rowsPerPage;
@@ -1823,6 +2006,20 @@ class Table {
             const element = array[index];
             //TODO: Decide whether to hide the mainRow or the container.
             if (array.length - index - 1 >= lowerBound && array.length - index - 1 <= upperBound) {
+=======
+    //! Big optimization flaw
+    //TODO: Optimize this by working with reverse indexes instead of reversing the array
+    refreshCurrentPageVisibility() {
+        //Spread to not reverse the sorted one
+        //Reference to objects is kept anyways
+        const reversedArray = [...this.sortedMainChildren].reverse();
+        const lowerBound = (this.currentPage - 1) * userPrefs.rowsPerPage;
+        const upperBound = this.currentPage * userPrefs.rowsPerPage - 1;
+        for (let index = 0; index < reversedArray.length; index++) {
+            const element = reversedArray[index];
+            //TODO: Decide whether to hide the mainRow or the container.
+            if (index >= lowerBound && index <= upperBound) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 if (element.state.container != "") {
                     element.state.paged = true;
                     const childTrades = JSON.parse(element.current[gin("30")]);
@@ -2291,7 +2488,11 @@ class Expander {
     /**
      *  In case of a moreOptions expander, the values are not going to be filtered (at least in this patch). So only a single element will be taken giving directions on which promptDefatults object to read from
      * */
+<<<<<<< HEAD
     fill(content, maxLenght = 100) {
+=======
+    fill(content) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         // The content type determines how the listerObj list is interpreted
         if (this.currentFormat == "lister") {
             //Todo: Check that the content type matches the expander type
@@ -2306,7 +2507,11 @@ class Expander {
             else {
                 const orderedListByTag = [...content].sort((a, b) => a.tag.localeCompare(b.tag));
                 // Print a divider based on tag
+<<<<<<< HEAD
                 for (let index = 0; index < orderedListByTag.length && index < maxLenght; index++) {
+=======
+                for (let index = 0; index < orderedListByTag.length; index++) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     //Separate the elements with different tags
                     /*ideas:
                         - Make the paragraph cliccable and show only the trades with that specific
@@ -2332,7 +2537,11 @@ class Expander {
                     this.element.append(clickableValue);
                     //Give it activation properties
                     clickableValue.innerHTML = orderedListByTag[index].value;
+<<<<<<< HEAD
                     clickableValue.realValue = Object.create(orderedListByTag[index]);
+=======
+                    clickableValue.realValue = Object.assign({}, orderedListByTag[index]);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     //Click event
                     clickableValue.addEventListener("click", (e) => {
                         var _a;
@@ -2472,6 +2681,10 @@ class Row2 {
             try {
                 //dbObject acts as a save of the previous version
                 const dbObject = Object.assign({}, this.current);
+<<<<<<< HEAD
+=======
+                console.log(dbObject, this.current);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 // Put user field changes into the json_user_fields field
                 const jsUF = {};
                 Object.values(userPrefs.customFields).forEach((customField) => {
@@ -2503,10 +2716,23 @@ class Row2 {
                 if (dbObject[gin("00i")] == dbObject[gin("00p")]) {
                     tag = "Edit";
                 }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                const request = await fetch(
+                // "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
+                // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
+                "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager", {
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 const request = await fetch("http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager", 
                 // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
                 // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
                 {
+<<<<<<< HEAD
+=======
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     method: "POST",
                     credentials: "same-origin",
                     body: JSON.stringify({ tag, trade: dbObject }),
@@ -2525,6 +2751,10 @@ class Row2 {
                     if (this.current.hasOwnProperty(key))
                         continue;
                     //Throwing here would impact other factors
+<<<<<<< HEAD
+=======
+                    console.log({ message: "One key coming from the db object was not defined in the current object", key: key, obj: JSON.parse(data.message) });
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     delete updatedTrade[key];
                 }
                 delete updatedTrade[gin("30")]; //Here we are deleting the incoming closed list because it's not updated. We could send it to the origin but it would make no difference. Refer to the standard api schema
@@ -2801,10 +3031,23 @@ class Row2 {
                         //It's a child, it takes care of its parent and removes itself from the references
                         else {
                             //If there's an error, it will be thrown and the function will return false
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                            const request = await fetch(
+                            // "http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
+                            // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager",
+                            "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager", {
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                             const request = await fetch("http://192.168.0.23/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager", 
                             // "http://localhost/MyMIWallet/v7/v1.5/public/index.php/Trade-Tracker/Trade-Manager"
                             // "https://www.mymiwallet.com/Trade-Tracker/Trade-Manager"
                             {
+<<<<<<< HEAD
+=======
+>>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                 method: "POST",
                                 credentials: "same-origin",
                                 body: JSON.stringify({ tag: "Delete", trade: this.current }),
@@ -2924,7 +3167,11 @@ class Row2 {
                 const availableFields = availableFieldsGen();
                 //Create the new trade object
                 //Create a new row "percenting" the numerical values of the current one and creating a relative different one
+<<<<<<< HEAD
                 const percentedNewTrade = Object.assign({}, this.origin);
+=======
+                const percentedNewTrade = Object.assign({}, this.current);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 let index = 1;
                 let newPseudoId = `${this.origin[gin("00i")]}c${index}`;
                 if (this.state.table == "") {
@@ -3114,6 +3361,10 @@ class Row2 {
     }
     dropdownChildren(expand = !this.state.dropDown.expanded) {
         const childList = JSON.parse(this.current[gin("30")]);
+<<<<<<< HEAD
+=======
+        console.log(expand);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         const theTable = this.state.table;
         if (theTable != "") {
             childList.forEach((pId) => {
@@ -3494,7 +3745,11 @@ class Row2 {
                         const availableChoices = listBrowse(list, input);
                         //Show the listing block
                         listingExpander.moveAndResizeTo();
+<<<<<<< HEAD
                         listingExpander.fill(availableChoices, 10);
+=======
+                        listingExpander.fill(availableChoices);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     }
                     else {
                         console.error("Target is null");
@@ -3507,7 +3762,11 @@ class Row2 {
                         //Now filter using that input
                         const availableChoices = listBrowse(list, input);
                         //Show the listing block
+<<<<<<< HEAD
                         listingExpander.fill(availableChoices, 10);
+=======
+                        listingExpander.fill(availableChoices);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         listingExpander.show();
                     }
                     else {
@@ -4063,7 +4322,10 @@ saveAllBtn.onclick = function () {
 // Edit User preferences
 const editPrefsBtn = spawnBtn();
 controllerBox.append(editPrefsBtn);
+<<<<<<< HEAD
 console.log(editPrefsBtn);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 editPrefsBtn.agd("button", "mainBtn");
 editPrefsBtn.innerHTML = "Settings";
 const mainEditPrefsWindow = document.querySelector(".tt-edit-user-preferences");
@@ -4073,8 +4335,11 @@ if (mainEditPrefsWindow != null) {
         state: {
             visible: false,
             currentPage: "columnsEditor",
+<<<<<<< HEAD
             editing: new Set([]),
             closing: false,
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         },
         elements: {
             mainWindow: mainEditPrefsWindow,
@@ -4085,6 +4350,7 @@ if (mainEditPrefsWindow != null) {
                 columnsEditor: mainEditPrefsWindow.querySelector(".columns-editor"),
                 customColumns: mainEditPrefsWindow.querySelector(".custom-columns"),
             },
+<<<<<<< HEAD
             saveBtn: mainEditPrefsWindow.querySelector("#saveBtn"),
             resetBtn: mainEditPrefsWindow.querySelector("#resetBtn")
         },
@@ -4104,10 +4370,13 @@ if (mainEditPrefsWindow != null) {
             this.state.editing.clear();
             this.elements.saveBtn.disabled = true;
             this.elements.resetBtn.disabled = true;
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         },
         showMainTab() {
             changeVisible(this.elements.mainWindow, true, [this.state.visible]);
         },
+<<<<<<< HEAD
         async hideMainTab() {
             if (this.state.closing == true) {
                 return;
@@ -4544,6 +4813,25 @@ if (mainEditPrefsWindow != null) {
     editPrefsObj.refreshPages();
     ///Pages:
     ///columns editor
+=======
+        hideMainTab() {
+            changeVisible(this.elements.mainWindow, false, [this.state.visible]);
+        },
+        switchPage(newPage) {
+            if (this.elements.pages.hasOwnProperty(newPage)) {
+                changeVisible(this.elements.pages[this.state.currentPage], false);
+                changeVisible(this.elements.pages[newPage], true);
+                this.state.currentPage = newPage;
+            }
+            else {
+                console.error("Trying to switch to non-existing preferences page");
+            }
+        },
+    };
+    //Runtimes
+    //Initializers
+    editPrefsObj.hideMainTab();
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     //hide all pages
     Object.values(editPrefsObj.elements.pages).forEach((page) => {
         changeVisible(page, false);
@@ -4551,7 +4839,11 @@ if (mainEditPrefsWindow != null) {
     //make the first one show
     editPrefsObj.switchPage("columnsEditor");
     //Listeners
+<<<<<<< HEAD
     ///main tab
+=======
+    //main tab
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     editPrefsBtn.addEventListener("click", function () {
         editPrefsObj.showMainTab();
     });
@@ -4565,6 +4857,7 @@ if (mainEditPrefsWindow != null) {
             }
         }
     });
+<<<<<<< HEAD
     ///Save
     editPrefsObj.elements.saveBtn.addEventListener("click", function () {
         if (editPrefsObj.state.editing.size != 0) {
@@ -4577,6 +4870,8 @@ if (mainEditPrefsWindow != null) {
             editPrefsObj.switchPage(editPrefsObj.state.currentPage, 2);
         }
     });
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 else {
     console.error("Couldn't find the user preferences menu box");

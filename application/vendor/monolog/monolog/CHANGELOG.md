@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### 2.9.1 (2023-02-06)
 
   * Fixed Logger not being serializable anymore (#1792)
@@ -27,6 +28,8 @@
   * Fixed PHP 8.2 deprecation warnings (#1722)
   * Fixed rare race condition or filesystem issue where StreamHandler is unable to create the directory the log should go into yet it exists already (#1678)
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ### 2.7.0 (2022-06-09)
 
   * Added `$datetime` parameter to `Logger::addRecord` as low level API to allow logging into the past or future (#1682)

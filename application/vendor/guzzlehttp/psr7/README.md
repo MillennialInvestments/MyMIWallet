@@ -8,12 +8,15 @@ functionality like query string parsing.
 ![Static analysis](https://github.com/guzzle/psr7/workflows/Static%20analysis/badge.svg)
 
 
+<<<<<<< HEAD
 # Installation
 
 ```shell
 composer require guzzlehttp/psr7
 ```
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 # Stream implementation
 
 This package comes with a number of stream implementations and stream
@@ -251,8 +254,11 @@ class EofCallbackStream implements StreamInterface
 
     private $callback;
 
+<<<<<<< HEAD
     private $stream;
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public function __construct(StreamInterface $stream, callable $cb)
     {
         $this->stream = $stream;
@@ -388,6 +394,7 @@ of the header. When a parameter does not contain a value, but just
 contains a key, this function will inject a key with a '' string value.
 
 
+<<<<<<< HEAD
 ## `GuzzleHttp\Psr7\Header::splitList`
 
 `public static function splitList(string|string[] $header): string[]`
@@ -410,6 +417,12 @@ Example headers include `accept`, `cache-control` and `if-none-match`.
 which performs the same operation with a cleaned up API and improved
 documentation.
 
+=======
+## `GuzzleHttp\Psr7\Header::normalize`
+
+`public static function normalize(string|array $header): array`
+
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 Converts an array of header values that may contain comma separated
 headers into an array of headers with no comma separated values.
 

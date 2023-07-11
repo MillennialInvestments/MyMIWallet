@@ -7,7 +7,11 @@ namespace GuzzleHttp;
  *
  * More documentation for each option can be found at http://guzzlephp.org/.
  *
+<<<<<<< HEAD
  * @see http://docs.guzzlephp.org/en/v6/request-options.html
+=======
+ * @link http://docs.guzzlephp.org/en/v6/request-options.html
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  */
 final class RequestOptions
 {
@@ -70,11 +74,16 @@ final class RequestOptions
     /**
      * connect_timeout: (float, default=0) Float describing the number of
      * seconds to wait while trying to connect to a server. Use 0 to wait
+<<<<<<< HEAD
      * 300 seconds (the default behavior).
+=======
+     * indefinitely (the default behavior).
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public const CONNECT_TIMEOUT = 'connect_timeout';
 
     /**
+<<<<<<< HEAD
      * crypto_method: (int) A value describing the minimum TLS protocol
      * version to use.
      *
@@ -87,6 +96,8 @@ final class RequestOptions
     public const CRYPTO_METHOD = 'crypto_method';
 
     /**
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * debug: (bool|resource) Set to true or set to a PHP stream returned by
      * fopen()  enable debug output with the HTTP handler used to send a
      * request.

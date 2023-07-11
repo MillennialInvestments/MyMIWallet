@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 $pageURIA   = $this->uri->segment(1);
 $pageURIB   = $this->uri->segment(2);
 $pageURIC   = $this->uri->segment(3);
@@ -8,6 +9,12 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 ?>
 <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="trackDepositsModal" aria-hidden="true">
 	<div class="modal-dialog" id="transModalDialog">
+=======
+$cuID		= isset($current_user->id) && ! empty($current_user->id) ? $current_user->id : '';
+?>
+<div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="trackDepositsModal" aria-hidden="true">
+	<div class="modal-dialog">
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 		<div class="modal-content" id="loading-content">
 			<?php $this->load->view('User/Dashboard/index/modal-loading-page'); ?>
 		</div>
@@ -15,6 +22,7 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 		</div>
 	</div>
 </div>
+<<<<<<< HEAD
 <?php 
    //$this->load->view('User/Wallets/Add/wallet-transaction-modal');
 // if ($pageURIA === 'Wallets' || $pageURIA === 'Wallet-Selection') {
@@ -22,6 +30,8 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 // }
 ?>
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 <script>
 	$('#depositFundsBtn').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -47,7 +57,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Deposit-Funds/' . $cuID) . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});	
 	$('.depositFundsBtn').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -71,7 +84,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Deposit-Funds/' . $cuID) . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});	
 	$('#withdrawFundsBtn').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -98,7 +114,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Withdraw-Funds/' . $cuID) . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});
 	$('.withdrawFundsBtn').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -125,7 +144,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Withdraw-Funds/' . $cuID) . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});
 	$('#trackDepositBtn').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -152,7 +174,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Add-Wallet-Deposit-Fetch/' . $cuID) . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});	
 	$('#trackWithdrawBtn').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -179,7 +204,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Add-Wallet-Withdraw-Fetch/' . $cuID) . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});	
 	$('.purMyMIGold').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -189,7 +217,11 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 		// $('#loading-image').show();
 		$.ajax({
 			type: 'get',
+<<<<<<< HEAD
 			url: <?php echo '\'' . site_url('MyMI-Gold/Purchase/' . $cuID) . '\''; ?>,
+=======
+			url: <?php echo '\'' . site_url('MyMI-Gold/Purchase/') . $cuID . '\''; ?>,
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 			dataType: 'html',
 			beforeSend: function() {
 				$('#loading-content').show(); 
@@ -203,7 +235,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('MyMI-Gold/Purchase/' . $cuID) . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});	
 	$('.purMyMIGoldWallet').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -213,7 +248,11 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 		// $('#loading-image').show();
 		$.ajax({
 			type: 'get',
+<<<<<<< HEAD
 			url: <?php echo '\'' . site_url('MyMI-Gold/Purchase/' . $cuID) . '\''; ?>,
+=======
+			url: <?php echo '\'' . site_url('MyMI-Gold/Purchase/') . $cuID . '\''; ?>,
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 			dataType: 'html',
 			// beforeSend: function() {
 			// 	$('#transactionContainer').hide(); 
@@ -227,7 +266,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('MyMI-Gold/Purchase/' . $cuID) . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});	
 	// PURCHASE MYMI GOLD MODAL
 	$('#purMyMIGoldNavbar').click(function(e) {
@@ -238,7 +280,11 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 		$('#loading-image').show();
 		$.ajax({
 			type: 'get',
+<<<<<<< HEAD
 			url: <?php echo '\'' . site_url('MyMI-Gold/Purchase/' . $cuID) . '\''; ?>,
+=======
+			url: <?php echo '\'' . site_url('MyMI-Gold/Purchase/') . $cuID . '\''; ?>,
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 			dataType: 'html',
 			beforeSend: function() {
 				$('#loading-content').show(); 
@@ -252,7 +298,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('MyMI-Gold/Purchase/' . $cuID) . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});	
 	// PURCHASE FIAT WALLET
 	$('.purFiatWalletBtn').click(function(e) {
@@ -277,7 +326,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Purchase-Wallet/Fiat/' . $cuID) . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});
 	// PURCHASE DIGITAL WALLET
 	$('.purDigitalWalletBtn').click(function(e) {
@@ -302,7 +354,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Purchase-Wallet/Digital/' . $cuID) . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});
 	$('#generateWalletAddressBtn').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -326,7 +381,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Wallets/Address-Generator') . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});
 	$('.addFiatWalletBtn').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -354,7 +412,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Add-Wallet/Fiat') . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});
 	$('#addFiatWalletBtn').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -381,6 +442,7 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Add-Wallet/Fiat') . '\''; ?>);
 	});
 	$('.addDigitalWalletBtn').click(function(e) {
@@ -437,6 +499,8 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 			}
 		});
         console.log(<?php echo '\'' . site_url('Add-Wallet/Digital') . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});
 	$('.addBankAccount').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -446,6 +510,7 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 		$('#loading-image').show();
 		$.ajax({
 			type: 'get',
+<<<<<<< HEAD
 			url: <?php echo '\'' . site_url('Wallets/Banking/Add/Account') . '\''; ?>,
 			dataType: 'html',
 			beforeSend: function() {
@@ -529,6 +594,9 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 			type: 'get',
 			url: <?php echo '\'' . site_url('Wallets/Investment/Add/Account/Modal') . '\''; ?>,
 			// url: <?php //echo '\'' . site_url('Wallets/Connect-Bank-Account') . '\''; ?>,
+=======
+			url: <?php echo '\'' . site_url('Wallets/Connect-Bank-Account') . '\''; ?>,
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 			dataType: 'html',
 			beforeSend: function() {
 				$('#loading-content').show(); 
@@ -545,6 +613,7 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Wallets/Connect-Bank-Account') . '\''; ?>);
 	});	
 	$('.walletSelectionFreeFiat').click(function(e) {
@@ -553,6 +622,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
         transModalDialog.classList.add("modal-lg");
         transModalDialog.classList.add("testDiv");
         
+=======
+	});	
+	$('.walletSelectionFreeFiat').click(function(e) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 		// prevent the default action when a nav button link is clicked
 		e.preventDefault();
 
@@ -577,6 +650,7 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Wallet-Selection/Fiat') . '\''; ?>);
 	});	
 	$('.walletSelection').click(function(e) {
@@ -642,6 +716,8 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 			}
 		});
         console.log(<?php echo '\'' . site_url('Wallet-Selection') . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});		
     $('.walletSelectionFiat').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -668,7 +744,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Wallet-Selection/Free/Fiat') . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});	
     $('.walletSelectionDigital').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -695,7 +774,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Wallet-Selection/Digital') . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});
 	$('.postAnnouncementBtn').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -722,7 +804,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Announcements/Post') . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});
 	$('.addExternalSiteBtn').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -749,7 +834,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Admin/Add-External-Site') . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});	
     $('.completeAssetRequest').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -776,7 +864,10 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Exchange/Coin-Listing/Asset-Information-Modal/Existing') . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});
     $('.createAssetRequest').click(function(e) {
 		// prevent the default action when a nav button link is clicked
@@ -803,6 +894,7 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 				$('#transactionContainer').html(html);
 			}
 		});
+<<<<<<< HEAD
         console.log(<?php echo '\'' . site_url('Exchange/Coin-Listing/Request') . '\''; ?>);
 	});
     $('#deleteWalletBtn').click(function(e) {
@@ -831,6 +923,8 @@ $cuID       = $_SESSION['allSessionData']['userAccount']['cuID'];
 			}
 		});
         console.log(<?php echo '\'' . site_url('Wallets/Delete/' . $pageURIC) . '\''; ?>);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	});
 	$('.closeModalBtn').click(function(e) {
 		// prevent the default action when a nav button link is clicked

@@ -49,22 +49,38 @@ class TokenizerPatterns
         $this->identifierPattern = '-?(?:'.$this->nmStartPattern.')(?:'.$this->nmCharPattern.')*';
         $this->hashPattern = '#((?:'.$this->nmCharPattern.')+)';
         $this->numberPattern = '[+-]?(?:[0-9]*\.[0-9]+|[0-9]+)';
+<<<<<<< HEAD
         $this->quotedStringPattern = '([^\n\r\f\\\\%s]|'.$this->stringEscapePattern.')*';
+=======
+        $this->quotedStringPattern = '([^\n\r\f%s]|'.$this->stringEscapePattern.')*';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     public function getNewLineEscapePattern(): string
     {
+<<<<<<< HEAD
         return '~'.$this->newLineEscapePattern.'~';
+=======
+        return '~^'.$this->newLineEscapePattern.'~';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     public function getSimpleEscapePattern(): string
     {
+<<<<<<< HEAD
         return '~'.$this->simpleEscapePattern.'~';
+=======
+        return '~^'.$this->simpleEscapePattern.'~';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     public function getUnicodeEscapePattern(): string
     {
+<<<<<<< HEAD
         return '~'.$this->unicodeEscapePattern.'~i';
+=======
+        return '~^'.$this->unicodeEscapePattern.'~i';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     public function getIdentifierPattern(): string

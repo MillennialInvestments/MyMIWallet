@@ -100,15 +100,19 @@ class CI_Exceptions
      * @param	int	$line		Line number
      * @return	void
      */
+<<<<<<< HEAD
     // public function log_exception($severity, $message, $filepath, $line)
     // {
     //     $severity = isset($this->levels[$severity]) ? $this->levels[$severity] : $severity;
     //     log_message('error', 'Severity: '.$severity.' --> '.$message.' '.$filepath.' '.$line);
     // }
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public function log_exception($severity, $message, $filepath, $line)
     {
         $severity = isset($this->levels[$severity]) ? $this->levels[$severity] : $severity;
         log_message('error', 'Severity: '.$severity.' --> '.$message.' '.$filepath.' '.$line);
+<<<<<<< HEAD
 
         if ($severity == E_ERROR || $severity == E_PARSE || $severity == E_COMPILE_ERROR) {
             $this->send_email($severity, $message, $filepath, $line);
@@ -125,6 +129,8 @@ class CI_Exceptions
         $CI->email->message("Severity: ".$severity."\r\nMessage: ".$message."\r\nFilepath: ".$filepath."\r\nLine: ".$line);
 
         $CI->email->send();
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     // --------------------------------------------------------------------

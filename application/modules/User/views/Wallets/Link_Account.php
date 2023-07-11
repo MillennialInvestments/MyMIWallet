@@ -23,9 +23,13 @@ $fieldData = array(
 );
 // $id                         = $id;
 $this->load->view('User/Wallets/Link_Account/header', $fieldData);
+<<<<<<< HEAD
 if($pageURIC === 'Search') {
     $this->load->view('User/Wallets/Link_Account/Search', $fieldData);
 } elseif ($pageURIC === 'Brokerage') {
+=======
+if ($pageURIC === 'Brokerage') {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     $this->load->view('User/Wallets/Link_Account/Brokerage', $fieldData);
 } elseif ($pageURIC === '1') {
     $this->load->view('User/Wallets/Link_Account/TD-Ameritrade', $fieldData);

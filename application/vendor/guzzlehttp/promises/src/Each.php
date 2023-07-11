@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 namespace GuzzleHttp\Promise;
 
 final class Each
@@ -22,15 +25,27 @@ final class Each
      * @param mixed    $iterable    Iterator or array to iterate over.
      * @param callable $onFulfilled
      * @param callable $onRejected
+<<<<<<< HEAD
+=======
+     *
+     * @return PromiseInterface
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public static function of(
         $iterable,
         callable $onFulfilled = null,
         callable $onRejected = null
+<<<<<<< HEAD
     ): PromiseInterface {
         return (new EachPromise($iterable, [
             'fulfilled' => $onFulfilled,
             'rejected' => $onRejected,
+=======
+    ) {
+        return (new EachPromise($iterable, [
+            'fulfilled' => $onFulfilled,
+            'rejected'  => $onRejected
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         ]))->promise();
     }
 
@@ -46,17 +61,30 @@ final class Each
      * @param int|callable $concurrency
      * @param callable     $onFulfilled
      * @param callable     $onRejected
+<<<<<<< HEAD
+=======
+     *
+     * @return PromiseInterface
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public static function ofLimit(
         $iterable,
         $concurrency,
         callable $onFulfilled = null,
         callable $onRejected = null
+<<<<<<< HEAD
     ): PromiseInterface {
         return (new EachPromise($iterable, [
             'fulfilled' => $onFulfilled,
             'rejected' => $onRejected,
             'concurrency' => $concurrency,
+=======
+    ) {
+        return (new EachPromise($iterable, [
+            'fulfilled'   => $onFulfilled,
+            'rejected'    => $onRejected,
+            'concurrency' => $concurrency
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         ]))->promise();
     }
 
@@ -68,17 +96,31 @@ final class Each
      * @param mixed        $iterable
      * @param int|callable $concurrency
      * @param callable     $onFulfilled
+<<<<<<< HEAD
+=======
+     *
+     * @return PromiseInterface
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public static function ofLimitAll(
         $iterable,
         $concurrency,
         callable $onFulfilled = null
+<<<<<<< HEAD
     ): PromiseInterface {
         return self::ofLimit(
             $iterable,
             $concurrency,
             $onFulfilled,
             function ($reason, $idx, PromiseInterface $aggregate): void {
+=======
+    ) {
+        return each_limit(
+            $iterable,
+            $concurrency,
+            $onFulfilled,
+            function ($reason, $idx, PromiseInterface $aggregate) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 $aggregate->reject($reason);
             }
         );

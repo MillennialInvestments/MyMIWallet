@@ -38,7 +38,11 @@ class Marketing extends Admin_Controller
     {
         parent::__construct();
         $this->load->helper(array('directory', 'form', 'file', 'url'));
+<<<<<<< HEAD
         $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'Users/auth'));
+=======
+        $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'user_agent', 'Users/auth'));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->load->model('Management/announcements_model');
         $this->load->model('Management/design_model');
         $this->load->model(array('API/api_model', 'User/exchange_model', 'User/mymigold_model', 'User/tracker_model'));
@@ -61,8 +65,13 @@ class Marketing extends Admin_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
         $pageName = 'Management_Marketing';
+=======
+        $pageType = 'Standard';
+        $pageName = 'Web_Design_Dashboard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         
         $this->set_current_user();
         
@@ -71,6 +80,7 @@ class Marketing extends Admin_Controller
         Template::render();
     }
 
+<<<<<<< HEAD
     public function Campaigns()
     {
         $pageType = 'Automated';
@@ -171,6 +181,8 @@ class Marketing extends Admin_Controller
         $this->db->insert('bf_management_tasks', $data);
     }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     /**
      * If the Auth lib is loaded, it will set the current user, since users
      * will never be needed if the Auth library is not loaded. By not requiring

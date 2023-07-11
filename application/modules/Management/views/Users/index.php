@@ -5,11 +5,15 @@ $day                                = date("d");
 $year                               = date("Y"); 
 $last_month                         = strtotime($month . ' - 1 month');
 $reporting                          = $this->mymianalytics->reporting(); 
+<<<<<<< HEAD
 // print_r($reporting);
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $getPendingUsers                    = $reporting['getPendingUsers'];
 $totalPendingUsers                  = $reporting['totalPendingUsers']; 
 $getActiveUsers                     = $reporting['getActiveUsers']; 
 $totalActiveUsers                   = $reporting['totalActiveUsers']; 
+<<<<<<< HEAD
 // $getInactiveUsers                   = $reporting['getInactiveUsers']; 
 // $getInactiveUsers                   = $this->analytical_model->get_inactive_users(); 
 $this->db->from('bf_users');
@@ -17,6 +21,8 @@ $this->db->where('active', 0);
 $this->db->where('banned', 0);
 $getInactiveUsers                   = $this->db->get(); 
 $totalInactiveUsers                 = $getInactiveUsers->num_rows(); 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $getPendingPartners                 = $reporting['getPendingPartners']; 
 $totalPendingPartners               = $reporting['totalPendingPartners']; 
 $getActivePartners                  = $reporting['getActivePartners']; 
@@ -27,7 +33,10 @@ $getCompleteSupport                 = $reporting['getCompleteSupport'];
 $totalCompleteSupport               = $reporting['totalCompleteSupport']; 
 $viewFileData                       = array(
     'getActiveUsers'                => $getActiveUsers,
+<<<<<<< HEAD
     'getInactiveUsers'              => $getInactiveUsers,
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 );
 ?>
 <div class="nk-block">
@@ -183,6 +192,7 @@ $viewFileData                       = array(
                                     </div>
                                 </div>
                                 <div class="card-inner">
+<<<<<<< HEAD
                                     <?php $this->load->view('Management/Users/Active-Table', $viewFileData); ?>
                                 </div><!-- .card-inner -->
                             </div><!-- .card-inner-group -->
@@ -222,6 +232,9 @@ $viewFileData                       = array(
                                 </div>
                                 <div class="card-inner">
                                     <?php $this->load->view('Management/Users/Inactive-Table', $viewFileData); ?>
+=======
+                                    <?php $this->load->view('Management/Users/Listing-Table', $viewFileData); ?>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                 </div><!-- .card-inner -->
                             </div><!-- .card-inner-group -->
                         </div><!-- .card -->

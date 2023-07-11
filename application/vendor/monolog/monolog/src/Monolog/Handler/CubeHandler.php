@@ -17,9 +17,14 @@ use Monolog\Utils;
 /**
  * Logs to Cube.
  *
+<<<<<<< HEAD
  * @link https://github.com/square/cube/wiki
  * @author Wan Chen <kami@kamisama.me>
  * @deprecated Since 2.8.0 and 3.2.0, Cube appears abandoned and thus we will drop this handler in Monolog 4
+=======
+ * @link http://square.github.com/cube/
+ * @author Wan Chen <kami@kamisama.me>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  */
 class CubeHandler extends AbstractProcessingHandler
 {

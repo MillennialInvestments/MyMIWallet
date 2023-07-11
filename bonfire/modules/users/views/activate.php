@@ -28,7 +28,11 @@ if (!empty($userID)) {
     $actCode                    = '';
 }
 ?>
+<<<<<<< HEAD
 <div class="intro-section intro-overview text-center bg-white pt-5 pb-0">
+=======
+<div class="intro-section intro-overview text-center bg-lighter pt-5 pb-0">
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     <div class="container-fluid">
         <div class="card">
             <div class="card-inner text-center">

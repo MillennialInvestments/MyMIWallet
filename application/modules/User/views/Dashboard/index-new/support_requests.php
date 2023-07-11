@@ -4,7 +4,11 @@ $this->db->from('bf_support_requests');
 $this->db->where('user_id', $cuID); 
 $this->db->where('email', $cuEmail); // Secondary layer of account validatioin. Deactivate/Comment out if causing issues
 $this->db->order_by('id', 'DESC'); 
+<<<<<<< HEAD
 $this->db->limit(3); 
+=======
+$this->db->limit(6); 
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $getSupportRequests                 = $this->db->get(); 
 ?>
 <div class="card card-bordered card-full">
@@ -15,7 +19,11 @@ $getSupportRequests                 = $this->db->get();
             </div>
             <div class="card-tools">
                 <ul class="card-tools-nav">
+<<<<<<< HEAD
                     <li><a href="<?php echo site_url('Support'); ?>"><span>Need Help?</span></a></li>
+=======
+                    <li><a href="#"><span>Cancel</span></a></li>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     <li class="active"><a href="#"><span>All</span></a></li>
                 </ul>
             </div>

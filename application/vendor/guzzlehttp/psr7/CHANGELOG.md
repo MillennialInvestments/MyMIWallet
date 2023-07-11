@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+<<<<<<< HEAD
 ## 2.5.0 - 2023-04-17
 
 ### Changed
@@ -45,6 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Rewind body before reading in `Message::bodySummary`
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ## 2.4.0 - 2022-06-20
 
 ### Added
@@ -135,7 +138,11 @@ Identical to the RC release.
 ### Removed
 
 - PHP < 7.2 support
+<<<<<<< HEAD
 - All functions in the `GuzzleHttp\Psr7` namespace
+=======
+- All functions in the Guzzle\Psr7 namespace
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 ## 1.8.1 - 2021-03-21
 

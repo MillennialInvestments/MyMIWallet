@@ -20,7 +20,10 @@ $cuPartner                              = $userAccount['cuPartner'];
 $cuWalletID                             = $userAccount['cuWalletID']; 
 $walletSum                              = $_SESSION['allSessionData']['myMIWalletSummary']['walletSum'];
 $MyMIGCoinSum			                = $_SESSION['allSessionData']['userGoldData']['coinSum'];
+<<<<<<< HEAD
 $totalAccountBalanceFMT                 = $_SESSION['allSessionData']['userBudget']['totalAccountBalanceFMT'];
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 if (!empty($_SESSION['allSessionData']['userAccount']['assetNetValue'])) {
     $walletAmount                       = $walletSum;
 } else {
@@ -63,9 +66,15 @@ $viewData                               = array(
                         <?php $this->load->view('User/Dashboard/Investor_Profile/Activity', $viewData); ?>
                     </div>
                     <!-- Assets -->
+<<<<<<< HEAD
                     <!-- <div class="tab-pane" id="tabItem3">
                         <?php //$this->load->view('User/Dashboard/Investor_Profile/Assets', $viewData); ?>
                     </div> -->
+=======
+                    <div class="tab-pane" id="tabItem3">
+                        <?php $this->load->view('User/Dashboard/Investor_Profile/Assets', $viewData); ?>
+                    </div>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     <!-- Bank Accounts -->
                     <div class="tab-pane" id="tabItem4">
                         <?php $this->load->view('User/Dashboard/Investor_Profile/Bank_Accounts', $viewData); ?>
@@ -124,7 +133,11 @@ $viewData                               = array(
                     <div class="card-inner">
                         <div class="user-account-info py-0">
                             <h6 class="overline-title-alt">MyMI Wallet</h6>
+<<<<<<< HEAD
                             <div class="user-balance"><?php echo $totalAccountBalanceFMT; ?> <small class="currency currency-btc">USD</small></div>
+=======
+                            <div class="user-balance"><?php echo $walletAmount; ?> <small class="currency currency-btc">USD</small></div>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                             <div class="user-balance-sub"><span><?php echo $MyMIGCoinSum; ?> <span class="currency currency-usd">MyMI Gold</span></span></div>
                         </div>
                     </div><!-- .card-inner -->
@@ -132,9 +145,15 @@ $viewData                               = array(
                         <ul class="nav link-list-menu border border-light round m-0 flex-column">
                             <li><a class="active" data-bs-toggle="tab" href="#tabItem1"><em class="icon ni ni-user-fill-c"></em><span>Personal Infomation</span></a></li>
                             <li><a data-bs-toggle="tab" href="#tabItem2"><em class="icon ni ni-activity-round-fill"></em><span>Activities</span></a></li>
+<<<<<<< HEAD
                             <!-- <li><a data-bs-toggle="tab" href="#tabItem3"><em class="icon ni ni-coins"></em><span>Assets</span></a></li> -->
                             <li><a data-bs-toggle="tab" href="#tabItem4"><em class="icon ni ni-wallet-fill"></em><span>Bank Accounts</span></a></li>
                             <!-- <li><a data-bs-toggle="tab" href="#tabItem5"><em class="icon ni ni-wallet-out"></em><span>External Accounts</span></a></li> -->
+=======
+                            <li><a data-bs-toggle="tab" href="#tabItem3"><em class="icon ni ni-coins"></em><span>Assets</span></a></li>
+                            <li><a data-bs-toggle="tab" href="#tabItem4"><em class="icon ni ni-wallet-fill"></em><span>Bank Accounts</span></a></li>
+                            <li><a data-bs-toggle="tab" href="#tabItem5"><em class="icon ni ni-wallet-out"></em><span>External Accounts</span></a></li>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                             <!-- <li><a data-bs-toggle="tab" href="#tabItem6"><em class="icon ni ni-grid-add-fill-c"></em><span>Connected Accounts</span></a></li>
                             <li><a data-bs-toggle="tab" href="#tabItem7"><em class="icon ni ni-bell-fill"></em><span>Notifications</span></a></li> -->
                             <li><a data-bs-toggle="tab" href="#tabItem8"><em class="icon ni ni-lock-alt-fill"></em><span>Security Settings</span></a></li>

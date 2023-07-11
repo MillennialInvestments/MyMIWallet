@@ -1,7 +1,11 @@
 <?php
 $beta               = $this->config->item('beta'); 
 ?>                   
+<<<<<<< HEAD
 <h1 class="card-title title">LOGIN</h1>
+=======
+<h1 class="mbr-section-title mbr-bold pt-3 mb-3 pb-3 mbr-fonts-style card-title align-center display-5">LOGIN</h1>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 <?php echo Template::message(); ?>
 
@@ -34,12 +38,20 @@ $beta               = $this->config->item('beta');
 		</div>
 	</div>
 
+<<<<<<< HEAD
     <?php if ($this->settings_lib->item('auth.allow_remember')) : ?>
+=======
+	<?php if ($this->settings_lib->item('auth.allow_remember')) : ?>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 		<div class="control-group form-row pb-3">
 			<div class="col-4"></div>
 			<div class="controls col-8">
 				<label class="checkbox" for="remember_me">
+<<<<<<< HEAD
 					<input type="checkbox" name="remember_me" id="remember_me" value="1" tabindex="3" checked/>
+=======
+					<input type="checkbox" name="remember_me" id="remember_me" value="1" tabindex="3" />
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 					<span class="inline-help"><?php echo lang('us_remember_note'); ?></span>
 				</label>
 			</div>

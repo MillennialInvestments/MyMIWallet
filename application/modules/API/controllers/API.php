@@ -38,7 +38,11 @@ class API extends Front_Controller
         parent::__construct();
 
         $this->load->helper(array('directory', 'form', 'file', 'url'));
+<<<<<<< HEAD
         $this->load->library(array('form_validation', 'upload'));
+=======
+        $this->load->library(array('form_validation', 'upload', 'user_agent'));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         //$this->load->model('user_model');
         $this->load->module('User/Trade_Tracker');
 
@@ -56,7 +60,11 @@ class API extends Front_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Home';
         $this->load->library('users/auth');
         $this->set_current_user();
@@ -66,6 +74,7 @@ class API extends Front_Controller
         Template::render();
     }
 
+<<<<<<< HEAD
     public function Content_Creator()
     {
         $pageType = 'Automated';
@@ -82,6 +91,12 @@ class API extends Front_Controller
     public function Purchase_Coins_Transaction()
     {
         $pageType = 'Automated';
+=======
+
+    public function Purchase_Coins_Transaction()
+    {
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Home';
         // $this->load->library('users/auth');
         // $this->set_current_user();
@@ -107,7 +122,11 @@ class API extends Front_Controller
 
     public function TDA_Access_Code()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Home';
         $this->load->library('users/auth');
         $this->set_current_user();

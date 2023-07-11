@@ -441,7 +441,11 @@ trait Options
             return $var;
         });
 
+<<<<<<< HEAD
         foreach (['dumpProperties', 'constructedObjectId', 'constructed'] as $property) {
+=======
+        foreach (['dumpProperties', 'constructedObjectId'] as $property) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             if (isset($infos[$property])) {
                 unset($infos[$property]);
             }

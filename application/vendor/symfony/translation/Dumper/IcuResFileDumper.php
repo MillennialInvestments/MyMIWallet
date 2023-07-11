@@ -47,7 +47,11 @@ class IcuResFileDumper extends FileDumper
             $data .= pack('V', \strlen($target))
                 .mb_convert_encoding($target."\0", 'UTF-16LE', 'UTF-8')
                 .$this->writePadding($data)
+<<<<<<< HEAD
             ;
+=======
+                  ;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         $resOffset = $this->getPosition($data);
@@ -56,7 +60,11 @@ class IcuResFileDumper extends FileDumper
             .$indexes
             .$this->writePadding($data)
             .$resources
+<<<<<<< HEAD
         ;
+=======
+              ;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         $bundleTop = $this->getPosition($data);
 

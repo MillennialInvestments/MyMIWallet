@@ -23,9 +23,15 @@ final class Utils
     {
         switch (\gettype($input)) {
             case 'object':
+<<<<<<< HEAD
                 return 'object('.\get_class($input).')';
             case 'array':
                 return 'array('.\count($input).')';
+=======
+                return 'object(' . \get_class($input) . ')';
+            case 'array':
+                return 'array(' . \count($input) . ')';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             default:
                 \ob_start();
                 \var_dump($input);
@@ -79,13 +85,20 @@ final class Utils
      *
      * The returned handler is not wrapped by any default middlewares.
      *
+<<<<<<< HEAD
      * @return callable(\Psr\Http\Message\RequestInterface, array): \GuzzleHttp\Promise\PromiseInterface Returns the best handler for the given system.
      *
      * @throws \RuntimeException if no viable Handler is available.
+=======
+     * @throws \RuntimeException if no viable Handler is available.
+     *
+     * @return callable(\Psr\Http\Message\RequestInterface, array): \GuzzleHttp\Promise\PromiseInterface Returns the best handler for the given system.
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public static function chooseHandler(): callable
     {
         $handler = null;
+<<<<<<< HEAD
 
         if (\defined('CURLOPT_CUSTOMREQUEST')) {
             if (\function_exists('curl_multi_exec') && \function_exists('curl_exec')) {
@@ -95,6 +108,14 @@ final class Utils
             } elseif (\function_exists('curl_multi_exec')) {
                 $handler = new CurlMultiHandler();
             }
+=======
+        if (\function_exists('curl_multi_exec') && \function_exists('curl_exec')) {
+            $handler = Proxy::wrapSync(new CurlMultiHandler(), new CurlHandler());
+        } elseif (\function_exists('curl_exec')) {
+            $handler = new CurlHandler();
+        } elseif (\function_exists('curl_multi_exec')) {
+            $handler = new CurlMultiHandler();
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         if (\ini_get('allow_url_fopen')) {
@@ -247,8 +268,13 @@ EOT
             }
             // Special match if the area when prefixed with ".". Remove any
             // existing leading "." and add a new leading ".".
+<<<<<<< HEAD
             $area = '.'.\ltrim($area, '.');
             if (\substr($host, -\strlen($area)) === $area) {
+=======
+            $area = '.' . \ltrim($area, '.');
+            if (\substr($host, -(\strlen($area))) === $area) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 return true;
             }
         }
@@ -269,13 +295,21 @@ EOT
      *
      * @throws InvalidArgumentException if the JSON cannot be decoded.
      *
+<<<<<<< HEAD
      * @see https://www.php.net/manual/en/function.json-decode.php
+=======
+     * @link https://www.php.net/manual/en/function.json-decode.php
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public static function jsonDecode(string $json, bool $assoc = false, int $depth = 512, int $options = 0)
     {
         $data = \json_decode($json, $assoc, $depth, $options);
         if (\JSON_ERROR_NONE !== \json_last_error()) {
+<<<<<<< HEAD
             throw new InvalidArgumentException('json_decode error: '.\json_last_error_msg());
+=======
+            throw new InvalidArgumentException('json_decode error: ' . \json_last_error_msg());
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         return $data;
@@ -290,13 +324,21 @@ EOT
      *
      * @throws InvalidArgumentException if the JSON cannot be encoded.
      *
+<<<<<<< HEAD
      * @see https://www.php.net/manual/en/function.json-encode.php
+=======
+     * @link https://www.php.net/manual/en/function.json-encode.php
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public static function jsonEncode($value, int $options = 0, int $depth = 512): string
     {
         $json = \json_encode($value, $options, $depth);
         if (\JSON_ERROR_NONE !== \json_last_error()) {
+<<<<<<< HEAD
             throw new InvalidArgumentException('json_encode error: '.\json_last_error_msg());
+=======
+            throw new InvalidArgumentException('json_encode error: ' . \json_last_error_msg());
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         /** @var string */
@@ -341,7 +383,11 @@ EOT
 
                 $errorMessage = 'IDN conversion failed';
                 if ($errors) {
+<<<<<<< HEAD
                     $errorMessage .= ' (errors: '.implode(', ', $errors).')';
+=======
+                    $errorMessage .= ' (errors: ' . implode(', ', $errors) . ')';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 }
 
                 throw new InvalidArgumentException($errorMessage);

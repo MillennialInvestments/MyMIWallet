@@ -38,7 +38,11 @@ class Invest extends Front_Controller
         parent::__construct();
 
         $this->load->helper(array('directory', 'form', 'file', 'url'));
+<<<<<<< HEAD
         $this->load->library(array('form_validation', 'upload'));
+=======
+        $this->load->library(array('form_validation', 'upload', 'user_agent'));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->load->model('User/investment_model');
         $this->load->module('users');
 
@@ -56,7 +60,11 @@ class Invest extends Front_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Request';
         
         $this->set_current_user();
@@ -68,7 +76,11 @@ class Invest extends Front_Controller
     
     public function Request()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Request';
         
         $this->set_current_user();
@@ -173,7 +185,11 @@ class Invest extends Front_Controller
     
     public function Purchase()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Confirmation';
         
         $this->set_current_user();
@@ -201,7 +217,11 @@ class Invest extends Front_Controller
     
     public function Complete()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Complete';
         
         $this->set_current_user();
@@ -213,7 +233,11 @@ class Invest extends Front_Controller
     
     public function Activate()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Request';
         
         $this->set_current_user();
@@ -254,7 +278,11 @@ class Invest extends Front_Controller
         
     public function Opt_In()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Accounting_Add_Investor';
         
         $this->set_current_user();

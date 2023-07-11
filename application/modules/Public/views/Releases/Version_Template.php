@@ -73,7 +73,11 @@ $viewData               = array(
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 <div class="intro-section intro-overview bg-white pt-5">
+=======
+<div class="intro-section intro-overview bg-lighter pt-5">
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     <div class="container-fluid container-xl px-2">
         <div class="row justify-content-center">
             <div class="col-12">

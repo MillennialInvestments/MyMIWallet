@@ -1,5 +1,8 @@
 <?php
+<<<<<<< HEAD
 ob_start();
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 /**
  * CodeIgniter
  *
@@ -307,5 +310,8 @@ define('VIEWPATH', $view_folder);
  *------------------------------------------------------------------------------
  */
 require_once(BASEPATH . 'core/CodeIgniter.php');
+<<<<<<< HEAD
 ob_end_flush();
 ?>
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

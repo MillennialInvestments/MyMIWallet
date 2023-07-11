@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
     $beta               = $this->config->item('beta');
     $userAccount        = $_SESSION['allSessionData']['userAccount']; 
     $userLastOrder      = $_SESSION['allSessionData']['userLastOrder']; 
@@ -14,15 +15,27 @@
     $user_trans_fee		= $userLastOrder['user_trans_fee'];
     $user_trans_percent	= $userLastOrder['user_trans_percent'];
     $redirect_url       = $userLastOrder['redirect_url'];
+=======
+    $orderID			= $_SESSION['allSessionData']['userLastOrder']['orderID'];
+    $wallet_id			= $_SESSION['allSessionData']['userLastOrder']['wallet_id'];
+    $total				= $_SESSION['allSessionData']['userLastOrder']['total'];
+    $amount				= $_SESSION['allSessionData']['userLastOrder']['amount'];
+    $user_trans_fee		= $_SESSION['allSessionData']['userLastOrder']['user_trans_fee'];
+    $user_trans_percent	= $_SESSION['allSessionData']['userLastOrder']['user_trans_percent'];
+    $redirect_url       = $_SESSION['allSessionData']['userLastOrder']['redirect_url'];
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     $total_cost			= round($amount + $user_trans_fee + $user_trans_percent);
     $paypalData			= array(
         'orderID'		=> $orderID,
         'total_cost'	=> $total_cost,
         'redirect_url'  => $redirect_url,
     );
+<<<<<<< HEAD
     $detailData         = array(
         'total'         => $total,
     );
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ?>
 <style>
 	@media (max-width: 375px) {
@@ -36,13 +49,22 @@
 </style>
 <div class="nk-block">
 	<div class="row gy-gs">
+<<<<<<< HEAD
 		<div class="col-12 mb-3" id="order-information">  
+=======
+		<div class="col-md-4"></div>
+		<div class="col-12 col-md-4 mb-3">  
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 			<div class="nk-block">
 				<div class="nk-block-head">
 					<?php echo theme_view('navigation_breadcrumbs'); ?>
 					<div class="nk-block-between-md g-4">
 						<div class="nk-block-head-content">
+<<<<<<< HEAD
 							<h2 class="nk-block-title fw-bold">Complete Your Purchase!</h2>
+=======
+							<h2 class="nk-block-title fw-bold">MYMI GOLD PURCHASE</h2>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 							<div class="nk-block-des"><p>Confirm and Complete Your MyMI Gold Purchase Information!</p></div>
 						</div>
 					</div>
@@ -50,6 +72,7 @@
 				</div>
 			</div> 
 		</div>
+<<<<<<< HEAD
 		<div class="col-12 col-md-4">  
             <div class="row">
                 <div class="col-12">
@@ -138,5 +161,49 @@
                 </div>
             </div>
         </div>
+=======
+		<div class="col-md-4"></div>
+		<div class="col-md-4"></div>
+		<div class="col-12 col-md-4">  
+			<div class="nk-block nk-block-lg">         
+				<p class="card-text blog-text text-center">
+					<strong>MYMI ORDER INFORMATION</strong>
+				</p>   
+				<table class="table table-borderless mb-3">
+					<?php
+                    echo '
+					<tr>
+						<th>WALLET ID:</th>
+						<td class="text-right">' . $wallet_id . '</td> 										
+					</tr> 
+					<tr>
+						<th>ORDER ID:</th>
+						<td class="text-right">' . $orderID . '</td> 										
+					</tr> 
+					<tr>
+						<th>TOTAL COINS:</th>
+						<td class="text-right">' . number_format($total, 0). ' MyMI Gold</td>
+					</tr>
+					<tr>
+						<th>PURCHASE AMOUNT:</th>
+						<td class="text-right">$' . number_format($amount, 2) . '</td>
+					</tr>
+					<tr>
+						<th>TRANSACTION FEES:</th>
+						<td class="text-right">$' . number_format($user_trans_fee + $user_trans_percent, 2) . '</td>
+					</tr>
+					<tr>
+						<th>COST:</th>
+						<td class="text-right">$' . number_format($amount + $user_trans_fee + $user_trans_percent, 2) . '</td>
+					</tr>
+					';
+                    ?>
+				</table>
+				<hr>
+			</div>
+		</div>
+		<div class="col-md-2"></div>
+		<?php $this->load->view('User/Wallets/Complete_Purchase/paypal_checkout', $paypalData); ?>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	</div>
 </div>

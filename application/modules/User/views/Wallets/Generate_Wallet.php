@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php
+<<<<<<< HEAD
 $errorClass             = empty($errorClass) ? ' error' : $errorClass;
 $controlClass           = empty($controlClass) ? 'span6' : $controlClass;
 $fieldData              = array(
@@ -19,6 +20,14 @@ $beta                   = $this->config->item('beta');
 //      ->full_url(current_url())
 //      ->comment('Generate Address') //Token identify Action
 //      ->log(); //Add Database Entry
+=======
+$errorClass   = empty($errorClass) ? ' error' : $errorClass;
+$controlClass = empty($controlClass) ? 'span6' : $controlClass;
+$fieldData = array(
+    'errorClass'    => $errorClass,
+    'controlClass'  => $controlClass,
+);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ?>
 <form class="form-horizontal" id="generate_digibyte_wallet_address">
 <div class="modal-header">

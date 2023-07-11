@@ -20,6 +20,10 @@ if ($feature_type === 'Premium Wallet') {
     $coin									= 'MYMIG'; // Set Coin as MyMI Gold
     $user_id								= $featureForm['user_id']; // Set User ID
     $user_email								= $featureForm['user_email']; // Set User Email
+<<<<<<< HEAD
+=======
+    $realize_id                             = $featureForm['realize_id'];
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     $wallet_id								= $featureForm['wallet_id']; // Set Wallet ID
     $wallet_type							= $featureForm['wallet_type']; // Set Wallet Type
     // $purchase_type							= 'Premium Wallet'; // Set Feature Purchase Type (ex: Premium Wallet, Trade Tracker, etc.)//
@@ -54,6 +58,7 @@ if ($feature_type === 'Premium Wallet') {
         $redirectURL						= 'Add-Digital-Wallet';
         $feature    						= 'Premium Crypto Wallet';
     }
+<<<<<<< HEAD
 
     $userRequest							= array(
         'status'							=> $status,
@@ -127,5 +132,80 @@ if ($feature_type === 'Premium Wallet') {
 
     return $this->db->insert('bf_mymigold_overview', $myMIGold);
 }
+=======
+}
+
+$userRequest							= array(
+    'status'							=> $status,
+    'beta'								=> $beta,
+    'user_id'							=> $user_id,
+    'user_email'						=> $user_email,
+    'coin'								=> $coin,
+    'wallet_id'							=> $wallet_id,
+    'initial_value'						=> $initial_value,
+    'current_value'						=> $current_value,
+    'available_coins'					=> $available_coins,
+    'new_availability'					=> $new_availability,
+    'initial_coin_value'				=> $initial_coin_value,
+    'new_coin_value'					=> $new_coin_value,
+    'amount'							=> $amount,
+    'total'								=> $total,
+    'total_cost'						=> $total_cost,
+    'total_fees'						=> $total_fees,
+    'gas_fee'							=> $gas_fee,
+    'trans_fee'							=> $trans_fee,
+    'trans_percent'						=> $trans_percent,
+    'user_gas_fee'						=> $user_gas_fee,
+    'user_trans_fee'					=> $user_trans_fee,
+    'user_trans_percent'				=> $user_trans_percent,
+);
+
+$this->db->insert('bf_users_coin_purchases', $userRequest);
+$purchase_id                            = $this->db->insert_id();
+
+$feature 								= array(
+    'trans_id'							=> $purchase_id,
+    'status'							=> $status,
+    'beta'								=> $beta,
+    'user_id'							=> $user_id,
+    'user_email'						=> $user_email,
+    'wallet_id'							=> $wallet_id,
+    'feature_cost'						=> $feature_cost,
+    'purchase_type'						=> $feature,
+    'initial_balance'					=> $initial_balance,
+    'amount'							=> $amount,
+    'total'								=> $total,
+    'remaining_balance'					=> $remaining_balance,
+);
+
+$this->db->insert('bf_users_purchases', $feature);
+
+$myMIGold								= array(
+    'status'							=> $status,
+    'trans_id'							=> $purchase_id,
+    'beta'								=> $beta,
+    'wallet_id'							=> $wallet_id,
+    'user_id'							=> $user_id,
+    'user_email'						=> $user_email,
+    'initial_value'						=> $initial_value,
+    'current_value'						=> $current_value,
+    'available_coins'					=> $available_coins,
+    'new_availability'					=> $new_availability,
+    'initial_coin_value'				=> $initial_coin_value,
+    'coin_value'						=> $new_coin_value,
+    'amount'							=> $amount,
+    'total'								=> $total,
+    'total_cost'						=> $total_cost,
+    'total_fees'						=> $total_fees,
+    'gas_fee'							=> $gas_fee,
+    'trans_fee'							=> $trans_fee,
+    'trans_percent'						=> $trans_percent,
+    'user_gas_fee'						=> $user_gas_fee,
+    'user_trans_fee'					=> $user_trans_fee,
+    'user_trans_percent'				=> $user_trans_percent,
+);
+
+return $this->db->insert('bf_mymigold_overview', $myMIGold);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ?>
 

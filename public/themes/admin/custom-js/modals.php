@@ -7,6 +7,7 @@ $pageURIE                               = $this->uri->segment(5);
 
 if ($pageURIA === 'Investor-Profile') {
     $this->load->view('User/Dashboard/Investor_Profile/Security/Reset_Password');
+<<<<<<< HEAD
     // echo '
     // <div class="modal fade" id="createBankAccountModal" tabindex="-1" aria-labelledby="createBankAccountModal" aria-hidden="true">
     //     <div class="modal-dialog">
@@ -18,4 +19,7 @@ if ($pageURIA === 'Investor-Profile') {
     //     </div>
     // </div>
     // ';
+=======
+    $this->load->view('User/Wallets/Create_Bank_Account');
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

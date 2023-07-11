@@ -39,7 +39,10 @@ class Home extends MX_Controller
         $this->lang->load('application');
         $this->load->library('events');
         $this->load->model('User/public_model');
+<<<<<<< HEAD
         $this->load->module('Users');
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         $this->load->library('installer_lib');
         if (! $this->installer_lib->is_installed()) {
@@ -63,7 +66,11 @@ class Home extends MX_Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Home';
         $this->set_current_user();
         
@@ -74,7 +81,11 @@ class Home extends MX_Controller
 
     public function Support()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Home';
         $this->set_current_user();
         

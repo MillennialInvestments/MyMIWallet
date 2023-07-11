@@ -24,6 +24,7 @@ use Throwable;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
+<<<<<<< HEAD
     /** @var callable|null */
     protected $appGetter = null;
 
@@ -40,6 +41,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->localeGetter = $localeGetter;
     }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public function boot()
     {
         $this->updateLocale();
@@ -60,12 +63,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
     public function updateLocale()
     {
+<<<<<<< HEAD
         $locale = $this->getLocale();
 
         if ($locale === null) {
             return;
         }
 
+=======
+        $app = $this->app && method_exists($this->app, 'getLocale') ? $this->app : app('translator');
+        $locale = $app->getLocale();
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         Carbon::setLocale($locale);
         CarbonImmutable::setLocale($locale);
         CarbonPeriod::setLocale($locale);
@@ -90,6 +98,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         // Needed for Laravel < 5.3 compatibility
     }
 
+<<<<<<< HEAD
     protected function getLocale()
     {
         if ($this->localeGetter) {
@@ -118,6 +127,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         return \function_exists('app') ? \app(...$args) : null;
     }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     protected function isEventDispatcher($instance)
     {
         return $instance instanceof EventDispatcher

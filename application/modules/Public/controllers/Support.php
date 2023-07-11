@@ -38,7 +38,11 @@ class Support extends Front_Controller
         parent::__construct();
 
         $this->load->helper(array('directory', 'form', 'file', 'url'));
+<<<<<<< HEAD
         $this->load->library(array('form_validation', 'upload', 'users/auth'));
+=======
+        $this->load->library(array('form_validation', 'upload', 'user_agent', 'users/auth'));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->load->model('user_model');
         $this->load->model(array('User/public_model', 'User/support_model'));
         //$this->load->module('ContactUs');
@@ -57,7 +61,11 @@ class Support extends Front_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Customer_Support';
         
         $this->set_current_user();
@@ -69,7 +77,11 @@ class Support extends Front_Controller
 
     public function Member_Customer_Support_Request()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Customer_Support';
         
         $this->set_current_user();
@@ -81,7 +93,11 @@ class Support extends Front_Controller
 
     public function FAQ()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Customer_Support_FAQ';
         
         $this->set_current_user();

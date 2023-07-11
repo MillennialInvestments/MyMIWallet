@@ -87,4 +87,11 @@ if(!function_exists('get_recapture_score')) {
 
         return $response->score;
     }
+<<<<<<< HEAD
 }
+=======
+}
+
+
+
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

@@ -1,5 +1,6 @@
 # CHANGELOG
 
+<<<<<<< HEAD
 
 ## 2.0.0 - TBC
 
@@ -31,6 +32,8 @@
 - Officially support PHP 8.2
 
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ## 1.5.1 - 2021-10-22
 
 ### Fixed
@@ -38,18 +41,28 @@
 - Revert "Call handler when waiting on fulfilled/rejected Promise"
 - Fix pool memory leak when empty array of promises provided
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ## 1.5.0 - 2021-10-07
 
 ### Changed
 
 - Call handler when waiting on fulfilled/rejected Promise
+<<<<<<< HEAD
 - Officially support PHP 8.1
 
 ### Fixed
 
 - Fix manually settle promises generated with `Utils::task`
 
+=======
+
+### Fixed
+
+- Fix manually settle promises generated with Utils::task
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 ## 1.4.1 - 2021-02-18
 
@@ -57,7 +70,10 @@
 
 - Fixed `each_limit` skipping promises and failing
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ## 1.4.0 - 2020-09-30
 
 ### Added

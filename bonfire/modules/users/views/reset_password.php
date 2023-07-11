@@ -17,6 +17,7 @@ $formSelect				= $this->config->item('form_select');
 $formSelectPicker		= $this->config->item('form_selectpicker');
 $formText				= $this->config->item('form_text');
 $formCustomText			= $this->config->item('form_custom_text');
+<<<<<<< HEAD
 $this->db->from('bf_users'); 
 $linkUserEmail          = str_replace(":", "@", $this->uri->segment(2));
 $this->db->where('email', $linkUserEmail); 
@@ -26,6 +27,10 @@ foreach($getUserInfo->result_array() as $userInfo) {
 }
 ?>
 <div class="intro-section intro-overview text-center bg-white pt-5 pb-0">
+=======
+?>
+<div class="intro-section intro-overview text-center bg-lighter pt-5 pb-0">
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     <div class="container-fluid">
         <div class="card">
             <div class="card-inner text-center">
@@ -64,7 +69,11 @@ foreach($getUserInfo->result_array() as $userInfo) {
                                     <div class="row justify-content-center g-gs">
                                         <div class="col-8">
                                             <?php echo form_open($this->uri->uri_string(), 'class="form-horizontal"'); ?>
+<<<<<<< HEAD
                                                 <input type="hidden" name="user_id" value="<?php echo $cuID; ?>" />
+=======
+                                                <input type="hidden" name="user_id" value="<?php echo $_SESSION['allSessionData']['userAccount']['cuID']; ?>" />
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                                 <div class="<?php echo $formGroup; ?>">
                                                     <label class="<?php echo $formLabel; ?>" for="password"><?php echo lang('bf_password'); ?></label>
                                                     <div class="<?php echo $formConCol; ?>">

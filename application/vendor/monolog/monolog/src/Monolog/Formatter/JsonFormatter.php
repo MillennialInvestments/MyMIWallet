@@ -178,6 +178,7 @@ class JsonFormatter extends NormalizerFormatter
             return $normalized;
         }
 
+<<<<<<< HEAD
         if (is_object($data)) {
             if ($data instanceof \DateTimeInterface) {
                 return $this->formatDate($data);
@@ -197,6 +198,14 @@ class JsonFormatter extends NormalizerFormatter
             }
 
             return $data;
+=======
+        if ($data instanceof \DateTimeInterface) {
+            return $this->formatDate($data);
+        }
+
+        if ($data instanceof Throwable) {
+            return $this->normalizeException($data, $depth);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         if (is_resource($data)) {

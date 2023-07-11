@@ -1,14 +1,24 @@
 <?php
+<<<<<<< HEAD
     // $this->load->library('MyMIAnalytics'); 
     $reporting                      = $this->mymianalytics->reporting();
     // $marketing                      = $this->mymimarketing->marketing(); 
 if (!empty($_SESSION['userAccount']['cuID'])) {
     // $this->load->library('MyMIAnalytics'); 
+=======
+    $this->load->library('MyMIAnalytics'); 
+    $reporting                      = $this->mymianalytics->reporting();
+if (!empty($_SESSION['userAccount']['cuID'])) {
+    $this->load->library('MyMIAnalytics'); 
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     if (!empty($_SESSION['user_id'])) {
         $cuID 					    = $_SESSION['user_id'];
     } else {
         $cuID                       = $this->input->ip_address();
+<<<<<<< HEAD
         $_SESSION['user_id']        = $cuID;
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
     $betaStatus                     = $this->config->item('beta');
     if ($betaStatus === 0) {
@@ -19,7 +29,11 @@ if (!empty($_SESSION['userAccount']['cuID'])) {
     $thisController                 = $this->router->fetch_class();
     $thisMethod                     = $this->router->fetch_method();
     $thisURL                        = $this->uri->uri_string();
+<<<<<<< HEAD
     $thisFullURL                    = current_url();
+=======
+    $thisFullURL                    = $this->uri->current_url();
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     $thisComment                    = 'User (' . $cuID . ') successfully viewed the following page: ' . $thisURL;
     $this->mymilogger
         ->user($cuID) //Set UserID, who created this  Action
@@ -31,7 +45,11 @@ if (!empty($_SESSION['userAccount']['cuID'])) {
         ->full_url($thisFullURL)
         ->comment($thisComment) //Token identify Action
         ->log(); //Add Database Entry
+<<<<<<< HEAD
     $userDefaultAccount             = $this->mymiuser->user_default_account_info(); 
+=======
+    $allSessionData                 = array();
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     $userAccount	        		= $this->mymiuser->user_account_info($cuID);
     $walletID                       = $userAccount['walletID'];
     // print_r($userAccount);
@@ -48,6 +66,7 @@ if (!empty($_SESSION['userAccount']['cuID'])) {
     $userWalletOpenSummary			= $this->mymiwallet->get_total_open_value($cuID);
     $userWalletTotalSummary			= $this->mymiwallet->get_total_wallet_value($cuID);
     $getUserAssetCount              = $this->exchange_model->get_user_asset_count($cuID);
+<<<<<<< HEAD
     $userFlashData                  = array(
         'cuID'                      => $cuID, 
         'beta'                      => $beta,
@@ -56,6 +75,8 @@ if (!empty($_SESSION['userAccount']['cuID'])) {
         'hostTime'                  => $hostTime,
         'time'                      => $time,
     ); 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     if ($pageURIA === 'Exchange' and $pageURIB === 'Market') {
         $exchangeMarketData			= $this->mymiexchange->get_market_summaries($pageURIC, $pageURID);
     } else {
@@ -75,9 +96,13 @@ if (!empty($_SESSION['userAccount']['cuID'])) {
         $userLastCompletedOrder     = array();
     }
     // $userExchangeInfo				= $this->mymiuser->get_user_exchange_info($cuID);
+<<<<<<< HEAD
     $_SESSION['allSessionData']     = array();  
     $allSessionData					= array(
         'userFlashData'             => $userFlashData,
+=======
+    $allSessionData					= array(
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         'userAccount'				=> $userAccount,
         // 'userInfo'					=> $userInfo,
         'userCoinData'				=> $userCoinData,
@@ -93,6 +118,7 @@ if (!empty($_SESSION['userAccount']['cuID'])) {
         'userLastOrder'			    => $userLastOrder,
         'userLastCompletedOrder'    => $userLastCompletedOrder,
         // 'userExchangeInfo'			=> $userExchangeInfo,
+<<<<<<< HEAD
         'reporting'                 => $reporting
     );
     print_r($allSessionData);
@@ -100,3 +126,11 @@ if (!empty($_SESSION['userAccount']['cuID'])) {
     // $_SESSION['reporting']	 	    = $reporting;
 }
 ?>
+=======
+        'reporting'                 => $reporting,
+    );
+
+    $_SESSION['allSessionData']	 	= $allSessionData;
+    $_SESSION['reporting']	 	    = $reporting;
+}
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

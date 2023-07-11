@@ -37,7 +37,11 @@ if ($beta === 0) {
                                         <h5 class="nk-block-title fw-normal">Overview</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
+<<<<<<< HEAD
                                                 This article will introduce you to MyMI Wallet's basic requirements and information needed to set up your MyMI Account.<br> 
+=======
+                                                This article will introduce you to MyMI Wallet's most important services you will need to set up your Investor Account.<br> 
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                                 This article will not cover everything in detail, but it will cover the three most important steps to get started.
                                             </p>
                                         </div>
@@ -65,23 +69,41 @@ if ($beta === 0) {
                                         </div>
                                     </div>
                                     <div class="card-inner text-left">
+<<<<<<< HEAD
                                         <h5 class="nk-block-title fw-normal">Step 2: Add Your Banking/Credit Wallets</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
                                                 <ul class="link-list-plain">
                                                     <li><a href="#configuring-investor-profile">Create a wallet for each Banking/Credit Card Account that you have.</a></li>
                                                     <li><a href="#integrating-wallets">Be sure to add your initial balance and continue to update your balances moving forward.</a></li>
+=======
+                                        <h5 class="nk-block-title fw-normal">Step 2: Adding Wallets/Trades</h5>
+                                        <div class="nk-block-des">
+                                            <p class="lead fs-14px">
+                                                <ul class="link-list-plain">
+                                                    <li><a href="#configuring-investor-profile">Integrating Wallets</a></li>
+                                                    <li><a href="#integrating-wallets">Trade History &amp; Tracker</a></li>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                                 </ul>
                                             </p>
                                         </div>
                                     </div>
                                     <div class="card-inner text-left">
+<<<<<<< HEAD
                                         <h5 class="nk-block-title fw-normal">Step 3: Create Your Financial Budget</h5>
                                         <div class="nk-block-des">
                                             <p class="lead fs-14px">
                                                 <ul class="link-list-plain">
                                                     <li><a href="#anayltical-customization">Add your income, expenses, & debt</a></li>
                                                     <li><a href="#trade-tracker-customization">Utilize recurring accounts to project your net growth for the year.</a></li>
+=======
+                                        <h5 class="nk-block-title fw-normal">Step 3: Analytical Customization</h5>
+                                        <div class="nk-block-des">
+                                            <p class="lead fs-14px">
+                                                <ul class="link-list-plain">
+                                                    <li><a href="#anayltical-customization">Trade Tracker Customization</a></li>
+                                                    <li><a href="#trade-tracker-customization">Backtesting &amp; Forecasting</a></li>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                                 </ul>
                                             </p>
                                         </div>

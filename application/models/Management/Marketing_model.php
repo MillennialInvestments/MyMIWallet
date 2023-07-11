@@ -118,6 +118,7 @@ class Marketing_model extends BF_Model
      * function to add/delete/update bf_dashboards
      */
     
+<<<<<<< HEAD
      public function get_active_campaigns() {
         $this->db->from('bf_marketing_campaigns'); 
         $this->db->where('status', 1); 
@@ -125,6 +126,8 @@ class Marketing_model extends BF_Model
         return $getActiveCampaigns;
     }
     
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public function get_marketing_page_seo()
     {
         $this->db->from('bf_marketing_page_seo');
@@ -133,6 +136,7 @@ class Marketing_model extends BF_Model
         return $getPageSEO;
     }
 
+<<<<<<< HEAD
     public function get_marketing_page_seo_by_name($pageTitle)
     {
         $this->db->from('bf_marketing_page_seo');
@@ -141,4 +145,13 @@ class Marketing_model extends BF_Model
         return $getPageSEOByName;
     }
 
+=======
+    public function get_marketing_page_seo_by_name($pageName)
+    {
+        $this->db->from('bf_marketing_page_seo');
+        $this->db->where('page_name', $pageName);
+        $getPageSEO                                 = $this->db->get();
+        return $getPageSEO;
+    }
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

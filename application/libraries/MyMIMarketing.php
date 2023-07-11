@@ -6,7 +6,10 @@ class MyMIMarketing
     {
         $this->CI =& get_instance();
         // $this->CI->load->library(array('Auth','MyMIGold','MyMICoin'));
+<<<<<<< HEAD
         $this->CI->load->model('Management/analytical_model');
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->CI->load->model('Management/marketing_model');
         //~ $this->CI->load->library(array('Auth', 'MyMIWallets'));
         $cuID 								= $this->CI->auth->user_id();
@@ -18,6 +21,7 @@ class MyMIMarketing
      *
      * @package applications\library\MyMIWallet\Controllers\Users
      */
+<<<<<<< HEAD
     public function marketing() {
         $pageName                               = Template::get('pageName'); 
         $department                             = $this->department(); 
@@ -116,6 +120,8 @@ class MyMIMarketing
     
         $this->db->insert('bf_management_tasks', $data);
     }
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
     public function get_page_headers()
     {

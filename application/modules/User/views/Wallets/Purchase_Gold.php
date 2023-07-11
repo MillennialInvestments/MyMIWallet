@@ -6,11 +6,16 @@ $fieldData = array(
     'errorClass'    => $errorClass,
     'controlClass'  => $controlClass,
 );
+<<<<<<< HEAD
 $beta           = $this->config->item('beta');
+=======
+
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $pageURIA		= $this->uri->segment(1);
 $pageURIB		= $this->uri->segment(2);
 $pageURIC		= $this->uri->segment(3);
 $pageURID		= $this->uri->segment(4);
+<<<<<<< HEAD
 $userAccount    = $_SESSION['allSessionData']['userAccount'];
 $cuID           = $userAccount['cuID'];
 $this->mymilogger
@@ -56,6 +61,39 @@ $this->mymilogger
         </div>
     </div>
 </form>
+=======
+?>
+<form class="form-horizontal" id="purchase_mymi_gold">
+<div class="modal-header">
+	<h3 class="modal-title" id="exampleModalLabel">Purchase MyMI Gold</h3>
+	<button type="button" class="close closeModalBtn" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body">
+	<div class="nk-block pt-1">
+		<div class="row">
+			<div class="col-lg-12">
+				<fieldset>
+					<?php
+                    Template::block('Purchase_Gold/user_fields', 'Purchase_Gold/user_fields', $fieldData);
+                    ?>
+				</fieldset>
+				<fieldset>
+					<?php
+                    // Allow modules to render custom fields. No payload is passed
+                    // since the user has not been created, yet.
+                    Events::trigger('render_user_form');
+                    ?>
+					<!-- Start of User Meta -->
+					<?php //$this->load->view('users/user_meta', array('frontend_only' => true));?>
+					<!-- End of User Meta -->
+				</fieldset>
+			</div>
+		</div>
+	</div>
+</div>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 <script type="text/javascript">
 const purchaseGoldForm		= document.querySelector("#purchase_mymi_gold");
 const purchaseGoldSubmit		= {};
@@ -133,9 +171,15 @@ function calculatePurchase()
 	document.getElementById('user_trans_fees').value 			= usertfee;
 	document.getElementById('user_trans_percent').value 		= usertper;
 	// Update Field Displays
+<<<<<<< HEAD
 	document.getElementById('display_total').innerHTML			= total + " MyMIG";
 	document.getElementById('display_fees').innerHTML			= "$" + expenses.toFixed(2);
 	document.getElementById('display_total_cost').innerHTML		= "$" + total_cost.toFixed(2);
+=======
+	document.getElementById('display_total').innerHTML			= total;
+	document.getElementById('display_fees').innerHTML			= expenses.toFixed(2);
+	document.getElementById('display_total_cost').innerHTML		= total_cost.toFixed(2);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 }
 </script> 								

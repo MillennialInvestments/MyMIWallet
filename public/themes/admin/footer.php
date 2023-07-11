@@ -11,7 +11,19 @@ $walletCost					= $this->config->item('wallet_cost');
 <div class="modal fade" id="coinModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
+<<<<<<< HEAD
             <?php $this->load->view('User/Wallets/Generate_Wallet'); ?>
+=======
+			<div class="modal-header">
+				<h3 class="modal-title" id="exampleModalLabel">Generate MyMI Wallet Address</h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+			<div class="modal-body">
+				<?php $this->load->view('User/Wallets/Generate_Wallet'); ?>
+			</div>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 		</div>
 	</div>
 </div>
@@ -39,8 +51,11 @@ $this->load->view('User/Dashboard/index/transaction-modal');
 
 if ($cuRole === '1') {
 $this->load->view('User/Dashboard/index/user-information-modal'); 
+<<<<<<< HEAD
 } elseif ($cuRole === '4') {
 $this->load->view('User/Dashboard/index/user-feedback-modal'); 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 ?>           
 <div id="debug"><!-- Stores the Profiler Results --></div>

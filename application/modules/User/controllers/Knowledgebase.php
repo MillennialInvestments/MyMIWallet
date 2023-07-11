@@ -313,7 +313,11 @@ class Knowledgebase extends Admin_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Knowledge_Base';
         
         $this->set_current_user();
@@ -325,7 +329,11 @@ class Knowledgebase extends Admin_Controller
 
     public function Account_Billing()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Knowledge_Base_Account_And_Billing';
         
         $this->set_current_user();
@@ -337,7 +345,11 @@ class Knowledgebase extends Admin_Controller
 
     public function Assets()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Knowledge_Base_Assets';
         
         $this->set_current_user();
@@ -349,7 +361,11 @@ class Knowledgebase extends Admin_Controller
 
     public function Getting_Started()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Knowledge_Base_Getting_Started';
         
         $this->set_current_user();
@@ -361,7 +377,11 @@ class Knowledgebase extends Admin_Controller
 
     public function Integrating_Wallets() 
    {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Knowledge_Base_Integrating_Wallets';
         
         $this->set_current_user();
@@ -373,7 +393,11 @@ class Knowledgebase extends Admin_Controller
 
     public function Investor_Profile()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Knowledge_Base_Investor_Profile';
         
         $this->set_current_user();
@@ -385,7 +409,11 @@ class Knowledgebase extends Admin_Controller
 
     public function KYC_Verification()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Knowledge_Base_KYC_Verification';
         
         $this->set_current_user();
@@ -397,7 +425,11 @@ class Knowledgebase extends Admin_Controller
 
     public function Partnerships()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Knowledge_Base_MyMI_Partnerships';
         
         $this->set_current_user();
@@ -409,7 +441,11 @@ class Knowledgebase extends Admin_Controller
 
     public function Promoted_Articles()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -421,7 +457,11 @@ class Knowledgebase extends Admin_Controller
 
     public function Technical_Support()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Knowledge_Base_Technical_Support';
         
         $this->set_current_user();
@@ -433,7 +473,11 @@ class Knowledgebase extends Admin_Controller
 
     public function Trade_Tracker()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Knowledge_Base_Trade_Tracker';
         
         $this->set_current_user();
@@ -445,7 +489,11 @@ class Knowledgebase extends Admin_Controller
 
     public function Tutorials()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Knowledge_Base_Tutorials';
         
         $this->set_current_user();
@@ -457,7 +505,11 @@ class Knowledgebase extends Admin_Controller
 
     public function Types_Of_Accounts()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Knowledge_Base_Types_Of_Accounts';
         
         $this->set_current_user();

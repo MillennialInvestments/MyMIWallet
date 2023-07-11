@@ -146,7 +146,11 @@ class Mouse
      */
     public function scrollUp(int $distance)
     {
+<<<<<<< HEAD
         return $this->scroll(-1 * \abs($distance));
+=======
+        return $this->scroll((-1 * \abs($distance)));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -183,11 +187,16 @@ class Mouse
         $scrollableArea = $this->page->getLayoutMetrics()->getCssContentSize();
         $visibleArea = $this->page->getLayoutMetrics()->getCssVisualViewport();
 
+<<<<<<< HEAD
         $maximumX = $scrollableArea['width'] - $visibleArea['clientWidth'];
         $maximumY = $scrollableArea['height'] - $visibleArea['clientHeight'];
 
         $distanceX = $this->getMaximumDistance($distanceX, $visibleArea['pageX'], $maximumX);
         $distanceY = $this->getMaximumDistance($distanceY, $visibleArea['pageY'], $maximumY);
+=======
+        $distanceX = $this->getMaximumDistance($distanceX, $visibleArea['pageX'], $scrollableArea['width']);
+        $distanceY = $this->getMaximumDistance($distanceY, $visibleArea['pageY'], $scrollableArea['height']);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         $targetX = $visibleArea['pageX'] + $distanceX;
         $targetY = $visibleArea['pageY'] + $distanceY;
@@ -223,7 +232,11 @@ class Mouse
      * @param int $right  The element right boundary
      * @param int $bottom The element bottom boundary
      *
+<<<<<<< HEAD
      * @return $this
+=======
+     * @return self
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     private function scrollToBoundary(int $right, int $bottom): self
     {
@@ -315,11 +328,16 @@ class Mouse
 
         $offsetX = $visibleArea['pageX'];
         $offsetY = $visibleArea['pageY'];
+<<<<<<< HEAD
         $minX = $element['left'] - $offsetX;
         $minY = $element['top'] - $offsetY;
 
         $positionX = \floor($minX + (($rightBoundary - $offsetX) - $minX) / 2);
         $positionY = \ceil($minY + (($bottomBoundary - $offsetY) - $minY) / 2);
+=======
+        $positionX = \random_int(\ceil($element['left'] - $offsetX), $rightBoundary - $offsetX);
+        $positionY = \random_int(\ceil($element['top'] - $offsetY), $bottomBoundary - $offsetY);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         $this->move($positionX, $positionY);
 
@@ -331,7 +349,11 @@ class Mouse
      *
      * @param int $distance Distance to scroll, positive or negative
      * @param int $current  Current position
+<<<<<<< HEAD
      * @param int $maximum  Maximum possible distance
+=======
+     * @param int $maximum  Maximum posible distance
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      *
      * @return int allowed distance to scroll
      */

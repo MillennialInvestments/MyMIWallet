@@ -230,8 +230,11 @@ trait Units
      */
     public function addUnit($unit, $value = 1, $overflow = null)
     {
+<<<<<<< HEAD
         $originalArgs = \func_get_args();
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $date = $this;
 
         if (!is_numeric($value) || !(float) $value) {
@@ -313,7 +316,11 @@ trait Units
         }
 
         if (!$date) {
+<<<<<<< HEAD
             throw new UnitException('Unable to add unit '.var_export($originalArgs, true));
+=======
+            throw new UnitException('Unable to add unit '.var_export(\func_get_args(), true));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         return $date;

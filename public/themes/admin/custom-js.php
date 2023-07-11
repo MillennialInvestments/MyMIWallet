@@ -38,6 +38,7 @@ $("[data-toggle=popover]").popover();
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
   $('collapse').collapse();
+<<<<<<< HEAD
 
 })
 </script>
@@ -57,3 +58,13 @@ $(function () {
         }
     }
 </script>
+=======
+  $.fn.datepicker.defaults.autoclose = true;
+  $.fn.datepicker.defaults.todayHighlight = true;
+  $('.datepicker').datepicker({ 
+	clearBtn: true,  
+	format: "dd/mm/yyyy",
+  });
+})
+</script>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

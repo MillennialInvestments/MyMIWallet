@@ -56,7 +56,11 @@ class PhpExecutableFinder
         $args = $includeArgs && $args ? ' '.implode(' ', $args) : '';
 
         // PHP_BINARY return the current sapi executable
+<<<<<<< HEAD
         if (\PHP_BINARY && \in_array(\PHP_SAPI, ['cli', 'cli-server', 'phpdbg'], true)) {
+=======
+        if (\PHP_BINARY && \in_array(\PHP_SAPI, ['cgi-fcgi', 'cli', 'cli-server', 'phpdbg'], true)) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return \PHP_BINARY.$args;
         }
 

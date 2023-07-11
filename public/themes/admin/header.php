@@ -26,6 +26,7 @@ $uriSegmentInfo         = array(
         // echo isset($toolbar_title) ? "{$toolbar_title} : " : '';
         // e($this->settings_lib->item('site.title'));
     ?></title> -->
+<<<<<<< HEAD
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="robots" content="noindex" />
 	<meta http-equiv="cache-control" content="no-cache">
@@ -54,6 +55,12 @@ $uriSegmentInfo         = array(
 
     gtag('config', 'G-2FS4BNS0SL');
     </script>
+=======
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="noindex" />
+	<meta http-equiv="cache-control" content="no-cache">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     <?php
     /* Modernizr is loaded before CSS so CSS can utilize its features */
     ?>

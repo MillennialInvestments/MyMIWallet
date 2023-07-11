@@ -28,6 +28,10 @@ class OperationTimedOut extends \Exception
             return \sprintf('%dms', (int) ($timeoutMicroSec / 1000));
         }
 
+<<<<<<< HEAD
         return \sprintf('%dμs', (int) $timeoutMicroSec);
+=======
+        return \sprintf('%dμs', (int) ($timeoutMicroSec));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 }

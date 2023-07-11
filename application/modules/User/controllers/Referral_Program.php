@@ -37,6 +37,11 @@ class Referral_Program extends Admin_Controller
     {
         parent::__construct();
 
+<<<<<<< HEAD
+=======
+        $this->load->helper(array('directory', 'form', 'file', 'url'));
+        $this->load->library(array('form_validation', 'upload', 'Services/auth', 'user_agent', 'Users/auth'));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->load->model('User/referral_model');
         $this->load->model('Management/investment_model');
         $this->load->module('ContactUs');
@@ -55,7 +60,11 @@ class Referral_Program extends Admin_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Admin_Dashboard';
         
         $this->set_current_user();
@@ -67,6 +76,7 @@ class Referral_Program extends Admin_Controller
 
     public function My_Referrals()
     {
+<<<<<<< HEAD
         $userAccount                        = $_SESSION['allSessionData']['userAccount'];
         $cuID                               = $userAccount['cuID'];
         $cuReferrerCode                     = $userAccount['cuReferrerCode'];
@@ -75,11 +85,16 @@ class Referral_Program extends Admin_Controller
         
         $pageType = 'Automated';
         $pageName = 'Referral_Program_Apply';
+=======
+        $pageType = 'Standard';
+        $pageName = 'Admin_Dashboard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
+<<<<<<< HEAD
         Template::set('cuID', $cuID);
         Template::render();
         // $this->set_current_user();
@@ -91,11 +106,18 @@ class Referral_Program extends Admin_Controller
         //     Template::set('pageName', $pageName);
         //     Template::render();
         // }
+=======
+        Template::render();
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     public function Users()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Admin_Dashboard';
         
         $this->set_current_user();
@@ -107,7 +129,11 @@ class Referral_Program extends Admin_Controller
     
     public function Marketing_Affiliate_Program_Agreement()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Marketing_Affiliate_Program_Agreement';
         
         $this->set_current_user();
@@ -121,7 +147,11 @@ class Referral_Program extends Admin_Controller
     // Add/Edit/Update Dashboards
     public function Apply()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Referral_Program_Apply';
         
         $this->set_current_user();
@@ -133,7 +163,11 @@ class Referral_Program extends Admin_Controller
 
     public function Success()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Referral_Program_Apply';
         
         $this->set_current_user();
@@ -145,7 +179,11 @@ class Referral_Program extends Admin_Controller
     
     public function New_Affiliate_Information()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Referral_Program_Activate_Affiliate';
         
         $this->set_current_user();
@@ -230,7 +268,11 @@ class Referral_Program extends Admin_Controller
     
     public function New_Affiliate_Procedure()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Admin_Dashboard';
         
         $this->set_current_user();

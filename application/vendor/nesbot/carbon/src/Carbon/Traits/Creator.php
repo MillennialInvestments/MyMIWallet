@@ -79,8 +79,13 @@ trait Creator
 
         // Work-around for PHP bug https://bugs.php.net/bug.php?id=67127
         if (!str_contains((string) .1, '.')) {
+<<<<<<< HEAD
             $locale = setlocale(LC_NUMERIC, '0'); // @codeCoverageIgnore
             setlocale(LC_NUMERIC, 'C'); // @codeCoverageIgnore
+=======
+            $locale = setlocale(LC_NUMERIC, '0');
+            setlocale(LC_NUMERIC, 'C');
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         try {
@@ -92,7 +97,11 @@ trait Creator
         $this->constructedObjectId = spl_object_hash($this);
 
         if (isset($locale)) {
+<<<<<<< HEAD
             setlocale(LC_NUMERIC, $locale); // @codeCoverageIgnore
+=======
+            setlocale(LC_NUMERIC, $locale);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         self::setLastErrors(parent::getLastErrors());
@@ -148,7 +157,11 @@ trait Creator
 
         $instance = new static($date->format('Y-m-d H:i:s.u'), $date->getTimezone());
 
+<<<<<<< HEAD
         if ($date instanceof CarbonInterface) {
+=======
+        if ($date instanceof CarbonInterface || $date instanceof Options) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             $settings = $date->getSettings();
 
             if (!$date->hasLocalTranslator()) {
@@ -354,6 +367,7 @@ trait Creator
      * If $hour is not null then the default values for $minute and $second
      * will be 0.
      *
+<<<<<<< HEAD
      * @param DateTimeInterface|int|null $year
      * @param int|null                   $month
      * @param int|null                   $day
@@ -361,6 +375,15 @@ trait Creator
      * @param int|null                   $minute
      * @param int|null                   $second
      * @param DateTimeZone|string|null   $tz
+=======
+     * @param int|null                 $year
+     * @param int|null                 $month
+     * @param int|null                 $day
+     * @param int|null                 $hour
+     * @param int|null                 $minute
+     * @param int|null                 $second
+     * @param DateTimeZone|string|null $tz
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      *
      * @throws InvalidFormatException
      *
@@ -862,6 +885,7 @@ trait Creator
      */
     public static function createFromLocaleFormat($format, $locale, $time, $tz = null)
     {
+<<<<<<< HEAD
         $format = preg_replace_callback(
             '/(?:\\\\[a-zA-Z]|[bfkqCEJKQRV]){2,}/',
             static function (array $match) use ($locale): string {
@@ -875,6 +899,8 @@ trait Creator
             $format
         );
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         return static::rawCreateFromFormat($format, static::translateTimeString($time, $locale, 'en'), $tz);
     }
 
@@ -934,6 +960,7 @@ trait Creator
     /**
      * Set last errors.
      *
+<<<<<<< HEAD
      * @param array|bool $lastErrors
      *
      * @return void
@@ -948,6 +975,15 @@ trait Creator
                 'errors' => [],
             ];
         }
+=======
+     * @param array $lastErrors
+     *
+     * @return void
+     */
+    private static function setLastErrors(array $lastErrors)
+    {
+        static::$lastErrors = $lastErrors;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**

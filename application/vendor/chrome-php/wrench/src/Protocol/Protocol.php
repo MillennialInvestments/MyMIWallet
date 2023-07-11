@@ -187,7 +187,18 @@ abstract class Protocol
      */
     public function generateKey(): string
     {
+<<<<<<< HEAD
         return \base64_encode(\random_bytes(16));
+=======
+        if (\extension_loaded('openssl')) {
+            $key = \openssl_random_pseudo_bytes(16);
+        } else {
+            // SHA1 is 128 bit (= 16 bytes)
+            $key = \sha1(\spl_object_hash($this).\mt_rand(0, \PHP_INT_MAX).\uniqid('', true), true);
+        }
+
+        return \base64_encode($key);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -375,7 +386,11 @@ abstract class Protocol
      *
      * @return string[]
      */
+<<<<<<< HEAD
     protected function getSuccessResponseHeaders(string $key): array
+=======
+    protected function getSuccessResponseHeaders($key)
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         return [
             self::HEADER_UPGRADE => self::UPGRADE_VALUE,
@@ -391,6 +406,7 @@ abstract class Protocol
      *
      * @see https://datatracker.ietf.org/doc/html/rfc6455#section-4.2.2
      *
+<<<<<<< HEAD
      * @param string $key
      *
      * @return string
@@ -398,6 +414,15 @@ abstract class Protocol
     protected function getAcceptValue(string $key): string
     {
         return \base64_encode(\sha1($key.self::MAGIC_GUID, true));
+=======
+     * @param string $encoded_key
+     *
+     * @return string
+     */
+    protected function getAcceptValue($encoded_key)
+    {
+        return \base64_encode(\sha1($encoded_key.self::MAGIC_GUID, true));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -430,7 +455,11 @@ abstract class Protocol
      *
      * @return string
      */
+<<<<<<< HEAD
     public function getResponseError($e, array $headers = []): string
+=======
+    public function getResponseError($e, array $headers = [])
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         $code = false;
 
@@ -456,6 +485,7 @@ abstract class Protocol
             return false;
         }
 
+<<<<<<< HEAD
         $statusCode = $this->getStatusCode($response);
 
         if (self::HTTP_SWITCHING_PROTOCOLS !== $statusCode) {
@@ -487,6 +517,26 @@ abstract class Protocol
         [$protocol, $statusCode] = \explode(' ', $response, 2);
 
         return (int) $statusCode;
+=======
+        $headers = $this->getHeaders($response);
+
+        if (!isset($headers[self::HEADER_ACCEPT])) {
+            throw new HandshakeException('No accept header receieved on handshake response');
+        }
+
+        $accept = $headers[self::HEADER_ACCEPT];
+
+        if (!$accept) {
+            throw new HandshakeException('Invalid accept header');
+        }
+
+        $expected = $this->getAcceptValue($key);
+
+        \preg_match('#Sec-WebSocket-Accept:\s(.*)$#imU', $response, $matches);
+        $keyAccept = \trim($matches[1]);
+
+        return $keyAccept === $this->getEncodedHash($key);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -494,7 +544,11 @@ abstract class Protocol
      *
      * @return array<string, array>
      */
+<<<<<<< HEAD
     protected function getHeaders(string $response): array
+=======
+    protected function getHeaders(string $response)
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         $parts = \explode("\r\n\r\n", $response, 2);
 
@@ -506,6 +560,7 @@ abstract class Protocol
 
         $return = [];
         foreach (\explode("\r\n", $headers) as $header) {
+<<<<<<< HEAD
             $parts = \explode(':', $header, 2);
             if (2 == \count($parts)) {
                 [$name, $value] = $parts;
@@ -516,6 +571,18 @@ abstract class Protocol
                         $return[$name][] = \trim($value);
                     } else {
                         $return[$name] = [$return[$name], \trim($value)];
+=======
+            $parts = \explode(': ', $header, 2);
+            if (2 == \count($parts)) {
+                [$name, $value] = $parts;
+                if (!isset($return[$name])) {
+                    $return[$name] = $value;
+                } else {
+                    if (\is_array($return[$name])) {
+                        $return[$name][] = $value;
+                    } else {
+                        $return[$name] = [$return[$name], $value];
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     }
                 }
             }
@@ -525,6 +592,7 @@ abstract class Protocol
     }
 
     /**
+<<<<<<< HEAD
      * Gets the body from a full response.
      *
      * @return string
@@ -535,13 +603,19 @@ abstract class Protocol
     }
 
     /**
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * Gets an encoded hash for a key.
      *
      * @param string $key
      *
      * @return string
      */
+<<<<<<< HEAD
     public function getEncodedHash(string $key): string
+=======
+    public function getEncodedHash($key)
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         return \base64_encode(\pack('H*', \sha1($key.self::MAGIC_GUID)));
     }
@@ -645,7 +719,11 @@ abstract class Protocol
      *
      * @throws InvalidArgumentException
      */
+<<<<<<< HEAD
     protected function getRequestHeaders(string $response): array
+=======
+    protected function getRequestHeaders(string $response)
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         $eol = \stripos($response, "\r\n");
 

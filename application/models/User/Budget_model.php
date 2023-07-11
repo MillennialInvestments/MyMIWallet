@@ -112,6 +112,7 @@ class Budget_model extends BF_Model
         
         return $data;
     }
+<<<<<<< HEAD
 
     /* Get All Budget Records 'created_by' User's $cuID */
     public function get_user_budget_records($cuID) {
@@ -341,6 +342,8 @@ class Budget_model extends BF_Model
         return $getLoanAccountsSummary;
     }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     
     /*
      * Dashboard Add/Edit/Delete
@@ -368,6 +371,7 @@ class Budget_model extends BF_Model
         return $this->db->insert('bf_users_budgeting', $user_data); 
     }
 
+<<<<<<< HEAD
     public function attach_account($accountID, $walletID) {
         $budgetData                             = array(
             'wallet_id'                         => $walletID,
@@ -377,6 +381,8 @@ class Budget_model extends BF_Model
         return $this->db->update('bf_users_budgeting', $budgetData);
     }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public function get_account_information($accountID) {
         $this->db->from('bf_users_budgeting'); 
         $this->db->where('id', $accountID); 
@@ -384,6 +390,7 @@ class Budget_model extends BF_Model
         return $getAccountInfo; 
     }
 
+<<<<<<< HEAD
     public function get_wallet_info($walletID) {
         $this->db->from('bf_users_wallet'); 
         $this->db->where('id', $walletID); 
@@ -408,10 +415,18 @@ class Budget_model extends BF_Model
         $this->db->order_by('year', 'asc');
         $this->db->order_by('month', 'asc');
         $this->db->order_by('day', 'asc');
+=======
+    public function get_accounts($cuID) {
+        $this->db->from('bf_users_budgeting');
+        $this->db->where('status', 1);
+        $this->db->where('deleted', 0); 
+        $this->db->where('created_by', $cuID); 
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $getAccounts                            = $this->db->get();
         return $getAccounts;
     }
 
+<<<<<<< HEAD
     public function get_accounts_order_asc_by_date_paid($cuID) {
         $this->db->from('bf_users_budgeting');
         $this->db->where('status', 1);
@@ -442,6 +457,11 @@ class Budget_model extends BF_Model
         $this->db->from('bf_users_budgeting');
         $this->db->where('status', 1);
         $this->db->where('paid', 0);
+=======
+    public function get_accounts_order_asc_by_date($cuID) {
+        $this->db->from('bf_users_budgeting');
+        $this->db->where('status', 1);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->db->where('deleted', 0); 
         $this->db->where('created_by', $cuID); 
         $this->db->order_by('year', 'asc');
@@ -508,6 +528,7 @@ class Budget_model extends BF_Model
         return $this->db->update('bf_users_budgeting', $statusUpdate); 
     }
 
+<<<<<<< HEAD
     public function get_paid_status($accountID) {
         $this->db->from('bf_users_budgeting');
         $this->db->where('id', $accountID);
@@ -567,12 +588,18 @@ class Budget_model extends BF_Model
     public function unpaid_account($accountID) {
         $statusUpdate                           = array(
             'paid'                              => 0,
+=======
+    public function paid_account($accountID) {
+        $statusUpdate                           = array(
+            'paid'                              => 1,
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         );
 
         $this->db->where('id', $accountID); 
         return $this->db->update('bf_users_budgeting', $statusUpdate); 
     }
 
+<<<<<<< HEAD
     public function get_income_accounts($cuID) {
         $this->db->from('bf_users_budgeting');
         $this->db->where('status', 1); 
@@ -584,6 +611,9 @@ class Budget_model extends BF_Model
     }
 
     public function get_income_accounts_summary($cuID) {
+=======
+    public function get_income_account_summary($cuID) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->db->select_sum('net_amount');
         // $this->db->select('account_type');
         $this->db->from('bf_users_budgeting');
@@ -595,6 +625,7 @@ class Budget_model extends BF_Model
         return $getIncomeAccountSummary;
     }
 
+<<<<<<< HEAD
     public function get_expense_accounts($cuID) {
         $this->db->from('bf_users_budgeting');
         $this->db->where('status', 1); 
@@ -617,6 +648,8 @@ class Budget_model extends BF_Model
         return $getExpenseAccountSummary;
     }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public function get_this_month_income_account_summary($cuID) {
         $thisMonth                              = date("m");
         $this->db->select_sum('net_amount');
@@ -687,6 +720,7 @@ class Budget_model extends BF_Model
         return $getExpenseAccountSummary;
     }
 
+<<<<<<< HEAD
     public function get_first_budget_account($cuID) {
         $this->db->from('bf_users_budgeting');
         $this->db->where('created_by', $cuID);
@@ -695,5 +729,17 @@ class Budget_model extends BF_Model
         $this->db->limit(1);
         $getFirstBudgetAccount                  = $this->db->get();
         return $getFirstBudgetAccount;
+=======
+    public function get_debt_accounts($cuID) {
+        $this->db->select_sum('net_amount'); 
+        $this->db->select('account_type');
+        $this->db->from('bf_users_budgeting'); 
+        $this->db->where('status', 1);
+        $this->db->where('deleted', 0); 
+        $this->db->where('created_by', $cuID); 
+        $this->db->where('is_debt', 1);        
+        $getDebtAccounts                        = $this->db->get(); 
+        return $getDebtAccounts;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 }

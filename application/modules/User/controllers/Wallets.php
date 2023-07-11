@@ -39,7 +39,10 @@ class Wallets extends Admin_Controller
         $this->load->library('Template');
         $this->load->model('User/investment_model', 'User/wallet_model');
         $this->load->module('Exchange');
+<<<<<<< HEAD
         $this->load->module('Institutions');
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         //$this->lang->load('Blog_lang');
     }
@@ -50,7 +53,11 @@ class Wallets extends Admin_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Wallets';
         
         $this->set_current_user();
@@ -59,6 +66,7 @@ class Wallets extends Admin_Controller
         Template::set('pageName', $pageName);
         Template::render();
     }
+<<<<<<< HEAD
     
     public function Add()
     {
@@ -123,6 +131,22 @@ class Wallets extends Admin_Controller
         }
     }
     public function Add_Account()
+=======
+
+    public function MyMI_Wallet()
+    {
+        $pageType = 'Standard';
+        $pageName = 'MyMI_Wallet';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+    
+    public function Add()
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         $pageType                           = 'Standard';
         $pageURIA                           = $this->uri->segment(1);
@@ -152,7 +176,11 @@ class Wallets extends Admin_Controller
         $this->form_validation->set_rules('url_link', 'URL Link', 'trim');
         
         if ($this->form_validation->run() === false) {
+<<<<<<< HEAD
             $this->load->view('Wallets/Add_Account');
+=======
+            $this->load->view('Wallets/Add');
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             Template::set('pageType', $pageType);
             Template::set('pageName', $pageName);
             Template::render();
@@ -185,6 +213,7 @@ class Wallets extends Admin_Controller
         }
     }
     
+<<<<<<< HEAD
     public function Confirm_Deposit()
     {
         $pageType = 'Automated';
@@ -200,6 +229,11 @@ class Wallets extends Admin_Controller
     public function Deposit_Funds()
     {
         $pageType = 'Automated';
+=======
+    public function Deposit_Funds()
+    {
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Deposit_Funds';
         
         $this->set_current_user();
@@ -258,6 +292,7 @@ class Wallets extends Admin_Controller
         }
     }
     
+<<<<<<< HEAD
     public function Edit()
     {
         $pageType = 'Automated';
@@ -286,6 +321,12 @@ class Wallets extends Admin_Controller
     {
         $pageType = 'Automated';
         $pageName = 'MyMI_Wallet';
+=======
+    public function Confirm_Deposit()
+    {
+        $pageType = 'Standard';
+        $pageName = 'Wallets_Confirm_Deposits';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         
         $this->set_current_user();
         
@@ -312,7 +353,11 @@ class Wallets extends Admin_Controller
     
     public function Withdraw_Funds()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Withdraw_Funds';
         
         $this->set_current_user();
@@ -387,7 +432,11 @@ class Wallets extends Admin_Controller
 
     public function Generate_Wallet()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Generate_Wallet';
         
         $this->set_current_user();
@@ -399,7 +448,11 @@ class Wallets extends Admin_Controller
     
     public function Wallet_Generator()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -409,7 +462,11 @@ class Wallets extends Admin_Controller
 
     public function Wallet_Manager()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -419,11 +476,16 @@ class Wallets extends Admin_Controller
 
     public function Wallet_Selection()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
         
+<<<<<<< HEAD
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
         Template::render();
@@ -440,20 +502,32 @@ class Wallets extends Admin_Controller
             Template::set_message('Record Could Be Updated', 'error');
             Template::redirect('/Budget');
         }
+=======
+        $this->load->view('User/Wallets/Wallet_Selection');
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     public function Link_Account($pageLink)
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         
         $this->set_current_user();
         if ($this->uri->segment(2)) {
             $wallet_id  = $this->uri->segment(2); 
         }
+<<<<<<< HEAD
         if ($pageLink === 'Search') {
             $pageName                               = 'Wallets_Search_Financial_Firms';
         } elseif ($pageLink === 'Brokerage') {
             $pageName                               = 'Dashboard';
+=======
+        if ($pageLink === 'Brokerage') {
+            $pageName = 'Dashboard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         } elseif ($pageLink === 'Approve') {
             if ($this->wallet_model->approve_wallet($wallet_id)) {
                 Template::redirect('Wallets/Link-Account/Successful/' . $wallet_id);
@@ -494,7 +568,11 @@ class Wallets extends Admin_Controller
 
     public function Link_Account_Success($id)
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -506,7 +584,11 @@ class Wallets extends Admin_Controller
 
     public function Purchase()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Purchase_Wallet';
         
         $this->set_current_user();
@@ -598,7 +680,11 @@ class Wallets extends Admin_Controller
                
     public function Purchase_MyMI_Gold()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Confirmation';
         
         $this->set_current_user();
@@ -610,7 +696,11 @@ class Wallets extends Admin_Controller
 
     public function Complete_Purchase()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Confirmation';
         
         $this->set_current_user();
@@ -622,7 +712,11 @@ class Wallets extends Admin_Controller
     
     public function Purchase_Complete($trans_id)
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Complete';
         
         $this->set_current_user();
@@ -637,7 +731,11 @@ class Wallets extends Admin_Controller
     
     public function Feature_Manager()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -647,7 +745,11 @@ class Wallets extends Admin_Controller
 
     public function Purchase_Manager()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -657,7 +759,11 @@ class Wallets extends Admin_Controller
 
     public function Purchase_Coins_Transaction()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -667,7 +773,11 @@ class Wallets extends Admin_Controller
 
     public function Add_Fiat_Wallet()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Confirmation';
         
         $this->set_current_user();
@@ -679,7 +789,11 @@ class Wallets extends Admin_Controller
 
     public function Add_Digital_Wallet()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Confirmation';
         
         $this->set_current_user();
@@ -689,9 +803,62 @@ class Wallets extends Admin_Controller
         Template::render();
     }
     
+<<<<<<< HEAD
     public function Create_Bank_Account()
     {
         $pageType = 'Automated';
+=======
+    public function Edit()
+    {
+        $pageType = 'Standard';
+        $pageName = 'Edit_Wallet';
+        
+        $this->set_current_user();
+        //~ $this->output->cache(1440);
+        
+        // create the data object
+        $data = new stdClass();
+        // set validation rules
+        $this->form_validation->set_rules('webpage', 'Webpage', 'trim');
+        $this->form_validation->set_rules('url_link', 'URL Link', 'trim');
+        
+        if ($this->form_validation->run() === false) {
+            $this->load->view('Wallets/Edit');
+            Template::set('pageType', $pageType);
+            Template::set('pageName', $pageName);
+            Template::render();
+        } else {
+            // set variables from the form
+            $wallet_id						= $this->input->post('id');
+            $user_id						= $this->input->post('user_id');
+            $user_email						= $this->input->post('user_email');
+            $broker							= $this->input->post('broker');
+            $type							= $this->input->post('type');
+            $amount							= $this->input->post('amount');
+            $nickname						= $this->input->post('nickname');
+            
+            if ($this->investor_model->edit_wallet($wallet_id, $user_id, $user_email, $broker, $type, $amount, $nickname)) {
+                Template::set_message('Wallet Edited Successfully', 'success');
+                redirect('Wallets');
+            } else {
+                
+                // user creation failed, this should never happen
+                $data->error = 'There was a problem submitting your request. Please try again.';
+                
+                // send error to the view
+                $this->load->view('Wallets/Edit', $data);
+                Template::set_message('Form Information Not Entered Correctly', 'error');
+                Template::set('pageType', $pageType);
+                Template::set('pageName', $pageName);
+                Template::render();
+            }
+        }
+    }
+    
+    public function Create_Bank_Account()
+    {
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Create_Bank_Account';
         
         $this->set_current_user();
@@ -778,7 +945,11 @@ class Wallets extends Admin_Controller
     
     public function Transfer_Funds()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -790,7 +961,11 @@ class Wallets extends Admin_Controller
     
     public function Wallet_Transaction()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -800,7 +975,11 @@ class Wallets extends Admin_Controller
    
     public function Add_Deposit_Fetch()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -810,7 +989,11 @@ class Wallets extends Admin_Controller
     
     public function Add_Withdraw_Fetch()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -820,7 +1003,11 @@ class Wallets extends Admin_Controller
 
     public function Purchase_Gold()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -830,7 +1017,11 @@ class Wallets extends Admin_Controller
 
     public function Details()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Wallet_Details';
         
         $this->set_current_user();
@@ -840,6 +1031,7 @@ class Wallets extends Admin_Controller
         Template::render();
     }
             
+<<<<<<< HEAD
     public function Delete()
     {
         $pageType = 'Automated';
@@ -865,6 +1057,21 @@ class Wallets extends Admin_Controller
     //         redirect('/Wallets');
     //     }
     // }
+=======
+    public function Delete($wallet_id)
+    {
+        // create the data object
+        $data = new stdClass();
+        
+        // set variables from the form
+        
+        if ($this->wallet_model->delete_wallet($wallet_id)) {
+            // user creation ok
+            Template::set_message('Deleted Successfully', 'error');
+            redirect('/Wallets');
+        }
+    }
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     
     private function saveData($type = 'insert', $id = 0)
     {

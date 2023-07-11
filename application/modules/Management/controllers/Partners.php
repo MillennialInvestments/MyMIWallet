@@ -38,7 +38,11 @@ class Partners extends Admin_Controller
     {
         parent::__construct();
         $this->load->helper(array('directory', 'form', 'file', 'url'));
+<<<<<<< HEAD
         $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'Users/auth'));
+=======
+        $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'user_agent', 'Users/auth'));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->load->model(array('API/api_model', 'User/exchange_model', 'User/mymigold_model', 'User/tracker_model', 'Management/announcements_model', 'Management/design_model'));
         $this->load->module('Announcements');
         $this->load->module('Exchange');
@@ -59,7 +63,11 @@ class Partners extends Admin_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();

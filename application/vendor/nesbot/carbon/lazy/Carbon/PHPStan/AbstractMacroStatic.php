@@ -28,10 +28,13 @@ if (!class_exists(AbstractReflectionMacro::class, false)) {
                 return $this->reflectionFunction;
             }
 
+<<<<<<< HEAD
             if ($this->reflectionFunction instanceof Reflection\ReflectionMethod) {
                 return new Reflection\Adapter\ReflectionMethod($this->reflectionFunction);
             }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return $this->reflectionFunction instanceof ReflectionMethod
                 ? new Reflection\Adapter\ReflectionMethod(
                     Reflection\ReflectionMethod::createFromName(

@@ -61,6 +61,7 @@ class App_hooks
      */
     public function __construct()
     {
+<<<<<<< HEAD
         // Check if an instance of CodeIgniter is available.
         if (get_instance() !== null) {
             $this->ci =& get_instance();
@@ -68,6 +69,9 @@ class App_hooks
             // If an instance is not available, create a new CI object.
             $this->ci = new CI_Controller();
         }
+=======
+        $this->ci =& get_instance();
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         if (is_object($this->ci)) {
             $this->isInstalled = $this->ci->config->item('bonfire.installed');
@@ -148,10 +152,44 @@ class App_hooks
             return;
         }
 
+<<<<<<< HEAD
         // Check if CI_Session class is loaded and load it if necessary.
         if (! class_exists('CI_Session', false)) {
             if (! isset($this->ci->session)) {
                 $this->ci->load->library('session');
+=======
+        // If the CI_Session class is not loaded, this might be a controller that
+        // doesn't extend any of Bonfire's controllers. In that case, try to do
+        // this the old fashioned way and add it straight to the session.
+
+        if (! class_exists('CI_Session', false)) {
+            if (is_object(get_instance())) {
+                // If an instance is available, just load the session lib.
+                $this->ci->load->library('session');
+            } elseif (get_instance() === null) {
+                // If an instance is not available...
+                // Try to grab the REQUEST_URI since this will work in most cases.
+                $uri = empty($_SERVER['REQUEST_URI']) ? null : $_SERVER['REQUEST_URI'];
+                if (empty($uri)) {
+                    // Try to get the current URL through PATH INFO.
+                    $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : @getenv('PATH_INFO');
+                    if (trim($path, '/') != '' && $path != '/' . SELF) {
+                        $uri = $path;
+                    }
+                }
+
+                if (empty($uri)) {
+                    // Finally, try the query string.
+                    $path =  isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : @getenv('QUERY_STRING');
+                    if (trim($path, '/') != '') {
+                        $uri = $path;
+                    }
+                }
+
+                // Set the variable in the session and return.
+                $_SESSION['requested_page'] = $uri;
+                return;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             }
         }
 
@@ -164,6 +202,7 @@ class App_hooks
         }
     }
 
+<<<<<<< HEAD
 
     protected function ruriInArray(array $ruriArray)
     {
@@ -171,6 +210,10 @@ class App_hooks
             return false;
         }
 
+=======
+    protected function ruriInArray(array $ruriArray)
+    {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         // Output of uri->ruri_string() is considerably different in CI 3 when using
         // the BF_Router, so the following normalizes the output for the comparison
         // with $this->ignore_pages.

@@ -42,7 +42,11 @@
                     <div class="card-inner text-center">
                         <i class="icon icon-lg ni ni-spark"></i>
                         <h5 class="nk-block-title fw-normal">Account / Billing</h5>
+<<<<<<< HEAD
                         <div class="nk-block-head-sub"><span>Information regarding Account &amp; Billing</span></div>
+=======
+                        <div class="nk-block-head-sub"><span>Find information regarding Account &amp; Billing</span></div>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         <div class="nk-block-des">
                             <p class="lead">
                                 <a class="btn btn-primary btn-md" href="<?php echo site_url('Knowledge-Base/Account-And-Billing'); ?>">Learn more</a>

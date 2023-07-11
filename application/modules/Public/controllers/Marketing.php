@@ -38,7 +38,11 @@ class Marketing extends Front_Controller
         parent::__construct();
 
         $this->load->helper(array('directory', 'form', 'file', 'url'));
+<<<<<<< HEAD
         $this->load->library(array('form_validation', 'upload'));
+=======
+        $this->load->library(array('form_validation', 'upload', 'user_agent'));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         //$this->load->model('user_model');
         //$this->load->module('ContactUs');
 
@@ -56,7 +60,11 @@ class Marketing extends Front_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Home';
         
         $this->set_current_user();
@@ -68,7 +76,11 @@ class Marketing extends Front_Controller
 
     public function Why_MyMI_Wallet()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Home';
         
         $this->set_current_user();
@@ -80,7 +92,11 @@ class Marketing extends Front_Controller
 
     public function MyMI_Gold()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'How_It_Works_MyMI_Gold';
         
         $this->set_current_user();
@@ -90,6 +106,7 @@ class Marketing extends Front_Controller
         Template::render();
     }
 
+<<<<<<< HEAD
     public function Our_Story() {
         $pageType = 'Automated';
         $pageName = 'Our_Story';
@@ -101,6 +118,8 @@ class Marketing extends Front_Controller
         Template::render();
     }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     private function saveData($type = 'insert', $id = 0)
     {
         if ($type != 'insert') {

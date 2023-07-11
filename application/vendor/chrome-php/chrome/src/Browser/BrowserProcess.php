@@ -11,6 +11,10 @@
 
 namespace HeadlessChromium\Browser;
 
+<<<<<<< HEAD
+=======
+use HeadlessChromium\Browser;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 use HeadlessChromium\Communication\Connection;
 use HeadlessChromium\Exception\OperationTimedOut;
 use HeadlessChromium\Utils;
@@ -293,9 +297,12 @@ class BrowserProcess implements LoggerAwareInterface
             // auto debug port
             '--remote-debugging-port=0',
 
+<<<<<<< HEAD
             // allow remote access
             '--remote-allow-origins=*',
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             // disable undesired features
             '--disable-background-networking',
             '--disable-background-timer-throttling',
@@ -318,11 +325,14 @@ class BrowserProcess implements LoggerAwareInterface
             '--use-mock-keychain', // osX only
         ];
 
+<<<<<<< HEAD
         // disable browser notifications
         if (\array_key_exists('disableNotifications', $options) && (true === $options['disableNotifications'])) {
             $args[] = '--disable-notifications';
         }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         // enable headless mode
         if (!\array_key_exists('headless', $options) || $options['headless']) {
             $args[] = '--headless';
@@ -351,11 +361,14 @@ class BrowserProcess implements LoggerAwareInterface
             $args[] = '--window-size='.\implode(',', $options['windowSize']);
         }
 
+<<<<<<< HEAD
         if (\array_key_exists('userCrashDumpsDir', $options)) {
             $args[] = '--enable-crash-reporter';
             $args[] = '--crash-dumps-dir='.$options['userCrashDumpsDir'];
         }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         // sandbox mode - useful if you want to use chrome headless inside docker
         if (\array_key_exists('noSandbox', $options) && $options['noSandbox']) {
             $args[] = '--no-sandbox';
@@ -444,9 +457,12 @@ class BrowserProcess implements LoggerAwareInterface
                                 $this->logger->debug('process: ✓ accepted output');
 
                                 return $matches[1];
+<<<<<<< HEAD
                             } elseif (\preg_match('/Cannot start http server for devtools\./', $output, $matches)) {
                                 $process->stop();
                                 throw new \RuntimeException('Devtools could not start');
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                             } else {
                                 // log
                                 $this->logger->debug('process: ignoring output:'.\trim($output));
@@ -461,7 +477,10 @@ class BrowserProcess implements LoggerAwareInterface
 
             return Utils::tryWithTimeout($timeout, $generator($process));
         } catch (OperationTimedOut $e) {
+<<<<<<< HEAD
             $process->stop();
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             throw new \RuntimeException('Cannot start browser', 0, $e);
         }
     }

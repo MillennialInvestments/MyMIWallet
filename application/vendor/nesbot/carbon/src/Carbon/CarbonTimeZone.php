@@ -253,6 +253,7 @@ class CarbonTimeZone extends DateTimeZone
     }
 
     /**
+<<<<<<< HEAD
      * Return the type number:
      *
      * Type 1; A UTC offset, such as -0300
@@ -265,6 +266,8 @@ class CarbonTimeZone extends DateTimeZone
     }
 
     /**
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * Create a CarbonTimeZone from mixed input.
      *
      * @param DateTimeZone|string|int|null $object

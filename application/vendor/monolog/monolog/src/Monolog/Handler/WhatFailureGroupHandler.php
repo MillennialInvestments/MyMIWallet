@@ -64,6 +64,7 @@ class WhatFailureGroupHandler extends GroupHandler
             }
         }
     }
+<<<<<<< HEAD
 
     /**
      * {@inheritDoc}
@@ -78,4 +79,6 @@ class WhatFailureGroupHandler extends GroupHandler
             }
         }
     }
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

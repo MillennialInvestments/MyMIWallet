@@ -39,7 +39,10 @@ class Dashboard extends Admin_Controller
         //$this->load->module('ContactUs');
         $this->load->library('Template');
         $this->load->model(array('User/dashboard_model', 'User/exchange_model', 'User/public_model'));
+<<<<<<< HEAD
         $this->load->module('Institutions');
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     // -------------------------------------------------------------------------
@@ -48,7 +51,11 @@ class Dashboard extends Admin_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -60,7 +67,11 @@ class Dashboard extends Admin_Controller
 
     public function Investor_Profile()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investor_Profile';
         
         $this->set_current_user();
@@ -72,7 +83,11 @@ class Dashboard extends Admin_Controller
 
     public function Profile_Manager()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Profile_Manager';
         
         $this->set_current_user();
@@ -86,7 +101,11 @@ class Dashboard extends Admin_Controller
 
     public function Add_Investor_Profile()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Add_Investor_Profile';
         
         $this->set_current_user();
@@ -142,7 +161,11 @@ class Dashboard extends Admin_Controller
                                 
     public function Announcements()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->load->model('Management/announcements_model');
@@ -155,7 +178,11 @@ class Dashboard extends Admin_Controller
 
     public function Edit_Profile()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Edit_Profile';
         
         $this->set_current_user();
@@ -216,7 +243,11 @@ class Dashboard extends Admin_Controller
 
     public function Edit_Investor_Profile()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Edit_Investor_Profile';
         
         $this->set_current_user();
@@ -271,7 +302,11 @@ class Dashboard extends Admin_Controller
     
     public function Edit_Social_Media()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Edit_Social_Media';
         
         $this->set_current_user();
@@ -318,7 +353,11 @@ class Dashboard extends Admin_Controller
                
     public function Mymi_Coins()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -330,7 +369,11 @@ class Dashboard extends Admin_Controller
             
     public function My_Profile()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'User_Profile';
         
         $this->set_current_user();
@@ -385,7 +428,11 @@ class Dashboard extends Admin_Controller
            
     public function Purchase()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Confirmation';
         
         $this->set_current_user();
@@ -397,7 +444,11 @@ class Dashboard extends Admin_Controller
 
     public function Purchase_Coins()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Purchase_Coins';
         
         $this->set_current_user();
@@ -409,7 +460,11 @@ class Dashboard extends Admin_Controller
 
     public function Request_Coins()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Request_Coins';
         
         $this->set_current_user();
@@ -494,7 +549,11 @@ class Dashboard extends Admin_Controller
     
     public function Complete($trans_id)
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Investment_Complete';
         
         $this->set_current_user();
@@ -509,7 +568,11 @@ class Dashboard extends Admin_Controller
            
     public function Markets()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -521,7 +584,11 @@ class Dashboard extends Admin_Controller
 
     public function Search()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Search';
         
         $this->set_current_user();
@@ -551,7 +618,11 @@ class Dashboard extends Admin_Controller
            
     public function Trade_Alerts()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -563,7 +634,11 @@ class Dashboard extends Admin_Controller
 
     public function Trade_Alerts_Log()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -575,7 +650,11 @@ class Dashboard extends Admin_Controller
         
     public function User_Profile()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'User_Profile';
         
         $this->set_current_user();

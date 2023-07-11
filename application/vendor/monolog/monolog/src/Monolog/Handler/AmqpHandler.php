@@ -27,6 +27,7 @@ class AmqpHandler extends AbstractProcessingHandler
      * @var AMQPExchange|AMQPChannel $exchange
      */
     protected $exchange;
+<<<<<<< HEAD
     /** @var array<string, mixed> */
     private $extraAttributes = [];
 
@@ -52,6 +53,8 @@ class AmqpHandler extends AbstractProcessingHandler
         $this->extraAttributes = $extraAttributes;
         return $this;
     }
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
     /**
      * @var string
@@ -85,6 +88,7 @@ class AmqpHandler extends AbstractProcessingHandler
         $routingKey = $this->getRoutingKey($record);
 
         if ($this->exchange instanceof AMQPExchange) {
+<<<<<<< HEAD
             $attributes = [
                 'delivery_mode' => 2,
                 'content_type'  => 'application/json',
@@ -92,11 +96,20 @@ class AmqpHandler extends AbstractProcessingHandler
             if ($this->extraAttributes) {
                 $attributes = array_merge($attributes, $this->extraAttributes);
             }
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             $this->exchange->publish(
                 $data,
                 $routingKey,
                 0,
+<<<<<<< HEAD
                 $attributes
+=======
+                [
+                    'delivery_mode' => 2,
+                    'content_type' => 'application/json',
+                ]
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             );
         } else {
             $this->exchange->basic_publish(
@@ -151,6 +164,7 @@ class AmqpHandler extends AbstractProcessingHandler
 
     private function createAmqpMessage(string $data): AMQPMessage
     {
+<<<<<<< HEAD
         $attributes = [
             'delivery_mode' => 2,
             'content_type' => 'application/json',
@@ -159,6 +173,15 @@ class AmqpHandler extends AbstractProcessingHandler
             $attributes = array_merge($attributes, $this->extraAttributes);
         }
         return new AMQPMessage($data, $attributes);
+=======
+        return new AMQPMessage(
+            $data,
+            [
+                'delivery_mode' => 2,
+                'content_type' => 'application/json',
+            ]
+        );
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**

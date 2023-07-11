@@ -1,6 +1,7 @@
 
 <div class="intro-section intro-feature bg-white pt-0" id="registration-form">
     <div class="container-fluid px-0">
+<<<<<<< HEAD
         <div class="row justify-content-center pt-5">
             <?php
                 $site_open = $this->settings_lib->item('auth.allow_register');
@@ -13,10 +14,27 @@
 					<div class="card-body py-5">
                         <div id="login">
                             <?php $this->load->view('users/login-form'); ?>
+=======
+        <div class="row justify-content-center py-0">
+            <div class="mbr-black col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
+				<div class="card">
+					<div class="card-body py-5">
+                        <div class="row justify-content-center pt-5">
+                            <?php
+                                $site_open = $this->settings_lib->item('auth.allow_register');
+                            ?>
+                            <p><br/><a href="<?php echo site_url(); ?>">&larr; <?php echo lang('us_back_to') . 'Home'; ?></a></p>
+                        </div>
+                        <div class="row">
+                            <div id="login">
+                                <?php $this->load->view('users/login-form'); ?>
+                            </div>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         </div>
 	                </div>
 	            </div>
 	        </div>
+<<<<<<< HEAD
             <div class="mbr-black d-none col-xxl-8 col-lg-8 col-md-8 col-12 grid-margin stretch-card">
                 <div class="card card-bordered pricing">
                     <div class="card-body py-lg-5">
@@ -45,6 +63,8 @@
                     </div>
                 </div>
             </div>
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	    </div>
 	</div>
 </div>

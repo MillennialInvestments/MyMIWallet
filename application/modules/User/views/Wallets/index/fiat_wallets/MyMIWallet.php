@@ -1,6 +1,10 @@
 <?php
 echo '
+<<<<<<< HEAD
 <div class="col-xxl-3 col-lg-4 col-sm-6 mt-3">
+=======
+<div class="col-md-6 col-lg-4 mt-3">
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	<div class="card card-bordered">
 		<div class="nk-wgw">
 			<div class="nk-wgw-inner">
@@ -17,6 +21,7 @@ echo '
 			</div>
 			<div class="nk-wgw-actions">
 				<ul>
+<<<<<<< HEAD
                     <li class="' . $btnSizing . '">
                         <a href="' . site_url('/MyMI-Wallet') . '"><em class="icon ni ni-menu"></em><span>Details</span></a>
                     </li>
@@ -25,11 +30,22 @@ echo '
 					</li>
 					<li class="' . $btnSizing . '">
 						<a class="withdrawFundsBtn" href="#" data-toggle="modal" data-target="#transactionModal"><em class="icon ni ni-minus"></em><span>Withdraw</span></a>
+=======
+					<li>
+						<a class="depositFundsBtn" href="#" data-toggle="modal" data-target="#transactionModal"><i class="icon icon-arrow-up"></i> <span>Deposit Funds</span></a>
+					</li>
+					<li>
+						<a class="withdrawFundsBtn" href="#" data-toggle="modal" data-target="#transactionModal"><em class="icon icon-arrow-down"></em><span>Withdraw Funds</span></a>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 					</li>
 				</ul>
 			</div>
 			<div class="nk-wgw-more dropdown">
+<<<<<<< HEAD
 				<a href="#" class="btn btn-icon btn-trigger" data-toggle="dropdown"><i class="icon ni ni-options"></i></a>
+=======
+				<a href="#" class="btn btn-icon btn-trigger" data-toggle="dropdown"><i class="icon-options full-width"></i></a>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 				<div class="dropdown-menu dropdown-menu-xs dropdown-menu-right">
 					<ul class="link-list-plain sm">
 						<li><a href="' . site_url('/MyMI-Wallet') . '">Details</a></li>   

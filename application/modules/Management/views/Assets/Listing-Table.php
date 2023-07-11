@@ -27,7 +27,11 @@
                             <td>' . $asset['listing_type'] . '</td>
                             <td>' . $asset['blockchain'] . ' (' . $asset['blockchain_name'] . ')</td>
                             <td>' . $asset['coin_quantity'] . '</td>
+<<<<<<< HEAD
                             <td><a href="' . site_url('Management/' . $pageURIB . '/Support/Requests/' . $asset['id']) . '"><i class="icon icon-plus"></i></a></td>
+=======
+                            <td><a href="' . site_url('Management/' . $pageURIB . '/Support/Requests/' . $support['id']) . '"><i class="icon icon-plus"></i></a></td>
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         </tr>
                         ';
                     }

@@ -50,10 +50,17 @@ class CookieJar implements CookieJarInterface
         $cookieJar = new self();
         foreach ($cookies as $name => $value) {
             $cookieJar->setCookie(new SetCookie([
+<<<<<<< HEAD
                 'Domain' => $domain,
                 'Name' => $name,
                 'Value' => $value,
                 'Discard' => true,
+=======
+                'Domain'  => $domain,
+                'Name'    => $name,
+                'Value'   => $value,
+                'Discard' => true
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             ]));
         }
 
@@ -97,7 +104,11 @@ class CookieJar implements CookieJarInterface
     }
 
     /**
+<<<<<<< HEAD
      * {@inheritDoc}
+=======
+     * @inheritDoc
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public function toArray(): array
     {
@@ -107,13 +118,20 @@ class CookieJar implements CookieJarInterface
     }
 
     /**
+<<<<<<< HEAD
      * {@inheritDoc}
+=======
+     * @inheritDoc
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public function clear(?string $domain = null, ?string $path = null, ?string $name = null): void
     {
         if (!$domain) {
             $this->cookies = [];
+<<<<<<< HEAD
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return;
         } elseif (!$path) {
             $this->cookies = \array_filter(
@@ -143,7 +161,11 @@ class CookieJar implements CookieJarInterface
     }
 
     /**
+<<<<<<< HEAD
      * {@inheritDoc}
+=======
+     * @inheritDoc
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public function clearSessionCookies(): void
     {
@@ -156,7 +178,11 @@ class CookieJar implements CookieJarInterface
     }
 
     /**
+<<<<<<< HEAD
      * {@inheritDoc}
+=======
+     * @inheritDoc
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public function setCookie(SetCookie $cookie): bool
     {
@@ -171,15 +197,25 @@ class CookieJar implements CookieJarInterface
         $result = $cookie->validate();
         if ($result !== true) {
             if ($this->strictMode) {
+<<<<<<< HEAD
                 throw new \RuntimeException('Invalid cookie: '.$result);
             }
             $this->removeCookieIfEmpty($cookie);
 
+=======
+                throw new \RuntimeException('Invalid cookie: ' . $result);
+            }
+            $this->removeCookieIfEmpty($cookie);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return false;
         }
 
         // Resolve conflicts with previously set cookies
         foreach ($this->cookies as $i => $c) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             // Two cookies are identical, when their path, and domain are
             // identical.
             if ($c->getPath() != $cookie->getPath() ||
@@ -255,7 +291,11 @@ class CookieJar implements CookieJarInterface
     /**
      * Computes cookie path following RFC 6265 section 5.1.4
      *
+<<<<<<< HEAD
      * @see https://tools.ietf.org/html/rfc6265#section-5.1.4
+=======
+     * @link https://tools.ietf.org/html/rfc6265#section-5.1.4
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     private function getCookiePathFromRequest(RequestInterface $request): string
     {
@@ -291,8 +331,13 @@ class CookieJar implements CookieJarInterface
                 !$cookie->isExpired() &&
                 (!$cookie->getSecure() || $scheme === 'https')
             ) {
+<<<<<<< HEAD
                 $values[] = $cookie->getName().'='
                     .$cookie->getValue();
+=======
+                $values[] = $cookie->getName() . '='
+                    . $cookie->getValue();
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             }
         }
 

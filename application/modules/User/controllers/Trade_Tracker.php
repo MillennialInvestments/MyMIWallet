@@ -38,7 +38,11 @@ class Trade_Tracker extends Admin_Controller
         parent::__construct();
 
         $this->load->helper(array('directory', 'form', 'file', 'url'));
+<<<<<<< HEAD
         $this->load->library(array('form_validation', 'upload'));
+=======
+        $this->load->library(array('form_validation', 'upload', 'user_agent'));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         //~ $this->load->model('User/tracker_model');
         //$this->load->module('ContactUs');
 
@@ -56,7 +60,11 @@ class Trade_Tracker extends Admin_Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -68,7 +76,11 @@ class Trade_Tracker extends Admin_Controller
 
     public function Log()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -80,7 +92,11 @@ class Trade_Tracker extends Admin_Controller
 
     public function Overview()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -92,7 +108,11 @@ class Trade_Tracker extends Admin_Controller
         
     public function Holdings_Manager()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -100,6 +120,7 @@ class Trade_Tracker extends Admin_Controller
         $this->load->view('Exchange/Order_Buy_Manager');
     }
 
+<<<<<<< HEAD
     public function Layout_Manager()
     {
         $pageType = 'Automated';
@@ -113,6 +134,11 @@ class Trade_Tracker extends Admin_Controller
     public function Trade_Manager()
     {
         $pageType = 'Automated';
+=======
+    public function Trade_Manager()
+    {
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -122,7 +148,11 @@ class Trade_Tracker extends Admin_Controller
     
     public function Trade_Tracker_Editor()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -132,7 +162,11 @@ class Trade_Tracker extends Admin_Controller
 
     public function Search()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Search';
         
         $this->set_current_user();
@@ -169,7 +203,11 @@ class Trade_Tracker extends Admin_Controller
     
     public function Add()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Add';
         
         $this->set_current_user();
@@ -268,7 +306,11 @@ class Trade_Tracker extends Admin_Controller
     
     public function Quick_Trade()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Quick_Trade';
         
         $this->set_current_user();
@@ -336,7 +378,11 @@ class Trade_Tracker extends Admin_Controller
     
     public function Sell()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Sell';
         
         $this->set_current_user();
@@ -456,7 +502,11 @@ class Trade_Tracker extends Admin_Controller
     
     public function Update($stockID)
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Trade_Tracker_Update';
         
         $this->set_current_user();
@@ -532,7 +582,11 @@ class Trade_Tracker extends Admin_Controller
     
     public function Close()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Close';
         
         $this->set_current_user();
@@ -664,7 +718,11 @@ class Trade_Tracker extends Admin_Controller
     
     public function Add_Stock()
     {
+<<<<<<< HEAD
         $pageType = 'Automated';
+=======
+        $pageType = 'Standard';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Add_Stock';
         
         $this->set_current_user();

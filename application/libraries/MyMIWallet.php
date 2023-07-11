@@ -165,6 +165,7 @@ class MyMIWallet
         }
     }
 
+<<<<<<< HEAD
     public function get_wallet_summaries($cuID) {
         $getCheckingSummaries                                       = $this->CI->mymiwallet->get_checking_summaries($cuID);
         $getCreditSummaries                                         = $this->CI->mymiwallet->get_credit_summaries($cuID); 
@@ -192,6 +193,8 @@ class MyMIWallet
         return $userWalletInfo;
     }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public function get_total_wallet_value($cuID)
     {
         $defWalletInfo				    	                        = $this->CI->mymiwallet->get_default_wallet_info($cuID);
@@ -278,6 +281,69 @@ class MyMIWallet
         }
     }
 
+<<<<<<< HEAD
+=======
+    public function get_wallet_info($cuID, $walletID)
+    {
+        $getWalletDeposits					    = $this->CI->wallet_model->get_wallet_deposits($cuID, $walletID);
+        foreach ($getWalletDeposits->result_array() as $depositInfo) {
+            $depositAmount				        = $depositInfo['amount'];
+        }
+        $getWalletWithdrawals				    = $this->CI->wallet_model->get_wallet_withdrawals($cuID, $walletID);
+        foreach ($getWalletWithdrawals->result_array() as $withdrawInfo) {
+            $withdrawAmount				        = $withdrawInfo['amount'];
+        }
+        $getWalletTrades					    = $this->CI->tracker_model->get_wallet_trades_net_gains($walletID);
+        foreach ($getWalletTrades->result_array() as $walletTrades) {
+            //~ $walletGains				= number_format($walletTrades['net_gains'], 2, '.', '');
+            $walletGains				        = $walletTrades['net_gains'];
+        }
+        $getWalletsTotals					    = $this->CI->wallet_model->get_wallet_totals($cuID);
+        foreach ($getWalletsTotals->result_array() as $walletTotals) {
+            $walletInitialAmount		        = $walletTotals['amount'] + $depositAmount - $withdrawAmount;
+            $walletTotalAmount			        = $walletTotals['amount'] + $depositAmount - $withdrawAmount + $walletGains;
+        }
+        $getWalletInfo						    = $this->CI->investor_model->get_wallet_info($walletID);
+        foreach ($getWalletInfo->result_array() as $walletInfo) {
+            $walletBroker				        = $walletInfo['broker'];
+            $walletAccountID    		        = $walletInfo['account_id'];
+            $walletAccessCode                   = $walletInfo['access_code'];
+            $walletPremium                      = $walletInfo['premium_wallet']; 
+            $walletNickname				        = $walletInfo['nickname'];
+            $walletDefault				        = $walletInfo['default_wallet'];
+            $walletExchange				        = $walletInfo['exchange_wallet'];
+            $walletMarketPair			        = $walletInfo['market_pair'];
+            $walletMarket				        = $walletInfo['market'];
+            $walletAmount				        = $walletInfo['amount'];
+            if (!empty($walletInfo['nickname'])) {
+                $walletTitle		            = $walletInfo['nickname'];
+            } else {
+                $walletTitle		            = $walletInfo['broker'] . 'Account';
+            };
+        }
+        $walletTotalAmount                      = 
+        $userWalletInfo						        = array(
+            'walletID'					        => $walletID,
+            'walletBroker'                      => $walletBroker,
+            'walletAccountID'   		        => $walletAccountID,
+            'walletAccessCode'                  => $walletAccessCode,
+            'walletPremium'                     => $walletPremium,
+            'walletInitialAmount'		        => $walletInitialAmount,
+            'walletTitle'				        => $walletTitle,
+            'walletNickname'			        => $walletNickname,
+            'walletDefault'				        => $walletDefault,
+            'walletExchange'		    	    => $walletExchange,
+            'walletMarketPair'		    	    => $walletMarketPair,
+            'walletMarket'			    	    => $walletMarket,
+            'walletTotalAmount'		    	    => $walletTotalAmount,
+            'depositAmount'			    	    => $depositAmount,
+            'withdrawAmount'			        => $withdrawAmount,
+            'walletGains'				        => $walletGains,
+        );
+        return $userWalletInfo;
+    }
+
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public function get_total_wallet_percentage($cuID)
     {
         $getAllWalletAmounts					        = $this->CI->wallet_model->get_all_wallet_amounts($cuID);
@@ -331,6 +397,24 @@ class MyMIWallet
         return $userLastActivity;
     }
     
+<<<<<<< HEAD
+=======
+    public function get_wallet_information($walletID)
+    {
+        $getWalletInformation              	 	= $this->CI->wallet_model->get_wallet_info($walletID);
+        foreach ($getWalletInformation->result_array() as $walletInfo) {
+            $walletData                     	= array(
+                'type'                     		=> $walletInfo['type'],
+                'broker'                   		=> $walletInfo['broker'],
+                'nickname'                 		=> $walletInfo['nickname'],
+                'amount'             	    	=> $walletInfo['amount'],
+            );
+            
+            return $walletData;
+        }
+    }
+
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public function get_wallets_by_user($userID) {
         $getUserWallets                         = $this->CI->analytical_model->get_total_active_wallets_by_user($userID); 
         return $getUserWallets;

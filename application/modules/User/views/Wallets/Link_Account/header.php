@@ -1,9 +1,13 @@
 <?php
+<<<<<<< HEAD
 if ($pageURIC === 'Search') {
     $title              = 'Search Institutions';
     $subtitle           = '';
     $description        = 'Search Financial Institutions to Connect Your Accounts';
 } elseif ($pageURIC === 'Details') {
+=======
+if ($pageURIC === 'Details') {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     $title              = 'Confirm Account Details';
     $subtitle           = '';
     $description        = 'Please View & Confirm Your Account Details';

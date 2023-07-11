@@ -75,9 +75,12 @@ trait Comparison
      */
     public function equalTo($date): bool
     {
+<<<<<<< HEAD
         $this->discourageNull($date);
         $this->discourageBoolean($date);
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         return $this == $this->resolveCarbon($date);
     }
 
@@ -158,9 +161,12 @@ trait Comparison
      */
     public function greaterThan($date): bool
     {
+<<<<<<< HEAD
         $this->discourageNull($date);
         $this->discourageBoolean($date);
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         return $this > $this->resolveCarbon($date);
     }
 
@@ -222,10 +228,14 @@ trait Comparison
      */
     public function greaterThanOrEqualTo($date): bool
     {
+<<<<<<< HEAD
         $this->discourageNull($date);
         $this->discourageBoolean($date);
 
         return $this >= $this->resolveCarbon($date);
+=======
+        return $this >= $date;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -265,9 +275,12 @@ trait Comparison
      */
     public function lessThan($date): bool
     {
+<<<<<<< HEAD
         $this->discourageNull($date);
         $this->discourageBoolean($date);
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         return $this < $this->resolveCarbon($date);
     }
 
@@ -329,10 +342,14 @@ trait Comparison
      */
     public function lessThanOrEqualTo($date): bool
     {
+<<<<<<< HEAD
         $this->discourageNull($date);
         $this->discourageBoolean($date);
 
         return $this <= $this->resolveCarbon($date);
+=======
+        return $this <= $date;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -366,10 +383,17 @@ trait Comparison
         }
 
         if ($equal) {
+<<<<<<< HEAD
             return $this >= $date1 && $this <= $date2;
         }
 
         return $this > $date1 && $this < $date2;
+=======
+            return $this->greaterThanOrEqualTo($date1) && $this->lessThanOrEqualTo($date2);
+        }
+
+        return $this->greaterThan($date1) && $this->lessThan($date2);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -563,6 +587,7 @@ trait Comparison
     }
 
     /**
+<<<<<<< HEAD
      * Determines if the instance is a long year (using calendar year).
      *
      * ⚠️ This method completely ignores month and day to use the numeric year number,
@@ -574,6 +599,14 @@ trait Comparison
      * ```
      * Carbon::create(2015)->isLongYear(); // true
      * Carbon::create(2016)->isLongYear(); // false
+=======
+     * Determines if the instance is a long year
+     *
+     * @example
+     * ```
+     * Carbon::parse('2015-01-01')->isLongYear(); // true
+     * Carbon::parse('2016-01-01')->isLongYear(); // false
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * ```
      *
      * @see https://en.wikipedia.org/wiki/ISO_8601#Week_dates
@@ -586,6 +619,7 @@ trait Comparison
     }
 
     /**
+<<<<<<< HEAD
      * Determines if the instance is a long year (using ISO 8601 year).
      *
      * @example
@@ -607,6 +641,8 @@ trait Comparison
     }
 
     /**
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * Compares the formatted values of the two dates.
      *
      * @example
@@ -1022,12 +1058,20 @@ trait Comparison
             return $current->startOfMinute()->eq($other);
         }
 
+<<<<<<< HEAD
         if (preg_match('/\d(?:h|am|pm)$/', $tester)) {
+=======
+        if (preg_match('/\d(h|am|pm)$/', $tester)) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return $current->startOfHour()->eq($other);
         }
 
         if (preg_match(
+<<<<<<< HEAD
             '/^(?:january|february|march|april|may|june|july|august|september|october|november|december)(?:\s+\d+)?$/i',
+=======
+            '/^(january|february|march|april|may|june|july|august|september|october|november|december)\s+\d+$/i',
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             $tester
         )) {
             return $current->startOfMonth()->eq($other->startOfMonth());
@@ -1108,6 +1152,7 @@ trait Comparison
     {
         return $this->endOfTime ?? false;
     }
+<<<<<<< HEAD
 
     private function discourageNull($value): void
     {
@@ -1122,4 +1167,6 @@ trait Comparison
             @trigger_error("Since 2.61.0, it's deprecated to compare a date to true or false, meaning of such comparison is ambiguous and will no longer be possible in 3.0.0, you should explicitly pass 'now' or make an other check to eliminate boolean values.", \E_USER_DEPRECATED);
         }
     }
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

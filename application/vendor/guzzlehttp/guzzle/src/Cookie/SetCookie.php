@@ -11,6 +11,7 @@ class SetCookie
      * @var array
      */
     private static $defaults = [
+<<<<<<< HEAD
         'Name' => null,
         'Value' => null,
         'Domain' => null,
@@ -20,6 +21,17 @@ class SetCookie
         'Secure' => false,
         'Discard' => false,
         'HttpOnly' => false,
+=======
+        'Name'     => null,
+        'Value'    => null,
+        'Domain'   => null,
+        'Path'     => '/',
+        'Max-Age'  => null,
+        'Expires'  => null,
+        'Secure'   => false,
+        'Discard'  => false,
+        'HttpOnly' => false
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     ];
 
     /**
@@ -58,6 +70,7 @@ class SetCookie
             } else {
                 foreach (\array_keys(self::$defaults) as $search) {
                     if (!\strcasecmp($search, $key)) {
+<<<<<<< HEAD
                         if ($search === 'Max-Age') {
                             if (is_numeric($value)) {
                                 $data[$search] = (int) $value;
@@ -65,6 +78,9 @@ class SetCookie
                         } else {
                             $data[$search] = $value;
                         }
+=======
+                        $data[$search] = $value;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         continue 2;
                     }
                 }
@@ -80,6 +96,7 @@ class SetCookie
      */
     public function __construct(array $data = [])
     {
+<<<<<<< HEAD
         $this->data = self::$defaults;
 
         if (isset($data['Name'])) {
@@ -123,6 +140,15 @@ class SetCookie
             $this->data[$key] = $data[$key];
         }
 
+=======
+        /** @var array|null $replaced will be null in case of replace error */
+        $replaced = \array_replace(self::$defaults, $data);
+        if ($replaced === null) {
+            throw new \InvalidArgumentException('Unable to replace the default values for the Cookie.');
+        }
+
+        $this->data = $replaced;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         // Extract the Expires value and turn it into a UNIX timestamp if needed
         if (!$this->getExpires() && $this->getMaxAge()) {
             // Calculate the Expires date
@@ -134,6 +160,7 @@ class SetCookie
 
     public function __toString()
     {
+<<<<<<< HEAD
         $str = $this->data['Name'].'='.($this->data['Value'] ?? '').'; ';
         foreach ($this->data as $k => $v) {
             if ($k !== 'Name' && $k !== 'Value' && $v !== null && $v !== false) {
@@ -141,6 +168,15 @@ class SetCookie
                     $str .= 'Expires='.\gmdate('D, d M Y H:i:s \G\M\T', $v).'; ';
                 } else {
                     $str .= ($v === true ? $k : "{$k}={$v}").'; ';
+=======
+        $str = $this->data['Name'] . '=' . ($this->data['Value'] ?? '') . '; ';
+        foreach ($this->data as $k => $v) {
+            if ($k !== 'Name' && $k !== 'Value' && $v !== null && $v !== false) {
+                if ($k === 'Expires') {
+                    $str .= 'Expires=' . \gmdate('D, d M Y H:i:s \G\M\T', $v) . '; ';
+                } else {
+                    $str .= ($v === true ? $k : "{$k}={$v}") . '; ';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 }
             }
         }
@@ -436,7 +472,11 @@ class SetCookie
             return false;
         }
 
+<<<<<<< HEAD
         return (bool) \preg_match('/\.'.\preg_quote($cookieDomain, '/').'$/', $domain);
+=======
+        return (bool) \preg_match('/\.' . \preg_quote($cookieDomain, '/') . '$/', $domain);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -465,8 +505,13 @@ class SetCookie
             $name
         )) {
             return 'Cookie name must not contain invalid characters: ASCII '
+<<<<<<< HEAD
                 .'Control characters (0-31;127), space, tab and the '
                 .'following characters: ()<>@,;:\"/?={}';
+=======
+                . 'Control characters (0-31;127), space, tab and the '
+                . 'following characters: ()<>@,;:\"/?={}';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         // Value must not be null. 0 and empty string are valid. Empty strings

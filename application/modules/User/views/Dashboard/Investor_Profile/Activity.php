@@ -25,7 +25,10 @@
             $this->db->from('bf_act_logger'); 
             $this->db->where('created_by', $cuID); 
             $this->db->order_by('id', 'DESC'); 
+<<<<<<< HEAD
             $this->db->not_like('type', 'Page Visit');
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             $this->db->limit(20); 
             $getUserActivities               = $this->db->get();
             // print_r($getUserActivities->result_array()); 

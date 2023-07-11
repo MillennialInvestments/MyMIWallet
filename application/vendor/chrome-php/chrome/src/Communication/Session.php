@@ -86,7 +86,11 @@ class Session extends EventEmitter
     {
         $responseReader = $this->sendMessage($message);
 
+<<<<<<< HEAD
         $response = $responseReader->waitForResponse($timeout);
+=======
+        $response = $responseReader->waitForResponse($timeout ?? $this->getConnection()->getSendSyncDefaultTimeout());
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         if (!$response) {
             throw new NoResponseAvailable('No response was sent in the given timeout');

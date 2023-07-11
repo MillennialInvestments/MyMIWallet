@@ -81,7 +81,11 @@ final class Path
 
         // Replace "~" with user's home directory.
         if ('~' === $path[0]) {
+<<<<<<< HEAD
             $path = self::getHomeDirectory().substr($path, 1);
+=======
+            $path = self::getHomeDirectory().mb_substr($path, 1);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         $path = self::normalize($path);
@@ -151,14 +155,24 @@ final class Path
         $path = self::canonicalize($path);
 
         // Maintain scheme
+<<<<<<< HEAD
         if (false !== $schemeSeparatorPosition = strpos($path, '://')) {
             $scheme = substr($path, 0, $schemeSeparatorPosition + 3);
             $path = substr($path, $schemeSeparatorPosition + 3);
+=======
+        if (false !== ($schemeSeparatorPosition = mb_strpos($path, '://'))) {
+            $scheme = mb_substr($path, 0, $schemeSeparatorPosition + 3);
+            $path = mb_substr($path, $schemeSeparatorPosition + 3);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         } else {
             $scheme = '';
         }
 
+<<<<<<< HEAD
         if (false === $dirSeparatorPosition = strrpos($path, '/')) {
+=======
+        if (false === ($dirSeparatorPosition = strrpos($path, '/'))) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return '';
         }
 
@@ -169,10 +183,17 @@ final class Path
 
         // Directory equals Windows root "C:/"
         if (2 === $dirSeparatorPosition && ctype_alpha($path[0]) && ':' === $path[1]) {
+<<<<<<< HEAD
             return $scheme.substr($path, 0, 3);
         }
 
         return $scheme.substr($path, 0, $dirSeparatorPosition);
+=======
+            return $scheme.mb_substr($path, 0, 3);
+        }
+
+        return $scheme.mb_substr($path, 0, $dirSeparatorPosition);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -219,7 +240,11 @@ final class Path
         }
 
         // Maintain scheme
+<<<<<<< HEAD
         if (false !== $schemeSeparatorPosition = strpos($path, '://')) {
+=======
+        if (false !== ($schemeSeparatorPosition = strpos($path, '://'))) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             $scheme = substr($path, 0, $schemeSeparatorPosition + 3);
             $path = substr($path, $schemeSeparatorPosition + 3);
         } else {
@@ -233,7 +258,11 @@ final class Path
             return $scheme.'/';
         }
 
+<<<<<<< HEAD
         $length = \strlen($path);
+=======
+        $length = mb_strlen($path);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         // Windows root
         if ($length > 1 && ':' === $path[1] && ctype_alpha($firstCharacter)) {
@@ -349,16 +378,27 @@ final class Path
         $extension = ltrim($extension, '.');
 
         // No extension for paths
+<<<<<<< HEAD
         if ('/' === substr($path, -1)) {
+=======
+        if ('/' === mb_substr($path, -1)) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return $path;
         }
 
         // No actual extension in path
         if (empty($actualExtension)) {
+<<<<<<< HEAD
             return $path.('.' === substr($path, -1) ? '' : '.').$extension;
         }
 
         return substr($path, 0, -\strlen($actualExtension)).$extension;
+=======
+            return $path.('.' === mb_substr($path, -1) ? '' : '.').$extension;
+        }
+
+        return mb_substr($path, 0, -mb_strlen($actualExtension)).$extension;
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     public static function isAbsolute(string $path): bool
@@ -368,8 +408,13 @@ final class Path
         }
 
         // Strip scheme
+<<<<<<< HEAD
         if (false !== $schemeSeparatorPosition = strpos($path, '://')) {
             $path = substr($path, $schemeSeparatorPosition + 3);
+=======
+        if (false !== ($schemeSeparatorPosition = mb_strpos($path, '://'))) {
+            $path = mb_substr($path, $schemeSeparatorPosition + 3);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         $firstCharacter = $path[0];
@@ -380,9 +425,15 @@ final class Path
         }
 
         // Windows root
+<<<<<<< HEAD
         if (\strlen($path) > 1 && ctype_alpha($firstCharacter) && ':' === $path[1]) {
             // Special case: "C:"
             if (2 === \strlen($path)) {
+=======
+        if (mb_strlen($path) > 1 && ctype_alpha($firstCharacter) && ':' === $path[1]) {
+            // Special case: "C:"
+            if (2 === mb_strlen($path)) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 return true;
             }
 
@@ -451,9 +502,15 @@ final class Path
             return self::canonicalize($path);
         }
 
+<<<<<<< HEAD
         if (false !== $schemeSeparatorPosition = strpos($basePath, '://')) {
             $scheme = substr($basePath, 0, $schemeSeparatorPosition + 3);
             $basePath = substr($basePath, $schemeSeparatorPosition + 3);
+=======
+        if (false !== ($schemeSeparatorPosition = mb_strpos($basePath, '://'))) {
+            $scheme = mb_substr($basePath, 0, $schemeSeparatorPosition + 3);
+            $basePath = mb_substr($basePath, $schemeSeparatorPosition + 3);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         } else {
             $scheme = '';
         }
@@ -574,7 +631,11 @@ final class Path
      */
     public static function isLocal(string $path): bool
     {
+<<<<<<< HEAD
         return '' !== $path && false === strpos($path, '://');
+=======
+        return '' !== $path && false === mb_strpos($path, '://');
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -638,7 +699,11 @@ final class Path
 
                 // Prevent false positives for common prefixes
                 // see isBasePath()
+<<<<<<< HEAD
                 if (0 === strpos($path.'/', $basePath.'/')) {
+=======
+                if (0 === mb_strpos($path.'/', $basePath.'/')) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     // next path
                     continue 2;
                 }
@@ -666,12 +731,20 @@ final class Path
             if (null === $finalPath) {
                 // For first part we keep slashes, like '/top', 'C:\' or 'phar://'
                 $finalPath = $path;
+<<<<<<< HEAD
                 $wasScheme = (false !== strpos($path, '://'));
+=======
+                $wasScheme = (false !== mb_strpos($path, '://'));
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 continue;
             }
 
             // Only add slash if previous part didn't end with '/' or '\'
+<<<<<<< HEAD
             if (!\in_array(substr($finalPath, -1), ['/', '\\'])) {
+=======
+            if (!\in_array(mb_substr($finalPath, -1), ['/', '\\'])) {
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 $finalPath .= '/';
             }
 
@@ -717,11 +790,19 @@ final class Path
         // Don't append a slash for the root "/", because then that root
         // won't be discovered as common prefix ("//" is not a prefix of
         // "/foobar/").
+<<<<<<< HEAD
         return 0 === strpos($ofPath.'/', rtrim($basePath, '/').'/');
     }
 
     /**
      * @return string[]
+=======
+        return 0 === mb_strpos($ofPath.'/', rtrim($basePath, '/').'/');
+    }
+
+    /**
+     * @return non-empty-string[]
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     private static function findCanonicalParts(string $root, string $pathWithoutRoot): array
     {
@@ -776,19 +857,34 @@ final class Path
         }
 
         // Remember scheme as part of the root, if any
+<<<<<<< HEAD
         if (false !== $schemeSeparatorPosition = strpos($path, '://')) {
             $root = substr($path, 0, $schemeSeparatorPosition + 3);
             $path = substr($path, $schemeSeparatorPosition + 3);
+=======
+        if (false !== ($schemeSeparatorPosition = mb_strpos($path, '://'))) {
+            $root = mb_substr($path, 0, $schemeSeparatorPosition + 3);
+            $path = mb_substr($path, $schemeSeparatorPosition + 3);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         } else {
             $root = '';
         }
 
+<<<<<<< HEAD
         $length = \strlen($path);
 
         // Remove and remember root directory
         if (0 === strpos($path, '/')) {
             $root .= '/';
             $path = $length > 1 ? substr($path, 1) : '';
+=======
+        $length = mb_strlen($path);
+
+        // Remove and remember root directory
+        if (0 === mb_strpos($path, '/')) {
+            $root .= '/';
+            $path = $length > 1 ? mb_substr($path, 1) : '';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         } elseif ($length > 1 && ctype_alpha($path[0]) && ':' === $path[1]) {
             if (2 === $length) {
                 // Windows special case: "C:"
@@ -796,8 +892,13 @@ final class Path
                 $path = '';
             } elseif ('/' === $path[2]) {
                 // Windows normal case: "C:/"..
+<<<<<<< HEAD
                 $root .= substr($path, 0, 3);
                 $path = $length > 3 ? substr($path, 3) : '';
+=======
+                $root .= mb_substr($path, 0, 3);
+                $path = $length > 3 ? mb_substr($path, 3) : '';
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             }
         }
 
@@ -806,11 +907,19 @@ final class Path
 
     private static function toLower(string $string): string
     {
+<<<<<<< HEAD
         if (false !== $encoding = mb_detect_encoding($string, null, true)) {
             return mb_strtolower($string, $encoding);
         }
 
         return strtolower($string);
+=======
+        if (false !== $encoding = mb_detect_encoding($string)) {
+            return mb_strtolower($string, $encoding);
+        }
+
+        return strtolower($string, $encoding);
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     private function __construct()

@@ -14,12 +14,15 @@ declare(strict_types=1);
 namespace Carbon\PHPStan;
 
 use Closure;
+<<<<<<< HEAD
 use InvalidArgumentException;
 use PHPStan\BetterReflection\Reflection\Adapter\ReflectionParameter as AdapterReflectionParameter;
 use PHPStan\BetterReflection\Reflection\Adapter\ReflectionType as AdapterReflectionType;
 use PHPStan\BetterReflection\Reflection\ReflectionClass as BetterReflectionClass;
 use PHPStan\BetterReflection\Reflection\ReflectionFunction as BetterReflectionFunction;
 use PHPStan\BetterReflection\Reflection\ReflectionParameter as BetterReflectionParameter;
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 use PHPStan\Reflection\Php\BuiltinMethodReflection;
 use PHPStan\TrinaryLogic;
 use ReflectionClass;
@@ -80,6 +83,7 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         $this->className = $className;
         $this->methodName = $methodName;
+<<<<<<< HEAD
         $rawReflectionFunction = \is_array($macro)
             ? new ReflectionMethod($macro[0], $macro[1])
             : new ReflectionFunction($macro);
@@ -100,6 +104,16 @@ abstract class AbstractMacro implements BuiltinMethodReflection
         if ($rawReflectionFunction->isClosure()) {
             try {
                 $closure = $rawReflectionFunction->getClosure();
+=======
+        $this->reflectionFunction = \is_array($macro)
+            ? new ReflectionMethod($macro[0], $macro[1])
+            : new ReflectionFunction($macro);
+        $this->parameters = $this->reflectionFunction->getParameters();
+
+        if ($this->reflectionFunction->isClosure()) {
+            try {
+                $closure = $this->reflectionFunction->getClosure();
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 $boundClosure = Closure::bind($closure, new stdClass());
                 $this->static = (!$boundClosure || (new ReflectionFunction($boundClosure))->getClosureThis() === null);
             } catch (Throwable $e) {
@@ -108,6 +122,7 @@ abstract class AbstractMacro implements BuiltinMethodReflection
         }
     }
 
+<<<<<<< HEAD
     private function getReflectionFunction($spec)
     {
         if (\is_array($spec) && \count($spec) === 2 && \is_string($spec[1])) {
@@ -133,6 +148,8 @@ abstract class AbstractMacro implements BuiltinMethodReflection
         throw new InvalidArgumentException('Could not create reflection from the spec given'); // @codeCoverageIgnore
     }
 
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     /**
      * {@inheritdoc}
      */
@@ -218,6 +235,7 @@ abstract class AbstractMacro implements BuiltinMethodReflection
      */
     public function getReturnType(): ?ReflectionType
     {
+<<<<<<< HEAD
         $type = $this->reflectionFunction->getReturnType();
 
         if ($type instanceof ReflectionType) {
@@ -225,6 +243,9 @@ abstract class AbstractMacro implements BuiltinMethodReflection
         }
 
         return self::adaptType($type);
+=======
+        return $this->reflectionFunction->getReturnType();
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -258,6 +279,7 @@ abstract class AbstractMacro implements BuiltinMethodReflection
     {
         return null;
     }
+<<<<<<< HEAD
 
     public function returnsByReference(): TrinaryLogic
     {
@@ -285,4 +307,6 @@ abstract class AbstractMacro implements BuiltinMethodReflection
 
         return $modernParser;
     }
+=======
+>>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
