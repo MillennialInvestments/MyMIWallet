@@ -118,12 +118,138 @@ class Wallet_model extends BF_Model
      * function to add/delete/update bf_dashboards
      */
     
+
+    // Attach Wallet to Budget Record for Processing
+    public function attach_wallet_to_budget_record($recordID, $walletID) {
+        $userData                               = array(
+            'wallet_id'                         => $walletID,
+        ); 
+
+        $this->db->where('id', $recordID); 
+        return $this->db->update('bf_users_budgeting', $userData);
+    }
+    
+    // Get All Wallet Accounts (Based on Wallet Type)
+    public function get_checking_wallets($cuID) {
+        $this->db->from('bf_users_bank_accounts');
+        $this->db->where('account_type', 'Checking');
+        $this->db->where('status', 1);
+        $this->db->where('deleted', 0); 
+        $this->db->where('user_id', $cuID); 
+        $getCheckingWallets                     = $this->db->get();
+        return $getCheckingWallets;
+    }
+
+    public function get_checking_wallets_summary($cuID) {
+        $this->db->select_sum('balance');
+        $this->db->from('bf_users_bank_accounts');
+        $this->db->where('account_type', 'Checking');
+        $this->db->where('status', 1);
+        $this->db->where('deleted', 0); 
+        $this->db->where('user_id', $cuID); 
+        $getCheckingWalletsSummary              = $this->db->get();
+        return $getCheckingWalletsSummary;
+    }
+
+    public function get_credit_wallets($cuID) {
+        $this->db->from('bf_users_credit_accounts');
+        $this->db->where('account_type', 'Credit');
+        $this->db->where('status', 1);
+        $this->db->where('deleted', 0); 
+        $this->db->where('user_id', $cuID); 
+        $getCreditWallets                       = $this->db->get();
+        return $getCreditWallets;
+    }
+
+    public function get_credit_wallets_summary($cuID) {
+        $this->db->select_sum('available_balance', 'credit_limit', 'current_balance');
+        $this->db->from('bf_users_credit_accounts');
+        $this->db->where('account_type', 'Credit');
+        $this->db->where('status', 1);
+        $this->db->where('deleted', 0); 
+        $this->db->where('user_id', $cuID); 
+        $getCreditWalletsSummary              = $this->db->get();
+        return $getCreditWalletsSummary;
+    }
+
+    public function get_debt_wallets($cuID) {
+        $this->db->from('bf_users_credit_accounts');
+        $this->db->where('account_type', 'Debt');
+        $this->db->where('status', 1);
+        $this->db->where('deleted', 0); 
+        $this->db->where('user_id', $cuID); 
+        $getDebtWallets                       = $this->db->get();
+        return $getDebtWallets;
+    }
+
+    public function get_investment_wallets($cuID) {
+        $this->db->from('bf_users_invest_accounts');
+        $this->db->where('account_type', 'Investment');
+        $this->db->where('status', 1);
+        $this->db->where('deleted', 0); 
+        $this->db->where('user_id', $cuID); 
+        $getInvestmentWallets                   = $this->db->get();
+        return $getInvestmentWallets;
+    }
+
+    public function get_investment_wallets_summary($cuID) {
+        $this->db->select_sum('net_worth');
+        $this->db->from('bf_users_invest_accounts');
+        $this->db->where('account_type', 'Investment');
+        $this->db->where('status', 1);
+        $this->db->where('deleted', 0); 
+        $this->db->where('user_id', $cuID); 
+        $getCreditWalletsSummary              = $this->db->get();
+        return $getCreditWalletsSummary;
+    }
+
+    public function get_savings_wallets($cuID) {
+        $this->db->from('bf_users_bank_accounts');
+        $this->db->where('account_type', 'Savings');
+        $this->db->where('status', 1);
+        $this->db->where('deleted', 0); 
+        $this->db->where('user_id', $cuID); 
+        $getSavingsWallets                      = $this->db->get();
+        return $getSavingsWallets;
+    }
+
+    public function get_savings_wallets_summary($cuID) {
+        $this->db->select_sum('balance');
+        $this->db->from('bf_users_bank_accounts');
+        $this->db->where('account_type', 'Savings');
+        $this->db->where('status', 1);
+        $this->db->where('deleted', 0); 
+        $this->db->where('user_id', $cuID); 
+        $getCheckingWalletsSummary              = $this->db->get();
+        return $getCheckingWalletsSummary;
+    }
+    
+    // Get Summary of all Wallet Types (Checking / Credit / Debt / Loans)
+    // Get Summary of Wallet Percent Change Summary
+    public function get_all_percent_change($walletID)
+    {
+        $this->db->select_sum('closed_perc');
+        $this->db->from('bf_users_trades');
+        $this->db->where('wallet', $walletID);
+        $getAllPercentChange					= $this->db->get();
+        return $getAllPercentChange;
+    }
+    
+    public function wallet_trade_gains($walletID)
+    {
+        $this->db->select_sum('net_gains'); 
+        $this->db->from('bf_users_trades');
+        $this->db->where('wallet', $walletID);
+        $getWalletTradeGains 	                = $this->db->get();
+        return $getWalletTradeGains;
+    }
+    
     public function generate_wallet($user_id, $beta, $private_key, $public_key)
     {
-        $user 					        = array(
-            'beta_wallet'				=> $beta,
-            'private_key'				=> $private_key,
-            'wallet_id'					=> $public_key,
+        $user 					                = array(
+            'beta_wallet'				        => $beta,
+            'private_key'				        => $private_key,
+            'wallet_id'					        => $public_key,
         );
         
         $this->db->where('id', $user_id);
@@ -135,7 +261,7 @@ class Wallet_model extends BF_Model
         $this->db->from('bf_users_wallet');
         $this->db->where('user_id', $cuID);
         $this->db->where('default_wallet', 'Yes');
-        $getDefaultWallet   	        = $this->db->get();
+        $getDefaultWallet   	                = $this->db->get();
         return $getDefaultWallet;
     }
  
@@ -144,16 +270,8 @@ class Wallet_model extends BF_Model
         $this->db->from('bf_users_wallet_transactions');
         $this->db->where('user_id', $cuID);
         $this->db->where('active', 'Yes');
-        $getTransactions = $this->db->get();
+        $getTransactions                        = $this->db->get();
         return $getTransactions;
-    }
-
-    public function get_all_deposits($cuID)
-    {
-        $this->db->select_sum('amount');
-        $this->db->from('bf_users_wallet_transactions');
-        $this->db->where('trans_type', 'Deposit');
-        $getWalletDeposits              = $this->db->get();
     }
 
     public function get_trade_alerts()
@@ -161,7 +279,7 @@ class Wallet_model extends BF_Model
         $this->db->from('bf_investment_trade_alerts');
         $this->db->where('status', 'Opened');
         $this->db->order_by('id', 'DESC');
-        $getTradeAlerts = $this->db->get();
+        $getTradeAlerts                         = $this->db->get();
         return $getTradeAlerts;
     }
             
@@ -169,11 +287,47 @@ class Wallet_model extends BF_Model
     {
         $this->db->from('bf_investment_trade_alerts');
         $this->db->where('id', $tradeID);
-        $getUserTrades = $this->db->get();
+        $getUserTrades                          = $this->db->get();
         return $getUserTrades;
+    }
+            
+    // Get All Wallet Trades
+    public function get_wallet_trades($walletID)
+    {
+        $this->db->from('bf_users_trades');
+        $this->db->where('wallet', $walletID);
+        $getWalletTrades            = $this->db->get();
+        return $getWalletTrades;
+    }
+
+    // Get Wallet Trades - Openings
+    public function get_wallet_trades_openings($walletID)
+    {
+        // $this->db->select_sum('net_gains');
+        $this->db->from('bf_users_trades');
+        $this->db->where('wallet', $walletID);
+        $this->db->where('order_status', 'OPENING');
+        $getWalletTradesOpening					= $this->db->get();
+        return $getWalletTradesOpening;
     }
     
     // Get Wallet, MyMI Coin, MyMI Gold Deposits
+    public function get_all_deposits($cuID)
+    {
+        $this->db->select_sum('amount');
+        $this->db->from('bf_users_wallet_transactions');
+        $this->db->where('trans_type', 'Deposit');
+        $getWalletDeposits              = $this->db->get();
+    }   
+     
+    public function get_all_withdrawals($cuID)
+    {
+        $this->db->select_sum('amount');
+        $this->db->from('bf_users_wallet_transactions');
+        $this->db->where('trans_type', 'Withdraw');
+        $getWalletDeposits              = $this->db->get();
+    }
+
     public function get_wallet_deposits($cuID, $walletID)
     {
         if (!empty($walletID)) {
@@ -191,6 +345,77 @@ class Wallet_model extends BF_Model
             $getWalletDeposits 		= $this->db->get();
             return $getWalletDeposits;
         }
+    }
+    
+    public function get_wallet_withdrawals($cuID, $walletID)
+    {
+        if ($walletID !== null) {
+            $this->db->select_sum('amount');
+            $this->db->from('bf_users_wallet_transactions');
+            $this->db->where('trans_type', 'Withdraw');
+            $this->db->where('wallet_id', $walletID);
+            $getWalletWithdrawals 	= $this->db->get();
+            return $getWalletWithdrawals;
+        } else {
+            $this->db->select_sum('amount');
+            $this->db->from('bf_users_wallet_transactions');
+            $this->db->where('trans_type', 'Withdraw');
+            $this->db->where('user_id', $cuID);
+            $getWalletWithdrawals 	= $this->db->get();
+            return $getWalletWithdrawals;
+        }
+    }
+    
+    public function get_single_wallet_deposits($wallet_id)
+    {
+        $this->db->select_sum('amount');
+        $this->db->from('bf_users_wallet_transactions');
+        $this->db->where('trans_type', 'Deposit');
+        $this->db->where('wallet_id', $wallet_id);
+        $getSingleWalletDeposits	= $this->db->get();
+        return $getSingleWalletDeposits;
+    }
+    
+    public function get_single_wallet_withdrawals($wallet_id)
+    {
+        $this->db->select_sum('amount');
+        $this->db->from('bf_users_wallet_transactions');
+        $this->db->where('trans_type', 'Withdraw');
+        $this->db->where('wallet_id', $wallet_id);
+        $getSingleWalletWithdrawals	= $this->db->get();
+        return $getSingleWalletWithdrawals;
+    }
+    
+    public function get_last_wallet_deposit($cuID, $walletID)
+    {
+        $this->db->from('bf_users_wallet_transactions');
+        $this->db->where('trans_type', 'Deposit');
+        $this->db->where('wallet_id', $walletID);
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit(1);
+        $getLastDeposit = $this->db->get();
+        return $getLastDeposit;
+    }
+        
+    public function get_last_wallet_withdraw($cuID, $walletID)
+    {
+        $this->db->from('bf_users_wallet_transactions');
+        $this->db->where('trans_type', 'Withdraw');
+        $this->db->where('wallet_id', $walletID);
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit(1);
+        $getLastWithdraw = $this->db->get();
+        return $getLastWithdraw;
+    }
+    
+    public function complete_deposit($transID)
+    {
+        $user				= array(
+            'active'		=> 'Yes',
+        );
+        
+        $this->db->where('id', $transID);
+        return $this->db->update('bf_users_wallet_transactions', $user);
     }
     
     public function get_mymic_deposits($cuID)
@@ -443,19 +668,53 @@ class Wallet_model extends BF_Model
         return $this->db->insert('bf_users_trading_accounts', $user);
     }
     
-    public function get_user_bank_accounts($userID)
+    public function get_user_bank_accounts($cuID)
     {
         $this->db->from('bf_users_bank_accounts');
-        $this->db->where('user_id', $userID);
+        $this->db->where('user_id', $cuID);
         $this->db->where('status', 1); 
         $getBankAccounts				= $this->db->get();
         return $getBankAccounts;
     }
     
-    public function get_bank_account_information($accountID) {
+    public function get_user_credit_accounts($cuID)
+    {
+        $this->db->from('bf_users_credit_accounts');
+        $this->db->where('user_id', $cuID);
+        $this->db->where('status', 1); 
+        $getCreditAccounts				= $this->db->get();
+        return $getCreditAccounts;
+    }
+    
+    public function get_user_closed_credit_accounts($cuID)
+    {
+        $this->db->from('bf_users_credit_accounts');
+        $this->db->where('user_id', $cuID);
+        $this->db->where('status', 2); 
+        $getCreditAccounts				= $this->db->get();
+        return $getCreditAccounts;
+    }
+    
+    public function get_user_invest_accounts($cuID)
+    {
+        $this->db->from('bf_users_credi_accounts');
+        $this->db->where('user_id', $cuID);
+        $this->db->where('status', 1); 
+        $getCreditAccounts				= $this->db->get();
+        return $getCreditAccounts;
+    }
+    
+    public function get_bank_account_info($accountID) {
         $this->db->from('bf_users_bank_accounts');
         $this->db->where('id', $accountID); 
-        $getBankAccountInfo     = $this->db->get();
+        $getBankAccount                 = $this->db->get();
+        return $getBankAccount;
+    }
+
+    public function get_bank_account_information() {
+        $this->db->from('bf_users_bank_accounts');
+        // $this->db->where('id', $accountID); 
+        $getBankAccountInfo             = $this->db->get();
         return $getBankAccountInfo;
     }
     
@@ -463,8 +722,9 @@ class Wallet_model extends BF_Model
     {
         $this->db->from('bf_users_wallet');
         $this->db->where('user_id', $cuID);
-        $getWallets				= $this->db->get();
-        $getWalletCount			= $getWallets->num_rows();
+        $this->db->where('status', 1);
+        $getWallets				        = $this->db->get();
+        $getWalletCount			        = $getWallets->num_rows();
         return $getWalletCount;
     }
     
@@ -473,8 +733,8 @@ class Wallet_model extends BF_Model
         $this->db->from('bf_users_wallet');
         $this->db->where('user_id', $cuID);
         $this->db->where('default_wallet', 'No');
-        $getWallets				= $this->db->get();
-        $getWalletCount			= $getWallets->num_rows();
+        $getWallets				        = $this->db->get();
+        $getWalletCount			        = $getWallets->num_rows();
         return $getWalletCount;
     }
     
@@ -482,7 +742,7 @@ class Wallet_model extends BF_Model
     {
         $this->db->from('bf_users_wallet');
         $this->db->where('id', $walletID);
-        $getWalletInfo			= $this->db->get();
+        $getWalletInfo			        = $this->db->get();
         return $getWalletInfo;
     }
     
@@ -491,17 +751,16 @@ class Wallet_model extends BF_Model
         $this->db->select_sum('amount');
         $this->db->from('bf_users_wallet');
         $this->db->where('id', $walletID);
-        $getWalletInitialSum	= $this->db->get();
+        $getWalletInitialSum	        = $this->db->get();
         return $getWalletInitialSum;
     }
      
     public function get_all_wallets($cuID)
     {
         $this->db->from('bf_users_wallet');
-        $this->db->where('user_id', $cuID);
-        $this->db->where('default_wallet', 'No');
-        $getAllWallets			= $this->db->get();
-        return $getAllWallets;
+        $this->db->where('active', 'Yes');
+        $getUserWallets                     = $this->db->get();
+        return $getUserWallets;
     }
      
     public function get_fiat_wallets($cuID, $limit)
@@ -569,77 +828,6 @@ class Wallet_model extends BF_Model
         $this->db->where('default_wallet !=', 'Yes');
         $walletTotals 			= $this->db->get();
         return $walletTotals;
-    }
-    
-    public function get_wallet_withdrawals($cuID, $walletID)
-    {
-        if ($walletID !== null) {
-            $this->db->select_sum('amount');
-            $this->db->from('bf_users_wallet_transactions');
-            $this->db->where('trans_type', 'Withdraw');
-            $this->db->where('wallet_id', $walletID);
-            $getWalletWithdrawals 	= $this->db->get();
-            return $getWalletWithdrawals;
-        } else {
-            $this->db->select_sum('amount');
-            $this->db->from('bf_users_wallet_transactions');
-            $this->db->where('trans_type', 'Withdraw');
-            $this->db->where('user_id', $cuID);
-            $getWalletWithdrawals 	= $this->db->get();
-            return $getWalletWithdrawals;
-        }
-    }
-    
-    public function get_single_wallet_deposits($wallet_id)
-    {
-        $this->db->select_sum('amount');
-        $this->db->from('bf_users_wallet_transactions');
-        $this->db->where('trans_type', 'Deposit');
-        $this->db->where('wallet_id', $wallet_id);
-        $getSingleWalletDeposits	= $this->db->get();
-        return $getSingleWalletDeposits;
-    }
-    
-    public function get_single_wallet_withdrawals($wallet_id)
-    {
-        $this->db->select_sum('amount');
-        $this->db->from('bf_users_wallet_transactions');
-        $this->db->where('trans_type', 'Withdraw');
-        $this->db->where('wallet_id', $wallet_id);
-        $getSingleWalletWithdrawals	= $this->db->get();
-        return $getSingleWalletWithdrawals;
-    }
-    
-    public function get_last_wallet_deposit($cuID, $walletID)
-    {
-        $this->db->from('bf_users_wallet_transactions');
-        $this->db->where('trans_type', 'Deposit');
-        $this->db->where('wallet_id', $walletID);
-        $this->db->order_by('id', 'DESC');
-        $this->db->limit(1);
-        $getLastDeposit = $this->db->get();
-        return $getLastDeposit;
-    }
-        
-    public function get_last_wallet_withdraw($cuID, $walletID)
-    {
-        $this->db->from('bf_users_wallet_transactions');
-        $this->db->where('trans_type', 'Withdraw');
-        $this->db->where('wallet_id', $walletID);
-        $this->db->order_by('id', 'DESC');
-        $this->db->limit(1);
-        $getLastWithdraw = $this->db->get();
-        return $getLastWithdraw;
-    }
-    
-    public function complete_deposit($transID)
-    {
-        $user				= array(
-            'active'		=> 'Yes',
-        );
-        
-        $this->db->where('id', $transID);
-        return $this->db->update('bf_users_wallet_transactions', $user);
     }
     
     public function get_inactive_wallets($cuID)

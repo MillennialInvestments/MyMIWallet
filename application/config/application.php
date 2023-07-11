@@ -122,7 +122,7 @@ $config['template.ajax_layout'] = 'ajax';
 // specifically at a single type of phone (ie, Blackberry or iPhone).
 // NOTE: when rendering, if the file doesn't exist in the targetted theme, the
 // Template library then checks the default site for the same file.
-$config['template.use_mobile_themes'] = false;
+$config['template.use_mobile_themes'] = true;
 
 //------------------------------------------------------------------------------
 // DEFAULT THEME
@@ -170,7 +170,7 @@ $config['template.breadcrumb_symbol']	= ' : ';
 //------------------------------------------------------------------------------
 // If set to true, views will be parsed via CodeIgniter's parser.
 // If false, views will be considered PHP views only.
-$config['template.parse_views'] = false;
+$config['template.parse_views'] = true;
 
 //------------------------------------------------------------------------------
 // !ASSETS

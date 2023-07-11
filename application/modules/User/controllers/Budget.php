@@ -47,20 +47,8 @@ class Budget extends Admin_Controller
 
     public function index()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'User_Budget';
-        
-        $this->set_current_user();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-
-    public function Account_Overview()
-    {
-        $pageType = 'Standard';
-        $pageName = 'User_Budget_Account_Overview';
         
         $this->set_current_user();
         
@@ -71,8 +59,8 @@ class Budget extends Admin_Controller
 
     public function Add()
     {
-        $pageType = 'Standard';
-        $pageName = 'User_Budget_Add_Account';
+        $pageType = 'Automated';
+        $pageName = 'User_Budget';
         
         $this->set_current_user();
         
@@ -81,10 +69,11 @@ class Budget extends Admin_Controller
         Template::render();
     }
 
-    public function Edit()
+    public function Copy()
     {
-        $pageType = 'Standard';
-        $pageName = 'User_Budget_Edit_Account';
+        $pageType = 'Automated';
+        $pageName = 'User_Budget';
+        // $pageName = 'User_Budget_Copy';
         
         $this->set_current_user();
         
@@ -95,8 +84,8 @@ class Budget extends Admin_Controller
 
     public function Account_Manager()
     {
-        $pageType = 'Standard';
-        $pageName = 'User_Budget_Account_Manager';
+        $pageType = 'Automated';
+        $pageName = 'User_Budget';
         
         $this->set_current_user();
         
@@ -106,10 +95,10 @@ class Budget extends Admin_Controller
         Template::render();
     }
 
-    public function Recurring_Account_Schedule()
+    public function Account_Overview()
     {
-        $pageType = 'Standard';
-        $pageName = 'User_Budget_Recurring_Account_Schedule';
+        $pageType = 'Automated';
+        $pageName = 'User_Budget';
         
         $this->set_current_user();
         
@@ -166,6 +155,54 @@ class Budget extends Admin_Controller
         }
     }
 
+    public function Details()
+    {
+        $pageType = 'Automated';
+        $pageName = 'User_Budget';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+
+    public function Edit()
+    {
+        $pageType = 'Automated';
+        $pageName = 'User_Budget';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+
+    public function Forecast()
+    {
+        $pageType = 'Automated';
+        $pageName = 'User_Budget';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+
+    public function History()
+    {
+        $pageType = 'Automated';
+        $pageName = 'User_Budget_History';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+
     public function Paid($accountID) {
         if ($this->budget_model->paid_account($accountID)) {
             Template::set_message('Account status changed to: "Paid"', 'success');
@@ -174,6 +211,40 @@ class Budget extends Admin_Controller
             Template::set_message('Account could not be updated', 'error'); 
             Template::redirect('/Budget'); 
         }
+    }
+
+    // public function Unpaid($accountID) {
+    //     if ($this->budget_model->unpaid_account($accountID)) {
+    //         Template::set_message('Account status changed to: "Paid"', 'success');
+    //         Template::redirect('/Budget'); 
+    //     } else {
+    //         Template::set_message('Account could not be updated', 'error'); 
+    //         Template::redirect('/Budget'); 
+    //     }
+    // }
+
+    public function Recurring_Account_Schedule()
+    {
+        $pageType = 'Automated';
+        $pageName = 'User_Budget';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+
+    public function Search()
+    {
+        $pageType = 'Automated';
+        $pageName = 'User_Budget';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
     }
 
     private function saveData($type = 'insert', $id = 0)

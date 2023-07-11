@@ -1,5 +1,13 @@
 User-agent: *
-Disallow: /index.html
-Disallow: /application
-Disallow: /bonfire
-Disallow: /public
+Disallow: /application/
+Disallow: /system/
+Disallow: /vendor/
+Disallow: /index.php
+Disallow: /config/
+Disallow: /cache/
+Disallow: /logs/
+
+# Allow crawling of assets
+Allow: /assets/js/
+Allow: /assets/css/
+Allow: /assets/img/

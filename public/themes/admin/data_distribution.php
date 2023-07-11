@@ -16,7 +16,7 @@ $thisController                 = $this->router->fetch_class();
 $thisMethod                     = $this->router->fetch_method();
 $thisURL                        = $this->uri->uri_string();
 $thisFullURL                    = current_url();
-$thisComment                    = 'User (' . $cuID . ') successfully viewed the following page: ' . $thisURL;
+$thisComment                    = $thisURL;
 $this->mymilogger
      ->user($cuID) //Set UserID, who created this  Action
      ->beta($beta) //Set whether in Beta or nto
@@ -29,7 +29,16 @@ $this->mymilogger
      ->log(); //Add Database Entry
 $allSessionData                 = array();
 $userAccount	        		= $this->mymiuser->user_account_info($cuID);
-$userBudget                     = $this->mymibudget->user_budget_info($cuID); 
+if ($userAccount['cuID'] !== $_SESSION['user_id']) {
+    echo '<script>console.log("User is not the same user as Session user_id")</script>';
+}
+$userAssessment                 = $this->mymiuser->get_user_financial_assessment($cuID); 
+$userBudget                     = $this->mymibudget->all_user_budget_info($cuID); 
+$userInvestments                = $this->mymiinvestments->all_user_investments_info($cuID); 
+$userWallets                    = $this->mymiwallets->get_user_wallet_information($cuID);
+
+$cuReferrerCode                 = $userAccount['cuReferrerCode'];
+$userReferrals                  = $this->mymireferrals->all_user_referral_info($cuID, $cuReferrerCode); 
 $walletID                       = $userAccount['walletID'];
 // print_r($userAccount);
 // Template::set('userAccountInfo', $userAccountInfo);
@@ -66,7 +75,11 @@ if ($pageURIA === 'MyMI-Gold' || $pageURIB === 'Complete-Purchase') {
 // $userExchangeInfo				= $this->mymiuser->get_user_exchange_info($cuID);
 $allSessionData					= array(
     'userAccount'				=> $userAccount,
+    'userAssessment'            => $userAssessment,
     'userBudget'                => $userBudget,
+    'userInvestments'           => $userInvestments,
+    'userReferrals'             => $userReferrals,
+    'userWallets'               => $userWallets,
     // 'userInfo'					=> $userInfo,
     'userCoinData'				=> $userCoinData,
     'userGoldData'				=> $userGoldData,

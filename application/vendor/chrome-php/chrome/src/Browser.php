@@ -82,10 +82,6 @@ class Browser
 
         // enable target discovery
         $connection->sendMessageSync(new Message('Target.setDiscoverTargets', ['discover' => true]));
-
-        // set up http headers
-        $headers = $connection->getConnectionHttpHeaders();
-        $connection->sendMessageSync(new Message('Network.setExtraHTTPHeaders', $headers));
     }
 
     /**
@@ -124,12 +120,18 @@ class Browser
      */
     final public function sendCloseMessage(): void
     {
+        if (!$this->connection->isConnected()) {
+            $this->connection->getLogger()->debug('process: chrome already stopped, ignoring');
+
+            return;
+        }
         $r = $this->connection->sendMessageSync(new Message('Browser.close'));
         if (!$r->isSuccessful()) {
             // log
             $this->connection->getLogger()->debug('process: ✗ could not close gracefully');
             throw new \Exception('cannot close, Browser.close not supported');
         }
+        $this->connection->disconnect();
     }
 
     /**
@@ -186,7 +188,26 @@ class Browser
     }
 
     /**
+     * Find a target matching the type and title.
+     *
+     * @param string $type
+     * @param string $title
+     */
+    public function findTarget(string $type, string $title): ?Target
+    {
+        foreach ($this->targets as $target) {
+            if ($target->getTargetInfo('type') === $type && $target->getTargetInfo('title') === $title) {
+                return $target;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * @param string $targetId
+     *
+     * @throws CommunicationException
      *
      * @return Page|null
      */
@@ -224,6 +245,13 @@ class Browser
 
         // Page.setLifecycleEventsEnabled
         $page->getSession()->sendMessageSync(new Message('Page.setLifecycleEventsEnabled', ['enabled' => true]));
+
+        // set up http headers
+        $headers = $this->connection->getConnectionHttpHeaders();
+
+        if (\count($headers) > 0) {
+            $page->setExtraHTTPHeaders($headers);
+        }
 
         // add prescript
         if ($this->pagePreScript) {

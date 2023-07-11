@@ -4,18 +4,17 @@ $pageURIB 		= $this->uri->segment(2);
 $pageURIC 		= $this->uri->segment(3);
 $pageURID 		= $this->uri->segment(4);
 $pageType		= Template::get('pageType');
-if ($pageURIA === 'admin') {
-    ?>
+?>
 <script>
 $(document).ready(function() {
-	$('#dashboardTasksDatatable').DataTable( {
-		"order": [[ 0, "desc" ]],     
-	}	
-	);
+    $('.defaultDTTable').DataTable( {
+        "order": [[ 0, "asc" ]],     
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    }	
+    );
 } );
 </script>
 <?php
-}
 if ($pageURIA === 'Management') {
     ?>
 	<script>
@@ -23,6 +22,28 @@ if ($pageURIA === 'Management') {
 		$('#supportRequestOverview').DataTable( {
 			"order": [[ 0, "asc" ]],     
 			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+		}	
+		);
+	} );
+	</script>
+	<script>
+	$(document).ready(function() {
+		$('#userActivityLoggerDatatable').DataTable( {
+			"order": [[ 0, "desc" ]],     
+			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+		}	
+		);
+	} );
+	</script>
+<?php
+}
+if ($pageURIA === 'Content-Creator') {
+?>
+<script>
+	$(document).ready(function() {
+		$('.contentCreator').DataTable( {
+			"order": [[ 0, "desc" ]],     
+			"lengthMenu": [[10, 25, 50, 100, 250, 500, 1000, -1], ["All", 10, 25, 50, 100, 250, 500, 1000]]
 		}	
 		);
 	} );
@@ -42,34 +63,25 @@ $(document).ready(function() {
 </script>
 <?php   
 }
-if ($pageURIA === 'Budget') {
+if ($pageURIA === 'Budget' || $pageURIA === 'Dashboard') {
     ?>
 	<script>
-	$(document).ready(function() {
-		$('#userBudgetingIncomeDatatable').DataTable( {
-			"order": [[ 0, "asc" ]],     
-			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-		}	
-		);
-	} );
+    $(document).ready(function() {
+        $('#userBudgetingDatatable').DataTable( {
+            "order": [[ 0, "asc" ]],     
+			"lengthMenu": [[25, 50, 100, 500, -1], [10, 25, 50, 100, 500, "All"]]
+        }	
+        );
+    } );
 	</script>
 	<script>
-	$(document).ready(function() {
-		$('#userBudgetingExpenseDatatable').DataTable( {
-			"order": [[ 0, "asc" ]],     
-			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-		}	
-		);
-	} );
-	</script>
-	<script>
-	$(document).ready(function() {
-		$('#budgetRecurringTable').DataTable( {
-			"order": [[ 0, "asc" ]],     
-			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-		}	
-		);
-	} );
+    $(document).ready(function() {
+        $('#userBudgetingHistoricalDatatable').DataTable( {
+            "order": [[ 0, "asc" ]],     
+			"lengthMenu": [[25, 50, 100, 500, -1], [10, 25, 50, 100, 500, "All"]]
+        }	
+        );
+    } );
 	</script>
 <?php
 }
@@ -121,7 +133,7 @@ if ($pageURIA === 'Trade-Tracker') {
 	</script>    
 <?php
 }
-if ($pageURIA === 'Wallet-Details') {
+if ($pageURIB === 'Details') {
     ?>
 	<script>
 	$(document).ready(function() {
@@ -302,3 +314,11 @@ $(document).ready(function() {
 <?php
     }
 ?>
+<script>
+$(document).ready(function() {
+	$('#dashboardTasksDatatable').DataTable( {
+		"order": [[ 0, "desc" ]],     
+	}	
+	);
+} );
+</script>

@@ -1,15 +1,36 @@
 <?php
-$cuID					= $_SESSION['allSessionData']['userAccount']['cuID'];
-$cuEmail				= $_SESSION['allSessionData']['userAccount']['cuEmail'];
-$cuDisplayName			= $_SESSION['allSessionData']['userAccount']['cuDisplayName'];
-$cuUserType				= $_SESSION['allSessionData']['userAccount']['cuUserType'];
-$walletAmount			= $_SESSION['allSessionData']['userAccount']['walletAmount'];
-$MyMICCurrentValue		= $_SESSION['allSessionData']['MyMICoinData']['current_value'];
-$MyMICCoinSum			= $_SESSION['allSessionData']['MyMICoinData']['current_value'] / $_SESSION['allSessionData']['MyMICoinData']['mymic_coin_value'];
-$MyMIGCurrentValue		= $_SESSION['allSessionData']['userGoldData']['totalValue'];
-$MyMIGCoinSum			= $_SESSION['allSessionData']['userGoldData']['coinSum'];
-$totalValue				= $_SESSION['allSessionData']['userGoldData']['totalValue'];
-$myMIGPerChange			= $_SESSION['allSessionData']['userGoldData']['myMIGPerChange'];
+$userAccount            = $_SESSION['allSessionData']['userAccount'];
+$MyMICoinData           = $_SESSION['allSessionData']['MyMICoinData'];
+$userCoinData           = $_SESSION['allSessionData']['userCoinData'];
+$userGoldData           = $_SESSION['allSessionData']['userGoldData'];
+$cuID					= $userAccount['cuID'];
+$cuRole                 = $userAccount['cuRole'];
+$cuEmail				= $userAccount['cuEmail'];
+$cuDisplayName			= $userAccount['cuDisplayName'];
+$cuUserType				= $userAccount['cuUserType'];
+$walletAmount			= $userAccount['walletAmount'];
+$MyMICCurrentValue		= $MyMICoinData['current_value'];
+$MyMICCoinSum			= $MyMICoinData['current_value'] / $MyMICoinData['mymic_coin_value'];
+$MyMIGCurrentValue		= $userGoldData['totalValue'];
+$MyMIGCoinSum			= $userGoldData['coinSum'];
+$myMIGPerChange			= $userGoldData['myMIGPerChange'];
+
+// New Configuration for User Coin Data
+if ($userCoinData['totalValue'] > 0) {
+    $totalMyMICValue    = '$' . number_format($userCoinData['totalValue'],2);
+} elseif ($userCoinData['totalValue'] < 0) {
+    $totalMyMICValue    = '-$' . number_format($userCoinData['totalValue'],2); 
+} else {
+    $totalMyMICValue    = '$0.00';
+}
+if ($userGoldData['totalValue'] > 0) {
+    $totalMyMIGValue    = '$' . number_format($userGoldData['totalValue'],2);
+} elseif ($userGoldData['totalValue'] < 0) {
+    $totalMyMIGValue    = '-$' . number_format($userGoldData['totalValue'],2); 
+} else {
+    $totalMyMIGValue    = '$0.00';
+}
+$totalMyMICCoinSum      = number_format($userCoinData['coinSum'],0);
 ?>
 <style>
     @media (max-width: 420px) {
@@ -26,10 +47,22 @@ $myMIGPerChange			= $_SESSION['allSessionData']['userGoldData']['myMIGPerChange'
             margin-left: -3rem;
         }
     }
+    @media (min-width: 956px) {
+        #navbar-user-profile-dropdown {
+            left: -10rem !important;
+        }
+    }
+    .my-dropdown-menu {
+        position: absolute;
+        transform: none;
+        top: 20px;
+        left: -160px;
+        will-change: transform;
+    }
 </style>
 <div class="nk-header nk-header-fluid nk-header-fixed is-light">
-	<div class="container-fluid full-width pl-5">
-		<div class="nk-header-wrap">
+	<div class="container-fluid full-width pl-1 pl-lg-5">
+		<div class="nk-header-wrap pr-2 pr-lg-1">
 			<div class="nk-menu-trigger d-xl-none ml-n1">
 				<a type="button" class="nk-nav-toggle nk-quick-nav-icon" data-toggle="collapse" href="#collapseSidebar" role="button" aria-expanded="false" aria-controls="collapseSidebar"><em class="icon ni ni-menu"></em></a>
 			</div>
@@ -50,22 +83,48 @@ $myMIGPerChange			= $_SESSION['allSessionData']['userGoldData']['myMIGPerChange'
                     ?>
 				</a>
 			</div>
-			<div class="nk-header-news d-none d-xl-block">
+			<!-- <div class="nk-header-news d-none d-xl-block">
 				<div class="nk-news-list">
 					<a class="nk-news-item" href="https://www.youtube.com/channel/UCtWWy71LQpea_tHkb7fIL7A" target="_blank">
-						<div class="nk-news-icon"><em class="icon ni ni-card-view"></em></div>
-						<div class="nk-news-text">
-							<p>Sucribe to our Youtube Channel for more videos &amp; Tutorials! <span>Subscribe Now!</span></p>
+						<div class="nk-news-icon"><em class="icon ni ni-youtube"></em></div>
+						<div class="nk-news-text full-width">
+							!-- <p>Sucribe to our Youtube Channel for more videos &amp; Tutorials! <span>Subscribe Now!</span></p> --
+							<p class="full-width">Subcribe To Our Youtube Channel</p>
 							<em class="icon ni ni-external"></em>
+						</div>
+					</a>
+				</div>
+			</div> -->
+			<div class="nk-header-news d-none d-xl-block" style="width: 25%;">
+				<div class="nk-news-list">
+					<a class="nk-news-item" href="<?php echo site_url('/Support/Feedback'); ?>" target="_blank">
+						<div class="nk-news-icon"><em class="icon ni ni-youtube"></em></div>
+						<div class="nk-news-text full-width">
+							<p class="full-width" style="text-overflow:inherit; overflow:visible;">Subcribe to our Youtube Channel for more videos &amp; Tutorials! <span>Give Feedback!</span></p>
+							<!-- <p class="full-width" style="text-overflow:inherit; overflow:visible;">Your Feedback Is Important!</p> -->
+                            <!-- <btn class="btn btn-primary btn-block btn-xs mx-3">Submit Feedback!</btn> -->
+							<!-- <em class="icon ni ni-external"></em> -->
 						</div>
 					</a>
 				</div>
 			</div>
 			<div class="nk-header-tools">
 				<ul class="nk-quick-nav">
+                    <?php
+                    if ($cuRole === '1') {
+                    ?>
                     <li class="d-none d-sm-block">
                         <a class="btn btn-primary text-white" data-toggle="modal" data-target="#userInfoModal">User Data</a>
                     </li>
+                    <?php    
+                    } elseif ($cuRole === '4') {
+                    ?>
+                    <li class="d-none d-sm-block">
+                        <a class="btn btn-primary text-white" data-toggle="modal" data-target="#userFeedbackModal">Feedback?</a>
+                    </li>
+                    <?php     
+                    }
+                    ?>
 					<li class="dropdown user-dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<div class="user-toggle">
@@ -81,12 +140,12 @@ $myMIGPerChange			= $_SESSION['allSessionData']['userGoldData']['myMIGPerChange'
 								<h6 class="overline-title-alt">MyMI Coin Balance</h6>
 								<div class="user-balance" style="font-weight:bold;">
 									<?php
-                                    echo '$' . number_format($MyMICCurrentValue, 2);
+                                    echo $totalMyMICValue;
                                     ?> 
 									<small class="currency currency-usd">USD</small>
 								</div>
 								<div class="user-balance-sub">
-									Total Coins <span><?php echo $MyMICCoinSum; ?> <span class="currency currency-btc">MyMI Coins</span></span>
+									Total Coins <span><?php echo $totalMyMICCoinSum; ?> <span class="currency currency-btc">MyMI Coin</span></span>
 								</div>
 <!--
 								<a href="#" class="link"><span>Withdraw Funds</span> <em class="icon ni ni-wallet-out"></em></a>
@@ -103,7 +162,7 @@ $myMIGPerChange			= $_SESSION['allSessionData']['userGoldData']['myMIGPerChange'
 								<h6 class="overline-title-alt">MyMI Gold Balance</h6>
 								<div class="user-balance" style="font-weight:bold;">
 									<?php
-                                    echo $MyMIGCurrentValue;
+                                    echo $totalMyMIGValue;
                                     ?> 
 									<small class="currency currency-usd">USD</small>
 								</div>
@@ -117,10 +176,10 @@ $myMIGPerChange			= $_SESSION['allSessionData']['userGoldData']['myMIGPerChange'
 							<div class="dropdown-inner">
 								<ul class="link-list">
 									<li>
-										<a href="" class="purMyMIGold" data-toggle="modal" data-target="#transactionModal" title="Purchase MyMI Gold"><em class="icon ni ni-wallet-in"></em><span>Purchase Coins</span></a>
+										<a href="" class="purMyMIGold" data-toggle="modal" data-target="#transactionModal" title="Purchase MyMI Gold"><em class="icon ni ni-wallet-in"></em><span>Purchase Gold</span></a>
 									</li> 
 									<li>
-										<a href="<?php echo site_url('/Exchange/Market/MYMIG/MYMI'); ?>"><em class="icon ni ni-wallet-out"></em><span>Transfer Coins</span></a>
+										<a href="<?php echo site_url('/Exchange/Market/MYMIG/MYMI'); ?>"><em class="icon ni ni-wallet-out"></em><span>Transfer Gold</span></a>
 									</li>
 								</ul>
 							</div>
@@ -137,7 +196,7 @@ $myMIGPerChange			= $_SESSION['allSessionData']['userGoldData']['myMIGPerChange'
 							</div>
 						</a>
 						<div class="dropdown-menu dropdown-menu-md dropdown-menu-left dropdown-menu-s1" id="navbar-user-profile-dropdown">
-							<div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
+							<div class="dropdown-inner user-card-wrap bg-white d-none d-md-block">
 								<div class="user-card">
 									<div class="user-avatar"><span><i class="icon-user"></i></span></div>
 									<div class="user-info"><span class="lead-text"><?php echo $cuDisplayName; ?></span><span class="sub-text"><?php echo $cuEmail; ?></span></div>

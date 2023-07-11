@@ -41,3 +41,19 @@ $(function () {
 
 })
 </script>
+<script>
+    function calculate(inputElement) {
+        var input = inputElement.value;
+        var resultElement = inputElement.parentNode.getElementsByClassName('calculation')[0];
+        
+        if(input.startsWith('=')) {
+            try {
+            var result = eval(input.substring(1));
+            resultElement.value = result;
+            } catch(e) {
+            console.log(e.message);
+            // Handle any potential errors from eval
+            }
+        }
+    }
+</script>

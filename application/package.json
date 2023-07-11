@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@cubejs-client/core": "^0.31.15",
+    "chart.js": "^4.0.1"
+  }
+}

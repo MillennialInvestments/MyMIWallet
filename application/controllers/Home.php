@@ -39,6 +39,7 @@ class Home extends MX_Controller
         $this->lang->load('application');
         $this->load->library('events');
         $this->load->model('User/public_model');
+        $this->load->module('Users');
 
         $this->load->library('installer_lib');
         if (! $this->installer_lib->is_installed()) {
@@ -62,7 +63,7 @@ class Home extends MX_Controller
      */
     public function index()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         $this->set_current_user();
         
@@ -73,7 +74,7 @@ class Home extends MX_Controller
 
     public function Support()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         $this->set_current_user();
         

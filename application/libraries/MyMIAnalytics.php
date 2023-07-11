@@ -5,8 +5,8 @@ class MyMIAnalytics
     public function __construct()
     {
         $this->CI =& get_instance();
-        $this->CI->load->library('Auth', 'MyMIUser');
-        $this->CI->load->model('Management/analytical_model');
+        $this->CI->load->library('users/auth', 'MyMIUser', 'Session');
+        $this->CI->load->model(array('Management/analytical_model'));
         $this->CI->load->config('site_settings');
         //~ $this->CI->load->library(array('Auth', 'MyMIWallets'));
         $cuID                               = $this->CI->auth->user_id();
@@ -14,6 +14,7 @@ class MyMIAnalytics
     
     public function reporting()
     {    
+        $cuID                               = $this->CI->auth->user_id();
         $pageURIB                           = $this->CI->uri->segment(2); 
         $department                         = $pageURIB;
         $target                             = $this->targets();
@@ -27,7 +28,10 @@ class MyMIAnalytics
         $trackedTrades                      = $this->get_total_trades_tracked(); 
         $pendingUsers                       = $this->get_pending_users(); 
         $activeUsers                        = $this->get_active_users(); 
+        $inactiveUsers                      = $this->get_inactive_users(); 
+        $inactivePartners                   = $this->get_inactive_partners(); 
         $activeWallets                      = $this->get_total_active_wallets();
+        $activeServices                     = $this->get_active_services(); 
 
         // Partner Functions
         $pendingPartners                    = $this->get_pending_partners(); 
@@ -35,15 +39,20 @@ class MyMIAnalytics
         $pendingPartnerAssets               = $this->get_pending_partner_assets();
         $approvedPartnerAssets              = $this->get_approved_partner_assets();
 
+        // User Activity & Reporting
+        $getUserActivity                    = $this->get_user_activity($cuID);
+
         // Reporting Percentages
         $assetPercentage                    = number_format((($approvedAssets['totalApprovedAssets'] / $target['targetAssets']) * 100),2) . '%'; 
         $pendingAssetsPercentage            = number_format(((($approvedAssets['totalApprovedAssets'] + $pendingAssets['totalPendingAssets'])/ $target['targetAssets']) * 100),2) . '%'; 
+        $subscriptionPercentage             = number_format((($activeServices['totalActiveServices'] / $target['targetSubscriptions']) * 100), 2) . '%'; 
         $transactionPercentage              = number_format((($totalTransOrders['totalTransactions'] / $target['targetTransactions']) * 100),2) . '%'; 
         $tradesPercentage                   = number_format((($trackedTrades['totalTradesTracked'] / $target['targetTrades']) * 100),2) . '%'; 
         $usersPercentage                    = number_format((($activeUsers['totalActiveUsers'] / $target['targetUsers']) * 100),2) . '%'; 
         $walletsPercentage                  = number_format((($activeWallets['totalWalletsCreated'] / $target['targetWallets']) * 100),2) . '%'; 
         $transAmountPercentage              = number_format((($totalAmounts['totalTransTotalsPlain'] / $target['targetTransAmount']) * 100),2) . '%'; 
         $transFeesPercentage                = number_format((($totalAmounts['totalTransFeesPlain'] / $target['targetTransFees']) * 100),2) . '%'; 
+
         // Partner Subset
         $partnerAssetPercentage             = number_format((($approvedPartnerAssets['totalApprovedPartnerAssets'] / $target['targetPartnerAssets']) * 100),2) . '%'; 
         $partnerPercentage                  = number_format((($activePartners['totalActivePartners'] / $target['targetPartners']) * 100),2) . '%'; 
@@ -67,14 +76,21 @@ class MyMIAnalytics
             'totalApprovedPartnerAssets'    => $approvedPartnerAssets['totalApprovedPartnerAssets'],
             'getActiveUsers'                => $activeUsers['getActiveUsers'],
             'totalActiveUsers'              => $activeUsers['totalActiveUsers'],
+            'getInactiveUsers'              => $inactiveUsers['getInactiveUsers'],
+            'totalInactiveUsers'            => $inactiveUsers['totalInactiveUsers'],
             'getActivePartners'             => $activePartners['getActivePartners'],
             'totalActivePartners'           => $activePartners['totalActivePartners'],
+            'getInactivePartners'           => $inactivePartners['getInactivePartners'],
+            'totalInactivePartners'         => $inactivePartners['totalInactivePartners'],
+            'getActiveServices'             => $activeServices['getActiveServices'],
+            'totalActiveServices'           => $activeServices['totalActiveServices'],
+            'getActiveSubscriptions'        => $activeServices['getActiveSubscriptions'],
+            'totalActiveSubscriptions'      => $activeServices['totalActiveSubscriptions'],
+            'getActiveSubscriptions'        => $activeServices['getActiveSubscriptions'],
             'getCompleteSupport'            => $completeSupport['getCompleteSupport'],
             'totalCompleteSupport'          => $completeSupport['totalCompleteSupport'],
             'getCompletePartnerSupport'     => $completeSupport['getCompletePartnerSupport'],
             'totalCompletePartnerSupport'   => $completeSupport['totalCompletePartnerSupport'],
-            'getTotalActiveWallets'         => $activeWallets['getTotalActiveWallets'],
-            'totalWalletsCreated'           => $activeWallets['totalWalletsCreated'],
            
             // Get Pending Reports
             'getPendingAssets'              => $pendingAssets['getPendingAssets'],
@@ -91,6 +107,7 @@ class MyMIAnalytics
             // Get Percentages               
             'assetPercentage'               => $assetPercentage,
             'pendingAssetsPercentage'       => $pendingAssetsPercentage,
+            'subscriptionPercentage'        => $subscriptionPercentage,
             'transactionPercentage'         => $transactionPercentage,
             'tradesPercentage'              => $tradesPercentage,
             'partnerPercentage'             => $partnerPercentage,
@@ -98,6 +115,7 @@ class MyMIAnalytics
             'walletsPercentage'             => $walletsPercentage,
             'transAmountPercentage'         => $transAmountPercentage,
             'transFeesPercentage'           => $transFeesPercentage,
+
             // Partner Subset
             'partnerAssetPercentage'        => $partnerAssetPercentage,
             // 'partnerTransationPercentage'   => $partnerTransactionPercentage,
@@ -107,6 +125,7 @@ class MyMIAnalytics
 
             // Get Targets
             'targetAssets'                  => $target['targetAssets'],
+            'targetSubscriptions'           => $target['targetSubscriptions'],
             'targetTransactions'            => $target['targetTransactions'],
             'targetTransAmount'             => $target['targetTransAmount'],
             'targetTransFees'               => $target['targetTransFees'],
@@ -137,19 +156,126 @@ class MyMIAnalytics
             'totalLastTransTotals'          => $lastTotalAmounts['totalLastTransTotals'],
             'getTotalTradesTracked'         => $trackedTrades['getTotalTradesTracked'],
             'totalTradesTracked'            => $trackedTrades['totalTradesTracked'],  
+            // 'totalMarketingTasks'           => $departmentPendingTasks['totalMarketingTasks'],
+            // 'getUserActivity'               => $getUserActivity['getUserActivity']->result_array(),  
+
+            // Get Wallet Information
+            'getTotalActiveWallets'         => $activeWallets['getTotalActiveWallets'],
+            'totalWalletsCreated'           => $activeWallets['totalWalletsCreated'],
+            'totalDefaultWalletsCreated'    => $activeWallets['totalDefaultWalletsCreated'],
+            'getTotalWalletTransactions'    => $activeWallets['getTotalWalletTransactions'],
+            'totalWalletTransactions'       => $activeWallets['totalWalletTransactions'],
+            'averageWalletTransactions'      => $activeWallets['averageWalletTransactions'],
         );
 
         $_SESSION['reporting']              = $reporting;
         return $reporting;
     }
 
+    public function get_user_activity($cuID) {
+        $getUserActivity                    = $this->CI->analytical_model->get_users_activity($cuID); 
+        return $getUserActivity;
+    }
+
+    public function get_users_activity() {
+        $getUsersActivity                   = $this->CI->analytical_model->get_users_activity(); 
+        return $getUsersActivity;
+    }
+
     public function targets() {
-        $targetAssets                       = 100;
+        $activeUsers                        = $this->get_active_users(); 
+        $totalActiveUsers                   = $activeUsers['totalActiveUsers']; 
+        if ($totalActiveUsers <= 500) {
+            $targetUsers                    = 500;
+        } elseif ($totalActiveUsers <= 1000) {
+            $targetUsers                    = 1000;
+        } elseif ($totalActiveUsers <= 2500) {
+            $targetUsers                    = 2500;
+        } elseif ($totalActiveUsers <= 5000) {
+            $targetUsers                    = 5000;
+        } elseif ($totalActiveUsers <= 10000) {
+            $targetUsers                    = 10000;
+        } elseif ($totalActiveUsers <= 25000) {
+            $targetUsers                    = 25000;
+        } elseif ($totalActiveUsers <= 50000) {
+            $targetUsers                    = 50000;
+        } elseif ($totalActiveUsers <= 100000) {
+            $targetUsers                    = 100000;
+        } elseif ($totalActiveUsers <= 250000) {
+            $targetUsers                    = 250000;
+        } elseif ($totalActiveUsers <= 500000) {
+            $targetUsers                    = 500000;
+        } elseif ($totalActiveUsers <= 1000000) {
+            $targetUsers                    = 1000000;
+        } elseif ($totalActiveUsers <= 2500000) {
+            $targetUsers                    = 2500000;
+        } elseif ($totalActiveUsers <= 5000000) {
+            $targetUsers                    = 5000000;
+        } elseif ($totalActiveUsers <= 10000000) {
+            $targetUsers                    = 10000000;            
+        }
+        $approvedAssets                     = $this->get_approved_assets(); 
+        $totalApprovedAssets                = $approvedAssets['totalApprovedAssets'];
+        if ($totalApprovedAssets <= 100) {
+            $targetAssets                   = 100;
+        } elseif ($totalApprovedAssets <= 250) {
+            $targetAssets                   = 250;
+        } elseif ($totalApprovedAssets <= 500) {
+            $targetAssets                   = 500;
+        } elseif ($totalApprovedAssets <= 1000) {
+            $targetAssets                   = 1000;
+        } elseif ($totalApprovedAssets <= 2500) {
+            $targetAssets                   = 2500;
+        } elseif ($totalApprovedAssets <= 5000) {
+            $targetAssets                   = 5000;
+        } elseif ($totalApprovedAssets <= 10000) {
+            $targetAssets                   = 10000;
+        } elseif ($totalApprovedAssets <= 25000) {
+            $targetAssets                   = 25000;
+        } elseif ($totalApprovedAssets <= 50000) {
+            $targetAssets                   = 50000;
+        } elseif ($totalApprovedAssets <= 100000) {
+            $targetAssets                   = 100000;
+        } elseif ($totalApprovedAssets <= 250000) {
+            $targetAssets                   = 250000;
+        } elseif ($totalApprovedAssets <= 500000) {
+            $targetAssets                   = 500000;
+        } elseif ($totalApprovedAssets <= 1000000) {
+            $targetAssets                   = 1000000;
+        }
+        $activeServices                     = $this->get_active_services();
+        $totalActiveSubscriptions           = $activeServices['totalActiveSubscriptions'];
+        if ($totalActiveSubscriptions <= 100) {
+            $targetSubscriptions            = 100;
+        } elseif ($totalActiveSubscriptions <= 250) {
+            $targetSubscriptions            = 250;
+        } elseif ($totalActiveSubscriptions <= 500) {
+            $targetSubscriptions            = 500;
+        } elseif ($totalActiveSubscriptions <= 1000) {
+            $targetSubscriptions            = 1000;
+        } elseif ($totalActiveSubscriptions <= 2500) {
+            $targetSubscriptions            = 2500;
+        } elseif ($totalActiveSubscriptions <= 5000) {
+            $targetSubscriptions            = 5000;
+        } elseif ($totalActiveSubscriptions <= 10000) {
+            $targetSubscriptions            = 10000;
+        } elseif ($totalActiveSubscriptions <= 25000) {
+            $targetSubscriptions            = 25000;
+        } elseif ($totalActiveSubscriptions <= 50000) {
+            $targetSubscriptions            = 50000;
+        } elseif ($totalActiveSubscriptions <= 100000) {
+            $targetSubscriptions            = 100000;
+        } elseif ($totalActiveSubscriptions <= 250000) {
+            $targetSubscriptions            = 250000;
+        } elseif ($totalActiveSubscriptions <= 500000) {
+            $targetSubscriptions            = 500000;
+        } elseif ($totalActiveSubscriptions <= 1000000) {
+            $targetSubscriptions            = 1000000;
+        }
         $targetTransactions                 = 1000;
         $targetTransAmount                  = 100000;
         $targetTransFees                    = 10000;
         $targetTrades                       = 25000;
-        $targetUsers                        = 1000;
         $targetWallets                      = 1000; 
         $targetPartnerAssets                = 10;
         $targetPartners                     = 100;
@@ -159,6 +285,7 @@ class MyMIAnalytics
 
         $target                             = array(
             'targetAssets'                  => $targetAssets,
+            'targetSubscriptions'           => $targetSubscriptions,
             'targetTransactions'            => $targetTransactions,
             'targetTransAmount'             => $targetTransAmount,
             'targetTransFees'               => $targetTransFees,
@@ -202,6 +329,24 @@ class MyMIAnalytics
         );
 
         return $pendingAssetByID;
+    }
+
+    public function get_active_services() {
+        $getActiveServices                  = $this->CI->analytical_model->get_active_services(); 
+        $totalActiveServices                = $getActiveServices->num_rows(); 
+        $getActiveSubscriptions             = $this->CI->analytical_model->get_active_services_subscriptions();
+        if (!empty($getActiveSubscriptions)) {
+            $totalActiveSubscriptions       = $getActiveSubscriptions->num_rows(); 
+        } else {
+            $totalActiveSubscriptions       = 0;
+        }
+        $activeServices                     = array(
+            'getActiveServices'             => $getActiveServices,
+            'totalActiveServices'           => $totalActiveServices,
+            'getActiveSubscriptions'        => $getActiveSubscriptions,
+            'totalActiveSubscriptions'      => $totalActiveSubscriptions,
+        ); 
+        return $activeServices;
     }
 
     public function get_approved_assets() {
@@ -265,14 +410,14 @@ class MyMIAnalytics
         // Define Investor Total Amounts
         foreach($getTotalAmounts->result_array() as $totalAmounts) {
             if ($totalAmounts['fees'] > 0) {
-                $totalTransFees             = '<strong>$' . number_format($totalAmounts['fees'],2) . '</strong>';
+                $totalTransFees             = '<span>$' . number_format($totalAmounts['fees'],2) . '</span>';
             } elseif ($totalAmounts['fees'] < 0) {
-                $totalTransFees             = '<strong class="statusRed">-$' . number_format($totalAmounts['fees'],2) . '</strong>';
+                $totalTransFees             = '<span class="statusRed">-$' . number_format($totalAmounts['fees'],2) . '</span>';
             }
             if ($totalAmounts['amount'] > 0) {
-                $totalTransTotals           = '<strong>$' . number_format($totalAmounts['amount'],2) . '</strong>';
+                $totalTransTotals           = '<span>$' . number_format($totalAmounts['amount'],2) . '</span>';
             } elseif ($totalAmounts['amount'] < 0) {
-                $totalTransTotals           = '<strong class="statusRed">-$' . number_format($totalAmounts['amount'],2) . '</strong>';
+                $totalTransTotals           = '<span class="statusRed">-$' . number_format($totalAmounts['amount'],2) . '</span>';
             }
             $totalTransFeesPlain            = number_format($totalAmounts['fees'], 2, '.', ''); 
             $totalTransTotalsPlain          = number_format($totalAmounts['amount'], 2, '.', '');
@@ -281,21 +426,21 @@ class MyMIAnalytics
         if (!empty($getPartnerAssetOrders)) {
             foreach ($getPartnerAssetOrders->result_array() as $partnerAssets) {
                 if ($partnerAssets['fees'] > 0) {
-                    $totalPartnerTransFees      = '<strong>$' . number_format($partnerAssets['fees'], 2) . '</strong>';
+                    $totalPartnerTransFees      = '<span>$' . number_format($partnerAssets['fees'], 2) . '</span>';
                 } elseif ($partnerAssets['fees'] < 0) {
-                    $totalPartnerTransFees      = '<strong class="statusRed">-$' . number_format($partnerAssets['fees'], 2) . '</strong>';
+                    $totalPartnerTransFees      = '<span class="statusRed">-$' . number_format($partnerAssets['fees'], 2) . '</span>';
                 }
                 if ($partnerAssets['amount'] > 0) {
-                    $totalPartnerTransTotals    = '<strong>$' . number_format($partnerAssets['amount'], 2) . '</strong>';
+                    $totalPartnerTransTotals    = '<span>$' . number_format($partnerAssets['amount'], 2) . '</span>';
                 } elseif ($partnerAssets['amount'] < 0) {
-                    $totalPartnerTransTotals     = '<strong class="statusRed">-$' . number_format($partnerAssets['amount'], 2) . '</strong>';
+                    $totalPartnerTransTotals     = '<span class="statusRed">-$' . number_format($partnerAssets['amount'], 2) . '</span>';
                 }
                 $totalPartnerTransFeesPlain     = number_format($partnerAssets['fees'], 2, '.', '');
                 $totalPartnerTransTotalsPlain   = number_format($partnerAssets['amount'], 2, '.', '');
             }
         } else {
-            $totalPartnerTransFees          = '<strong>$0.00</strong>';
-            $totalPartnerTransTotals        = '<strong>$0.00</strong>';
+            $totalPartnerTransFees          = '<span>$0.00</span>';
+            $totalPartnerTransTotals        = '<span>$0.00</span>';
             $totalPartnerTransFeesPlain     = '0.00';
             $totalPartnerTransTotalsPlain   = '0.00';
         }
@@ -319,14 +464,14 @@ class MyMIAnalytics
         $getLastTotalAmounts                = $this->CI->analytical_model->get_last_total_amount();
         foreach($getLastTotalAmounts->result_array() as $lastTotalAmounts) {
             if ($lastTotalAmounts['fees'] > 0) {
-                $totalLastTransFees         = '<strong>$' . number_format($lastTotalAmounts['fees'],2) . '</strong>';
+                $totalLastTransFees         = '<span>$' . number_format($lastTotalAmounts['fees'],2) . '</span>';
             } elseif ($lastTotalAmounts['fees'] < 0) {
-                $totalLastTransFees         = '<strong class="statusRed">-$' . number_format($lastTotalAmounts['fees'],2) . '</strong>';
+                $totalLastTransFees         = '<span class="statusRed">-$' . number_format($lastTotalAmounts['fees'],2) . '</span>';
             }
             if ($lastTotalAmounts['amount'] > 0) {
-                $totalLastTransTotals       = '<strong>$' . number_format($lastTotalAmounts['amount'],2) . '</strong>';
+                $totalLastTransTotals       = '<span>$' . number_format($lastTotalAmounts['amount'],2) . '</span>';
             } elseif ($lastTotalAmounts['amount'] < 0) {
-                $totalLastTransTotals       = '<strong class="statusRed">-$' . number_format($lastTotalAmounts['amount'],2) . '</strong>';
+                $totalLastTransTotals       = '<span class="statusRed">-$' . number_format($lastTotalAmounts['amount'],2) . '</span>';
             }
         }
 
@@ -375,14 +520,53 @@ class MyMIAnalytics
     public function get_total_active_wallets() {
         $getTotalActiveWallets              = $this->CI->analytical_model->get_total_active_wallets();
         $totalWalletsCreated                = $getTotalActiveWallets->num_rows();
-
+        // !! FIX THIS!!! //
+        // $getTotalActiveDefaultWallets       = $this->CI->analytical_model->get_total_active_default_wallets();
+        // $totalDefaultWalletsCreated         = $getTotalActiveDefaultWallets; 
+        $totalDefaultWalletsCreated         = 0; 
+        // !! FIX THIS!!! //
+        // $getTotalWalletTransactions         = $this->CI->analytical_model->get_total_wallet_transactions(); 
+        // $totalWalletTransactions            = $getTotalWalletTransactions->num_rows(); 
+        $getTotalWalletTransactions         = 0; 
+        $totalWalletTransactions            = 0; 
+        // !! UNCOMMENT ONCE YOU FIX ISSUES ABOVE
+        // $averageWalletTransactions          = number_format($totalWalletTransactions / $totalWalletsCreated,2);
+        $averageWalletTransactions          = 0;
+        if ($averageWalletTransactions > 0) {
+            $averageWalletTransactions      = $averageWalletTransactions;
+        } else {
+            $averageWalletTransactions      = 0;
+        }
         $activeWallets                      = array(
             'getTotalActiveWallets'         => $getTotalActiveWallets,
             'totalWalletsCreated'           => $totalWalletsCreated,
+            'totalDefaultWalletsCreated'    => $totalDefaultWalletsCreated,
+            'getTotalWalletTransactions'    => $getTotalWalletTransactions,
+            'totalWalletTransactions'       => $totalWalletTransactions,
+            'averageWalletTransactions'     => $averageWalletTransactions, 
         );
 
         return $activeWallets;
     }
+
+    // public function get_total_active_wallets() {
+    //     $getTotalActiveWallets              = $this->CI->analytical_model->get_total_active_wallets();
+    //     $totalWalletsCreated                = $getTotalActiveWallets->num_rows();
+    //     $getTotalDefaultWalletsCreated      = $this->CI->analytical_model->get_total_active_default_wallets();
+    //     $totalDefaultWalletsCreated         = $getTotalDefaultWalletsCreated->num_rows();
+    //     $getTotalWalletTransactions         = $this->CI->analytical_model->get_total_wallet_transactions(); 
+    //     $totalWalletTransactions            = $getTotalWalletTransactions->num_rows();
+    //     $activeWallets                      = array(
+    //         'getTotalActiveWallets'         => $getTotalActiveWallets,
+    //         'totalWalletsCreated'           => $totalWalletsCreated,
+    //         'totalDefaultWalletsCreated'    => $totalDefaultWalletsCreated,
+    //         'getTotalWalletTransactions'    => $getTotalWalletTransactions,
+    //         'totalWalletTransactions'       => $totalWalletTransactions,
+
+    //     );
+
+    //     return $activeWallets;
+    // }
 
     public function get_total_trades_tracked() {
         $getTotalTradesTracked              = $this->CI->analytical_model->get_total_trades_tracked();
@@ -420,6 +604,25 @@ class MyMIAnalytics
         return $activeUsers;
     }
 
+    public function get_inactive_users() {
+        $getInactiveUsers                   = $this->CI->analytical_model->get_inactive_users(); 
+        if (empty($getInactiveUsers)) {
+            $this->db->from('bf_users');
+            $this->db->where('active', 0); 
+            $this->db->where('banned', 0); 
+            $getInactiveUsers                       = $this->db->get(); 
+            return $getInactiveUsers;
+        }
+        $totalInactiveUsers                 = $getInactiveUsers->num_rows();
+
+        $inactiveUsers                        = array(
+            'getInactiveUsers'              => $getInactiveUsers,
+            'totalInactiveUsers'            => $totalInactiveUsers,
+        );
+        
+        return $inactiveUsers;
+    }
+
     public function get_pending_partners() {
         $getPendingPartners                 = $this->CI->analytical_model->get_pending_partners();
         $totalPendingPartners               = $getPendingPartners->num_rows();
@@ -442,5 +645,49 @@ class MyMIAnalytics
         );
 
         return $activePartners;
+    }
+
+    public function get_inactive_partners() {
+        $getInactivePartners                = $this->CI->analytical_model->get_inactive_partners(); 
+        if (empty($getInactivePartners)) {
+            $this->db->from('bf_users');
+            $this->db->where('active', 0); 
+            $this->db->where('banned', 0); 
+            $this->db->where('partner', 1);
+            $getInactivePartners            = $this->db->get(); 
+            return $getInactivePartners;
+        }
+        $totalInactivePartners              = $getInactivePartners->num_rows();
+
+        $inactivePartners                   = array(
+            'getInactivePartners'           => $getInactivePartners,
+            'totalInactivePartners'         => $totalInactivePartners,
+        );
+        
+        return $inactivePartners;
+    }
+
+    public function get_department_tasks($department, $tasks) {
+        $getTasksByDepartment               = $this->CI->analytical_model->get_tasks_by_department($department); 
+        $totalTasksByDepartment             = $getTasksByDepartment->num_rows();
+
+        // create an array to hold total tasks by type
+        $totalTasksByTypeArr = [];
+    
+        // loop through each task type
+        foreach ($tasks as $taskType) {
+            // get tasks by type
+            $getTasksByType = $this->CI->analytical_model->get_tasks_by_type($department, $taskType); 
+            // count the tasks and store it in the array with the task type as the key
+            $totalTasksByTypeArr[$taskType] = $getTasksByType->num_rows();
+        }
+    
+        $departmentPendingTasks = array(
+            'getTasksByDepartment'          => $getTasksByDepartment,
+            'totalTasks'                    => $totalTasksByDepartment,
+            'totalTasksByType'              => $totalTasksByTypeArr,
+        ); 
+
+        return $departmentPendingTasks; 
     }
 }

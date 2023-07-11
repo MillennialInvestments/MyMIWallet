@@ -39,6 +39,7 @@ class Dashboard extends Admin_Controller
         //$this->load->module('ContactUs');
         $this->load->library('Template');
         $this->load->model(array('User/dashboard_model', 'User/exchange_model', 'User/public_model'));
+        $this->load->module('Institutions');
     }
 
     // -------------------------------------------------------------------------
@@ -47,7 +48,7 @@ class Dashboard extends Admin_Controller
 
     public function index()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -59,7 +60,7 @@ class Dashboard extends Admin_Controller
 
     public function Investor_Profile()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Investor_Profile';
         
         $this->set_current_user();
@@ -71,7 +72,7 @@ class Dashboard extends Admin_Controller
 
     public function Profile_Manager()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Profile_Manager';
         
         $this->set_current_user();
@@ -85,7 +86,7 @@ class Dashboard extends Admin_Controller
 
     public function Add_Investor_Profile()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Add_Investor_Profile';
         
         $this->set_current_user();
@@ -141,7 +142,7 @@ class Dashboard extends Admin_Controller
                                 
     public function Announcements()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->load->model('Management/announcements_model');
@@ -154,7 +155,7 @@ class Dashboard extends Admin_Controller
 
     public function Edit_Profile()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Edit_Profile';
         
         $this->set_current_user();
@@ -215,7 +216,7 @@ class Dashboard extends Admin_Controller
 
     public function Edit_Investor_Profile()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Edit_Investor_Profile';
         
         $this->set_current_user();
@@ -270,7 +271,7 @@ class Dashboard extends Admin_Controller
     
     public function Edit_Social_Media()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Edit_Social_Media';
         
         $this->set_current_user();
@@ -317,7 +318,7 @@ class Dashboard extends Admin_Controller
                
     public function Mymi_Coins()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -329,7 +330,7 @@ class Dashboard extends Admin_Controller
             
     public function My_Profile()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'User_Profile';
         
         $this->set_current_user();
@@ -384,7 +385,7 @@ class Dashboard extends Admin_Controller
            
     public function Purchase()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Investment_Confirmation';
         
         $this->set_current_user();
@@ -396,7 +397,7 @@ class Dashboard extends Admin_Controller
 
     public function Purchase_Coins()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Purchase_Coins';
         
         $this->set_current_user();
@@ -408,7 +409,7 @@ class Dashboard extends Admin_Controller
 
     public function Request_Coins()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Investment_Request_Coins';
         
         $this->set_current_user();
@@ -493,7 +494,7 @@ class Dashboard extends Admin_Controller
     
     public function Complete($trans_id)
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Investment_Complete';
         
         $this->set_current_user();
@@ -508,7 +509,7 @@ class Dashboard extends Admin_Controller
            
     public function Markets()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -520,7 +521,7 @@ class Dashboard extends Admin_Controller
 
     public function Search()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Search';
         
         $this->set_current_user();
@@ -550,7 +551,7 @@ class Dashboard extends Admin_Controller
            
     public function Trade_Alerts()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -562,7 +563,7 @@ class Dashboard extends Admin_Controller
 
     public function Trade_Alerts_Log()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -574,7 +575,7 @@ class Dashboard extends Admin_Controller
         
     public function User_Profile()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'User_Profile';
         
         $this->set_current_user();

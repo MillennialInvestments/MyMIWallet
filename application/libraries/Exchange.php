@@ -7,8 +7,8 @@ class Exchange_Old
     public function __construct()
     {
         $this->ci =& get_instance();
-        $this->ci->load->library(array('users/Auth', 'MyMICoin', 'MyMIGold'));
-        $this->ci->load->model(array('User/Investor_model', 'User/Tracker_model', 'User/Wallet_model'));
+        // $this->ci->load->library(array('users/Auth', 'MyMICoin', 'MyMIGold'));
+        // $this->ci->load->model(array('User/Investor_model', 'User/Tracker_model', 'User/Wallet_model'));
         //~ $this->ci->load->library(array('Auth', 'MyMIWallets'));
         $cuID 								                        = $this->ci->auth->user_id();
     }

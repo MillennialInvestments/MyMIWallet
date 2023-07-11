@@ -1,4 +1,5 @@
 <?php
+ob_start();
 /**
  * CodeIgniter
  *
@@ -306,3 +307,5 @@ define('VIEWPATH', $view_folder);
  *------------------------------------------------------------------------------
  */
 require_once(BASEPATH . 'core/CodeIgniter.php');
+ob_end_flush();
+?>

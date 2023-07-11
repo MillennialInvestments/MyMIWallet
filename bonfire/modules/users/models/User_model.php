@@ -429,9 +429,37 @@ class User_model extends BF_Model
          'nickname'				=> $nickname,
         );
         
-        return $this->db->insert('bf_users_wallet', $users);
+        $this->db->insert('bf_users_wallet', $users);
+        $lastWalletID           = $this->db->insert_id();
+        return $lastWalletID;         
     }
     
+    public function add_default_wallet_to_user($userID, $userEmail, $userUsername, $lastWalletID) {
+        $walletData             = array(
+            'default_wallet'    => $lastWalletID,      
+        ); 
+
+        $this->db->where('id', $userID); 
+        $this->db->where('email', $userEmail);
+        $this->db->where('username', $userUsername);
+        return $this->db->update('bf_users', $walletData);
+    } 
+
+    public function track_referral($referrer_code, $user_id, $type, $city, $state, $country, $zipcode) {
+        $data = array(
+            'referrer_code'             => $referrer_code,
+            'user_id'                   => $user_id,
+            'signup_date'               => date('Y-m-d H:i:s'), // Current date and time
+            'user_type'                 => $user_type,
+            'city'                      => $city,
+            'state'                     => $state,
+            'country'                   => $country,
+            'zipcode'                   => $zipcode,
+            'active'                    => 1 // Set the referral as active
+        );
+        $this->db->insert('bf_users_referrals', $data);
+    }
+
     /**
      * Update an existing user. Before saving, it will:
      * - Generate a new password/hash if both password and pass_confirm are provided.

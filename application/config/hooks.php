@@ -15,6 +15,14 @@ $hook['pre_controller'][] = array(
     'params'   => ''
 );
 
+// New SEO check hook
+$hook['post_controller'][] = array(
+    'class'    => 'PreControllerHook',
+    'function' => 'seo_check',
+    'filename' => 'PreControllerHook.php',
+    'filepath' => 'hooks'
+);
+
 // Allow performance of good redirects to previous pages.
 $hook['post_controller'][] = array(
     'class'    => 'App_hooks',
@@ -32,3 +40,13 @@ $hook['post_controller_constructor'][] = array(
     'filepath' => 'hooks',
     'params'   => ''
 );
+
+
+// // Automatically minify HTML 
+// $hook['display_override'] = array(
+//     'class'    => 'Minify_html',
+//     'function' => 'enable',
+//     'filename' => 'Minify_html.php',
+//     'filepath' => 'hooks',
+//     'params'   => ''
+// );

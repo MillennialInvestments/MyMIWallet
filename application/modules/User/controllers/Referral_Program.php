@@ -37,8 +37,6 @@ class Referral_Program extends Admin_Controller
     {
         parent::__construct();
 
-        $this->load->helper(array('directory', 'form', 'file', 'url'));
-        $this->load->library(array('form_validation', 'upload', 'Services/auth', 'user_agent', 'Users/auth'));
         $this->load->model('User/referral_model');
         $this->load->model('Management/investment_model');
         $this->load->module('ContactUs');
@@ -57,7 +55,7 @@ class Referral_Program extends Admin_Controller
 
     public function index()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Admin_Dashboard';
         
         $this->set_current_user();
@@ -69,19 +67,35 @@ class Referral_Program extends Admin_Controller
 
     public function My_Referrals()
     {
-        $pageType = 'Standard';
-        $pageName = 'Admin_Dashboard';
+        $userAccount                        = $_SESSION['allSessionData']['userAccount'];
+        $cuID                               = $userAccount['cuID'];
+        $cuReferrerCode                     = $userAccount['cuReferrerCode'];
+        $pageType                           = 'Standard';
+        $pageName                           = 'Admin_Dashboard';
+        
+        $pageType = 'Automated';
+        $pageName = 'Referral_Program_Apply';
         
         $this->set_current_user();
         
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
+        Template::set('cuID', $cuID);
         Template::render();
+        // $this->set_current_user();
+
+        // if (empty($cuReferrerCode)) {
+        //     Template::redirect(site_url('/Referral-Program/Apply/' . $cuID));
+        // } else {
+        //     Template::set('pageType', $pageType);
+        //     Template::set('pageName', $pageName);
+        //     Template::render();
+        // }
     }
 
     public function Users()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Admin_Dashboard';
         
         $this->set_current_user();
@@ -93,7 +107,7 @@ class Referral_Program extends Admin_Controller
     
     public function Marketing_Affiliate_Program_Agreement()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Marketing_Affiliate_Program_Agreement';
         
         $this->set_current_user();
@@ -107,7 +121,7 @@ class Referral_Program extends Admin_Controller
     // Add/Edit/Update Dashboards
     public function Apply()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Referral_Program_Apply';
         
         $this->set_current_user();
@@ -119,7 +133,7 @@ class Referral_Program extends Admin_Controller
 
     public function Success()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Referral_Program_Apply';
         
         $this->set_current_user();
@@ -131,7 +145,7 @@ class Referral_Program extends Admin_Controller
     
     public function New_Affiliate_Information()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Referral_Program_Activate_Affiliate';
         
         $this->set_current_user();
@@ -216,7 +230,7 @@ class Referral_Program extends Admin_Controller
     
     public function New_Affiliate_Procedure()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Admin_Dashboard';
         
         $this->set_current_user();

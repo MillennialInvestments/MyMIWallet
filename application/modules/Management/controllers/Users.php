@@ -38,7 +38,8 @@ class Users extends Admin_Controller
     {
         parent::__construct();
         $this->load->helper(array('directory', 'form', 'file', 'url'));
-        $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'user_agent', 'Users/auth'));
+        $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'Users/auth'));
+        $this->load->model('Management/analytical_model');
         $this->load->model('Management/announcements_model');
         $this->load->model('Management/design_model');
         $this->load->model(array('API/api_model', 'User/exchange_model', 'User/mymigold_model', 'User/tracker_model'));
@@ -61,7 +62,7 @@ class Users extends Admin_Controller
 
     public function index()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -73,7 +74,7 @@ class Users extends Admin_Controller
 
     public function Assets()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -93,7 +94,7 @@ class Users extends Admin_Controller
 
     public function Distribute()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -113,7 +114,7 @@ class Users extends Admin_Controller
 
     public function Orders($userID)
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Web_Design_Dashboard';
         $this->set_current_user();
         
@@ -124,7 +125,7 @@ class Users extends Admin_Controller
 
     public function Profile()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -134,6 +135,14 @@ class Users extends Admin_Controller
         Template::render();
     }
     
+    public function Export_Users() {
+        $table_name = 'bf_users';
+        $file_path = './public/assets/documents/Exports/Users/bf_users.csv';
+
+        $this->csvexportmodel->save_table_to_csv($table_name, $file_path);
+
+        $this->csvexport->export($file_path);
+    }
     /**
      * If the Auth lib is loaded, it will set the current user, since users
      * will never be needed if the Auth library is not loaded. By not requiring

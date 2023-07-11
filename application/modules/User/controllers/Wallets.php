@@ -39,6 +39,7 @@ class Wallets extends Admin_Controller
         $this->load->library('Template');
         $this->load->model('User/investment_model', 'User/wallet_model');
         $this->load->module('Exchange');
+        $this->load->module('Institutions');
 
         //$this->lang->load('Blog_lang');
     }
@@ -49,20 +50,8 @@ class Wallets extends Admin_Controller
 
     public function index()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Wallets';
-        
-        $this->set_current_user();
-        
-        Template::set('pageType', $pageType);
-        Template::set('pageName', $pageName);
-        Template::render();
-    }
-
-    public function MyMI_Wallet()
-    {
-        $pageType = 'Standard';
-        $pageName = 'MyMI_Wallet';
         
         $this->set_current_user();
         
@@ -133,10 +122,84 @@ class Wallets extends Admin_Controller
             }
         }
     }
+    public function Add_Account()
+    {
+        $pageType                           = 'Standard';
+        $pageURIA                           = $this->uri->segment(1);
+        $pageURIB                           = $this->uri->segment(2);
+        if ($pageURIA === 'Free') {
+            if ($pageURIB === 'Fiat') {
+                $pageName                   = 'Add_Wallet_Free_Fiat';
+            } else {
+                $pageName                   = 'Add_Wallet_Free_Digital';
+            }
+        } elseif ($pageURIA === 'Premium') {
+            if ($pageURIB === 'Fiat') {
+                $pageName                   = 'Add_Wallet_Premium_Fiat';
+            } else {
+                $pageName                   = 'Add_Wallet_Premium_Digital';
+            }
+        }
+        $pageName                           = 'Add_Wallet';
+        
+        $this->set_current_user();
+        //~ $this->output->cache(1440);
+        
+        // create the data object
+        $data = new stdClass();
+        // set validation rules
+        $this->form_validation->set_rules('webpage', 'Webpage', 'trim');
+        $this->form_validation->set_rules('url_link', 'URL Link', 'trim');
+        
+        if ($this->form_validation->run() === false) {
+            $this->load->view('Wallets/Add_Account');
+            Template::set('pageType', $pageType);
+            Template::set('pageName', $pageName);
+            Template::render();
+        } else {
+            // set variables from the form
+            $beta							= $this->input->post('beta');
+            $user_id						= $this->input->post('user_id');
+            $username						= $this->input->post('username');
+            $user_email						= $this->input->post('user_email');
+            $broker							= $this->input->post('broker');
+            $type							= $this->input->post('type');
+            $amount							= $this->input->post('amount');
+            $nickname						= $this->input->post('nickname');
+            
+            if ($this->wallet_model->add_wallet($beta, $user_id, $username, $user_email, $broker, $type, $amount, $nickname)) {
+                Template::set_message('Wallet Added Successfully', 'success');
+                redirect('Wallets');
+            } else {
+                
+                // user creation failed, this should never happen
+                $data->error = 'There was a problem submitting your request. Please try again.';
+                
+                // send error to the view
+                $this->load->view('Wallets/Add', $data);
+                Template::set_message('Form Information Not Entered Correctly', 'error');
+                Template::set('pageType', $pageType);
+                Template::set('pageName', $pageName);
+                Template::render();
+            }
+        }
+    }
+    
+    public function Confirm_Deposit()
+    {
+        $pageType = 'Automated';
+        $pageName = 'Wallets_Confirm_Deposits';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
     
     public function Deposit_Funds()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Deposit_Funds';
         
         $this->set_current_user();
@@ -195,10 +258,34 @@ class Wallets extends Admin_Controller
         }
     }
     
-    public function Confirm_Deposit()
+    public function Edit()
     {
-        $pageType = 'Standard';
-        $pageName = 'Wallets_Confirm_Deposits';
+        $pageType = 'Automated';
+        $pageName = 'Wallets_Edit';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+    
+    public function Edit_Account()
+    {
+        $pageType = 'Automated';
+        $pageName = 'Wallets_Edit_Account';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+
+    public function MyMI_Wallet()
+    {
+        $pageType = 'Automated';
+        $pageName = 'MyMI_Wallet';
         
         $this->set_current_user();
         
@@ -225,7 +312,7 @@ class Wallets extends Admin_Controller
     
     public function Withdraw_Funds()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Withdraw_Funds';
         
         $this->set_current_user();
@@ -300,7 +387,7 @@ class Wallets extends Admin_Controller
 
     public function Generate_Wallet()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Generate_Wallet';
         
         $this->set_current_user();
@@ -312,7 +399,7 @@ class Wallets extends Admin_Controller
     
     public function Wallet_Generator()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -322,7 +409,7 @@ class Wallets extends Admin_Controller
 
     public function Wallet_Manager()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -332,24 +419,41 @@ class Wallets extends Admin_Controller
 
     public function Wallet_Selection()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
         
-        $this->load->view('User/Wallets/Wallet_Selection');
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
+    }
+    
+    public function Attach_Account($accountType, $accountID, $walletID) {
+        $this->load->model('User/budget_model');
+        $this->set_current_user(); 
+        
+        if ($this->budget_model->attach_account($accountID, $walletID)) {
+            Template::set_message('Record Updated Successfully', 'success');
+            Template::redirect('/Budget');
+        } else {
+            Template::set_message('Record Could Be Updated', 'error');
+            Template::redirect('/Budget');
+        }
     }
 
     public function Link_Account($pageLink)
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         
         $this->set_current_user();
         if ($this->uri->segment(2)) {
             $wallet_id  = $this->uri->segment(2); 
         }
-        if ($pageLink === 'Brokerage') {
-            $pageName = 'Dashboard';
+        if ($pageLink === 'Search') {
+            $pageName                               = 'Wallets_Search_Financial_Firms';
+        } elseif ($pageLink === 'Brokerage') {
+            $pageName                               = 'Dashboard';
         } elseif ($pageLink === 'Approve') {
             if ($this->wallet_model->approve_wallet($wallet_id)) {
                 Template::redirect('Wallets/Link-Account/Successful/' . $wallet_id);
@@ -390,7 +494,7 @@ class Wallets extends Admin_Controller
 
     public function Link_Account_Success($id)
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -402,7 +506,7 @@ class Wallets extends Admin_Controller
 
     public function Purchase()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Purchase_Wallet';
         
         $this->set_current_user();
@@ -494,7 +598,7 @@ class Wallets extends Admin_Controller
                
     public function Purchase_MyMI_Gold()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Investment_Confirmation';
         
         $this->set_current_user();
@@ -506,7 +610,7 @@ class Wallets extends Admin_Controller
 
     public function Complete_Purchase()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Investment_Confirmation';
         
         $this->set_current_user();
@@ -518,7 +622,7 @@ class Wallets extends Admin_Controller
     
     public function Purchase_Complete($trans_id)
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Investment_Complete';
         
         $this->set_current_user();
@@ -533,7 +637,7 @@ class Wallets extends Admin_Controller
     
     public function Feature_Manager()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -543,7 +647,7 @@ class Wallets extends Admin_Controller
 
     public function Purchase_Manager()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -553,7 +657,7 @@ class Wallets extends Admin_Controller
 
     public function Purchase_Coins_Transaction()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -563,7 +667,7 @@ class Wallets extends Admin_Controller
 
     public function Add_Fiat_Wallet()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Investment_Confirmation';
         
         $this->set_current_user();
@@ -575,7 +679,7 @@ class Wallets extends Admin_Controller
 
     public function Add_Digital_Wallet()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Investment_Confirmation';
         
         $this->set_current_user();
@@ -585,56 +689,9 @@ class Wallets extends Admin_Controller
         Template::render();
     }
     
-    public function Edit()
-    {
-        $pageType = 'Standard';
-        $pageName = 'Edit_Wallet';
-        
-        $this->set_current_user();
-        //~ $this->output->cache(1440);
-        
-        // create the data object
-        $data = new stdClass();
-        // set validation rules
-        $this->form_validation->set_rules('webpage', 'Webpage', 'trim');
-        $this->form_validation->set_rules('url_link', 'URL Link', 'trim');
-        
-        if ($this->form_validation->run() === false) {
-            $this->load->view('Wallets/Edit');
-            Template::set('pageType', $pageType);
-            Template::set('pageName', $pageName);
-            Template::render();
-        } else {
-            // set variables from the form
-            $wallet_id						= $this->input->post('id');
-            $user_id						= $this->input->post('user_id');
-            $user_email						= $this->input->post('user_email');
-            $broker							= $this->input->post('broker');
-            $type							= $this->input->post('type');
-            $amount							= $this->input->post('amount');
-            $nickname						= $this->input->post('nickname');
-            
-            if ($this->investor_model->edit_wallet($wallet_id, $user_id, $user_email, $broker, $type, $amount, $nickname)) {
-                Template::set_message('Wallet Edited Successfully', 'success');
-                redirect('Wallets');
-            } else {
-                
-                // user creation failed, this should never happen
-                $data->error = 'There was a problem submitting your request. Please try again.';
-                
-                // send error to the view
-                $this->load->view('Wallets/Edit', $data);
-                Template::set_message('Form Information Not Entered Correctly', 'error');
-                Template::set('pageType', $pageType);
-                Template::set('pageName', $pageName);
-                Template::render();
-            }
-        }
-    }
-    
     public function Create_Bank_Account()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Create_Bank_Account';
         
         $this->set_current_user();
@@ -721,7 +778,7 @@ class Wallets extends Admin_Controller
     
     public function Transfer_Funds()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -733,7 +790,7 @@ class Wallets extends Admin_Controller
     
     public function Wallet_Transaction()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -743,7 +800,7 @@ class Wallets extends Admin_Controller
    
     public function Add_Deposit_Fetch()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -753,7 +810,7 @@ class Wallets extends Admin_Controller
     
     public function Add_Withdraw_Fetch()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -763,7 +820,7 @@ class Wallets extends Admin_Controller
 
     public function Purchase_Gold()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -773,7 +830,7 @@ class Wallets extends Admin_Controller
 
     public function Details()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Wallet_Details';
         
         $this->set_current_user();
@@ -783,19 +840,31 @@ class Wallets extends Admin_Controller
         Template::render();
     }
             
-    public function Delete($wallet_id)
+    public function Delete()
     {
-        // create the data object
-        $data = new stdClass();
+        $pageType = 'Automated';
+        $pageName = 'Wallet_Delete';
         
-        // set variables from the form
+        $this->set_current_user();
         
-        if ($this->wallet_model->delete_wallet($wallet_id)) {
-            // user creation ok
-            Template::set_message('Deleted Successfully', 'error');
-            redirect('/Wallets');
-        }
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        Template::render();
     }
+            
+    // public function Delete()
+    // {
+    //     // create the data object
+    //     $data = new stdClass();
+        
+    //     // set variables from the form
+        
+    //     if ($this->wallet_model->delete_wallet($wallet_id)) {
+    //         // user creation ok
+    //         Template::set_message('Deleted Successfully', 'error');
+    //         redirect('/Wallets');
+    //     }
+    // }
     
     private function saveData($type = 'insert', $id = 0)
     {

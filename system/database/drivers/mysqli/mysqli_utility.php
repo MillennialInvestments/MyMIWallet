@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
+ * Copyright (c) 2019 - 2022, CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,12 +30,13 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.3.0
  * @filesource
  */
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * MySQLi Utility Class
@@ -44,151 +45,168 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @subpackage	Drivers
  * @category	Database
  * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/user_guide/database/
+ * @link		https://codeigniter.com/userguide3/database/
  */
-class CI_DB_mysqli_utility extends CI_DB_utility
-{
+class CI_DB_mysqli_utility extends CI_DB_utility {
 
-    /**
-     * List databases statement
-     *
-     * @var	string
-     */
-    protected $_list_databases	= 'SHOW DATABASES';
+	/**
+	 * List databases statement
+	 *
+	 * @var	string
+	 */
+	protected $_list_databases	= 'SHOW DATABASES';
 
-    /**
-     * OPTIMIZE TABLE statement
-     *
-     * @var	string
-     */
-    protected $_optimize_table	= 'OPTIMIZE TABLE %s';
+	/**
+	 * OPTIMIZE TABLE statement
+	 *
+	 * @var	string
+	 */
+	protected $_optimize_table	= 'OPTIMIZE TABLE %s';
 
-    /**
-     * REPAIR TABLE statement
-     *
-     * @var	string
-     */
-    protected $_repair_table	= 'REPAIR TABLE %s';
+	/**
+	 * REPAIR TABLE statement
+	 *
+	 * @var	string
+	 */
+	protected $_repair_table	= 'REPAIR TABLE %s';
 
-    // --------------------------------------------------------------------
+	// --------------------------------------------------------------------
 
-    /**
-     * Export
-     *
-     * @param	array	$params	Preferences
-     * @return	mixed
-     */
-    protected function _backup($params = array())
-    {
-        if (count($params) === 0) {
-            return false;
-        }
+	/**
+	 * Export
+	 *
+	 * @param	array	$params	Preferences
+	 * @return	mixed
+	 */
+	protected function _backup($params = array())
+	{
+		if (count($params) === 0)
+		{
+			return FALSE;
+		}
 
-        // Extract the prefs for simplicity
-        extract($params);
+		// Extract the prefs for simplicity
+		extract($params);
 
-        // Build the output
-        $output = '';
+		// Build the output
+		$output = '';
 
-        // Do we need to include a statement to disable foreign key checks?
-        if ($foreign_key_checks === false) {
-            $output .= 'SET foreign_key_checks = 0;'.$newline;
-        }
+		// Do we need to include a statement to disable foreign key checks?
+		if ($foreign_key_checks === FALSE)
+		{
+			$output .= 'SET foreign_key_checks = 0;'.$newline;
+		}
 
-        foreach ((array) $tables as $table) {
-            // Is the table in the "ignore" list?
-            if (in_array($table, (array) $ignore, true)) {
-                continue;
-            }
+		foreach ( (array) $tables as $table)
+		{
+			// Is the table in the "ignore" list?
+			if (in_array($table, (array) $ignore, TRUE))
+			{
+				continue;
+			}
 
-            // Get the table schema
-            $query = $this->db->query('SHOW CREATE TABLE '.$this->db->escape_identifiers($this->db->database.'.'.$table));
+			// Get the table schema
+			$query = $this->db->query('SHOW CREATE TABLE '.$this->db->escape_identifiers($this->db->database.'.'.$table));
 
-            // No result means the table name was invalid
-            if ($query === false) {
-                continue;
-            }
+			// No result means the table name was invalid
+			if ($query === FALSE)
+			{
+				continue;
+			}
 
-            // Write out the table schema
-            $output .= '#'.$newline.'# TABLE STRUCTURE FOR: '.$table.$newline.'#'.$newline.$newline;
+			// Write out the table schema
+			$output .= '#'.$newline.'# TABLE STRUCTURE FOR: '.$table.$newline.'#'.$newline.$newline;
 
-            if ($add_drop === true) {
-                $output .= 'DROP TABLE IF EXISTS '.$this->db->protect_identifiers($table).';'.$newline.$newline;
-            }
+			if ($add_drop === TRUE)
+			{
+				$output .= 'DROP TABLE IF EXISTS '.$this->db->protect_identifiers($table).';'.$newline.$newline;
+			}
 
-            $i = 0;
-            $result = $query->result_array();
-            foreach ($result[0] as $val) {
-                if ($i++ % 2) {
-                    $output .= $val.';'.$newline.$newline;
-                }
-            }
+			$i = 0;
+			$result = $query->result_array();
+			foreach ($result[0] as $val)
+			{
+				if ($i++ % 2)
+				{
+					$output .= $val.';'.$newline.$newline;
+				}
+			}
 
-            // If inserts are not needed we're done...
-            if ($add_insert === false) {
-                continue;
-            }
+			// If inserts are not needed we're done...
+			if ($add_insert === FALSE)
+			{
+				continue;
+			}
 
-            // Grab all the data from the current table
-            $query = $this->db->query('SELECT * FROM '.$this->db->protect_identifiers($table));
+			// Grab all the data from the current table
+			$query = $this->db->query('SELECT * FROM '.$this->db->protect_identifiers($table));
 
-            if ($query->num_rows() === 0) {
-                continue;
-            }
+			if ($query->num_rows() === 0)
+			{
+				continue;
+			}
 
-            // Fetch the field names and determine if the field is an
-            // integer type. We use this info to decide whether to
-            // surround the data with quotes or not
+			// Fetch the field names and determine if the field is an
+			// integer type. We use this info to decide whether to
+			// surround the data with quotes or not
 
-            $i = 0;
-            $field_str = '';
-            $is_int = array();
-            while ($field = $query->result_id->fetch_field()) {
-                // Most versions of MySQL store timestamp as a string
-                $is_int[$i] = in_array($field->type, array(MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_INT24, MYSQLI_TYPE_LONG), true);
+			$i = 0;
+			$field_str = '';
+			$is_int = array();
+			while ($field = $query->result_id->fetch_field())
+			{
+				// Most versions of MySQL store timestamp as a string
+				$is_int[$i] = in_array($field->type, array(MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_INT24, MYSQLI_TYPE_LONG), TRUE);
 
-                // Create a string of field names
-                $field_str .= $this->db->escape_identifiers($field->name).', ';
-                $i++;
-            }
+				// Create a string of field names
+				$field_str .= $this->db->escape_identifiers($field->name).', ';
+				$i++;
+			}
 
-            // Trim off the end comma
-            $field_str = preg_replace('/, $/', '', $field_str);
+			// Trim off the end comma
+			$field_str = preg_replace('/, $/' , '', $field_str);
 
-            // Build the insert string
-            foreach ($query->result_array() as $row) {
-                $val_str = '';
+			// Build the insert string
+			foreach ($query->result_array() as $row)
+			{
+				$val_str = '';
 
-                $i = 0;
-                foreach ($row as $v) {
-                    // Is the value NULL?
-                    if ($v === null) {
-                        $val_str .= 'NULL';
-                    } else {
-                        // Escape the data if it's not an integer
-                        $val_str .= ($is_int[$i] === false) ? $this->db->escape($v) : $v;
-                    }
+				$i = 0;
+				foreach ($row as $v)
+				{
+					// Is the value NULL?
+					if ($v === NULL)
+					{
+						$val_str .= 'NULL';
+					}
+					else
+					{
+						// Escape the data if it's not an integer
+						$val_str .= ($is_int[$i] === FALSE) ? $this->db->escape($v) : $v;
+					}
 
-                    // Append a comma
-                    $val_str .= ', ';
-                    $i++;
-                }
+					// Append a comma
+					$val_str .= ', ';
+					$i++;
+				}
 
-                // Remove the comma at the end of the string
-                $val_str = preg_replace('/, $/', '', $val_str);
+				// Remove the comma at the end of the string
+				$val_str = preg_replace('/, $/' , '', $val_str);
 
-                // Build the INSERT string
-                $output .= 'INSERT INTO '.$this->db->protect_identifiers($table).' ('.$field_str.') VALUES ('.$val_str.');'.$newline;
-            }
+				// Build the INSERT string
+				$output .= 'INSERT INTO '.$this->db->protect_identifiers($table).' ('.$field_str.') VALUES ('.$val_str.');'.$newline;
+			}
 
-            $output .= $newline.$newline;
-        }
+			$output .= $newline.$newline;
+		}
 
-        // Do we need to include a statement to re-enable foreign key checks?
-        if ($foreign_key_checks === false) {
-            $output .= 'SET foreign_key_checks = 1;'.$newline;
-        }
+		// Do we need to include a statement to re-enable foreign key checks?
+		if ($foreign_key_checks === FALSE)
+		{
+			$output .= 'SET foreign_key_checks = 1;'.$newline;
+		}
 
-        return $output;
-    }
+		return $output;
+	}
+
 }

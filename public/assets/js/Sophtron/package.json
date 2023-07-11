@@ -1,0 +1,24 @@
+{
+  "name": "sophtron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sophtron/Sophtron-Integration.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sophtron/Sophtron-Integration/issues"
+  },
+  "homepage": "https://github.com/sophtron/Sophtron-Integration#readme",
+  "dependencies": {
+    "axios": "^1.2.0",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.1.1"
+  }
+}

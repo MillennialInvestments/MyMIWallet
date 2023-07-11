@@ -1,0 +1,97 @@
+<?php /* /users/views/user_fields.php */
+date_default_timezone_set('America/Chicago');
+$date = date("F jS, Y");
+$hostTime = date("g:i A");
+$time = date("g:i A", strtotime($hostTime) - 60 * 60 * 5);
+$currentMethod = $this->router->fetch_method();
+
+$errorClass     = empty($errorClass) ? ' error' : $errorClass;
+$controlClass   = empty($controlClass) ? 'span4' : $controlClass;
+$registerClass  = $currentMethod == 'register' ? ' required' : '';
+$editSettings   = $currentMethod == 'edit';
+// Set Form Config
+$formGroup				= $this->config->item('form_container');
+$formLabel				= $this->config->item('form_label');
+$formConCol				= $this->config->item('form_control_column');
+$formControl			= $this->config->item('form_control');
+$formSelect				= $this->config->item('form_select');
+$formSelectPicker		= $this->config->item('form_selectpicker');
+$formText				= $this->config->item('form_text');
+$formCustomText			= $this->config->item('form_custom_text');
+?>
+<?php
+// Set up Validation for whether or not we accept Third-Party Accounts
+?>		                
+<h4 class="card-title">Add Account Information</h4>
+<p class="card-description"> Please fill out information below</p>			
+<hr>
+<input type="hidden" name="form_mode" id="form_mode" value="<?php echo set_value('form_mode', isset($user) ? $user->form_mode : 'Add'); ?>">	
+<input type="hidden" name="redirectURL" id="redirectURL" value="<?php echo set_value('redirectURL', isset($user) ? $user->redirectURL : $redirectURL); ?>">	
+<input type="hidden" name="beta" id="beta" value="<?php echo set_value('beta', isset($user) ? $user->beta : $beta); ?>">	
+<input type="hidden" class="form-control" name="user_id" id="user_id" value="<?php echo set_value('user_id', isset($user) ? $user->user_id : $cuID); ?>">	
+<input type="hidden" class="form-control" name="user_email" id="user_email" value="<?php echo set_value('user_email', isset($user) ? $user->user_email : $cuEmail); ?>">
+<input type="hidden" class="form-control" name="username" id="username" value="<?php echo set_value('username', isset($user) ? $user->username : $cuUsername); ?>">
+<input type="hidden" class="form-control" name="wallet_id" id="wallet_id" value="<?php echo set_value('wallet_id', isset($user) ? $user->wallet_id : $walletID); ?>">	
+<input type="hidden" class="form-control" name="wallet_type" id="wallet_type" value="<?php echo set_value('wallet_type', isset($user) ? $user->wallet_type : $walletType); ?>">
+<input type="hidden" class="form-control" name="purchase_type" id="purchase_type" value="<?php echo set_value('purchase_type', isset($user) ? $user->purchase_type : $purchaseType); ?>">
+<div class="<?php echo $formGroup; ?>">
+	<label class="col-12">Name of Bank</label>
+	<div class="col-12">        
+		<input type="text" class="<?php echo $formControl; ?>" name="bank_name" id="bank_name" placeholder="Ex: Capital One Bank" value="<?php echo set_value('bank_name', isset($user) ? $user->bank_name : ''); ?>">	
+	</div>
+</div>	
+<div class="<?php echo $formGroup; ?>">
+	<label class="col-12">Create Nickname for Account</label>
+	<div class="col-12">        
+		<input type="text" class="<?php echo $formControl; ?>" name="nickname" id="nickname" placeholder="Ex: Main Banking Account" value="<?php echo set_value('nickname', isset($user) ? $user->nickname : ''); ?>">	
+	</div>
+</div>
+<div class="<?php echo $formGroup; ?>">
+	<label class="col-12">Credit Card Number</label>
+	<div class="col-12">        
+		<input type="text" class="<?php echo $formControl; ?>" name="account_number" id="account_number" placeholder="Ex: 0123 -OR- 012345678910" value="<?php echo set_value('account_number', isset($user) ? $user->account_number : ''); ?>">	
+	</div>
+</div>
+<div class="<?php echo $formGroup; ?>">
+	<label class="col-12">Total Credit Limit</label>
+	<div class="col-12">        
+		<input type="text" class="<?php echo $formControl; ?>" name="credit_limit" id="credit_limit" onChange="calculateBalance(); return false;" placeholder="Ex: 1500.00" value="<?php echo set_value('credit_limit', isset($user) ? $user->credit_limit : ''); ?>">	
+	</div>
+</div>
+<div class="<?php echo $formGroup; ?>">
+	<label class="col-12">Current Balance</label>
+	<div class="col-12">        
+		<input type="text" class="<?php echo $formControl; ?>" name="current_balance" id="current_balance" onChange="calculateBalance(); return false;" placeholder="Ex: 1500.00" value="<?php echo set_value('current_balance', isset($user) ? $user->current_balance : ''); ?>">	
+	</div>
+</div>
+<div class="<?php echo $formGroup; ?>">
+	<label class="col-12">Available Balance</label>
+	<div class="col-12">        
+		<input type="text" class="<?php echo $formControl; ?>" name="available_balance" id="available_balance" onChange="calculateBalance(); return false;" placeholder="Ex: 1500.00" value="<?php echo set_value('available_balance', isset($user) ? $user->available_balance : ''); ?>">	
+	</div>
+</div>
+<div class="<?php echo $formGroup; ?> pt-3">
+	<div class="col-md-4"></div>
+	<div class="col-12 col-md-8">
+		<div class="row">
+			<div class="col-6 px-1">                   
+				<button type="button" class="btn btn-secondary btn-block" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+			</div>
+			<div class="col-6 px-1">                   
+				<input class="btn btn-primary btn-block" type="submit" name="register" id="addNewWalletSubmit" value="Submit" />
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+function calculateBalance()
+{
+	var credit_limit 		                                        = document.getElementById('credit_limit').value;
+	var current_balance 		                                    = document.getElementById('current_balance').value;
+    
+	var available_balance                                           = credit_limit - current_balance;  
+	// Update Field Displays
+	document.getElementById('available_balance').value			    = available_balance.toFixed(2);
+
+}
+</script> 

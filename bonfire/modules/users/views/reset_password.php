@@ -25,7 +25,7 @@ foreach($getUserInfo->result_array() as $userInfo) {
     $cuID               = $userInfo['id'];
 }
 ?>
-<div class="intro-section intro-overview text-center bg-lighter pt-5 pb-0">
+<div class="intro-section intro-overview text-center bg-white pt-5 pb-0">
     <div class="container-fluid">
         <div class="card">
             <div class="card-inner text-center">

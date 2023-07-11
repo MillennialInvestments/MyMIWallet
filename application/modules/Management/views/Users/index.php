@@ -5,10 +5,18 @@ $day                                = date("d");
 $year                               = date("Y"); 
 $last_month                         = strtotime($month . ' - 1 month');
 $reporting                          = $this->mymianalytics->reporting(); 
+// print_r($reporting);
 $getPendingUsers                    = $reporting['getPendingUsers'];
 $totalPendingUsers                  = $reporting['totalPendingUsers']; 
 $getActiveUsers                     = $reporting['getActiveUsers']; 
 $totalActiveUsers                   = $reporting['totalActiveUsers']; 
+// $getInactiveUsers                   = $reporting['getInactiveUsers']; 
+// $getInactiveUsers                   = $this->analytical_model->get_inactive_users(); 
+$this->db->from('bf_users');
+$this->db->where('active', 0);
+$this->db->where('banned', 0);
+$getInactiveUsers                   = $this->db->get(); 
+$totalInactiveUsers                 = $getInactiveUsers->num_rows(); 
 $getPendingPartners                 = $reporting['getPendingPartners']; 
 $totalPendingPartners               = $reporting['totalPendingPartners']; 
 $getActivePartners                  = $reporting['getActivePartners']; 
@@ -19,6 +27,7 @@ $getCompleteSupport                 = $reporting['getCompleteSupport'];
 $totalCompleteSupport               = $reporting['totalCompleteSupport']; 
 $viewFileData                       = array(
     'getActiveUsers'                => $getActiveUsers,
+    'getInactiveUsers'              => $getInactiveUsers,
 );
 ?>
 <div class="nk-block">
@@ -174,7 +183,45 @@ $viewFileData                       = array(
                                     </div>
                                 </div>
                                 <div class="card-inner">
-                                    <?php $this->load->view('Management/Users/Listing-Table', $viewFileData); ?>
+                                    <?php $this->load->view('Management/Users/Active-Table', $viewFileData); ?>
+                                </div><!-- .card-inner -->
+                            </div><!-- .card-inner-group -->
+                        </div><!-- .card -->
+                    </div>
+                </div>
+            </div>
+            <div class="nk-block">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-bordered h-100">
+                            <div class="card-inner-group">
+                                <div class="card-inner card-inner-md">
+                                    <div class="card-title-group">
+                                        <div class="card-title">
+                                            <h6 class="title">Inactive Users</h6>
+                                        </div>
+                                        <div class="card-tools me-n1">
+                                            <div class="row">
+                                                <span class="col">
+                                                    <a class="link py-3" href="<?php echo site_url('Management/Assets/Create'); ?>"><i class="icon ni ni-plus-circle"></i> Add Asset</a>
+                                                </span>
+                                                <span class="col">
+                                                    <div class="drodown">
+                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <ul class="link-list-opt no-bdr">
+                                                                <li><a href="#"><em class="icon ni ni-setting"></em><span>Action Settings</span></a></li>
+                                                                <li><a href="#"><em class="icon ni ni-notify"></em><span>Push Notification</span></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-inner">
+                                    <?php $this->load->view('Management/Users/Inactive-Table', $viewFileData); ?>
                                 </div><!-- .card-inner -->
                             </div><!-- .card-inner-group -->
                         </div><!-- .card -->

@@ -88,6 +88,3 @@ if(!function_exists('get_recapture_score')) {
         return $response->score;
     }
 }
-
-
-

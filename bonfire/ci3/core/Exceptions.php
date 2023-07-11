@@ -100,10 +100,31 @@ class CI_Exceptions
      * @param	int	$line		Line number
      * @return	void
      */
+    // public function log_exception($severity, $message, $filepath, $line)
+    // {
+    //     $severity = isset($this->levels[$severity]) ? $this->levels[$severity] : $severity;
+    //     log_message('error', 'Severity: '.$severity.' --> '.$message.' '.$filepath.' '.$line);
+    // }
     public function log_exception($severity, $message, $filepath, $line)
     {
         $severity = isset($this->levels[$severity]) ? $this->levels[$severity] : $severity;
         log_message('error', 'Severity: '.$severity.' --> '.$message.' '.$filepath.' '.$line);
+
+        if ($severity == E_ERROR || $severity == E_PARSE || $severity == E_COMPILE_ERROR) {
+            $this->send_email($severity, $message, $filepath, $line);
+        }
+    }
+
+    private function send_email($severity, $message, $filepath, $line) {
+        $CI =& get_instance();
+        $CI->load->library('email');
+
+        $CI->email->from('support@mymiwallet.com', 'MyMI Support');
+        $CI->email->to('team@mymiwallet.com');
+        $CI->email->subject('PHP Error: '.$severity);
+        $CI->email->message("Severity: ".$severity."\r\nMessage: ".$message."\r\nFilepath: ".$filepath."\r\nLine: ".$line);
+
+        $CI->email->send();
     }
 
     // --------------------------------------------------------------------

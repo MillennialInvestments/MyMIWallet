@@ -680,4 +680,11 @@ class Tracker_model extends BF_Model
         
         return $this->db->insert('bf_investment_stock_listing', $user);
     }
+
+    public function get_all_trade_tracker_configs() {
+        $this->db->from('bf_users_trades_configs');
+        $this->db->where('status', 1);
+        $getAllTTConfigs                        = $this->db->get();
+        return $getAllTTConfigs;
+    }
 }

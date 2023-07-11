@@ -38,7 +38,7 @@ class Web_Design extends Admin_Controller
     {
         parent::__construct();
         $this->load->helper(array('directory', 'form', 'file', 'url'));
-        $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'user_agent', 'Users/auth'));
+        $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'Users/auth'));
         $this->load->model('Management/announcements_model');
         $this->load->model('Management/design_model');
         $this->load->model(array('API/api_model', 'User/exchange_model', 'User/mymigold_model', 'User/tracker_model'));
@@ -61,7 +61,7 @@ class Web_Design extends Admin_Controller
 
     public function index()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -73,7 +73,7 @@ class Web_Design extends Admin_Controller
 
     public function Content_Creator()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -85,7 +85,7 @@ class Web_Design extends Admin_Controller
 
     public function Curl_Generator()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -97,7 +97,7 @@ class Web_Design extends Admin_Controller
 
     public function Pages()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Web_Design_Pages';
         
         $this->set_current_user();
@@ -109,7 +109,7 @@ class Web_Design extends Admin_Controller
 
     public function Page_Template()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Page_Template';
         
         $this->set_current_user();
@@ -121,7 +121,7 @@ class Web_Design extends Admin_Controller
 
     public function Test_Page()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Web_Design_Test_Page';
         
         $this->set_current_user();
@@ -134,7 +134,7 @@ class Web_Design extends Admin_Controller
 
     public function Test_Page_Email()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Web_Design_Test_Page_Email';
         
         $this->set_current_user();
@@ -146,7 +146,7 @@ class Web_Design extends Admin_Controller
 
     public function Test_Page_CB()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Web_Design_Test_Page_CB';
         
         $this->set_current_user();
@@ -158,7 +158,7 @@ class Web_Design extends Admin_Controller
 
     public function Sitemap_Generator()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Sitemap_Generator';
         
         $this->set_current_user();
@@ -172,7 +172,7 @@ class Web_Design extends Admin_Controller
 
     public function Basic_UI()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Basic_UI';
         
         $this->set_current_user();
@@ -184,7 +184,7 @@ class Web_Design extends Admin_Controller
     
     public function Icons()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Icons';
         
         $this->set_current_user();
@@ -196,7 +196,7 @@ class Web_Design extends Admin_Controller
     
     public function Forms()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Forms';
         
         $this->set_current_user();
@@ -208,7 +208,7 @@ class Web_Design extends Admin_Controller
     
     public function Charts()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Charts';
         
         $this->set_current_user();
@@ -220,7 +220,7 @@ class Web_Design extends Admin_Controller
     
     public function Tables()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Tables';
         
         $this->set_current_user();
@@ -232,7 +232,7 @@ class Web_Design extends Admin_Controller
     
     public function UI_Elements()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'UI_Elements';
         
         $this->set_current_user();

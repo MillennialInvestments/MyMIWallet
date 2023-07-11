@@ -65,10 +65,10 @@ class Users extends Front_Controller
     public function login()
     {
         // session_destroy();
-        unset($_SESSION['allSessionData']);
+        $this->session->sess_destroy();
 
         $pageName = 'Login';
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         Template::set('pageName', $pageName);
         Template::set('pageType', $pageType);
         if (!empty($_SESSION['user_id'])) {
@@ -90,7 +90,6 @@ class Users extends Front_Controller
         if ($this->auth->is_logged_in() !== false) {
             Template::redirect('/Dashboard');
         }
-
         // Try to login.
         if (isset($_POST['log-me-in'])
             && true === $this->auth->login(
@@ -122,18 +121,17 @@ class Users extends Front_Controller
 
             // If the site is configured to use role-based login destinations and
             // the login destination has been set...
-            //~ if ($this->settings_lib->item('auth.do_login_redirect')
-            //~ && ! empty($this->auth->login_destination)
-            //~ ) {
-            //~ Template::redirect($this->auth->login_destination);
-            //~ }
 
             // If possible, send the user to the requested page.
-            if (! empty($this->requested_page)) {
+            if (!empty($this->requested_page)) {
                 if ($this->requested_page === site_url('')) {
                     Template::redirect('/Dashboard');
                 } else {
                     Template::redirect($this->requested_page);
+                }
+            } else {
+                if ($this->settings_lib->item('auth.do_login_redirect') && ! empty($this->auth->login_destination)) {
+                    Template::redirect($this->auth->login_destination);
                 }
             }
             
@@ -276,7 +274,8 @@ class Users extends Front_Controller
      * 'login_url' respectively.
      *
      * @return void
-     */public function register()
+     */
+    public function register()
     {
         // Are users allowed to register?
         if (! $this->settings_lib->item('auth.allow_register')) {
@@ -285,134 +284,186 @@ class Users extends Front_Controller
         }
 
         // return an error of your choosing
-        $id	 				            = $this->input->post('id');
-        $beta                           = $this->input->post('beta');
-        $type	 			            = $this->input->post('type');
-        $partner 			            = $this->input->post('partner');
-        $investor 			            = $this->input->post('investor');
-        $organization		            = $this->input->post('organization');
-        $signup_date		            = $this->input->post('signup_date');
-        $account_type                   = $this->input->post('account_type');
-        $email	 			            = $this->input->post('email');
-        $username			            = $this->input->post('username');
-        $user_email	 		            = $email;
-        $register_url 		            = $this->input->post('register_url') ?: REGISTER_URL;
-        $login_url    		            = $this->input->post('login_url') ?: LOGIN_URL;
+        $id	 				                                        = $this->input->post('id');
+        $beta                                                       = $this->input->post('beta');
+        $type	 			                                        = $this->input->post('type');
+        $partner 			                                        = $this->input->post('partner');
+        $investor 			                                        = $this->input->post('investor');
+        $organization		                                        = $this->input->post('organization');
+        $signup_date		                                        = $this->input->post('signup_date');
+        $account_type                                               = $this->input->post('account_type');
+        $email	 			                                        = $this->input->post('email');
+        $username			                                        = $this->input->post('username');
+        $user_email	 		                                        = $email;
+        $referral_code                                              = $this->input->post('referral_code');
+        $register_url 		                                        = $this->input->post('register_url') ?: REGISTER_URL;
+        $login_url    		                                        = $this->input->post('login_url') ?: LOGIN_URL;
                 
-        $phone				            = $this->input->post('phone');
-        $address			            = $this->input->post('address');
-        $city				            = $this->input->post('city');
-        $state				            = $this->input->post('state');
-        $country			            = $this->input->post('country');
-        $zipcode			            = $this->input->post('zipcode');
+        $phone				                                        = $this->input->post('phone');
+        $address			                                        = $this->input->post('address');
+        $city				                                        = $this->input->post('city');
+        $state				                                        = $this->input->post('state');
+        $country			                                        = $this->input->post('country');
+        $zipcode			                                        = $this->input->post('zipcode');
                 
         // Default Wallet Information
-        $default_wallet		            = 'Yes';
-        $exchange_wallet	            = 'Yes';
-        $active				            = 'Yes';
-        $market_pair		            = 'USD';
-        $market				            = 'MYMI';
-        $broker				            = 'Default';
-        $nickname			            = 'MyMI Funds';
-        $wallet_type		            = 'Fiat';
-        $amount				            = '0.00';
+        $default_wallet		                                        = 'Yes';
+        $exchange_wallet	                                        = 'Yes';
+        $active				                                        = 'Yes';
+        $market_pair		                                        = 'USD';
+        $market				                                        = 'MYMI';
+        $broker				                                        = 'Default';
+        $nickname			                                        = 'MyMI Funds';
+        $wallet_type		                                        = 'Fiat';
+        $amount				                                        = '0.00';
 
         // Set Activity Logger Configuration
         if (!empty($_SESSION['user_id'])) {
-             $cuID 			            = $_SESSION['user_id'];
+             $cuID 			                                        = $_SESSION['user_id'];
         } else {
-            $cuID                       = $this->input->ip_address();
+            $cuID                                                   = $this->input->ip_address();
         }
-        $betaStatus                     = $this->config->item('beta');
+        $betaStatus                                                 = $this->config->item('beta');
         if ($betaStatus === 0) {
-            $betaAlt                    = 'No';
+            $betaAlt                                                = 'No';
         } else {
-            $betaAlt                    = 'Yes';
+            $betaAlt                                                = 'Yes';
         }
-        $thisController                 = $this->router->fetch_class();
-        $thisMethod                     = $this->router->fetch_method();
-        $thisURL                        = $this->uri->uri_string();
-        $thisFullURL                    = current_url();
+        $thisController                                             = $this->router->fetch_class();
+        $thisMethod                                                 = $this->router->fetch_method();
+        $thisURL                                                    = $this->uri->uri_string();
+        $thisFullURL                                                = current_url();
                 
         $this->load->model('roles/role_model');
         $this->load->helper('date');
 
         $this->load->config('address');
         $this->load->helper('address');
-        $pageType		                = 'register';
+        $this->load->library('Recaptcha');
+        $pageType		                                            = 'register';
         // $this->load->config('user_meta');
         // $meta_fields = config_item('user_meta_fields');
         // Template::set('meta_fields', $meta_fields);
         Template::set('pageType', $pageType);
 
-        if (isset($_POST['register'])) {
-            // $score = get_recapture_score($_POST['g-recaptcha-response']);
-        
-            // if ($score > RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
-                if ($userId = $this->saveUser('insert', 0)) {
-                    if ($this->user_model->add_social_networks($id, $email, $username)) {
-                        if ($this->user_model->add_default_wallet($id, $active, $beta, $default_wallet, $exchange_wallet, $market_pair, $market, $username, $email, $broker, $wallet_type, $amount, $nickname)) {
-                            // User Activation
-                            $activation = $this->user_model->set_activation($userId);
-                            $message    = $activation['message'];
-                            $error      = $activation['error'];
+        // Verify the reCAPTCHA response
+        if ($userId                                                 = $this->saveUser('insert', 0)) {
+            $score                                                  = get_recapture_score($_POST['g-recaptcha-response']);
 
-                            Template::set_message($message, $error ? 'error' : 'success');
+            if (isset($_POST['register'])) {          
+                if($score < RECAPTCHA_ACCEPTABLE_SPAM_SCORE){
+                // // Check if the reCAPTCHA validation was successful
+                // if (!$isValid) {
+                //     // The reCAPTCHA validation failed, set an error message
+                //     $this->session->set_flashdata('error', 'The reCAPTCHA validation failed. Please try again.');
+                //     log_message('error', 'The reCAPTCHA validation failed. Please try again.');
+                //     // Redirect back to the registration form
+                //     redirect($thisURL);
+                // } else {
+                    if ($userId                                     = $this->saveUser('insert', 0)) {
+                        // if ($this->user_model->add_social_networks($id, $email, $username)) {
+                            if ($this->user_model->add_default_wallet($id, $active, $beta, $default_wallet, $exchange_wallet, $market_pair, $market, $username, $email, $broker, $wallet_type, $amount, $nickname)) {
+                                // User Activation
+                                $activation                         = $this->user_model->set_activation($userId);
+                                $message                            = $activation['message'];
+                                $error                              = $activation['error'];
 
-                            log_activity($userId, 'User registered account', 'users');
-                            Template::redirect('Verify-Email/' . $userId);
-                            $thisComment                    = 'User (' . $cuID . ') successfully registered an account!';
-                            $this->mymilogger
-                                ->user($cuID) //Set UserID, who created this  Action
-                                ->beta($betaAlt) //Set whether in Beta or nto
-                                ->type('User Account') //Entry type like, Post, Page, Entry
-                                ->controller($thisController)
-                                ->method($thisMethod)
-                                ->url($thisURL)
-                                ->full_url($thisFullURL)
-                                ->comment($thisComment) //Token identify Action
-                                ->log(); //Add Database Entry
-                        }
+                                Template::set_message($message, $error ? 'error' : 'success');
+
+                                log_message('info', 'User registered account: ' . $cuID);
+                                log_activity($userId, 'User registered account', 'users');
+                                $thisComment                        = 'User (' . $cuID . ') successfully registered an account!';
+                                $this->mymilogger
+                                    ->user($cuID) //Set UserID, who created this  Action
+                                    ->beta($betaAlt) //Set whether in Beta or nto
+                                    ->type('User Account') //Entry type like, Post, Page, Entry
+                                    ->controller($thisController)
+                                    ->method($thisMethod)
+                                    ->url($thisURL)
+                                    ->full_url($thisFullURL)
+                                    ->comment($thisComment) //Token identify Action
+                                    ->log(); //Add Database Entry
+
+                                if (!empty($referral_code)) {
+                                    if ($this->user_model->track_referral($referral_code, $userId, $signup_date, $type, $city, $state, $country, $zipcode)) {
+                                        $thisComment                = 'User Referral (' . $cuID . ') tracked successfully using Referral Code: ' . $referral_code;
+                                        $this->mymilogger
+                                            ->user($cuID) //Set UserID, who created this  Action
+                                            ->beta($betaAlt) //Set whether in Beta or nto
+                                            ->type('User Referral Tracking') //Entry type like, Post, Page, Entry
+                                            ->controller($thisController)
+                                            ->method($thisMethod)
+                                            ->url($thisURL)
+                                            ->full_url($thisFullURL)
+                                            ->comment($thisComment) //Token identify Action
+                                            ->log(); //Add Database Entry
+
+                                        Template::redirect('Verify-Email/' . $userId);
+                                    } else {
+                                        $thisComment                = 'User Referral (' . $cuID . ') could not be tracked using Referral Code: ' . $referral_code;
+                                        $this->mymilogger
+                                            ->user($cuID) //Set UserID, who created this  Action
+                                            ->beta($betaAlt) //Set whether in Beta or nto
+                                            ->type('User Referral Tracking') //Entry type like, Post, Page, Entry
+                                            ->controller($thisController)
+                                            ->method($thisMethod)
+                                            ->url($thisURL)
+                                            ->full_url($thisFullURL)
+                                            ->comment($thisComment) //Token identify Action
+                                            ->log(); //Add Database Entry
+
+                                            Template::redirect('Verify-Email/' . $userId);
+                                    }
+                                }
+                            } else {
+                                // User Activation
+                                $activation                         = $this->user_model->set_activation($userId);
+                                $message                            = $activation['message'];
+                                $error                              = $activation['error'];
+
+                                Template::set_message($message, $error ? 'error' : 'success');
+
+                                log_activity($userId, 'Could not create default wallet for New User: ' . $cuID, 'users');
+                                log_message('error', 'Could not create default wallet for New User: ' . $cuID);
+                                Template::redirect($thisURL);
+                                $thisComment                        = 'ERROR: User (' . $cuID . ') Account registration failed!';
+                                $this->mymilogger
+                                    ->user($cuID) //Set UserID, who created this  Action
+                                    ->beta($betaAlt) //Set whether in Beta or nto
+                                    ->type('ERROR: User Account') //Entry type like, Post, Page, Entry
+                                    ->controller($thisController)
+                                    ->method($thisMethod)
+                                    ->url($thisURL)
+                                    ->full_url($thisFullURL)
+                                    ->comment($thisComment) //Token identify Action
+                                    ->log(); //Add Database Entry
+                                Template::set_message(lang('us_registration_fail'), 'error');
+                            }
+                        // }
+                    } else {
+                        $thisComment                                = 'ERROR: User (' . $cuID . ') Account registration failed!';
+                        $this->mymilogger
+                            ->user($cuID) //Set UserID, who created this  Action
+                            ->beta($betaAlt) //Set whether in Beta or nto
+                            ->type('ERROR: User Account') //Entry type like, Post, Page, Entry
+                            ->controller($thisController)
+                            ->method($thisMethod)
+                            ->url($thisURL)
+                            ->full_url($thisFullURL)
+                            ->comment($thisComment) //Token identify Action
+                            ->log(); //Add Database Entry
+                        Template::set_message(lang('us_registration_fail'), 'error');
+                        // Don't redirect because validation errors will be lost.
                     }
-                } else {
-                    $thisComment                    = 'ERROR: User (' . $cuID . ') Account registration failed!';
-                    $this->mymilogger
-                        ->user($cuID) //Set UserID, who created this  Action
-                        ->beta($betaAlt) //Set whether in Beta or nto
-                        ->type('ERROR: User Account') //Entry type like, Post, Page, Entry
-                        ->controller($thisController)
-                        ->method($thisMethod)
-                        ->url($thisURL)
-                        ->full_url($thisFullURL)
-                        ->comment($thisComment) //Token identify Action
-                        ->log(); //Add Database Entry
-                    Template::set_message(lang('us_registration_fail'), 'error');
-                    // Don't redirect because validation errors will be lost.
                 }
-            // } else {
-            //     $thisComment                    = 'ERROR: User (' . $cuID . ') Registration Recaptcha failed!';
-            //     $this->mymilogger
-            //         ->user($cuID) //Set UserID, who created this  Action
-            //         ->beta($betaAlt) //Set whether in Beta or nto
-            //         ->type('ERROR: User Account') //Entry type like, Post, Page, Entry
-            //         ->controller($thisController)
-            //         ->method($thisMethod)
-            //         ->url($thisURL)
-            //         ->full_url($thisFullURL)
-            //         ->comment($thisComment) //Token identify Action
-            //         ->log(); //Add Database Entry
-            //     Template::set_message(lang('us_registration_fail'), 'error');
-            //     // Don't redirect because validation errors will be lost.
-            //     Template::set_message('Potential Spam! Please verify you are not a robot.', 'error'); 
-            //     Template::redirect($this->uri->uri_string()); 
-            // }
-        }
+            }
 
-        if ($this->siteSettings['auth.password_show_labels'] == 1) {
-            Assets::add_js(
-                $this->load->view('users_js', array('settings' => $this->siteSettings), true),
-                'inline'
-            );
+            if ($this->siteSettings['auth.password_show_labels'] == 1) {
+                Assets::add_js(
+                    $this->load->view('users_js', array('settings'  => $this->siteSettings), true),
+                    'inline'
+                );
+            }
         }
 
         // Generate password hint messages.
@@ -423,6 +474,7 @@ class Users extends Front_Controller
         Template::set('page_title', 'Register');
         Template::render();
     }
+
 
     // -------------------------------------------------------------------------
     // Password Management
@@ -765,7 +817,7 @@ class Users extends Front_Controller
     
     public function Verify_Email($userID)
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Verify_Email';
         $this->load->library('users/auth');
         $this->set_current_user();
@@ -804,7 +856,7 @@ class Users extends Front_Controller
     
     public function Account_Information()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Account_Information';
         $this->load->library('users/auth');
         $this->load->module('User/Wallets');
@@ -920,7 +972,7 @@ class Users extends Front_Controller
     
     public function Successful_Cancellation()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'User_Successful_Cancellation';
         $this->load->library('users/auth');
         $this->set_current_user();
@@ -932,7 +984,7 @@ class Users extends Front_Controller
         
     public function Successful_Downgrade()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'User_Successful_Downgrade';
         $this->load->library('users/auth');
         $this->set_current_user();
@@ -944,7 +996,7 @@ class Users extends Front_Controller
         
     public function Successful_Registration()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'User_Successful_Registration';
         $this->load->library('users/auth');
         $this->set_current_user();

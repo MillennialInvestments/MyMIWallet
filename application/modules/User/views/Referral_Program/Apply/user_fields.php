@@ -16,6 +16,7 @@ $editSettings   	    = $currentMethod == 'edit';
 $year				    = date("Y");
 $today				    = date("m/d/Y");
 $userAccount            = $_SESSION['allSessionData']['userAccount'];
+// print_r($userAccount); 
 $cuID 				    = $userAccount['cuID'];
 $cuUserType			    = $userAccount['cuUserType'];
 $cuEmail			    = $userAccount['cuEmail'];
@@ -113,12 +114,12 @@ $formCustomText			= $this->config->item('form_custom_text');
 		<input type="text" class="<?php echo $formControl; ?>" name="wallet_id" id="wallet_id" placeholder="Enter Wallet Address" value="<?php echo set_value('wallet_id', isset($user) ? $user->wallet_id : $cuWalletID); ?>">						
 	</div>
 </div>
-<div class="<?php echo $formGroup; ?>">
+<!-- <div class="<?php echo $formGroup; ?>">
 	<label for="paypal" class="<?php echo $formLabel; ?>">PayPal</label>
 	<div class="<?php echo $formConCol; ?>">
 		<input type="text" class="<?php echo $formControl; ?>" name="paypal" id="paypal" placeholder="Enter PayPal Email" value="<?php echo set_value('paypal', isset($user) ? $user->paypal : $paypal); ?>">						
 	</div>
-</div>
+</div> -->
 <?php
 /*
 <div class="<?php echo $formGroup; ?>">
@@ -141,10 +142,10 @@ $formCustomText			= $this->config->item('form_custom_text');
 </div>
 */
 ?>
-<div class="<?php echo $formGroup; ?>">
+<!-- <div class="<?php echo $formGroup; ?>">
 	<label for="other_payment" class="<?php echo $formLabel; ?>">Other Payment Method</label>
 	<div class="<?php echo $formConCol; ?>">
 		<input type="text" class="<?php echo $formControl; ?>" name="other_payment" id="other_payment" placeholder="Enter Other Payment Method" value="<?php echo set_value('other_payment', isset($user) ? $user->other_payment : ''); ?>">						
 	</div>
-</div>
+</div> -->
 					

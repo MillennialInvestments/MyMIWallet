@@ -17,7 +17,7 @@ $cuUserType					    = $_SESSION['allSessionData']['userAccount']['cuUserType'];
 // print_r($this->session->allSessionData['userAccount']); 
 if ($configMode === 'Add') {
     $integrationTitle           = 'Integrate ' . $accountType . ' Account';
-    $formTitle                  = $accountType . ' - Account Information';
+    $formTitle                  = $accountType . '<br><small>Account Information</small>';
     if ($accountType === 'Income') {
         $designatedDate             = 'Date of Month Received';
     } elseif ($accountType === 'Expense') {
@@ -25,8 +25,22 @@ if ($configMode === 'Add') {
     }
 } elseif ($configMode === 'Edit') {
     $integrationTitle           = 'Integrate ' . $accountName . ' - ' . $accountType . ' Account';
-    $formTitle                  = $accountName . ' - Account Information';
+    $formTitle                  = $accountName . '<br><small>Account Information</small>';
+} elseif ($configMode === 'Copy') {
+    $integrationTitle           = 'Copy ' . $accountName . ' - ' . $accountType . ' Account';
+    $formTitle                  = $accountName . '<br><small>Account Information</small>';
 }
+if ($this->uri->segment(2) === 'Recurring-Account') { 
+    $accountID                  = $this->uri->segment(4);
+    $designatedDateText         = $accountDesignatedDate;
+} elseif ($this->uri->segment(2) === 'Edit') {
+    $accountID                  = $this->uri->segment(3);
+    $designatedDateText         = $accountDesignatedDate;
+} elseif ($this->uri->segment(2) === 'Copy') {
+    $accountID                  = ''; 
+    $designatedDateText         = $accountDesignatedDate; 
+}
+$newAccountDate                 = nice_date($accountDesignatedDate, 'm/d/Y');
 // Set Form Config
 $formGroup				        = $this->config->item('form_container');
 $formLabel				        = $this->config->item('form_label');
@@ -37,14 +51,6 @@ $formSelectPicker		        = $this->config->item('form_selectpicker');
 $formText				        = $this->config->item('form_text');
 $formCustomText			        = $this->config->item('form_custom_text');
 // $formMode                       = $this->uri->segment(2);
-if ($this->uri->segment(2) === 'Recurring-Account') { 
-    $accountID                  = $this->uri->segment(4);
-    $designatedDateText         = $accountDesignatedDate;
-} elseif ($this->uri->segment(2) === 'Edit') {
-    $accountID                  = $this->uri->segment(3);
-    $designatedDateText         = $accountDesignatedDate;
-}
-$newAccountDate                 = nice_date($accountDesignatedDate, 'm/d/Y');
 ?>                              
 <!-- <h4 class="card-title"><?php //echo $integrationTitle; ?></h4>
 <p class="card-description"> Please fill out information below</p>	
@@ -208,10 +214,11 @@ if ($cuUserType === 'Beta') {
         </select>
 	</div>
 </div>
+<?php if ($accountType === 'Expense') { ?>
 <div class="<?php echo $formGroup; ?> mb-2">    
 	<label for="is_debt" class="col-6 form-label">Is this considered a Debt?</label>
 	<div class="col-6">
-        <select name="is_debt" class="<?php echo $formSelectPicker; ?>" id="is_debt" required="required" style="height: 40px; padding: 10px;">
+        <select class="<?php echo $formSelectPicker; ?>" name="is_debt" id="is_debt" style="height: 40px; padding: 10px;">
             <?php
                 $account_type_values = array(
                     $accountIsDebt              => $accountIsDebtText,
@@ -228,6 +235,9 @@ if ($cuUserType === 'Beta') {
         </select>
 	</div>
 </div>
+<?php } else { ?>
+    <input type="hidden" class="form-control" name="form_mode" id="form_mode" value="<?php echo set_value('form_mode', isset($user) ? $user->form_mode : $configMode); ?>">	
+<?php } ?>
 <div class="<?php echo $formGroup; ?> mb-2">    
 	<label class="col-6 form-label" for="default-01"><?php echo $accountType; ?> Account Name <span class="text-muted">(Optional)</span></label>    
 	<div class="col-6">       
@@ -246,6 +256,27 @@ if ($cuUserType === 'Beta') {
 		<input type="text" class="<?php //echo $formControl; ?>" name="gross_amount" id="gross_amount" placeholder="Enter Current Value of Wallet" value="<?php //echo set_value('gross_amount', isset($user) ? $user->gross_amount : $accountGrossAmount); ?>">	
 	</div>
 </div> -->
+<div class="<?php echo $formGroup; ?> mb-2">    
+	<label for="paid" class="col-6 form-label">Paid/Received?</label>
+	<div class="col-6">
+
+        <select name="paid" class="<?php echo $formSelectPicker; ?>" id="paid" required="required" style="height: 40px; padding: 10px;">
+            <?php
+                $paid_values = array(
+                    $accountPaidStatus              => $accountPaidStatus,
+                    'N/A'                           => 'Select-An-Option',
+                    '1'    		                    => 'Yes',
+                    '0'    		                    => 'No',
+                );
+                foreach ($paid_values as $value => $display_text) {
+                    $selected = ($value == $this->input->post('paid')) ? ' selected="selected"' : "";
+
+                    echo '<option value="'.$value.'" '.$selected.'>'.$display_text.'</option>';
+                }
+            ?>
+        </select>
+	</div>
+</div>
 <div class="<?php echo $formGroup; ?> mb-2">    
 	<label for="recurring_account" class="col-6 form-label">Recurring Account?</label>
 	<div class="col-6">
@@ -334,3 +365,4 @@ if (!empty($accountRecurringAccount) || $accountRecurringAccount === 'Yes') {
         </div>
     </div>
 </div>
+<hr>

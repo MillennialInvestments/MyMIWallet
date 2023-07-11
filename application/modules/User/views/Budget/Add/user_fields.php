@@ -1,5 +1,4 @@
 <?php /* /users/views/user_fields.php */
-date_default_timezone_set('America/Chicago');
 $date                           = date("F jS, Y");
 $hostTime                       = date("g:i A");
 $time                           = date("g:i A", strtotime($hostTime) - 60 * 60 * 5);
@@ -43,16 +42,7 @@ if ($formMode === 'Add') {
     $accountID                  = $this->uri->segment(3);
 }
 
-?>                              
-<!-- <h4 class="card-title"><?php //echo $integrationTitle; ?></h4>
-<p class="card-description"> Please fill out information below</p>	
-<p class="text-center py-3">	
-    <a class="btn btn-primary text-center" href="#">Integrate Account</a>
-</p>	
-<hr> -->
-<h4 class="card-title"><?php echo $formTitle; ?></h4>
-<p class="card-description"> Please fill out information below</p>			
-<hr>
+?>        
 <?php
 if ($cuUserType === 'Beta') {
     ?>
@@ -68,7 +58,6 @@ if ($cuUserType === 'Beta') {
 <input type="hidden" class="form-control" name="user_id" id="user_id" value="<?php echo set_value('user_id', isset($user) ? $user->user_id : $cuID); ?>">	
 <input type="hidden" class="form-control" name="user_email" id="user_email" value="<?php echo set_value('user_email', isset($user) ? $user->user_email : $cuEmail); ?>">	
 <input type="hidden" class="form-control" name="username" id="username" value="<?php echo set_value('username', isset($user) ? $user->username : $cuUsername); ?>">	
-<input type="hidden" class="form-control" name="account_id" id="account_id" value="<?php echo set_value('account_id', isset($user) ? $user->type : $accountID); ?>">
 <input type="hidden" class="form-control" name="account_id" id="account_id" value="<?php echo set_value('account_id', isset($user) ? $user->type : $accountID); ?>">
 <input type="hidden" class="form-control" name="account_type" id="account_type" value="<?php echo set_value('account_type', isset($user) ? $user->type : $accountType); ?>">
 
@@ -104,6 +93,8 @@ if ($cuUserType === 'Beta') {
                         'Debt - Personal'	        => 'Debt - Personal',
                         'Debt - Student'	        => 'Debt - Student',
                         'Electricity - Utility'     => 'Electricity - Utility',
+                        'Expense - Business'        => 'Expense - Business',
+                        'Expense - Personal'        => 'Expense - Personal',
                         'Food/Groceries'            => 'Food/Groceries',
                         'Gas - Transportation'      => 'Gas - Transportation',
                         'Gas - Utility'             => 'Gas - Utility',
@@ -119,13 +110,18 @@ if ($cuUserType === 'Beta') {
                         'Loan - Mortgage'           => 'Loan - Mortgage',
                         'Loan - Personal'	        => 'Loan - Personal',
                         'Loan - Student'	        => 'Loan - Student',
-                        'Medical'    		        => 'Medical',
+                        'Medical - Dental'	        => 'Medical - Dental',
+                        'Medical - Health'	        => 'Medical - Health',
+                        'Medical - Vision'	        => 'Medical - Vision',
+                        'Phone - Business'          => 'Phone - Business',  
+                        'Phone - Personal'          => 'Phone - Personal',  
                         'Rent'      		        => 'Rent',
                         'Taxes - Business'          => 'Taxes - Business',
                         'Taxes - Investments'       => 'Taxes - Investments',
                         'Taxes - Personal'          => 'Taxes - Personal',
                         'Travel'                    => 'Travel',
-                        'Water'                     => 'Water',
+                        'Warranty - Home'           => 'Warranty - Home',
+                        'Water'                     => 'Water - Utility',
                         'Other'                     => 'Other...',
                     );
                 } else {
@@ -142,6 +138,8 @@ if ($cuUserType === 'Beta') {
                         'Debt - Personal'	        => 'Debt - Personal',
                         'Debt - Student'	        => 'Debt - Student',
                         'Electricity - Utility'     => 'Electricity - Utility',
+                        'Expense - Business'        => 'Expense - Business',
+                        'Expense - Personal'        => 'Expense - Personal',
                         'Food/Groceries'            => 'Food/Groceries',
                         'Gas - Transportation'      => 'Gas - Transportation',
                         'Gas - Utility'             => 'Gas - Utility',
@@ -157,13 +155,18 @@ if ($cuUserType === 'Beta') {
                         'Loan - Mortgage'	        => 'Loan - Mortgage',
                         'Loan - Personal'	        => 'Loan - Personal',
                         'Loan - Student'	        => 'Loan - Student',
-                        'Medical'    		        => 'Medical',
-                        'Rent'      		        => 'Rent',
+                        'Medical - Dental'	        => 'Medical - Dental',
+                        'Medical - Health'	        => 'Medical - Health',
+                        'Medical - Vision'	        => 'Medical - Vision',
+                        'Phone - Business'          => 'Phone - Business',  
+                        'Phone - Personal'          => 'Phone - Personal',  
+                        'Rent'      		        => 'Rent',  
                         'Taxes - Business'          => 'Taxes - Business',
                         'Taxes - Investments'       => 'Taxes - Investments',
                         'Taxes - Personal'          => 'Taxes - Personal',
                         'Travel'                    => 'Travel',
-                        'Water'                     => 'Water',
+                        'Warranty - Home'           => 'Warranty - Home',
+                        'Water'                     => 'Water - Utility',
                         'Other'                     => 'Other...',
                     );
                 }
@@ -177,15 +180,29 @@ if ($cuUserType === 'Beta') {
 	</div>
 </div>
 <div class="<?php echo $formGroup; ?> mb-2">    
-	<label class="col-6 form-label" for="default-01"><?php echo $accountType; ?> Account Name <span class="text-muted">(Optional)</span></label>    
+	<label class="col-6 form-label" for="default-01">Account Name</label>    
 	<div class="col-6">       
 		<input type="text" class="<?php echo $formControl; ?>" name="nickname" id="nickname" placeholder="Enter Account Nickname" value="<?php echo set_value('nickname', isset($user) ? $user->nickname : $accountName); ?>">	
 	</div>
 </div>
+<?php if ($accountType === 'Expense') { ?>
+<div class="<?php echo $formGroup; ?> mb-2">    
+	<label class="col-6 form-label" for="default-01">Payment Amount</label>    
+	<div class="col-6">       
+		<input type="text" class="<?php echo $formControl; ?>" name="monthly_payment" id="monthly_payment" placeholder="Enter Monthly Payment" value="<?php echo set_value('monthly_payment', isset($user) ? $user->monthly_payment : $accountNetAmount); ?>">	
+	</div>
+</div>
+<?php } ?>
 <div class="<?php echo $formGroup; ?> mb-2">    
 	<label class="col-6 form-label" for="default-01">Net Amount</label>    
 	<div class="col-6">       
-		<input type="text" class="<?php echo $formControl; ?>" name="net_amount" id="net_amount" placeholder="Enter Current Value of Wallet" value="<?php echo set_value('net_amount', isset($user) ? $user->net_amount : $accountNetAmount); ?>">	
+		<input type="text" class="<?php echo $formControl; ?>" name="net_amount" id="net_amount" placeholder="(If Applicable)" value="<?php echo set_value('net_amount', isset($user) ? $user->net_amount : $accountNetAmount); ?>">	
+	</div>
+</div>
+<div class="<?php echo $formGroup; ?> mb-2">    
+	<label class="col-6 form-label" for="default-01">Gross Amount</label>    
+	<div class="col-6">       
+		<input type="text" class="<?php echo $formControl; ?>" name="gross_amount" id="gross_amount" placeholder="(If Applicable)" value="<?php echo set_value('gross_amount', isset($user) ? $user->gross_amount : $accountNetAmount); ?>">	
 	</div>
 </div>
 <!-- <div class="<?php //echo $formGroup; ?> mb-2">    
@@ -195,10 +212,31 @@ if ($cuUserType === 'Beta') {
 	</div>
 </div> -->
 <div class="<?php echo $formGroup; ?> mb-2">    
+	<label for="paid" class="col-6 form-label">Paid/Received?</label>
+	<div class="col-6">
+
+        <select name="paid" class="<?php echo $formSelectPicker; ?>" id="paid" required="required" style="height: 40px; padding: 10px;">
+            <?php
+                $paid_values = array(
+                    $accountPaidStatus              => $accountPaidStatus,
+                    'N/A'                           => 'Select-An-Option',
+                    '1'    		                    => 'Yes',
+                    '0'    		                    => 'No',
+                );
+                foreach ($paid_values as $value => $display_text) {
+                    $selected = ($value == $this->input->post('paid')) ? ' selected="selected"' : "";
+
+                    echo '<option value="'.$value.'" '.$selected.'>'.$display_text.'</option>';
+                }
+            ?>
+        </select>
+	</div>
+</div>
+<div class="<?php echo $formGroup; ?> mb-2">    
 	<label for="recurring_account" class="col-6 form-label">Recurring Account?</label>
 	<div class="col-6">
 
-        <select name="recurring_account" class="<?php echo $formSelectPicker; ?>" id="recurring_account" onchange="showDiv(this)" required="required" style="height: 40px; padding: 10px;">
+        <select name="recurring_account" class="<?php echo $formSelectPicker; ?>" id="recurring_account" onchange="showDiv(this)" style="height: 40px; padding: 10px;">
             <?php
                 $recurring_account_values = array(
                     $accountRecurringAccount        => $accountRecurringAccount,
@@ -282,6 +320,4 @@ if (!empty($accountRecurringAccount) || $accountRecurringAccount === 'Yes') {
         </div>
     </div>
 </div>
-<script type="text/javascript">
-
-</script>
+<hr>

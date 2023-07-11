@@ -42,7 +42,18 @@ $testInfo						= array(
                 ?>
 			</div>
 			<div class="nk-block">
-                <?php print_r($_SESSION['allSessionData']); ?>
+                <?php
+                $recordID                   = '790';
+                $userBudgetRecord           = $this->mymibudget->get_user_budget_record($cuID, $recordID);  
+                print_r($userBudgetRecord['getUserBudgetRecord'][0]['name']); 
+                $budgetRecord               = $userBudgetRecord['getUserBudgetRecord'][0]['name'];
+                // echo '<br><br>'; 
+                // echo $budgetRecord;
+                // foreach($userBudgetRecord as $userRecord) {
+                //     print_r($userRecord['getUserBudgetRecord'][0]['name']); 
+                // }
+                // print_r($getUserBudgetRecord); 
+                ?>
 			</div>     
 		</div>
 	</div>

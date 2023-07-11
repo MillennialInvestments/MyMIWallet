@@ -108,6 +108,7 @@ class Investor_model extends BF_Model
         return $getUserData;
     }
     
+    
     public function add_account_information($id, $first_name, $middle_name, $last_name, $name_suffix, $phone, $address, $city, $state, $country, $zipcode, $timezones, $language, $advertisement)
     {
         $user					= array(
@@ -382,6 +383,7 @@ class Investor_model extends BF_Model
     public function get_user_bank_accounts($cuID) {
         $this->db->from('bf_users_bank_accounts'); 
         $this->db->where('user_id', $cuID); 
+        $this->db->where('status', 1); 
         $getUserBankAccounts                = $this->db->get();
         return $getUserBankAccounts;
     }

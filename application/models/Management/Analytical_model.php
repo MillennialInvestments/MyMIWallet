@@ -113,6 +113,60 @@ class Analytical_model extends BF_Model
         return $data;
     }
     
+    public function get_active_campaigns() {
+        $this->db->from('bf_marketing_campaigns'); 
+        $this->db->where('status', 1); 
+        $getActiveCampaigns                         = $this->db->get(); 
+        return $getActiveCampaigns;
+    }
+
+    public function get_inactive_users() {
+        $this->db->from('bf_users');
+        $this->db->where('active', 0); 
+        $this->db->where('banned', 0); 
+        $getInactiveUsers                       = $this->db->get(); 
+        return $getInactiveUsers;
+
+    }
+    public function get_inactive_partners() {
+        $this->db->from('bf_users');
+        $this->db->where('active', 0); 
+        $this->db->where('banned', 0); 
+        $this->db->where('partner', 1);
+        $getInactivePartners                    = $this->db->get(); 
+        return $getInactivePartners;
+    }
+
+    public function get_active_services() {
+        $this->db->from('bf_users_services');
+        $this->db->where('status', 1);
+        $getActiveServices                      = $this->db->get(); 
+        return $getActiveServices;
+    }
+
+    public function get_active_services_subscriptions() {
+        $this->db->from('bf_user_services_purchases'); 
+        $this->db->where('status', 'Active'); 
+        $getActiveSubscriptions                 = $this->db->get(); 
+        return $getActiveSubscriptions; 
+    }
+
+    public function get_tasks_by_department($department) {
+        $this->db->from('bf_management_tasks');
+        $this->db->where('status', 'Pending');
+        $this->db->where('group', $department);
+        $getTasksByDepartment                   = $this->db->get(); 
+        return $getTasksByDepartment;
+    }
+
+    public function get_tasks_by_type($department,$tasks) {
+        $this->db->from('bf_management_tasks');
+        $this->db->where('status', 'Pending');
+        $this->db->where('group', $department);
+        $this->db->where('task', $tasks);
+        $getTasksByType                         = $this->db->get(); 
+        return $getTasksByType;
+    }
     /*
      * Dashboard Add/Edit/Delete
      * function to add/delete/update bf_dashboards
@@ -122,6 +176,19 @@ class Analytical_model extends BF_Model
         $this->db->where('id', $userID); 
         $getUserInfo                        = $this->db->get(); 
         return $getUserInfo;
+    }
+
+    public function get_user_activity($cuID) {
+        $this->db->from('bf_act_logger'); 
+        $this->db->where('created_by', $cuID);
+        $getUserActivity                    = $this->db->get();
+        return $getUserActivity; 
+    }
+
+    public function get_users_activity($cuID) {
+        $this->db->from('bf_act_logger'); 
+        $getUsersActivity                   = $this->db->get();
+        return $getUsersActivity; 
     }
 
     public function get_pending_assets(){
@@ -247,6 +314,15 @@ class Analytical_model extends BF_Model
         $this->db->where('status', 'Closed');
         $getTotalTrans                      = $this->db->get(); 
         return $getTotalTrans;
+    }
+
+    public function get_total_wallet_transactions() {
+        $this->db->from('bf_users_wallet_transactions'); 
+        $this->db->where('status', 1);
+        $this->db->where('active', 'Yes');
+        $getTotalWalletTransactions         = $this->db->get(); 
+        $getTotalWalletTransactions         = $getTotalWalletTransactions->num_rows();
+        return $getTotalWalletTransactions;
     }
 
     public function get_total_amounts() {
@@ -379,6 +455,15 @@ class Analytical_model extends BF_Model
         return $getTotalActiveWallets;
     }
 
+    public function get_total_active_default_wallets() {
+        $this->db->from('bf_users_wallet');
+        $this->db->where('active', 'Yes');
+        $this->db->where('default', 'Yes');
+        $getTotalActiveDefaultWallets           = $this->db->get();
+        // $getTotalActiveDefaultWallets           = $getTotalActiveDefaultWallets->num_rows();
+        return $getTotalActiveDefaultWallets;
+    }
+
     public function get_total_active_wallets_by_user($userID) {
         $this->db->from('bf_users_wallet');
         $this->db->where('active', 'Yes');
@@ -431,9 +516,5 @@ class Analytical_model extends BF_Model
         $this->db->where('referred !=', NULL);
         $getActivePartnerReferrals              = $this->db->get();
         return $getActivePartnerReferrals;
-    }
-
-    public function get_partner_referrals() {
-
     }
 }

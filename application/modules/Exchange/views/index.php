@@ -185,7 +185,7 @@ $applicationData								= array(
 						<th class="text-center">Market Cap</th>    
 						<th class="text-center">Total Growth</th>  
 						<th class="text-center">Total Volume</th>  
-						<th class="d-none d-md-block text-center">Circulating Coins</th>
+						<th class="d-none d-md-block text-center full-width">Circulating Coins</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -260,9 +260,9 @@ $applicationData								= array(
 						<th class="text-center pt-3 pl-5">
 							<a href="' . site_url('Exchange/Market/' . $market_pair . '/' . $market). '">
 								<div class="row">
-									<span class="d-none d-md-block col-md-2 px-0" style="max-width: 50px;"><img src="' . base_url('assets/images/Exchanges/Icons/' . $icon) . '" alt="" /><br> </span> 
-									<span class="col-2 pl-1 text-left d-none d-md-block">' . $market. ' <span class="badge badge-light">' . $market_pair . '</span><br><small>' . $description . '</small></span>
-									<span class="col-2 text-left d-block d-md-none pl-0">' . $market. ' <span class="badge badge-light ">' . $market_pair . '</span><br><small class="d-none d-md-block">' . $description . '</small></span>
+									<span class="d-none d-md-block col-2 col-md-2 px-0" style="max-width: 50px;"><img src="' . base_url('assets/images/Exchanges/Icons/' . $icon) . '" alt="" /><br> </span> 
+									<span class="col-2 col-md-8 pl-1 text-left d-none d-md-block">' . $market. ' <span class="badge badge-light">' . $market_pair . '</span><br><small>' . $description . '</small></span>
+									<span class="col-2 col-md-2 text-left d-block d-md-none pl-0">' . $market. ' <span class="badge badge-light ">' . $market_pair . '</span><br><small class="d-none d-md-block">' . $description . '</small></span>
 								</div>
 							</a>
 						</th>                

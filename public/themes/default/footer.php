@@ -23,3 +23,7 @@
         </div>
     </a>
 </div> -->
+<?php
+echo theme_view('js-links');
+echo theme_view('custom-js');
+?>

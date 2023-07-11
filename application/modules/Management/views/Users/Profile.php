@@ -8,7 +8,8 @@ if ($pageURIA === 'Investor-Profile') {
     $userAccount        = $_SESSION['allSessionData']['userAccount']; 
 } elseif ($pageURIA === 'Management' AND $pageURIB === 'Users' AND $pageURIC === 'Profile') {
     $userID             = $pageURID; 
-    $userAccount        = $this->mymiuser->user_account_info($userID); 
+    // $userAccount        = $this->mymiuser->user_account_info($userID);
+    $userAccount        = $_SESSION['allSessionData']['userAccount'];
 }
 // print_r($userAccount);
 ?>
@@ -120,7 +121,7 @@ if ($pageURIA === 'Investor-Profile') {
                             <div class="profile-ud-item">
                                 <div class="profile-ud wider">
                                     <span class="profile-ud-label">Wallet ID:</span>
-                                    <span class="profile-ud-value"><?php echo $userAccount['cuWalletID']; ?></span>
+                                    <span class="profile-ud-value"><small><?php echo $userAccount['cuWalletID']; ?></small></span>
                                 </div>
                             </div>
                             <div class="profile-ud-item">

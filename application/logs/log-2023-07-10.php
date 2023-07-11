@@ -1,0 +1,30 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2023-07-10 14:03:01 --> Severity: Notice --> Undefined variable: cuPrivateKey /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/index/Investor_Assessment/assessment_content.php 377
+ERROR - 2023-07-10 14:03:01 --> Severity: Notice --> Undefined variable: cuPublicKey /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/index/Investor_Assessment/assessment_content.php 384
+ERROR - 2023-07-10 14:22:06 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:22:06 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:22:06 --> Severity: Notice --> Undefined index: cuPublicKey /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 125
+ERROR - 2023-07-10 14:22:06 --> Severity: Notice --> Undefined index: cuPrivateKey /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 126
+ERROR - 2023-07-10 14:22:06 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:22:06 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:22:06 --> Severity: Notice --> Undefined index: cuPublicKey /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 125
+ERROR - 2023-07-10 14:22:06 --> Severity: Notice --> Undefined index: cuPrivateKey /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 126
+ERROR - 2023-07-10 14:22:06 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:22:06 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:22:06 --> Severity: Notice --> Undefined index: cuPublicKey /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 125
+ERROR - 2023-07-10 14:22:06 --> Severity: Notice --> Undefined index: cuPrivateKey /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 126
+ERROR - 2023-07-10 14:29:39 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:29:39 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:29:39 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:29:39 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:29:39 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:29:39 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:29:39 --> Severity: Notice --> Undefined variable: cuPrivateKey /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/index/Investor_Assessment/assessment_content.php 377
+ERROR - 2023-07-10 14:29:39 --> Severity: Notice --> Undefined variable: cuPublicKey /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/index/Investor_Assessment/assessment_content.php 384
+ERROR - 2023-07-10 14:32:51 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:32:51 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:32:52 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:32:52 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:32:52 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300
+ERROR - 2023-07-10 14:32:52 --> Severity: Notice --> Undefined index: public_key /home/mymiteam/mymiwallet/site/current/public/dev/application/libraries/MyMIUser.php 300

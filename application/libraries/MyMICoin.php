@@ -5,16 +5,16 @@ class MyMICoin
     public function __construct()
     {
         $this->CI =& get_instance();
-        $this->CI->load->library('Auth');
-        $this->CI->load->model('User/Mymicoin_model');
+        $this->CI->load->library('users/Auth');
+        $this->CI->load->model('User/mymicoin_model');
         $this->CI->load->config('site_settings');
         //~ $this->CI->load->library(array('Auth', 'MyMIWallets'));
-        $cuID = $this->CI->auth->user_id();
+        $cuID                                   = $this->CI->auth->user_id();;
     }
     
     public function get_coin_value()
     {
-        $getCoinValue							= $this->CI->mymicoin_model->get_coin_value()->result_array();
+        $getCoinValue						    = $this->CI->mymicoin_model->get_coin_value()->result_array();
         $mymic_coin_value						= $getCoinValue[0]['coin_value'];
         //~ $mymic_coin_value						= $getCoinValue[0]['coin_value'];
         return $mymic_coin_value;

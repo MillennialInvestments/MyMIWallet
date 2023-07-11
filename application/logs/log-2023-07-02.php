@@ -1,0 +1,5 @@
+ERROR - 2023-07-02 22:28:01 --> Severity: Notice --> Undefined variable: cuFullname /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/index/Investor_Assessment/assessment_content.php 601
+ERROR - 2023-07-02 22:28:01 --> Severity: Notice --> Undefined variable: cuFullname /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/index/Investor_Assessment/assessment_content.php 602
+ERROR - 2023-07-02 23:20:24 --> Severity: Notice --> Undefined variable: cuFullname /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/index/Investor_Assessment/assessment_content.php 601
+ERROR - 2023-07-02 23:20:24 --> Severity: Notice --> Undefined variable: cuFullname /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/index/Investor_Assessment/assessment_content.php 602
+ERROR - 2023-07-02 23:20:57 --> Severity: Notice --> Undefined variable: cuFullname /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Budget/index/Investor_Assessment/assessment_content.php 601

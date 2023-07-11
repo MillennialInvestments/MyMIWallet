@@ -175,10 +175,45 @@ class Referral_model extends BF_Model
     public function activate_affiliate($id)
     {
         $user = array(
-            'active'   				=> 1,
+            'active'   				        => 1,
         );
         
         $this->db->where('id', $id);
         return $this->db->update('bf_users_referral_program', $user);
+    }
+
+    public function get_total_referrals($cuID, $cuReferrerCode) {
+        $this->db->select('COUNT(*) as count, signup_date');
+        $this->db->from('bf_users_referral_program');
+        $this->db->where('referrer_code', $cuReferrerCode);
+        $this->db->group_by('DATE(signup_date)');
+        $getTotalReferrals                  = $this->db->get();
+        return $getTotalReferrals;
+    }
+
+    public function get_total_active_referrals($cuID, $cuReferrerCode) {
+        $this->db->select('COUNT(*) as count, signup_date');
+        $this->db->from('bf_users_referral_program');
+        $this->db->where('referrer_code', $cuReferrerCode);
+        $this->db->where('active', 1);
+        $this->db->group_by('DATE(signup_date)');
+        $getTotalActiveReferrals            = $this->db->get();
+        return $getTotalActiveReferrals;
+    }
+
+    public function calculate_commission($cuID, $cuReferrerCode) {
+        $this->db->select('SUM(amount) as total_spending');
+        // $this->db->join('bf_users_referrals', 'bf_users_transactions.user_id = bf_users_referrals.user_id');
+        $this->db->where('referral_code', $cuReferrerCode);
+        $this->db->where('MONTH(date)', date('m')); // Current month
+        $this->db->where('YEAR(date)', date('Y')); // Current year
+        $getTotalSpend                      = $this->db->get('bf_users_transactions');
+        // $totalSpendCommissions              = $getTotalSpend->row();
+        $commissionsData                    = array(
+            'getTotalSpend'                 => $getTotalSpend,
+            // 'totalSpendCommissions'         => $totalSpendCommissions,
+            // 'totalCommissionsPayment'       => $totalSpendCommissions->total_spending * 0.25,
+        );
+        return $commissionsData;
     }
 }

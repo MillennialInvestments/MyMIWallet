@@ -18,7 +18,7 @@ $formSelectPicker		= $this->config->item('form_selectpicker');
 $formText				= $this->config->item('form_text');
 $formCustomText			= $this->config->item('form_custom_text');
 ?>
-<div class="intro-section intro-overview text-center bg-lighter pt-5 pb-0">
+<div class="intro-section intro-overview text-center bg-white pt-5 pb-0">
     <div class="container-fluid">
         <div class="card">
             <div class="card-inner text-center">

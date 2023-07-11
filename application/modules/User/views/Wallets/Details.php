@@ -38,95 +38,121 @@ if ($pageAccountType === 'Bank-Account') {
         'accountBalance'            => $accountBalance,
     );
     $this->load->view('User/Wallets/Details/bank_accounts', $accountInformation);
-} elseif ($pageAccountType === 'Wallet') {
-    $walletID					    = $this->uri->segment(3);
-    $getWalletInfo				    = $this->mymiwallet->get_wallet_info($cuID, $walletID);
-    $walletInitial				    = isset($getWalletInfo['walletInitial']) && ! empty($getWalletInfo['walletInitial']) ? $getWalletInfo['walletInitial'] : '';
-    // Wallet Details
-    if (!empty($getWalletInfo['walletInitial'])) {
-        $walletInitial			    = $getWalletInfo['walletInitial'];
-    } else {
-        $walletInitial			    = '0.00';
-    }
-    if (!empty($getWalletInfo['walletInitialAmount'])) {
-        $walletInitialAmount	    = number_format($getWalletInfo['walletInitialAmount'],2);
-    } else {
-        $walletInitialAmount	    = '0.00';
-    }
-    if (!empty($getWalletInfo['depositAmount'])) {
-        $depositAmount	            = number_format($getWalletInfo['depositAmount'],2);
-    } else {
-        $depositAmount	            = '0.00';
-    }
-    if (!empty($getWalletInfo['withdrawAmount'])) {
-        $withdrawAmount	            = number_format($getWalletInfo['withdrawAmount'],2);
-    } else {
-        $withdrawAmount             = '0.00';
-    }
-    if (!empty($getWalletInfo['walletGains'])) {
-        $walletGains	            = number_format($getWalletInfo['walletGains'],2);
-    } else {
-        $walletGains	            = '0.00';
-    }
-    if (!empty($getWalletInfo['walletTotalAmount'])) {
-        $accountBalance	            = number_format($getWalletInfo['walletTotalAmount'],2);
-    } else {
-        $accountBalance	            = '0.00';
-    }
-
-
-    $getAllPercentChange		    = $this->tracker_model->get_all_percent_change($walletID);
-    foreach ($getAllPercentChange->result_array() as $walletTrades) {
-        $percent_change			    = $walletTrades['closed_perc'];
-        if ($percent_change === null) {
-            $percentChange			= '<span">0%</span>';
-        } elseif ($percent_change >= 0) {
-            $percentChange			= '<span class="text-success">' . $percent_change . '%</span>';
+} elseif ($pageAccountType === 'Wallets') {
+    
+    $accountTypeText                = 'Wallet';
+    $purchaseType                   = $this->uri->segment(2);
+    $pageView                       = 'User/Wallets/Edit/user_fields';
+    $tutorialView                   = 'User/Wallets/Details/wallets';
+    $beta                           = $this->config->item('beta');
+    $walletID					    = $this->uri->segment(4);
+    // $userWalletInfo                 = $this->wallet_model->get_wallet_info($cuID, $walletID)->result_array();
+    $this->db->from('bf_users_wallet');
+    $this->db->where('id', $walletID);
+    $userWalletInfo                 = $this->db->get()->result_array(); 
+    print_r($userWalletInfo);
+    foreach($userWalletInfo as $walletInfo) {
+        $walletType                     = $walletInfo['walletType'];
+        $walletBroker                   = $walletInfo['walletBroker'];
+        $walletAccountID                = $walletInfo['walletAccountID'];
+        $walletAccessCode               = $walletInfo['walletAccessCode'];
+        $walletPremium                  = $walletInfo['walletPremium'];
+        $walletInitialAmount            = $walletInfo['walletInitialAmount'];
+        $walletTitle                    = $walletInfo['walletTitle'];
+        $walletNickname                 = $walletInfo['walletNickname'];
+        $walletDefault                  = $walletInfo['walletDefault'];
+        $walletExchange                 = $walletInfo['walletExchange'];
+        $walletMarketPair               = $walletInfo['walletMarketPair'];
+        $walletMarket                   = $walletInfo['walletMarket'];
+        $getUserWalletTrades            = $walletInfo['getUserWalletTrades'];
+        if ($walletInfo['walletAmount'] > 0) {
+            $walletAmount               = '$' . number_format($walletInfo['walletAmount']);
+        } elseif ($walletInfo['walletAmount'] < 0) {
+            $walletAmount               = '-$' . number_format($walletInfo['walletAmount']);
         } else {
-            $percentChange			= '<span class="text-danger">' . $percent_change . '%</span>';
+            $walletAmount               = '$0.00';
         }
+        if ($walletInfo['walletTotalAmount'] > 0) {
+            $walletTotalAmount          = '$' . number_format($walletInfo['walletTotalAmount']);
+        } elseif ($walletInfo['walletTotalAmount'] < 0) {
+            $walletTotalAmount          = '-$' . number_format($walletInfo['walletTotalAmount']);
+        } else {
+            $walletTotalAmount          = '$0.00';
+        }
+        if ($walletInfo['walletGains'] > 0) {
+            $walletGains                = '$' . number_format($walletInfo['walletGains']);
+        } elseif ($walletInfo['walletGains'] < 0) {
+            $walletGains                = '-$' . number_format($walletInfo['walletGains']);
+        } else {
+            $walletGains                = '$0.00';
+        }
+        if ($walletInfo['depositAmount'] > 0) {
+            $depositAmount              = '$' . number_format($walletInfo['depositAmount']);
+        } elseif ($walletInfo['depositAmount'] < 0) {
+            $depositAmount              = '-$' . number_format($walletInfo['depositAmount']);
+        } else {
+            $depositAmount              = '$0.00';
+        }
+        if ($walletInfo['withdrawAmount'] > 0) {
+            $withdrawAmount             = '$' . number_format($walletInfo['withdrawAmount']);
+        } elseif ($walletInfo['withdrawAmount'] < 0) {
+            $withdrawAmount             = '-$' . number_format($walletInfo['withdrawAmount']);
+        } else {
+            $withdrawAmount             = '$0.00';
+        }
+        if ($walletInfo['percentChange'] > 0) {
+            $percentChange              = '$' . number_format($walletInfo['percentChange']);
+        } elseif ($walletInfo['percentChange'] < 0) {
+            $percentChange              = '-$' . number_format($walletInfo['percentChange']);
+        } else {
+            $percentChange              = '$0.00';
+        }
+        $transferBalance                = $walletInfo['depositAmount'] - $walletInfo['withdrawAmount'];
+        if ($transferBalance > 0) {
+            $transferBalance            = '$' . number_format($transferBalance);
+        } elseif ($transferBalance < 0) {
+            $transferBalance            = '-$' . number_format($transferBalance);
+        } else {
+            $transferBalance            = '$0.00';
+        }
+        $totalTrades                    = number_format($walletInfo['totalTrades'],0);
+        $this->db->select_sum('closed_perc');
+        $this->db->from('bf_users_trades');
+        $this->db->where('wallet', $walletID);
+        $getAllPercentChange		    = $this->db->get();
+        foreach ($getAllPercentChange->result_array() as $walletTrades) {
+            $percent_change			    = $walletTrades['closed_perc'];
+            if ($percent_change === null) {
+                $percentChange		    = '<span">0%</span>';
+            } elseif ($percent_change >= 0) {
+                $percentChange		    = '<span class="text-success">' . $percent_change . '%</span>';
+            } else {
+                $percentChange		    = '<span class="text-danger">' . $percent_change . '%</span>';
+            }
+        }
+        $accountInformation             = array(
+            'walletID'                  => $walletID,
+            'walletBroker'              => $walletBroker,
+            'walletAccountID'           => $walletAccountID,
+            'walletAccessCode'          => $walletAccessCode,
+            'walletPremium'             => $walletPremium,
+            'walletTitle'			    => $walletTitle,
+            'walletNickname'		    => $walletNickname,
+            'walletDefault'		        => $walletDefault,
+            'walletExchange'			=> $walletExchange,
+            'walletMarketPair'  	    => $walletMarketPair,
+            'walletMarket'			    => $walletMarket,
+            'walletGains'   		    => $walletGains,
+            'walletAmount'              => $walletAmount,
+            'walletTotalAmount'		    => $walletTotalAmount,
+            'percentChange'             => $percentChange,
+            'totalTrades'               => $totalTrades,
+            'depositAmount'             => $depositAmount,
+            'withdrawAmount'            => $withdrawAmount,
+            'transferBalance'           => $transferBalance,
+            'getUserWalletTrades'       => $getUserWalletTrades,
+        );
+        $this->load->view('User/Wallets/Details/wallets', $accountInformation); 
     }
-
-    $getLastTradeByUser				= $this->tracker_model->get_last_trade_info_by_user($cuID);
-    foreach ($getLastTradeByUser->result_array() as $lastTradeByUser) {
-        $lastTradeActivityDate		= $lastTradeByUser['submitted_date'];
-    }
-    // Get User Trades
-    $getTrades		                = $this->tracker_model->get_all_wallet_trades($walletID);
-
-    $getSymbols                     = $this->tracker_model->get_wallet_trades_openings($walletID);
-    $totalTrades                    = $getSymbols->num_rows();
-
-    $walletBroker                   = $getWalletInfo['walletBroker'];
-    $walletAccountID                = $getWalletInfo['walletAccountID'];
-    $walletAccessCode               = $getWalletInfo['walletAccessCode'];
-    $walletPremium                  = $getWalletInfo['walletPremium'];
-    $walletTitle		            = $getWalletInfo['walletTitle'];
-    $walletNickname 	            = $getWalletInfo['walletNickname'];
-    $walletDefault	                = $getWalletInfo['walletDefault'];
-    $walletExchange 		        = $getWalletInfo['walletExchange'];
-    $walletMarketPair               = $getWalletInfo['walletMarketPair'];
-    $walletMarket		            = $getWalletInfo['walletMarket'];
-    $accountInformation             = array(
-        'walletID'                  => $walletID,
-        'walletBroker'              => $walletBroker,
-        'walletAccountID'           => $walletAccountID,
-        'walletAccessCode'          => $walletAccessCode,
-        'walletPremium'             => $walletPremium,
-        'walletTitle'			    => $walletTitle,
-        'walletNickname'		    => $walletNickname,
-        'walletDefault'		        => $walletDefault,
-        'walletExchange'			=> $walletExchange,
-        'walletMarketPair'  	    => $walletMarketPair,
-        'walletMarket'			    => $walletMarket,
-        'walletGains'   		    => $walletGains,
-        'accountBalance'		    => $accountBalance,
-        'percentChange'             => $percentChange,
-        'totalTrades'               => $totalTrades,
-        'depositAmount'             => $depositAmount,
-        'withdrawAmount'            => $withdrawAmount,
-    );
-    $this->load->view('User/Wallets/Details/wallets', $accountInformation); 
 }
-
 ?>

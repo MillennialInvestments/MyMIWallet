@@ -1,0 +1,11 @@
+<h4 class="card-title pt-3">Additional Legal and US Regulatory Requirements for Referral Programs based in the State of Louisiana:</h4>
+<ol class="list-style">
+    <li>Compliance with State Laws: Ensure that your referral program complies with all relevant laws and regulations in the State of Louisiana, including consumer protection laws, privacy laws, and advertising laws.</li>
+    <li>Clear and Transparent Terms: Clearly state the terms and conditions of the referral program, including the commission structure, eligibility criteria, and any limitations or restrictions that apply. Make sure the terms are easily accessible and understandable for participants.</li>
+    <li>Prohibited Practices: Avoid engaging in deceptive, fraudulent, or unfair practices in your referral program. This includes misleading or false advertising, offering incentives for fraudulent referrals, or any other practices that violate consumer protection laws.</li>
+    <li>Privacy and Data Protection: Protect the personal information and privacy of your program participants in accordance with applicable data protection laws. Clearly communicate how you collect, use, and share participant data in your program.</li>
+    <li>Anti-Spam Regulations: Comply with anti-spam regulations, such as the CAN-SPAM Act, when sending referral-related emails or communications. Ensure that participants have opted-in to receive such communications and provide an easy way to opt-out.</li>
+    <li>Terms Modification and Termination: Reserve the right to modify or terminate the referral program at any time, and clearly communicate any changes to participants. This helps protect your business and allows for necessary adjustments as the program evolves.</li>
+    <li>Disclosures and Disclaimers: Include appropriate disclosures and disclaimers in your referral program materials to inform participants about the nature of the program, potential risks, and any relevant legal or financial considerations.</li>
+</ol>
+<p>Please consult with a legal professional or attorney specializing in the State of Louisiana to ensure full compliance with all applicable laws and regulations for your specific referral program.</p>
