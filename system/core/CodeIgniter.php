@@ -6,11 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
-<<<<<<< HEAD
  * Copyright (c) 2019 - 2022, CodeIgniter Foundation
-=======
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,20 +30,13 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
-<<<<<<< HEAD
  * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
  * @filesource
  */
-<<<<<<< HEAD
 defined('BASEPATH') OR exit('No direct script access allowed');
-=======
-defined('BASEPATH') or exit('No direct script access allowed');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /**
  * System Initialization File
@@ -58,11 +47,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @subpackage	CodeIgniter
  * @category	Front-controller
  * @author		EllisLab Dev Team
-<<<<<<< HEAD
  * @link		https://codeigniter.com/userguide3/
-=======
- * @link		https://codeigniter.com/user_guide/
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  */
 
 /**
@@ -71,18 +56,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @var	string
  *
  */
-<<<<<<< HEAD
 	const CI_VERSION = '3.1.13';
-=======
-    const CI_VERSION = '3.1.11';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Load the framework constants
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/constants.php'))
 	{
 		require_once(APPPATH.'config/'.ENVIRONMENT.'/constants.php');
@@ -92,26 +72,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	{
 		require_once(APPPATH.'config/constants.php');
 	}
-=======
-    if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/constants.php')) {
-        require_once(APPPATH.'config/'.ENVIRONMENT.'/constants.php');
-    }
-
-    if (file_exists(APPPATH.'config/constants.php')) {
-        require_once(APPPATH.'config/constants.php');
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Load the global functions
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	require_once(BASEPATH.'core/Common.php');
-=======
-    require_once(BASEPATH.'core/Common.php');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 
 /*
@@ -120,7 +87,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * ------------------------------------------------------
  */
 
-<<<<<<< HEAD
 if ( ! is_php('5.4'))
 {
 	ini_set('magic_quotes_runtime', 0);
@@ -162,43 +128,6 @@ if ( ! is_php('5.4'))
 			}
 		}
 	}
-=======
-if (! is_php('5.4')) {
-    ini_set('magic_quotes_runtime', 0);
-
-    if ((bool) ini_get('register_globals')) {
-        $_protected = array(
-            '_SERVER',
-            '_GET',
-            '_POST',
-            '_FILES',
-            '_REQUEST',
-            '_SESSION',
-            '_ENV',
-            '_COOKIE',
-            'GLOBALS',
-            'HTTP_RAW_POST_DATA',
-            'system_path',
-            'application_folder',
-            'view_folder',
-            '_protected',
-            '_registered'
-        );
-
-        $_registered = ini_get('variables_order');
-        foreach (array('E' => '_ENV', 'G' => '_GET', 'P' => '_POST', 'C' => '_COOKIE', 'S' => '_SERVER') as $key => $superglobal) {
-            if (strpos($_registered, $key) === false) {
-                continue;
-            }
-
-            foreach (array_keys($$superglobal) as $var) {
-                if (isset($GLOBALS[$var]) && ! in_array($var, $_protected, true)) {
-                    $GLOBALS[$var] = null;
-                }
-            }
-        }
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 
 
@@ -207,15 +136,9 @@ if (! is_php('5.4')) {
  *  Define a custom error handler so we can log PHP errors
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	set_error_handler('_error_handler');
 	set_exception_handler('_exception_handler');
 	register_shutdown_function('_shutdown_handler');
-=======
-    set_error_handler('_error_handler');
-    set_exception_handler('_exception_handler');
-    register_shutdown_function('_shutdown_handler');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
@@ -233,23 +156,16 @@ if (! is_php('5.4')) {
  * Note: Since the config file data is cached it doesn't
  * hurt to load it here.
  */
-<<<<<<< HEAD
 	if ( ! empty($assign_to_config['subclass_prefix']))
 	{
 		get_config(array('subclass_prefix' => $assign_to_config['subclass_prefix']));
 	}
-=======
-    if (! empty($assign_to_config['subclass_prefix'])) {
-        get_config(array('subclass_prefix' => $assign_to_config['subclass_prefix']));
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Should we use a Composer autoloader?
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	if ($composer_autoload = config_item('composer_autoload'))
 	{
 		if ($composer_autoload === TRUE)
@@ -267,56 +183,29 @@ if (! is_php('5.4')) {
 			log_message('error', 'Could not find the specified $config[\'composer_autoload\'] path: '.$composer_autoload);
 		}
 	}
-=======
-    if ($composer_autoload = config_item('composer_autoload')) {
-        if ($composer_autoload === true) {
-            file_exists(APPPATH.'vendor/autoload.php')
-                ? require_once(APPPATH.'vendor/autoload.php')
-                : log_message('error', '$config[\'composer_autoload\'] is set to TRUE but '.APPPATH.'vendor/autoload.php was not found.');
-        } elseif (file_exists($composer_autoload)) {
-            require_once($composer_autoload);
-        } else {
-            log_message('error', 'Could not find the specified $config[\'composer_autoload\'] path: '.$composer_autoload);
-        }
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Start the timer... tick tock tick tock...
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$BM =& load_class('Benchmark', 'core');
 	$BM->mark('total_execution_time_start');
 	$BM->mark('loading_time:_base_classes_start');
-=======
-    $BM =& load_class('Benchmark', 'core');
-    $BM->mark('total_execution_time_start');
-    $BM->mark('loading_time:_base_classes_start');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Instantiate the hooks class
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$EXT =& load_class('Hooks', 'core');
-=======
-    $EXT =& load_class('Hooks', 'core');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Is there a "pre_system" hook?
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$EXT->call_hook('pre_system');
-=======
-    $EXT->call_hook('pre_system');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
@@ -328,7 +217,6 @@ if (! is_php('5.4')) {
  * depending on another class that uses it.
  *
  */
-<<<<<<< HEAD
 	$CFG =& load_class('Config', 'core');
 
 	// Do we have any manually set config items in the index.php file?
@@ -339,16 +227,6 @@ if (! is_php('5.4')) {
 			$CFG->set_item($key, $value);
 		}
 	}
-=======
-    $CFG =& load_class('Config', 'core');
-
-    // Do we have any manually set config items in the index.php file?
-    if (isset($assign_to_config) && is_array($assign_to_config)) {
-        foreach ($assign_to_config as $key => $value) {
-            $CFG->set_item($key, $value);
-        }
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
@@ -364,7 +242,6 @@ if (! is_php('5.4')) {
  * in it's constructor, but it's _not_ class-specific.
  *
  */
-<<<<<<< HEAD
 	$charset = strtoupper(config_item('charset'));
 	ini_set('default_charset', $charset);
 
@@ -401,37 +278,6 @@ if (! is_php('5.4')) {
 	{
 		ini_set('php.internal_encoding', $charset);
 	}
-=======
-    $charset = strtoupper(config_item('charset'));
-    ini_set('default_charset', $charset);
-
-    if (extension_loaded('mbstring')) {
-        define('MB_ENABLED', true);
-        // mbstring.internal_encoding is deprecated starting with PHP 5.6
-        // and it's usage triggers E_DEPRECATED messages.
-        @ini_set('mbstring.internal_encoding', $charset);
-        // This is required for mb_convert_encoding() to strip invalid characters.
-        // That's utilized by CI_Utf8, but it's also done for consistency with iconv.
-        mb_substitute_character('none');
-    } else {
-        define('MB_ENABLED', false);
-    }
-
-    // There's an ICONV_IMPL constant, but the PHP manual says that using
-    // iconv's predefined constants is "strongly discouraged".
-    if (extension_loaded('iconv')) {
-        define('ICONV_ENABLED', true);
-        // iconv.internal_encoding is deprecated starting with PHP 5.6
-        // and it's usage triggers E_DEPRECATED messages.
-        @ini_set('iconv.internal_encoding', $charset);
-    } else {
-        define('ICONV_ENABLED', false);
-    }
-
-    if (is_php('5.6')) {
-        ini_set('php.internal_encoding', $charset);
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
@@ -439,110 +285,69 @@ if (! is_php('5.4')) {
  * ------------------------------------------------------
  */
 
-<<<<<<< HEAD
 	require_once(BASEPATH.'core/compat/mbstring.php');
 	require_once(BASEPATH.'core/compat/hash.php');
 	require_once(BASEPATH.'core/compat/password.php');
 	require_once(BASEPATH.'core/compat/standard.php');
-=======
-    require_once(BASEPATH.'core/compat/mbstring.php');
-    require_once(BASEPATH.'core/compat/hash.php');
-    require_once(BASEPATH.'core/compat/password.php');
-    require_once(BASEPATH.'core/compat/standard.php');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Instantiate the UTF-8 class
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$UNI =& load_class('Utf8', 'core');
-=======
-    $UNI =& load_class('Utf8', 'core');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Instantiate the URI class
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$URI =& load_class('URI', 'core');
-=======
-    $URI =& load_class('URI', 'core');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Instantiate the routing class and set the routing
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$RTR =& load_class('Router', 'core', isset($routing) ? $routing : NULL);
-=======
-    $RTR =& load_class('Router', 'core', isset($routing) ? $routing : null);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Instantiate the output class
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$OUT =& load_class('Output', 'core');
-=======
-    $OUT =& load_class('Output', 'core');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *	Is there a valid cache file? If so, we're done...
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	if ($EXT->call_hook('cache_override') === FALSE && $OUT->_display_cache($CFG, $URI) === TRUE)
 	{
 		exit;
 	}
-=======
-    if ($EXT->call_hook('cache_override') === false && $OUT->_display_cache($CFG, $URI) === true) {
-        exit;
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * -----------------------------------------------------
  * Load the security class for xss and csrf support
  * -----------------------------------------------------
  */
-<<<<<<< HEAD
 	$SEC =& load_class('Security', 'core');
-=======
-    $SEC =& load_class('Security', 'core');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Load the Input class and sanitize globals
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$IN	=& load_class('Input', 'core');
-=======
-    $IN	=& load_class('Input', 'core');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Load the Language class
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$LANG =& load_class('Lang', 'core');
-=======
-    $LANG =& load_class('Lang', 'core');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
@@ -550,7 +355,6 @@ if (! is_php('5.4')) {
  * ------------------------------------------------------
  *
  */
-<<<<<<< HEAD
 	// Load the base controller class
 	require_once BASEPATH.'core/Controller.php';
 
@@ -573,29 +377,6 @@ if (! is_php('5.4')) {
 
 	// Set a mark point for benchmarking
 	$BM->mark('loading_time:_base_classes_end');
-=======
-    // Load the base controller class
-    require_once BASEPATH.'core/Controller.php';
-
-    /**
-     * Reference to the CI_Controller method.
-     *
-     * Returns current CI instance object
-     *
-     * @return CI_Controller
-     */
-    function &get_instance()
-    {
-        return CI_Controller::get_instance();
-    }
-
-    if (file_exists(APPPATH.'core/'.$CFG->config['subclass_prefix'].'Controller.php')) {
-        require_once APPPATH.'core/'.$CFG->config['subclass_prefix'].'Controller.php';
-    }
-
-    // Set a mark point for benchmarking
-    $BM->mark('loading_time:_base_classes_end');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
@@ -618,7 +399,6 @@ if (! is_php('5.4')) {
  *  controller methods that begin with an underscore.
  */
 
-<<<<<<< HEAD
 	$e404 = FALSE;
 	$class = ucfirst($RTR->class);
 	$method = $RTR->method;
@@ -720,177 +500,61 @@ if (! is_php('5.4')) {
 	{
 		$params = array_slice($URI->rsegments, 2);
 	}
-=======
-    $e404 = false;
-    $class = ucfirst($RTR->class);
-    $method = $RTR->method;
-
-    if (empty($class) or ! file_exists(APPPATH.'controllers/'.$RTR->directory.$class.'.php')) {
-        $e404 = true;
-    } else {
-        require_once(APPPATH.'controllers/'.$RTR->directory.$class.'.php');
-
-        if (! class_exists($class, false) or $method[0] === '_' or method_exists('CI_Controller', $method)) {
-            $e404 = true;
-        } elseif (method_exists($class, '_remap')) {
-            $params = array($method, array_slice($URI->rsegments, 2));
-            $method = '_remap';
-        } elseif (! method_exists($class, $method)) {
-            $e404 = true;
-        }
-        /**
-         * DO NOT CHANGE THIS, NOTHING ELSE WORKS!
-         *
-         * - method_exists() returns true for non-public methods, which passes the previous elseif
-         * - is_callable() returns false for PHP 4-style constructors, even if there's a __construct()
-         * - method_exists($class, '__construct') won't work because CI_Controller::__construct() is inherited
-         * - People will only complain if this doesn't work, even though it is documented that it shouldn't.
-         *
-         * ReflectionMethod::isConstructor() is the ONLY reliable check,
-         * knowing which method will be executed as a constructor.
-         */
-        elseif (! is_callable(array($class, $method))) {
-            $reflection = new ReflectionMethod($class, $method);
-            if (! $reflection->isPublic() or $reflection->isConstructor()) {
-                $e404 = true;
-            }
-        }
-    }
-
-    if ($e404) {
-        if (! empty($RTR->routes['404_override'])) {
-            if (sscanf($RTR->routes['404_override'], '%[^/]/%s', $error_class, $error_method) !== 2) {
-                $error_method = 'index';
-            }
-
-            $error_class = ucfirst($error_class);
-
-            if (! class_exists($error_class, false)) {
-                if (file_exists(APPPATH.'controllers/'.$RTR->directory.$error_class.'.php')) {
-                    require_once(APPPATH.'controllers/'.$RTR->directory.$error_class.'.php');
-                    $e404 = ! class_exists($error_class, false);
-                }
-                // Were we in a directory? If so, check for a global override
-                elseif (! empty($RTR->directory) && file_exists(APPPATH.'controllers/'.$error_class.'.php')) {
-                    require_once(APPPATH.'controllers/'.$error_class.'.php');
-                    if (($e404 = ! class_exists($error_class, false)) === false) {
-                        $RTR->directory = '';
-                    }
-                }
-            } else {
-                $e404 = false;
-            }
-        }
-
-        // Did we reset the $e404 flag? If so, set the rsegments, starting from index 1
-        if (! $e404) {
-            $class = $error_class;
-            $method = $error_method;
-
-            $URI->rsegments = array(
-                1 => $class,
-                2 => $method
-            );
-        } else {
-            show_404($RTR->directory.$class.'/'.$method);
-        }
-    }
-
-    if ($method !== '_remap') {
-        $params = array_slice($URI->rsegments, 2);
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Is there a "pre_controller" hook?
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$EXT->call_hook('pre_controller');
-=======
-    $EXT->call_hook('pre_controller');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Instantiate the requested controller
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	// Mark a start point so we can benchmark the controller
 	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
 
 	$CI = new $class();
-=======
-    // Mark a start point so we can benchmark the controller
-    $BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
-
-    $CI = new $class();
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Is there a "post_controller_constructor" hook?
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$EXT->call_hook('post_controller_constructor');
-=======
-    $EXT->call_hook('post_controller_constructor');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Call the requested method
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	call_user_func_array(array(&$CI, $method), $params);
 
 	// Mark a benchmark end point
 	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_end');
-=======
-    call_user_func_array(array(&$CI, $method), $params);
-
-    // Mark a benchmark end point
-    $BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_end');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Is there a "post_controller" hook?
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$EXT->call_hook('post_controller');
-=======
-    $EXT->call_hook('post_controller');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Send the final rendered output to the browser
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	if ($EXT->call_hook('display_override') === FALSE)
 	{
 		$OUT->_display();
 	}
-=======
-    if ($EXT->call_hook('display_override') === false) {
-        $OUT->_display();
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
  * ------------------------------------------------------
  *  Is there a "post_system" hook?
  * ------------------------------------------------------
  */
-<<<<<<< HEAD
 	$EXT->call_hook('post_system');
-=======
-    $EXT->call_hook('post_system');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

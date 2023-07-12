@@ -4,19 +4,10 @@ $currentMethod 			= $this->router->method;
 $errorClass     		= empty($errorClass) ? ' error' : $errorClass;
 $registerClass  		= $currentMethod == 'register' ? ' required' : '';
 $editSettings   		= $currentMethod == 'edit';
-<<<<<<< HEAD
-=======
-// Input Field Settings
-$controlGroup 			= 'control-group form-row pb-3';
-$controlLabel 			= 'control-label col-12 pt-2 required';
-$controlClass 			= 'controls col-12';
-$controlInput   		= 'form-control full-width';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $isBeta					= $this->config->item('beta');
 $signup_date 			= date("n/j/Y");
 $registerType 			= $this->uri->segment(1);
 $preRegisterType 		= $this->uri->segment(2);
-<<<<<<< HEAD
 if (empty($this->uri->segment(1))) {
     // Input Field Settings
     $controlGroup 			= 'control-group form-row pb-3';
@@ -34,13 +25,10 @@ if (empty($this->uri->segment(1))) {
     $passwordLabel          = 'Password <small>(Confirm)</small>';
     $referralLabel          = 'Referral Code <small>(Optional)</small>';
 }
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $getLastID 				= $this->user_model->get_last_id();
 foreach ($getLastID->result_array() as $last) {
     $lastID				= $last['id'] + 1;
 }
-<<<<<<< HEAD
 ?>
 <div class="<?php echo $controlGroup; ?> <?php echo form_error('account_type') ? $errorClass : ''; ?>">
 	<label class="<?php e($controlLabel); ?>">Account Type</label>
@@ -61,8 +49,6 @@ foreach ($getLastID->result_array() as $last) {
 	</div>
 </div>
 <?php 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 if ($isBeta === 1) {
     ?>                                                                                                                  
 	<input type="hidden" id="id" name="id" value="<?php echo set_value('id', isset($user) ? $user->id : $lastID); ?>" />
@@ -77,11 +63,7 @@ if ($isBeta === 1) {
 	<input type="hidden" id="type" name="type" value="<?php echo set_value('type', isset($user) ? $user->type : 'Free'); ?>" />
 	<input type="hidden" id="partner" name="partner" value="<?php echo set_value('partner', isset($user) ? $user->partner : '1'); ?>" />
 	<input type="hidden" id="investor" name="investor" value="<?php echo set_value('investor', isset($user) ? $user->investor : '0'); ?>" />
-<<<<<<< HEAD
 	<div class="<?php e($controlGroup); ?> <?php echo form_error('organization') ? $errorClass : ''; ?> d-none" id="organizationDiv">
-=======
-	<div class="<?php e($controlGroup); ?> <?php echo form_error('organization') ? $errorClass : ''; ?>">
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 		<label class="<?php e($controlLabel); ?>" for="organization">Name of Organization</label>
 		<div class="<?php e($controlClass); ?>">
 			<input class="<?php echo $controlInput; ?>" type="text" id="organization" name="organization" value="<?php echo set_value('organization', isset($user) ? $user->organization : ''); ?>" />
@@ -90,7 +72,6 @@ if ($isBeta === 1) {
 	</div>
 <?php
     } elseif ($registerType === 'Investor') {
-<<<<<<< HEAD
         ?>
 	<input type="hidden" id="id" name="id" value="<?php echo set_value('id', isset($user) ? $user->id : $lastID); ?>" />
 	<input type="hidden" id="type" name="type" value="<?php echo set_value('type', isset($user) ? $user->type : 'Free'); ?>" />
@@ -109,12 +90,6 @@ if ($isBeta === 1) {
     <input type="hidden" id="id" name="id" value="<?php echo set_value('id', isset($user) ? $user->id : $lastID); ?>" />		
 	<input type="hidden" id="type" name="type" value="<?php echo set_value('type', isset($user) ? $user->type : 'Team'); ?>" />				
 	<input type="hidden" id="partner" name="partner" value="<?php echo set_value('partner', isset($user) ? $user->partner : '1'); ?>" />																						
-=======
-        ?>                                          		
-    <input type="hidden" id="id" name="id" value="<?php echo set_value('id', isset($user) ? $user->id : $lastID); ?>" />		
-	<input type="hidden" id="type" name="type" value="<?php echo set_value('type', isset($user) ? $user->type : 'Free'); ?>" />				
-	<input type="hidden" id="partner" name="partner" value="<?php echo set_value('partner', isset($user) ? $user->partner : '0'); ?>" />																						
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	<input type="hidden" id="investor" name="investor" value="<?php echo set_value('investor', isset($user) ? $user->investor : '1'); ?>" />
 	<input type="hidden" id="organization" name="organization" value="<?php echo set_value('organization', isset($user) ? $user->organization : '0'); ?>" />
 <?php
@@ -132,20 +107,6 @@ if ($isBeta === 1) {
 	.form-control {min-height: 40px !important; margin-top: 0px !important; background-color: #ededed !important;}
 </style>
 <input type="hidden" id="signup_date" name="signup_date" value="<?php echo set_value('signup_date', isset($user) ? $user->signup_date : $signup_date); ?>" />
-<<<<<<< HEAD
-=======
-<div class="<?php e($controlGroup); ?> <?php echo form_error('account_type') ? $errorClass : ''; ?>">
-    <label class="control-label col-sm-4 col-md-12 pt-2 required" for="email">
-		Account Type<br>
-		<div class="form-radio">
-			<input class="mt-2" type="radio" id="account_type_personal" name="account_type" value="<?php echo set_value('account_type', isset($user) ? $user->account_type : 'Personal'); ?>"> Personal Account <small>- an Individual Account</small>
-		</div>
-		<div class="form-radio">
-			<input class="mt-2" type="radio" id="account_type_business" name="account_type" value="<?php echo set_value('account_type', isset($user) ? $user->account_type : 'Business'); ?>"> Business Account <small>- a Business or Partner Account</small>
-		</div>
-    </label>
-</div>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 <div class="<?php e($controlGroup); ?> <?php echo form_error('email') ? $errorClass : ''; ?>">
     <label class="<?php e($controlLabel); ?>" for="email"><?php echo lang('bf_email'); ?> Address</label>
     <div class="<?php e($controlClass); ?>">
@@ -167,24 +128,11 @@ if ($isBeta === 1) {
     <div class="<?php e($controlClass); ?>">
         <input class="<?php echo $controlInput; ?>" type="password" id="password" name="password" value="" />
         <span class="help-inline"><?php echo form_error('password'); ?></span>
-<<<<<<< HEAD
 		<p class="help-block"><?php echo isset($password_hints) ? $password_hints : ''; ?></p>        
     </div>
 </div>
 <div class="<?php e($controlGroup); ?> <?php echo form_error('pass_confirm') ? $errorClass : ''; ?>">
     <label class="<?php e($controlLabel); ?> <?php echo $registerClass; ?>" for="pass_confirm"><?= $passwordLabel; ?></label>
-=======
-        
-    </div>
-</div>
-<div class="<?php e($controlGroup); ?>">
-	<div class="col-sm-12 col-md-12 col-lg-12">
-		<p class="help-block"><?php echo isset($password_hints) ? $password_hints : ''; ?></p>
-	</div>
-</div>
-<div class="<?php e($controlGroup); ?> <?php echo form_error('pass_confirm') ? $errorClass : ''; ?>">
-    <label class="<?php e($controlLabel); ?> <?php echo $registerClass; ?>" for="pass_confirm">Password <small>(Confirm)</small></label>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     <div class="<?php e($controlClass); ?>">
         <input class="<?php echo $controlInput; ?>" type="password" id="pass_confirm" name="pass_confirm" value="" />
     </div>
@@ -202,7 +150,6 @@ if ($isBeta === 1) {
 endif;
 ?>
 <div class="<?php e($controlGroup); ?> <?php echo form_error('referral_code') ? $errorClass : ''; ?>">
-<<<<<<< HEAD
     <label class="<?php e($controlLabel); ?>" for="referral_code"><?= $referralLabel; ?></label>
     <div class="<?php e($controlClass); ?>">
         <?php 
@@ -257,17 +204,3 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 </script>
-=======
-    <label class="<?php e($controlLabel); ?>" for="referral_code">Referral Code <small>(Optional)</small></label>
-    <div class="<?php e($controlClass); ?>">
-        <input class="<?php echo $controlInput; ?>" type="text" id="referral_code" name="referral_code" value="<?php echo set_value('referral_code', isset($user) ? $user->referral_code : ''); ?>" />
-        <span class="help-inline"><?php echo form_error('referral_code'); ?></span>
-    </div>
-</div>
-<small class="text-muted">
-We are committed to complying with all U.S. regulations that help prevent, detect and remediate unlawful behavior by customers and virtual currency developers when using Millennial Investment's MyMI Wallet trading platform or any of the company’s other services. 
-MyMI Wallet is also not a regulated exchange under U.S. securities laws. 
-By registering an account, you are agreeing to our <a href="<?php echo base_url('assets/documents/User/Terms-And-Conditions.pdf'); ?>">Terms &amp; Conditions</a>.
-</small>
-<input type="hidden" class="g-recaptcha-response" name="g-recaptcha-response">
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

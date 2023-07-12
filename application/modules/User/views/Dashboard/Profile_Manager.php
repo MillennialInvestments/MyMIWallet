@@ -4,11 +4,7 @@ $profileForm								= json_decode($profileForm, true);
 $thisController                             = $this->router->fetch_class();
 $thisMethod                                 = $this->router->fetch_method();
 $thisURL                                    = $this->uri->uri_string();
-<<<<<<< HEAD
 $thisFullURL                                = base_url($_SERVER['REQUEST_URI']);
-=======
-$thisFullURL                                = $this->uri->current_url();
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $betaStatus                                 = $this->config->item('beta');
 if ($betaStatus === 0) {
     $beta                                   = 'No';

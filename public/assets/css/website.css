@@ -17,7 +17,6 @@ padding-top: 2rem;
 fieldset {
 	border:none;
 }
-<<<<<<< HEAD
 .bootstrap-select>.dropdown-toggle {
     height: 2.5rem !important; 
 }
@@ -40,19 +39,14 @@ fieldset {
 .myfs-xxl {
     font-size: 5rem !important;
 }
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 .line {
 	width: 2px;
 	background-color: lightgrey !important;
 	height: 50px !important; 
 }
-<<<<<<< HEAD
 body .btn.dropdown-toggle.btn-default {
     height: 35px !important;
 }
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 .cid-s8fMu0noUh .line {
 	height: 3px !important;
 	background-color: #3E61BC !important;
@@ -122,10 +116,7 @@ select {width:100% !important;}
 	width: 100% !important;
 	max-height: inherit !important; 
 	margin-top: 2.5rem !important; 
-<<<<<<< HEAD
     overflow-y: auto;
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 .bootstrap-select .dropdown-menu.inner {
 	margin-top: 0px !important;
@@ -142,7 +133,6 @@ select {width:100% !important;}
 	position: relative !important;
 }
 .form-horizontal .control-group .controls {margin-left: 0px !important;}
-<<<<<<< HEAD
 .dataTables_filter{
     text-align: right;
     margin-right: 3rem;
@@ -160,10 +150,6 @@ strong{font-weight: bolder !important;}
     padding-right: 0;
     margin-right: 0;
   }
-=======
-.dataTables_filter{margin-right:5rem !important;}
-strong{font-weight: bolder !important;}
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 /*
  * MOBILE RESPONSIVENESS
  */
@@ -189,12 +175,7 @@ strong{font-weight: bolder !important;}
 	}
 } 
 @media (min-width: 768px) {
-<<<<<<< HEAD
 	.form-label{margin-top: 0.5rem !important; font-size: 0.9rem !important; padding-left: 1rem !important;}
-=======
-	#login {max-width: 350px !important;}
-	.form-label{margin-top: 1rem !important; font-size: 0.9rem !important; padding-left: 1rem !important;}
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 @media (min-width: 1440px) {
 	div.dataTables_wrapper div.dataTables_paginate ul.pagination{justify-content:flex-end !important}
@@ -385,10 +366,7 @@ strong{font-weight: bolder !important;}
   .cid-s0KKkCeVNf .card {
     margin-bottom: 2rem;
   }
-<<<<<<< HEAD
   #navbar-user-profile-dropdown{left:-170px !important;}
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 @media (max-width: 767px) {
   .cid-s0KKkCeVNf .card-wrapper {
@@ -1302,7 +1280,6 @@ select {width:100%;}
 	border: 1px solid #dbdfea;
 	border-radius: 4px;
 	transition: border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
-<<<<<<< HEAD
 }
 .dropdown-menu-s1 .show {
     transform: translate3d(-169px, 15px, 0px); 
@@ -1509,6 +1486,4 @@ select {width:100%;}
 	border: 1px solid #dbdfea;
 	border-radius: 4px;
 	transition: border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

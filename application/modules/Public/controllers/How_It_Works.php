@@ -38,11 +38,7 @@ class How_It_Works extends Front_Controller
         parent::__construct();
 
         $this->load->helper(array('directory', 'form', 'file', 'url'));
-<<<<<<< HEAD
         $this->load->library(array('form_validation', 'upload'));
-=======
-        $this->load->library(array('form_validation', 'upload', 'user_agent'));
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         //$this->load->model('user_model');
         //$this->load->module('ContactUs');
 
@@ -60,7 +56,6 @@ class How_It_Works extends Front_Controller
 
     public function index()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
         $pageName = 'Home';
         
@@ -98,9 +93,6 @@ class How_It_Works extends Front_Controller
     public function Registering_An_Account()
     {
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Home';
         
         $this->set_current_user();
@@ -112,11 +104,7 @@ class How_It_Works extends Front_Controller
 
     public function Why()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Home';
         
         $this->set_current_user();
@@ -128,11 +116,7 @@ class How_It_Works extends Front_Controller
 
     public function MyMI_Gold()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'How_It_Works_MyMI_Gold';
         
         $this->set_current_user();

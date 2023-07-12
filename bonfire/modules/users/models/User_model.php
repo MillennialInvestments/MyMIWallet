@@ -429,7 +429,6 @@ class User_model extends BF_Model
          'nickname'				=> $nickname,
         );
         
-<<<<<<< HEAD
         $this->db->insert('bf_users_wallet', $users);
         $lastWalletID           = $this->db->insert_id();
         return $lastWalletID;         
@@ -461,11 +460,6 @@ class User_model extends BF_Model
         $this->db->insert('bf_users_referrals', $data);
     }
 
-=======
-        return $this->db->insert('bf_users_wallet', $users);
-    }
-    
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     /**
      * Update an existing user. Before saving, it will:
      * - Generate a new password/hash if both password and pass_confirm are provided.

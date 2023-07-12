@@ -1,6 +1,5 @@
 <?php
 // Config Settings
-<<<<<<< HEAD
 $beta                               = $this->config->item('beta');
 $assetOperations                    = $this->config->item('assetOperations');
 $debtOperations                     = $this->config->item('debtOperations');
@@ -10,8 +9,6 @@ $investmentOperations               = $this->config->item('investmentOperations'
 $marketplaceOperations              = $this->config->item('marketplaceOperations');
 $referralOperations                 = $this->config->item('referralOperations');
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $communityTabs						= $this->config->item('communityTabs');
 $exchangeTab						= $this->config->item('exchangeTab');
 $marketMovers						= date("F-jS-Y");
@@ -26,12 +23,9 @@ $cuUserType							= $_SESSION['allSessionData']['userAccount']['cuUserType'];
 $cuReferrer						    = $_SESSION['allSessionData']['userAccount']['cuReferrer'];
 $cuReferrerCode						= $_SESSION['allSessionData']['userAccount']['cuReferrerCode'];
 $walletSum                          = $_SESSION['allSessionData']['myMIWalletSummary']['walletSum'];
-<<<<<<< HEAD
 $userBudget                         = $_SESSION['allSessionData']['userBudget'];
 $totalAccountBalance                = $userBudget['totalAccountBalance'];
 $totalAccountBalanceFMT             = $userBudget['totalAccountBalanceFMT'];
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 if (!empty($_SESSION['allSessionData']['userAccount']['assetNetValue'])) {
     $walletAmount                   = $walletSum;
 } else {
@@ -49,11 +43,7 @@ if (!empty($cuDisplayName)) {
 if ($this->agent->is_mobile()) {
     echo '<div class="nk-sidebar nk-sidebar-fixed collapse sidebar-offcanvas" id="collapseSidebar">';
 } else {
-<<<<<<< HEAD
     echo '<div class="nk-sidebar nk-sidebar-fixed" id="collapseSidebar">';
-=======
-    echo '<div class="nk-sidebar nk-sidebar-fixed" id="#collapseSidebar">';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 ?>
 	<div class="nk-sidebar-element nk-sidebar-head">
@@ -75,11 +65,7 @@ if ($this->agent->is_mobile()) {
 			</a> 
 		</div>  
 		<div class="nk-menu-trigger mr-n2">
-<<<<<<< HEAD
 			<a type="button" class="nk-nav-toggle nk-quick-nav-icon d-lg-none" data-toggle="collapse" href="#collapseSidebar" role="button" aria-expanded="false" aria-controls="collapseSidebar"><em class="icon ni ni-arrow-left" id="close-sidebar-nav-arrow"></em></a>
-=======
-			<a type="button" class="nk-nav-toggle nk-quick-nav-icon d-lg-none" data-toggle="collapse" href="#collapseSidebar" role="button" aria-expanded="false" aria-controls="collapseSidebar"><em class="icon ni ni-arrow-left"></em></a>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 		</div>
 	</div>
 	<div class="nk-sidebar-element">
@@ -90,11 +76,7 @@ if ($this->agent->is_mobile()) {
 						<div class="user-account-main">
 							<h6 class="overline-title-alt">Available Balance</h6>
 							<div class="user-balance">
-<<<<<<< HEAD
 								<?php echo $totalAccountBalanceFMT; ?> 
-=======
-								<?php echo $walletAmount; ?> 
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 								<small class="currency currency-usd">USD</small>
 							</div>
 							<div class="user-balance-alt">
@@ -161,25 +143,16 @@ if ($this->agent->is_mobile()) {
 				<div class="nk-sidebar-menu">
 					<ul class="nk-menu">
 						<li class="nk-menu-heading"><h6 class="overline-title">Account</h6></li>
-<<<<<<< HEAD
 						<!-- <li class="nk-menu-item">
 							<a href="<?php //echo site_url('/Dashboard'); ?>" class="nk-menu-link">
 								<span class="nk-menu-icon"><em class="icon ni ni-home"></em></span><span class="nk-menu-text">Dashboard</span>
 							</a>
 						</li> -->
-=======
-						<li class="nk-menu-item">
-							<a href="<?php echo site_url('/Dashboard'); ?>" class="nk-menu-link">
-								<span class="nk-menu-icon"><em class="icon ni ni-home"></em></span><span class="nk-menu-text">Dashboard</span>
-							</a>
-						</li>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         <li class="nk-menu-item">
 							<a href="<?php echo site_url('/Investor-Profile'); ?>" class="nk-menu-link">
 								<span class="nk-menu-icon"><em class="icon ni ni-account-setting"></em></span><span class="nk-menu-text">Account / Billing</span>
 							</a>
 						</li>
-<<<<<<< HEAD
                         <?php
                         if ($assetOperations === 1) {
                         ?>
@@ -191,14 +164,11 @@ if ($this->agent->is_mobile()) {
                         <?php 
                         }
                         ?>
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         <li class="nk-menu-item">
 							<a href="<?php echo site_url('/Budget'); ?>" class="nk-menu-link">
 								<span class="nk-menu-icon"><em class="icon ni ni-pie"></em></span><span class="nk-menu-text">My Budget</span>
 							</a>
 						</li> 
-<<<<<<< HEAD
                         <?php 
                         if ($debtOperations === 1) {
                         ?>
@@ -243,13 +213,6 @@ if ($this->agent->is_mobile()) {
                         <?php 
                         }
                         ?>
-=======
-						<li class="nk-menu-item">
-							<a href="<?php echo site_url('/Trade-Tracker'); ?>" class="nk-menu-link">
-								<span class="nk-menu-icon"><i class="icon-graph menu-icon"></i></span><span class="nk-menu-text">My Trades</span>
-							</a>
-						</li> 
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         <li class="nk-menu-item">
 							<a href="<?php echo site_url('/Wallets'); ?>" class="nk-menu-link">
 								<span class="nk-menu-icon"><em class="icon ni ni-wallet"></em></span><span class="nk-menu-text">My Wallets</span>
@@ -270,11 +233,7 @@ if ($this->agent->is_mobile()) {
                                 <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb"></em></span>
                                 <span class="nk-menu-text">Support</span>
                             </a>
-<<<<<<< HEAD
                             <ul class="nk-menu-sub">
-=======
-                            <ul class="nk-menu-sub" style="display: block;">
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                 <li class="nk-menu-item">
                                     <a href="<?php echo site_url('/Support'); ?>" class="nk-menu-link" data-bs-original-title="" title=""><span class="nk-menu-text">Contact Support</span></a>
                                 </li>
@@ -327,7 +286,6 @@ if ($this->agent->is_mobile()) {
 							<a class="nk-menu-link" href="<?php echo site_url('/Management/Assets'); ?>">
 							<span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span><span class="nk-menu-text">Assets</span>
 							</a>
-<<<<<<< HEAD
 						</li> 
 						<li class="nk-menu-item">
 							<a class="nk-menu-link" href="<?php echo site_url('/Content-Creator'); ?>">
@@ -337,12 +295,6 @@ if ($this->agent->is_mobile()) {
 						<li class="nk-menu-item">
 							<a href="<?php echo site_url('Management/Exchange'); ?>" class="nk-menu-link">
 							<span class="nk-menu-icon"><em class="icon ni ni-coins"></em></span><span class="nk-menu-text">Exchange</span>
-=======
-						</li>    
-						<li class="nk-menu-item">
-							<a href="<?php echo site_url('Management/Exchange'); ?>" class="nk-menu-link">
-							<span class="nk-menu-icon"><em class="icon ni ni-sign-usd"></em></span><span class="nk-menu-text">Exchange</span>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 							</a>
 						</li>
                         <!-- <li class="nk-menu-item">
@@ -351,7 +303,6 @@ if ($this->agent->is_mobile()) {
 							</a>
 						</li> -->
 						<li class="nk-menu-item">
-<<<<<<< HEAD
 							<a class="nk-menu-link" href="<?php echo site_url('/Management/Marketing'); ?>">
 							<span class="nk-menu-icon"><em class="icon ni ni-target"></em></span><span class="nk-menu-text">Marketing</span>
 							</a>
@@ -364,26 +315,18 @@ if ($this->agent->is_mobile()) {
 						<li class="nk-menu-item">
 							<a class="nk-menu-link" href="<?php echo site_url('/Management/Services'); ?>">
 							<span class="nk-menu-icon"><em class="icon ni ni-server"></em></span><span class="nk-menu-text">Services</span>
-=======
-							<a class="nk-menu-link" href="<?php echo site_url('/Management/Partners'); ?>">
-							<span class="nk-menu-icon"><em class="icon ni ni-briefcase"></em></span><span class="nk-menu-text">Partners</span>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 							</a>
 						</li>    
 						<li class="nk-menu-item">
 							<a class="nk-menu-link" href="<?php echo site_url('/Management/Users'); ?>">
 							<span class="nk-menu-icon"><em class="icon ni ni-users"></em></span><span class="nk-menu-text">Users</span>
 							</a>
-<<<<<<< HEAD
 						</li>    
                         <li class="nk-menu-item">
 							<a href="<?php echo site_url('/Management/Wallets'); ?>" class="nk-menu-link">
 								<span class="nk-menu-icon"><em class="icon ni ni-wallet"></em></span><span class="nk-menu-text">Wallets</span>
 							</a>
 						</li>      
-=======
-						</li>         
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 					</ul>
 				</div>
 				<div class="nk-sidebar-menu">
@@ -407,19 +350,6 @@ if ($this->agent->is_mobile()) {
 						</li>
 						<?php
                         } ?>
-<<<<<<< HEAD
-=======
-						<li class="nk-menu-item">
-							<a href="<?php echo site_url('Management/Exchange'); ?>" class="nk-menu-link">
-							<span class="nk-menu-icon"><em class="icon ni ni-sign-usd"></em></span><span class="nk-menu-text">Exchange</span>
-							</a>
-						</li>
-						<li class="nk-menu-item">
-							<a href="<?php echo site_url('/My-Referrals'); ?>" class="nk-menu-link">
-								<span class="nk-menu-icon"><em class="icon ni ni-share-alt"></em></span><span class="nk-menu-text">My Referrals</span>
-							</a>
-						</li>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 					</ul>
 				</div>
 				<?php
@@ -465,11 +395,7 @@ if ($this->agent->is_mobile()) {
 					<ul class="nk-menu nk-menu-footer">
 						<li class="nk-menu-item">
 							<a href="<?php echo site_url('Support'); ?>" class="nk-menu-link">
-<<<<<<< HEAD
 								<span class="nk-menu-icon"><i class="icon ni ni-help-alt"></i></span><span class="nk-menu-text">Support</span>
-=======
-								<span class="nk-menu-icon"><i class="icon-support"></i></span><span class="nk-menu-text">Support</span>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 							</a>
 						</li>
 						 

@@ -7,18 +7,11 @@ $day                                = date("d");
 $year                               = date("Y"); 
 $last_month                         = strtotime($month . ' - 1 month');
 $department                         = $this->uri->segment(2);
-<<<<<<< HEAD
 $reporting                          = $this->mymianalytics->reporting();
 $cuID                               = $_SESSION['allSessionData']['userAccount']['cuID']; 
 // print_r($_SESSION['allSessionData']); 
 // echo '<br><br>'; 
 // print_r($_SESSION['reporting']); 
-=======
-$reporting                          = $this->mymianalytics->reporting($department); 
-// print_r($_SESSION['allSessionData']); 
-// echo '<br><br>'; 
-// print_r($reporting); 
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 // Get Approved Reports
 $getApprovedAssets                  = $reporting['getApprovedAssets']; 
 $totalApprovedAssets                = $reporting['totalApprovedAssets']; 
@@ -64,12 +57,9 @@ $totalTradesTracked                 = $reporting['totalTradesTracked'];
 $totalWalletsCreated                = $reporting['totalWalletsCreated']; 
 $totalActiveUsers                   = $reporting['totalActiveUsers'];
 $totalActivePartners                = $reporting['totalActivePartners'];
-<<<<<<< HEAD
 
 // Get User Activity
 // $userActivity                       = $reporting['userActivity'];
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ?>
 <div class="nk-block">
 	<div class="row gy-gs">
@@ -492,7 +482,6 @@ $totalActivePartners                = $reporting['totalActivePartners'];
                             <div class="card-inner">
                                 <div class="project">
                                     <div class="project-head">
-<<<<<<< HEAD
                                         <a href="html/apps-kanban.html" class="project-title">
                                             <div class="user-avatar sq bg-info"><span>ME</span></div>
                                             <div class="project-info">
@@ -542,8 +531,6 @@ $totalActivePartners                = $reporting['totalActivePartners'];
                             <div class="card-inner">
                                 <div class="project">
                                     <div class="project-head">
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                         <a href="<?php echo site_url('Management/Assets/Distribute'); ?>" class="project-title">
                                             <div class="user-avatar sq bg-warning"><span>DA</span></div>
                                             <div class="project-info">
@@ -637,7 +624,6 @@ $totalActivePartners                = $reporting['totalActivePartners'];
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             <div class="nk-block">
                 <div class="row">
                     <div class="col-12">
@@ -721,8 +707,6 @@ $totalActivePartners                = $reporting['totalActivePartners'];
                     </div>
                 </div>
             </div>
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 		</div>
 	</div>
 </div>

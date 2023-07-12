@@ -34,7 +34,6 @@ if ($purchaseType === 'Free') {
     $user_gas_fee               = $amount * $gas_fee;
     $user_trans_fee             = $amount + $user_gas_fee;
     $user_trans_percent         = $amount + $trans_percent;
-<<<<<<< HEAD
 } else {
     $MyMIGCoin_Initial_Value    = $MyMIGCoin_Available - $MyMIGCoin_Value;
     $amount                     = 0;
@@ -44,8 +43,6 @@ if ($purchaseType === 'Free') {
     $user_gas_fee               = 0;
     $user_trans_fee             = 0;
     $user_trans_percent         = 0;
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 $current_value                  = $MyMIGCoin_Initial_Value + $amount;
 $total                          = $amount;

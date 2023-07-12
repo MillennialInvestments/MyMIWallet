@@ -55,11 +55,7 @@ class Brokerages extends Admin_Controller
 
     public function index()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         $this->set_current_user();
         
@@ -68,7 +64,6 @@ class Brokerages extends Admin_Controller
         Template::render();
     }
 
-<<<<<<< HEAD
     public function F_Links($id)
     {
         $pageType = 'Automated';
@@ -104,11 +99,6 @@ class Brokerages extends Admin_Controller
     public function TD_Ameritrade($id)
     {
         $pageType = 'Automated';
-=======
-    public function TD_Ameritrade($id)
-    {
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         $this->set_current_user();
         $cuID                                           = $_SESSION['allSessionData']['userAccount']['cuID'];

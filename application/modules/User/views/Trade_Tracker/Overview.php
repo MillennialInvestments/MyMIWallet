@@ -17,12 +17,6 @@ $cuID			= $_SESSION['allSessionData']['userAccount']['cuID'];
     .datatable-wrap {
         border: none !important;    
     }
-<<<<<<< HEAD
-=======
-    .tt-edit-user-preferences {
-        display: none; 
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     .tt-trade-window {
         background-color: transparent !important;
     }
@@ -41,16 +35,11 @@ $cuID			= $_SESSION['allSessionData']['userAccount']['cuID'];
             <div class="nk-block-head-content">
                 <ul class="nk-block-tools gx-3">
                     <div class="opt-menu-md dropdown tt-new-trade">
-<<<<<<< HEAD
                         <a class="btn btn-primary tt-spawn mr-2" href="<?php echo site_url('/Wallets'); ?>">
                             <em class="icon ni ni-plus"></em><span>New Account</span>
                         </a>
                         <button class="btn btn-primary tt-spawn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <em class="icon ni ni-plus"></em><span>New Trade</span>
-=======
-                        <button class="btn btn-primary tt-spawn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <em class="icon icon-plus"></em><span>New Trade</span>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         </button>
                         <div class="d-none" id="trade-list">
                             <?php
@@ -88,24 +77,7 @@ $cuID			= $_SESSION['allSessionData']['userAccount']['cuID'];
                                 }
                                 echo ']';
                             ?>
-<<<<<<< HEAD
                         </div>           
-=======
-                        </div>
-                        <div class="tt-type-selector dropdown-menu dropdown-menu-right text-center" arial-labelledby="option_button">
-                            <ul class="link-list-plain full-width">
-                                <li class="dropdown-item"><strong>Equity</strong></li>
-                                <li class="p-1" data-type="long" data-category="equity">Long</li>
-                                <li class="p-1" data-type="short" data-category="equity">Short</li>
-                                <li class="p-1"><strong>Buy Options</strong></li>
-                                <li class="p-1" data-type="call" data-category="option_buy">Call</li>
-                                <li class="p-1" data-type="put" data-category="option_buy">Put</li>
-                                <li class="p-1"><strong>Sell Options</strong></li>
-                                <li class="p-1" data-type="call" data-category="option_sell">Call</li>
-                                <li class="p-1" data-type="put" data-category="option_sell">Put</li>
-                            </ul>
-                        </div>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     </div>
                     <!-- <div class="form-group">
                         <input type="text" name="search" id="normal-search" placeholder="Search...">
@@ -120,7 +92,6 @@ $cuID			= $_SESSION['allSessionData']['userAccount']['cuID'];
         <div class="card-inner pt-0"> 
             <div class="dt-bootstrap4 no-footer">
                 <div class="my-3">
-<<<<<<< HEAD
                     <div class="new-target"></div>
                     <div class="origin" style="width: 50%;"></div>
                     <div class="current" style="width: 50%;"></div>
@@ -149,27 +120,6 @@ $cuID			= $_SESSION['allSessionData']['userAccount']['cuID'];
                     </div>
                     <div class="tt-alert-box">
                     </div>
-=======
-                    <div class="new-target p-0"></div>
-                    <div class="origin" style="width: 50%;"></div>
-                    <div class="current" style="width: 50%;"></div>
-                    <div class="tt-edit-user-preferences">
-                        <button class="close-button">✕</button>
-                        <div class="menu-bar"></div>
-                        <div class="page-section">
-
-                            <div class="page columns-editor">
-
-
-
-                            </div>
-
-                            <div class="page custom-columns"> </div>
-                        </div>
-                    </div>
-                    <div class="tt-alert-box">
-                    </div>	
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 </div>
             </div>
         </div>

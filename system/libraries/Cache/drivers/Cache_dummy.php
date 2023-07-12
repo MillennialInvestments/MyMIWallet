@@ -6,11 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
-<<<<<<< HEAD
  * Copyright (c) 2019 - 2022, CodeIgniter Foundation
-=======
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,20 +30,13 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
-<<<<<<< HEAD
  * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 2.0
  * @filesource
  */
-<<<<<<< HEAD
 defined('BASEPATH') OR exit('No direct script access allowed');
-=======
-defined('BASEPATH') or exit('No direct script access allowed');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /**
  * CodeIgniter Dummy Caching Class
@@ -58,7 +47,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link
  */
-<<<<<<< HEAD
 class CI_Cache_dummy extends CI_Driver {
 
 	/**
@@ -182,129 +170,4 @@ class CI_Cache_dummy extends CI_Driver {
 		return TRUE;
 	}
 
-=======
-class CI_Cache_dummy extends CI_Driver
-{
-
-    /**
-     * Get
-     *
-     * Since this is the dummy class, it's always going to return FALSE.
-     *
-     * @param	string
-     * @return	bool	FALSE
-     */
-    public function get($id)
-    {
-        return false;
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Cache Save
-     *
-     * @param	string	Unique Key
-     * @param	mixed	Data to store
-     * @param	int	Length of time (in seconds) to cache the data
-     * @param	bool	Whether to store the raw value
-     * @return	bool	TRUE, Simulating success
-     */
-    public function save($id, $data, $ttl = 60, $raw = false)
-    {
-        return true;
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Delete from Cache
-     *
-     * @param	mixed	unique identifier of the item in the cache
-     * @return	bool	TRUE, simulating success
-     */
-    public function delete($id)
-    {
-        return true;
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Increment a raw value
-     *
-     * @param	string	$id	Cache ID
-     * @param	int	$offset	Step/value to add
-     * @return	mixed	New value on success or FALSE on failure
-     */
-    public function increment($id, $offset = 1)
-    {
-        return true;
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Decrement a raw value
-     *
-     * @param	string	$id	Cache ID
-     * @param	int	$offset	Step/value to reduce by
-     * @return	mixed	New value on success or FALSE on failure
-     */
-    public function decrement($id, $offset = 1)
-    {
-        return true;
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Clean the cache
-     *
-     * @return	bool	TRUE, simulating success
-     */
-    public function clean()
-    {
-        return true;
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Cache Info
-     *
-     * @param	string	user/filehits
-     * @return	bool	FALSE
-     */
-    public function cache_info($type = null)
-    {
-        return false;
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Get Cache Metadata
-     *
-     * @param	mixed	key to get cache metadata on
-     * @return	bool	FALSE
-     */
-    public function get_metadata($id)
-    {
-        return false;
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * Is this caching driver supported on the system?
-     * Of course this one is.
-     *
-     * @return	bool	TRUE
-     */
-    public function is_supported()
-    {
-        return true;
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

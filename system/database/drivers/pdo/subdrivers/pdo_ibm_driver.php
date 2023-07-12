@@ -6,11 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
-<<<<<<< HEAD
  * Copyright (c) 2019 - 2022, CodeIgniter Foundation
-=======
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,20 +30,13 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
-<<<<<<< HEAD
  * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-<<<<<<< HEAD
 defined('BASEPATH') OR exit('No direct script access allowed');
-=======
-defined('BASEPATH') or exit('No direct script access allowed');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /**
  * PDO IBM DB2 Database Adapter Class
@@ -60,7 +49,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @subpackage	Drivers
  * @category	Database
  * @author		EllisLab Dev Team
-<<<<<<< HEAD
  * @link		https://codeigniter.com/userguide3/database/
  */
 class CI_DB_pdo_ibm_driver extends CI_DB_pdo_driver {
@@ -190,130 +178,12 @@ class CI_DB_pdo_ibm_driver extends CI_DB_pdo_driver {
 	public function field_data($table)
 	{
 		$sql = 'SELECT "colname" AS "name", "typename" AS "type", "default" AS "default", "length" AS "max_length",
-=======
- * @link		https://codeigniter.com/user_guide/database/
- */
-class CI_DB_pdo_ibm_driver extends CI_DB_pdo_driver
-{
-
-    /**
-     * Sub-driver
-     *
-     * @var	string
-     */
-    public $subdriver = 'ibm';
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Class constructor
-     *
-     * Builds the DSN if not already set.
-     *
-     * @param	array	$params
-     * @return	void
-     */
-    public function __construct($params)
-    {
-        parent::__construct($params);
-
-        if (empty($this->dsn)) {
-            $this->dsn = 'ibm:';
-
-            // Pre-defined DSN
-            if (empty($this->hostname) && empty($this->HOSTNAME) && empty($this->port) && empty($this->PORT)) {
-                if (isset($this->DSN)) {
-                    $this->dsn .= 'DSN='.$this->DSN;
-                } elseif (! empty($this->database)) {
-                    $this->dsn .= 'DSN='.$this->database;
-                }
-
-                return;
-            }
-
-            $this->dsn .= 'DRIVER='.(isset($this->DRIVER) ? '{'.$this->DRIVER.'}' : '{IBM DB2 ODBC DRIVER}').';';
-
-            if (isset($this->DATABASE)) {
-                $this->dsn .= 'DATABASE='.$this->DATABASE.';';
-            } elseif (! empty($this->database)) {
-                $this->dsn .= 'DATABASE='.$this->database.';';
-            }
-
-            if (isset($this->HOSTNAME)) {
-                $this->dsn .= 'HOSTNAME='.$this->HOSTNAME.';';
-            } else {
-                $this->dsn .= 'HOSTNAME='.(empty($this->hostname) ? '127.0.0.1;' : $this->hostname.';');
-            }
-
-            if (isset($this->PORT)) {
-                $this->dsn .= 'PORT='.$this->port.';';
-            } elseif (! empty($this->port)) {
-                $this->dsn .= ';PORT='.$this->port.';';
-            }
-
-            $this->dsn .= 'PROTOCOL='.(isset($this->PROTOCOL) ? $this->PROTOCOL.';' : 'TCPIP;');
-        }
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Show table query
-     *
-     * Generates a platform-specific query string so that the table names can be fetched
-     *
-     * @param	bool	$prefix_limit
-     * @return	string
-     */
-    protected function _list_tables($prefix_limit = false)
-    {
-        $sql = 'SELECT "tabname" FROM "syscat"."tables"
-			WHERE "type" = \'T\' AND LOWER("tabschema") = '.$this->escape(strtolower($this->database));
-
-        if ($prefix_limit === true && $this->dbprefix !== '') {
-            $sql .= ' AND "tabname" LIKE \''.$this->escape_like_str($this->dbprefix)."%' "
-                .sprintf($this->_like_escape_str, $this->_like_escape_chr);
-        }
-
-        return $sql;
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Show column query
-     *
-     * Generates a platform-specific query string so that the column names can be fetched
-     *
-     * @param	string	$table
-     * @return	array
-     */
-    protected function _list_columns($table = '')
-    {
-        return 'SELECT "colname" FROM "syscat"."columns"
-			WHERE LOWER("tabschema") = '.$this->escape(strtolower($this->database)).'
-				AND LOWER("tabname") = '.$this->escape(strtolower($table));
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Returns an object with field data
-     *
-     * @param	string	$table
-     * @return	array
-     */
-    public function field_data($table)
-    {
-        $sql = 'SELECT "colname" AS "name", "typename" AS "type", "default" AS "default", "length" AS "max_length",
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 				CASE "keyseq" WHEN NULL THEN 0 ELSE 1 END AS "primary_key"
 			FROM "syscat"."columns"
 			WHERE LOWER("tabschema") = '.$this->escape(strtolower($this->database)).'
 				AND LOWER("tabname") = '.$this->escape(strtolower($table)).'
 			ORDER BY "colno"';
 
-<<<<<<< HEAD
 		return (($query = $this->query($sql)) !== FALSE)
 			? $query->result_object()
 			: FALSE;
@@ -372,63 +242,4 @@ class CI_DB_pdo_ibm_driver extends CI_DB_pdo_driver
 			: $sql;
 	}
 
-=======
-        return (($query = $this->query($sql)) !== false)
-            ? $query->result_object()
-            : false;
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Update statement
-     *
-     * Generates a platform-specific update string from the supplied data
-     *
-     * @param	string	$table
-     * @param	array	$values
-     * @return	string
-     */
-    protected function _update($table, $values)
-    {
-        $this->qb_limit = false;
-        $this->qb_orderby = array();
-        return parent::_update($table, $values);
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Delete statement
-     *
-     * Generates a platform-specific delete string from the supplied data
-     *
-     * @param	string	$table
-     * @return	string
-     */
-    protected function _delete($table)
-    {
-        $this->qb_limit = false;
-        return parent::_delete($table);
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * LIMIT
-     *
-     * Generates a platform-specific LIMIT clause
-     *
-     * @param	string	$sql	SQL Query
-     * @return	string
-     */
-    protected function _limit($sql)
-    {
-        $sql .= ' FETCH FIRST '.($this->qb_limit + $this->qb_offset).' ROWS ONLY';
-
-        return ($this->qb_offset)
-            ? 'SELECT * FROM ('.$sql.') WHERE rownum > '.$this->qb_offset
-            : $sql;
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

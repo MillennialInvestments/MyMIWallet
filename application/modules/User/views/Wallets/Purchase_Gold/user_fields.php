@@ -39,12 +39,9 @@ if ($this->uri->uri_string() === 'Wallet-Selection/Fiat') {
 } elseif ($this->uri->uri_string() === 'Wallets/Link-Account/Brokerage/Digital ') {
     $feature                                = 'Premium Fiat Wallet';
     $redirect_url                           = 'Purchase-Wallet/Fiat';
-<<<<<<< HEAD
 } else {
     $feature                                = 'Purchasing MyMI Gold';
     $redirect_url                           = $this->uri->uri_string(); 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 ?>  
 <input class="<?php e($controlInput); ?>" type="hidden" id="redirect_url" name="redirect_url" value="<?php echo set_value('redirect_url', isset($user) ? $user->redirect_url : $redirect_url); ?>" /> 

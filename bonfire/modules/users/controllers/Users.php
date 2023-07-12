@@ -65,17 +65,10 @@ class Users extends Front_Controller
     public function login()
     {
         // session_destroy();
-<<<<<<< HEAD
         $this->session->sess_destroy();
 
         $pageName = 'Login';
         $pageType = 'Automated';
-=======
-        unset($_SESSION['allSessionData']);
-
-        $pageName = 'Login';
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         Template::set('pageName', $pageName);
         Template::set('pageType', $pageType);
         if (!empty($_SESSION['user_id'])) {
@@ -97,10 +90,6 @@ class Users extends Front_Controller
         if ($this->auth->is_logged_in() !== false) {
             Template::redirect('/Dashboard');
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         // Try to login.
         if (isset($_POST['log-me-in'])
             && true === $this->auth->login(
@@ -132,32 +121,18 @@ class Users extends Front_Controller
 
             // If the site is configured to use role-based login destinations and
             // the login destination has been set...
-<<<<<<< HEAD
 
             // If possible, send the user to the requested page.
             if (!empty($this->requested_page)) {
-=======
-            //~ if ($this->settings_lib->item('auth.do_login_redirect')
-            //~ && ! empty($this->auth->login_destination)
-            //~ ) {
-            //~ Template::redirect($this->auth->login_destination);
-            //~ }
-
-            // If possible, send the user to the requested page.
-            if (! empty($this->requested_page)) {
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 if ($this->requested_page === site_url('')) {
                     Template::redirect('/Dashboard');
                 } else {
                     Template::redirect($this->requested_page);
                 }
-<<<<<<< HEAD
             } else {
                 if ($this->settings_lib->item('auth.do_login_redirect') && ! empty($this->auth->login_destination)) {
                     Template::redirect($this->auth->login_destination);
                 }
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             }
             
             
@@ -299,12 +274,8 @@ class Users extends Front_Controller
      * 'login_url' respectively.
      *
      * @return void
-<<<<<<< HEAD
      */
     public function register()
-=======
-     */public function register()
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         // Are users allowed to register?
         if (! $this->settings_lib->item('auth.allow_register')) {
@@ -313,7 +284,6 @@ class Users extends Front_Controller
         }
 
         // return an error of your choosing
-<<<<<<< HEAD
         $id	 				                                        = $this->input->post('id');
         $beta                                                       = $this->input->post('beta');
         $type	 			                                        = $this->input->post('type');
@@ -363,74 +333,19 @@ class Users extends Front_Controller
         $thisMethod                                                 = $this->router->fetch_method();
         $thisURL                                                    = $this->uri->uri_string();
         $thisFullURL                                                = current_url();
-=======
-        $id	 				            = $this->input->post('id');
-        $beta                           = $this->input->post('beta');
-        $type	 			            = $this->input->post('type');
-        $partner 			            = $this->input->post('partner');
-        $investor 			            = $this->input->post('investor');
-        $organization		            = $this->input->post('organization');
-        $signup_date		            = $this->input->post('signup_date');
-        $account_type                   = $this->input->post('account_type');
-        $email	 			            = $this->input->post('email');
-        $username			            = $this->input->post('username');
-        $user_email	 		            = $email;
-        $register_url 		            = $this->input->post('register_url') ?: REGISTER_URL;
-        $login_url    		            = $this->input->post('login_url') ?: LOGIN_URL;
-                
-        $phone				            = $this->input->post('phone');
-        $address			            = $this->input->post('address');
-        $city				            = $this->input->post('city');
-        $state				            = $this->input->post('state');
-        $country			            = $this->input->post('country');
-        $zipcode			            = $this->input->post('zipcode');
-                
-        // Default Wallet Information
-        $default_wallet		            = 'Yes';
-        $exchange_wallet	            = 'Yes';
-        $active				            = 'Yes';
-        $market_pair		            = 'USD';
-        $market				            = 'MYMI';
-        $broker				            = 'Default';
-        $nickname			            = 'MyMI Funds';
-        $wallet_type		            = 'Fiat';
-        $amount				            = '0.00';
-
-        // Set Activity Logger Configuration
-        if (!empty($_SESSION['user_id'])) {
-             $cuID 			            = $_SESSION['user_id'];
-        } else {
-            $cuID                       = $this->input->ip_address();
-        }
-        $betaStatus                     = $this->config->item('beta');
-        if ($betaStatus === 0) {
-            $betaAlt                    = 'No';
-        } else {
-            $betaAlt                    = 'Yes';
-        }
-        $thisController                 = $this->router->fetch_class();
-        $thisMethod                     = $this->router->fetch_method();
-        $thisURL                        = $this->uri->uri_string();
-        $thisFullURL                    = current_url();
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 
         $this->load->model('roles/role_model');
         $this->load->helper('date');
 
         $this->load->config('address');
         $this->load->helper('address');
-<<<<<<< HEAD
         $this->load->library('Recaptcha');
         $pageType		                                            = 'register';
-=======
-        $pageType		                = 'register';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         // $this->load->config('user_meta');
         // $meta_fields = config_item('user_meta_fields');
         // Template::set('meta_fields', $meta_fields);
         Template::set('pageType', $pageType);
 
-<<<<<<< HEAD
         // Verify the reCAPTCHA response
         if ($userId                                                 = $this->saveUser('insert', 0)) {
             $score                                                  = get_recapture_score($_POST['g-recaptcha-response']);
@@ -549,76 +464,6 @@ class Users extends Front_Controller
                     'inline'
                 );
             }
-=======
-        if (isset($_POST['register'])) {
-            // $score = get_recapture_score($_POST['g-recaptcha-response']);
-        
-            // if ($score > RECAPTCHA_ACCEPTABLE_SPAM_SCORE) {
-                if ($userId = $this->saveUser('insert', 0)) {
-                    if ($this->user_model->add_social_networks($id, $email, $username)) {
-                        if ($this->user_model->add_default_wallet($id, $active, $beta, $default_wallet, $exchange_wallet, $market_pair, $market, $username, $email, $broker, $wallet_type, $amount, $nickname)) {
-                            // User Activation
-                            $activation = $this->user_model->set_activation($userId);
-                            $message    = $activation['message'];
-                            $error      = $activation['error'];
-
-                            Template::set_message($message, $error ? 'error' : 'success');
-
-                            log_activity($userId, 'User registered account', 'users');
-                            Template::redirect('Verify-Email/' . $userId);
-                            $thisComment                    = 'User (' . $cuID . ') successfully registered an account!';
-                            $this->mymilogger
-                                ->user($cuID) //Set UserID, who created this  Action
-                                ->beta($betaAlt) //Set whether in Beta or nto
-                                ->type('User Account') //Entry type like, Post, Page, Entry
-                                ->controller($thisController)
-                                ->method($thisMethod)
-                                ->url($thisURL)
-                                ->full_url($thisFullURL)
-                                ->comment($thisComment) //Token identify Action
-                                ->log(); //Add Database Entry
-                        }
-                    }
-                } else {
-                    $thisComment                    = 'ERROR: User (' . $cuID . ') Account registration failed!';
-                    $this->mymilogger
-                        ->user($cuID) //Set UserID, who created this  Action
-                        ->beta($betaAlt) //Set whether in Beta or nto
-                        ->type('ERROR: User Account') //Entry type like, Post, Page, Entry
-                        ->controller($thisController)
-                        ->method($thisMethod)
-                        ->url($thisURL)
-                        ->full_url($thisFullURL)
-                        ->comment($thisComment) //Token identify Action
-                        ->log(); //Add Database Entry
-                    Template::set_message(lang('us_registration_fail'), 'error');
-                    // Don't redirect because validation errors will be lost.
-                }
-            // } else {
-            //     $thisComment                    = 'ERROR: User (' . $cuID . ') Registration Recaptcha failed!';
-            //     $this->mymilogger
-            //         ->user($cuID) //Set UserID, who created this  Action
-            //         ->beta($betaAlt) //Set whether in Beta or nto
-            //         ->type('ERROR: User Account') //Entry type like, Post, Page, Entry
-            //         ->controller($thisController)
-            //         ->method($thisMethod)
-            //         ->url($thisURL)
-            //         ->full_url($thisFullURL)
-            //         ->comment($thisComment) //Token identify Action
-            //         ->log(); //Add Database Entry
-            //     Template::set_message(lang('us_registration_fail'), 'error');
-            //     // Don't redirect because validation errors will be lost.
-            //     Template::set_message('Potential Spam! Please verify you are not a robot.', 'error'); 
-            //     Template::redirect($this->uri->uri_string()); 
-            // }
-        }
-
-        if ($this->siteSettings['auth.password_show_labels'] == 1) {
-            Assets::add_js(
-                $this->load->view('users_js', array('settings' => $this->siteSettings), true),
-                'inline'
-            );
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         // Generate password hint messages.
@@ -630,10 +475,6 @@ class Users extends Front_Controller
         Template::render();
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     // -------------------------------------------------------------------------
     // Password Management
     // -------------------------------------------------------------------------
@@ -701,12 +542,8 @@ class Users extends Front_Controller
                     );
 
                     // Create the link to reset the password.
-<<<<<<< HEAD
                     $pass_link = site_url('Reset-Password/' . str_replace('@', ':', $this->input->post('email')) . "/{$hash}"); // Old Way of sending link - TBJ 10272022
                     // $pass_link = site_url('reset_password' . "/{$hash}");
-=======
-                    $pass_link = site_url('reset_password/' . str_replace('@', ':', $this->input->post('email')) . "/{$hash}");
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
                     // Now send the email
                     $this->load->library('emailer/emailer');
@@ -771,7 +608,6 @@ class Users extends Front_Controller
      *
      * @return void
      */
-<<<<<<< HEAD
     // public function reset_password($email = '', $code = '')
     // {
     //     // Set Activity Logger Variables
@@ -903,39 +739,6 @@ class Users extends Front_Controller
     {
         // If the user is logged in, go home.
         if ($this->auth->is_logged_in() !== false) {
-=======
-    public function reset_password($email = '', $code = '')
-    {
-        // Set Activity Logger Variables
-        if (!empty($_SESSION['user_id'])) {
-             $cuID 			            = $_SESSION['user_id'];
-        } else {
-            $cuID                       = $this->input->ip_address();
-        }
-        $betaStatus                     = $this->config->item('beta');
-        if ($betaStatus === 0) {
-            $beta                       = 'No';
-        } else {
-            $beta                       = 'Yes';
-        }
-        $thisController                 = $this->router->fetch_class();
-        $thisMethod                     = $this->router->fetch_method();
-        $thisURL                        = $this->uri->uri_string();
-        $thisFullURL                    = current_url();
-        // If the user is logged in, go home.
-        if ($this->auth->is_logged_in() !== false) {
-            $thisComment                    = 'Reset Password: User (' . $cuID . ') is already logged in!';
-            $this->mymilogger
-                ->user($cuID) //Set UserID, who created this  Action
-                ->beta($beta) //Set whether in Beta or nto
-                ->type('User Account') //Entry type like, Post, Page, Entry
-                ->controller($thisController)
-                ->method($thisMethod)
-                ->url($thisURL)
-                ->full_url($thisFullURL)
-                ->comment($thisComment) //Token identify Action
-                ->log(); //Add Database Entry
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             Template::redirect('/');
         }
 
@@ -967,45 +770,15 @@ class Users extends Front_Controller
                                   'reset_hash'  => '',
                     'force_password_reset' => 0,
                 );
-<<<<<<< HEAD
 
                 if ($this->user_model->update($this->input->post('user_id'), $data)) {
                     log_activity($this->input->post('user_id'), 'User Reset Password', 'users');
-=======
-                if ($this->user_model->update($this->input->post('user_id'), $data)) {
-                    log_activity($this->input->post('user_id'), 'User Reset Password', 'users');
-                    $thisComment                    = 'User (' . $cuID . ') successfully reset password';
-                    $this->mymilogger
-                        ->user($cuID) //Set UserID, who created this  Action
-                        ->beta($beta) //Set whether in Beta or nto
-                        ->type('Account') //Entry type like, Post, Page, Entry
-                        ->controller($thisController)
-                        ->method($thisMethod)
-                        ->url($thisURL)
-                        ->full_url($thisFullURL)
-                        ->comment($thisComment) //Token identify Action
-                        ->log(); //Add Database Entry
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
                     Template::set_message(lang('us_reset_password_success'), 'success');
                     Template::redirect(LOGIN_URL);
                 }
 
                 if (! empty($this->user_model->error)) {
-<<<<<<< HEAD
-=======
-                    $thisComment                    = 'User (' . $cuID . ') failed to reset password';
-                    $this->mymilogger
-                        ->user($cuID) //Set UserID, who created this  Action
-                        ->beta($beta) //Set whether in Beta or nto
-                        ->type('User Account') //Entry type like, Post, Page, Entry
-                        ->controller($thisController)
-                        ->method($thisMethod)
-                        ->url($thisURL)
-                        ->full_url($thisFullURL)
-                        ->comment($thisComment) //Token identify Action
-                        ->log(); //Add Database Entry
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     Template::set_message(sprintf(lang('us_reset_password_error'), $this->user_model->error), 'error');
                 }
             }
@@ -1040,17 +813,10 @@ class Users extends Front_Controller
         Template::set_view('users/reset_password');
         Template::render();
     }
-<<<<<<< HEAD
     
     public function Verify_Email($userID)
     {
         $pageType = 'Automated';
-=======
-   
-    public function Verify_Email($userID)
-    {
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Verify_Email';
         $this->load->library('users/auth');
         $this->set_current_user();
@@ -1089,11 +855,7 @@ class Users extends Front_Controller
     
     public function Account_Information()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Account_Information';
         $this->load->library('users/auth');
         $this->load->module('User/Wallets');
@@ -1209,11 +971,7 @@ class Users extends Front_Controller
     
     public function Successful_Cancellation()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'User_Successful_Cancellation';
         $this->load->library('users/auth');
         $this->set_current_user();
@@ -1225,11 +983,7 @@ class Users extends Front_Controller
         
     public function Successful_Downgrade()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'User_Successful_Downgrade';
         $this->load->library('users/auth');
         $this->set_current_user();
@@ -1241,11 +995,7 @@ class Users extends Front_Controller
         
     public function Successful_Registration()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'User_Successful_Registration';
         $this->load->library('users/auth');
         $this->set_current_user();

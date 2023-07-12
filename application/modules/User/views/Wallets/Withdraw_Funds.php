@@ -13,7 +13,6 @@ $walletAmount               = $_SESSION['allSessionData']['userDefaultWalletInfo
 $walletInitialAmount        = $_SESSION['allSessionData']['userDefaultWalletInfo']['walletInitialAmount'];
 $depositAmount              = $_SESSION['allSessionData']['userDefaultWalletInfo']['depositAmount'];
 $withdrawAmount             = $_SESSION['allSessionData']['userDefaultWalletInfo']['withdrawAmount'];
-<<<<<<< HEAD
 $this->mymilogger
      ->user($cuID) //Set UserID, who created this  Action
      ->beta($beta) //Set whether in Beta or nto
@@ -24,8 +23,6 @@ $this->mymilogger
      ->full_url(current_url())
      ->comment('Withdraw Funds') //Token identify Action
      ->log(); //Add Database Entry
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $fieldData = array(
     'errorClass'   			=> $errorClass,
     'controlClass'  		=> $controlClass,

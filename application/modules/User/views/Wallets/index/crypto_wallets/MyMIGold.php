@@ -1,10 +1,6 @@
 <?php
 echo '
-<<<<<<< HEAD
 <div class="col-xxl-3 col-lg-4 col-sm-6 mt-3">
-=======
-<div class="col-md-6 col-lg-4 mt-3">
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	<div class="card card-bordered">
 		<div class="nk-wgw">
 			<div class="nk-wgw-inner">
@@ -21,7 +17,6 @@ echo '
 			</div>
 			<div class="nk-wgw-actions">
 				<ul>
-<<<<<<< HEAD
                     <li class="' . $btnSizing . '">
                         <a href="' . site_url('/MyMI-Gold') . '"><em class="icon ni ni-menu"></em><span>Details</span></a>
                     </li>
@@ -30,13 +25,6 @@ echo '
 					</li>
 					<li class="' . $btnSizing . '">
 						<a class="withdrawFundsBtn" href="#" data-toggle="modal" data-target="#transactionModal"><em class="icon ni ni-minus"></em><span>Withdraw</span></a>
-=======
-					<li>
-						<a class="depositFundsBtn" href="#" data-toggle="modal" data-target="#transactionModal"><i class="icon icon-arrow-up"></i> <span>Deposit Funds</span></a>
-					</li>
-					<li>
-						<a class="withdrawFundsBtn" href="#" data-toggle="modal" data-target="#transactionModal"><em class="icon icon-arrow-down"></em><span>Withdraw Funds</span></a>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 					</li>
 				</ul>
 			</div>

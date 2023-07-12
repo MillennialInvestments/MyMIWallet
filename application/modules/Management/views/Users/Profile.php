@@ -8,12 +8,8 @@ if ($pageURIA === 'Investor-Profile') {
     $userAccount        = $_SESSION['allSessionData']['userAccount']; 
 } elseif ($pageURIA === 'Management' AND $pageURIB === 'Users' AND $pageURIC === 'Profile') {
     $userID             = $pageURID; 
-<<<<<<< HEAD
     // $userAccount        = $this->mymiuser->user_account_info($userID);
     $userAccount        = $_SESSION['allSessionData']['userAccount'];
-=======
-    $userAccount        = $this->mymiuser->user_account_info($userID); 
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 // print_r($userAccount);
 ?>
@@ -125,11 +121,7 @@ if ($pageURIA === 'Investor-Profile') {
                             <div class="profile-ud-item">
                                 <div class="profile-ud wider">
                                     <span class="profile-ud-label">Wallet ID:</span>
-<<<<<<< HEAD
                                     <span class="profile-ud-value"><small><?php echo $userAccount['cuWalletID']; ?></small></span>
-=======
-                                    <span class="profile-ud-value"><?php echo $userAccount['cuWalletID']; ?></span>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                 </div>
                             </div>
                             <div class="profile-ud-item">

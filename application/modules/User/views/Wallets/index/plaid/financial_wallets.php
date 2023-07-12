@@ -27,11 +27,7 @@
                 'accountAccountNumber'		        => $accountAccountNumber,
                 'accountBalance'		            => $accountBalance,
             );
-<<<<<<< HEAD
             $this->load->view('User/Wallets/index/financial_wallets/Wallet_Listing', $walletData);
-=======
-            $this->load->view('User/Wallets/index/fiat_wallets/Wallet_Listing', $walletData);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
     }
     /*
@@ -54,11 +50,7 @@
     // }
     $btnID				                            = 'addBankAccount';
     $elementTitle		                            = 'Add Banking Account';
-<<<<<<< HEAD
     $elementText		                            = 'Connect your Bank Account to determine your current financial liquidity.';
-=======
-    $elementText		                            = 'Create your Free Financial Account to manage an additional banking account separately.';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     $purchaseWalletData					            = array(
         'btnID'							            => $btnID,
         'elementTitle'					            => $elementTitle,

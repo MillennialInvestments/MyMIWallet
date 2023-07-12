@@ -302,7 +302,6 @@
             </div>
         </div><!-- .card-inner-group -->
     </div><!-- .card -->
-<<<<<<< HEAD
 </div><!-- .nk-block -->
 <div class="nk-block">
     <div class="card card-bordered card-stretch">
@@ -403,6 +402,4 @@
             </div>
         </div><!-- .card-inner-group -->
     </div><!-- .card -->
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 </div><!-- .nk-block -->

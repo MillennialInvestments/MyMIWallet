@@ -6,11 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
-<<<<<<< HEAD
  * Copyright (c) 2019 - 2022, CodeIgniter Foundation
-=======
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,20 +30,13 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
-<<<<<<< HEAD
  * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
  */
-<<<<<<< HEAD
 defined('BASEPATH') OR exit('No direct script access allowed');
-=======
-defined('BASEPATH') or exit('No direct script access allowed');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /**
  * PDO MySQL Database Adapter Class
@@ -60,7 +49,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @subpackage	Drivers
  * @category	Database
  * @author		EllisLab Dev Team
-<<<<<<< HEAD
  * @link		https://codeigniter.com/userguide3/database/
  */
 class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
@@ -144,85 +132,6 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver {
 			else
 			{
 				$sql = 'REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
-=======
- * @link		https://codeigniter.com/user_guide/database/
- */
-class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver
-{
-
-    /**
-     * Sub-driver
-     *
-     * @var	string
-     */
-    public $subdriver = 'mysql';
-
-    /**
-     * Compression flag
-     *
-     * @var	bool
-     */
-    public $compress = false;
-
-    /**
-     * Strict ON flag
-     *
-     * Whether we're running in strict SQL mode.
-     *
-     * @var	bool
-     */
-    public $stricton;
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Identifier escape character
-     *
-     * @var	string
-     */
-    protected $_escape_char = '`';
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Class constructor
-     *
-     * Builds the DSN if not already set.
-     *
-     * @param	array	$params
-     * @return	void
-     */
-    public function __construct($params)
-    {
-        parent::__construct($params);
-
-        if (empty($this->dsn)) {
-            $this->dsn = 'mysql:host='.(empty($this->hostname) ? '127.0.0.1' : $this->hostname);
-
-            empty($this->port) or $this->dsn .= ';port='.$this->port;
-            empty($this->database) or $this->dsn .= ';dbname='.$this->database;
-            empty($this->char_set) or $this->dsn .= ';charset='.$this->char_set;
-        } elseif (! empty($this->char_set) && strpos($this->dsn, 'charset=', 6) === false) {
-            $this->dsn .= ';charset='.$this->char_set;
-        }
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Database connection
-     *
-     * @param	bool	$persistent
-     * @return	object
-     */
-    public function db_connect($persistent = false)
-    {
-        if (isset($this->stricton)) {
-            if ($this->stricton) {
-                $sql = 'CONCAT(@@sql_mode, ",", "STRICT_ALL_TABLES")';
-            } else {
-                $sql = 'REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                         @@sql_mode,
                                         "STRICT_ALL_TABLES,", ""),
                                         ",STRICT_ALL_TABLES", ""),
@@ -230,7 +139,6 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver
                                         "STRICT_TRANS_TABLES,", ""),
                                         ",STRICT_TRANS_TABLES", ""),
                                         "STRICT_TRANS_TABLES", "")';
-<<<<<<< HEAD
 			}
 
 			if ( ! empty($sql))
@@ -469,229 +377,4 @@ class CI_DB_pdo_mysql_driver extends CI_DB_pdo_driver
 		return implode(', ', $this->qb_from);
 	}
 
-=======
-            }
-
-            if (! empty($sql)) {
-                if (empty($this->options[PDO::MYSQL_ATTR_INIT_COMMAND])) {
-                    $this->options[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET SESSION sql_mode = '.$sql;
-                } else {
-                    $this->options[PDO::MYSQL_ATTR_INIT_COMMAND] .= ', @@session.sql_mode = '.$sql;
-                }
-            }
-        }
-
-        if ($this->compress === true) {
-            $this->options[PDO::MYSQL_ATTR_COMPRESS] = true;
-        }
-
-        if (is_array($this->encrypt)) {
-            $ssl = array();
-            empty($this->encrypt['ssl_key'])    or $ssl[PDO::MYSQL_ATTR_SSL_KEY]    = $this->encrypt['ssl_key'];
-            empty($this->encrypt['ssl_cert'])   or $ssl[PDO::MYSQL_ATTR_SSL_CERT]   = $this->encrypt['ssl_cert'];
-            empty($this->encrypt['ssl_ca'])     or $ssl[PDO::MYSQL_ATTR_SSL_CA]     = $this->encrypt['ssl_ca'];
-            empty($this->encrypt['ssl_capath']) or $ssl[PDO::MYSQL_ATTR_SSL_CAPATH] = $this->encrypt['ssl_capath'];
-            empty($this->encrypt['ssl_cipher']) or $ssl[PDO::MYSQL_ATTR_SSL_CIPHER] = $this->encrypt['ssl_cipher'];
-
-            if (defined('PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT') && isset($this->encrypt['ssl_verify'])) {
-                $ssl[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = $this->encrypt['ssl_verify'];
-            }
-
-            // DO NOT use array_merge() here!
-            // It re-indexes numeric keys and the PDO_MYSQL_ATTR_SSL_* constants are integers.
-            empty($ssl) or $this->options += $ssl;
-        }
-
-        // Prior to version 5.7.3, MySQL silently downgrades to an unencrypted connection if SSL setup fails
-        if (
-            ($pdo = parent::db_connect($persistent)) !== false
-            && ! empty($ssl)
-            && version_compare($pdo->getAttribute(PDO::ATTR_CLIENT_VERSION), '5.7.3', '<=')
-            && empty($pdo->query("SHOW STATUS LIKE 'ssl_cipher'")->fetchObject()->Value)
-        ) {
-            $message = 'PDO_MYSQL was configured for an SSL connection, but got an unencrypted connection instead!';
-            log_message('error', $message);
-            return ($this->db_debug) ? $this->display_error($message, '', true) : false;
-        }
-
-        return $pdo;
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Select the database
-     *
-     * @param	string	$database
-     * @return	bool
-     */
-    public function db_select($database = '')
-    {
-        if ($database === '') {
-            $database = $this->database;
-        }
-
-        if (false !== $this->simple_query('USE '.$this->escape_identifiers($database))) {
-            $this->database = $database;
-            $this->data_cache = array();
-            return true;
-        }
-
-        return false;
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Begin Transaction
-     *
-     * @return	bool
-     */
-    protected function _trans_begin()
-    {
-        $this->conn_id->setAttribute(PDO::ATTR_AUTOCOMMIT, false);
-        return $this->conn_id->beginTransaction();
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Commit Transaction
-     *
-     * @return	bool
-     */
-    protected function _trans_commit()
-    {
-        if ($this->conn_id->commit()) {
-            $this->conn_id->setAttribute(PDO::ATTR_AUTOCOMMIT, true);
-            return true;
-        }
-
-        return false;
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Rollback Transaction
-     *
-     * @return	bool
-     */
-    protected function _trans_rollback()
-    {
-        if ($this->conn_id->rollBack()) {
-            $this->conn_id->setAttribute(PDO::ATTR_AUTOCOMMIT, true);
-            return true;
-        }
-
-        return false;
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Show table query
-     *
-     * Generates a platform-specific query string so that the table names can be fetched
-     *
-     * @param	bool	$prefix_limit
-     * @return	string
-     */
-    protected function _list_tables($prefix_limit = false)
-    {
-        $sql = 'SHOW TABLES FROM '.$this->_escape_char.$this->database.$this->_escape_char;
-
-        if ($prefix_limit === true && $this->dbprefix !== '') {
-            return $sql." LIKE '".$this->escape_like_str($this->dbprefix)."%'";
-        }
-
-        return $sql;
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Show column query
-     *
-     * Generates a platform-specific query string so that the column names can be fetched
-     *
-     * @param	string	$table
-     * @return	string
-     */
-    protected function _list_columns($table = '')
-    {
-        return 'SHOW COLUMNS FROM '.$this->protect_identifiers($table, true, null, false);
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Returns an object with field data
-     *
-     * @param	string	$table
-     * @return	array
-     */
-    public function field_data($table)
-    {
-        if (($query = $this->query('SHOW COLUMNS FROM '.$this->protect_identifiers($table, true, null, false))) === false) {
-            return false;
-        }
-        $query = $query->result_object();
-
-        $retval = array();
-        for ($i = 0, $c = count($query); $i < $c; $i++) {
-            $retval[$i]			= new stdClass();
-            $retval[$i]->name		= $query[$i]->Field;
-
-            sscanf(
-                $query[$i]->Type,
-                '%[a-z](%d)',
-                $retval[$i]->type,
-                $retval[$i]->max_length
-            );
-
-            $retval[$i]->default		= $query[$i]->Default;
-            $retval[$i]->primary_key	= (int) ($query[$i]->Key === 'PRI');
-        }
-
-        return $retval;
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * Truncate statement
-     *
-     * Generates a platform-specific truncate string from the supplied data
-     *
-     * If the database does not support the TRUNCATE statement,
-     * then this method maps to 'DELETE FROM table'
-     *
-     * @param	string	$table
-     * @return	string
-     */
-    protected function _truncate($table)
-    {
-        return 'TRUNCATE '.$table;
-    }
-
-    // --------------------------------------------------------------------
-
-    /**
-     * FROM tables
-     *
-     * Groups tables in FROM clauses if needed, so there is no confusion
-     * about operator precedence.
-     *
-     * @return	string
-     */
-    protected function _from_tables()
-    {
-        if (! empty($this->qb_join) && count($this->qb_from) > 1) {
-            return '('.implode(', ', $this->qb_from).')';
-        }
-
-        return implode(', ', $this->qb_from);
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

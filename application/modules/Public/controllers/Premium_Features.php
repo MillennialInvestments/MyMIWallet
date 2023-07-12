@@ -38,11 +38,7 @@ class Premium_Features extends Front_Controller
         parent::__construct();
 
         $this->load->helper(array('directory', 'form', 'file', 'url'));
-<<<<<<< HEAD
         $this->load->library(array('form_validation', 'upload'));
-=======
-        $this->load->library(array('form_validation', 'upload', 'user_agent'));
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         //$this->load->model('user_model');
         //$this->load->module('ContactUs');
 
@@ -60,11 +56,7 @@ class Premium_Features extends Front_Controller
 
     public function index()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Premium_Features';
         
         $this->set_current_user();
@@ -76,11 +68,7 @@ class Premium_Features extends Front_Controller
 
     public function Brokerage_API()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Premium_Brokerage_API_Integrations';
         
         $this->set_current_user();
@@ -92,11 +80,7 @@ class Premium_Features extends Front_Controller
 
     public function Advanced_Charting()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Premium_Advanced_Charting';
         
         $this->set_current_user();
@@ -108,11 +92,7 @@ class Premium_Features extends Front_Controller
 
     public function Due_Diligence_Database()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Premium_Due_Diligence_Database';
         
         $this->set_current_user();
@@ -124,11 +104,7 @@ class Premium_Features extends Front_Controller
     
     public function Trade_Tracker()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Premium_Advanced_Trade_Tracker';
         
         $this->set_current_user();
@@ -140,11 +116,7 @@ class Premium_Features extends Front_Controller
     
     public function Wallets()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Premium_Wallets';
         
         $this->set_current_user();

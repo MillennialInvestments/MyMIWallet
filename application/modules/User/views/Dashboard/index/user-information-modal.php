@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php 
 // $userAccount        = $_SESSION['allSessionData']['userAccount'];
 // $cuRole             = $userAccount['cuRole'];
@@ -8,8 +7,6 @@
 //     $modalTitle     = 'Would you like to provide feedback?';
 // }
 ?>
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 <div class="modal fade" id="userInfoModal" tabindex="-1" aria-labelledby="userInfoModal" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" id="user-information-content">

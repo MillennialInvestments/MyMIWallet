@@ -3,11 +3,7 @@
         <div class="card-title-group align-start mb-0">
             <div class="card-title">
                 <a href="<?php echo site_url('/Budget'); ?>">
-<<<<<<< HEAD
                     <h6 class="subtitle">Projected Annual Wealth</h6>
-=======
-                    <h6 class="subtitle">Financial Wealth - Overview</h6>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 </a>
             </div>
             <div class="card-tools">

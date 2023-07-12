@@ -6,7 +6,6 @@ echo theme_view('metadata-information');
 echo theme_view('header-information');
 echo theme_view('css-links');
 echo Assets::css();
-<<<<<<< HEAD
 if ($this->uri->segment(2) === 'register') {
     echo '<script src="https://www.google.com/recaptcha/api.js?render=' . $this->config->item('recaptcha_site_key') . '"></script>'; 
 }
@@ -33,8 +32,4 @@ if ($this->uri->segment(2) === 'register') {
     gtag('config', 'G-2FS4BNS0SL');
     </script>
 
-=======
-?>
-    <link rel="shortcut icon" href="<?php echo base_url(); ?>favicon.ico">
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 </head>

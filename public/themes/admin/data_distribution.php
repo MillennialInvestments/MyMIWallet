@@ -16,11 +16,7 @@ $thisController                 = $this->router->fetch_class();
 $thisMethod                     = $this->router->fetch_method();
 $thisURL                        = $this->uri->uri_string();
 $thisFullURL                    = current_url();
-<<<<<<< HEAD
 $thisComment                    = $thisURL;
-=======
-$thisComment                    = 'User (' . $cuID . ') successfully viewed the following page: ' . $thisURL;
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $this->mymilogger
      ->user($cuID) //Set UserID, who created this  Action
      ->beta($beta) //Set whether in Beta or nto
@@ -33,7 +29,6 @@ $this->mymilogger
      ->log(); //Add Database Entry
 $allSessionData                 = array();
 $userAccount	        		= $this->mymiuser->user_account_info($cuID);
-<<<<<<< HEAD
 if ($userAccount['cuID'] !== $_SESSION['user_id']) {
     echo '<script>console.log("User is not the same user as Session user_id")</script>';
 }
@@ -44,9 +39,6 @@ $userWallets                    = $this->mymiwallets->get_user_wallet_informatio
 
 $cuReferrerCode                 = $userAccount['cuReferrerCode'];
 $userReferrals                  = $this->mymireferrals->all_user_referral_info($cuID, $cuReferrerCode); 
-=======
-$userBudget                     = $this->mymibudget->user_budget_info($cuID); 
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $walletID                       = $userAccount['walletID'];
 // print_r($userAccount);
 // Template::set('userAccountInfo', $userAccountInfo);
@@ -83,15 +75,11 @@ if ($pageURIA === 'MyMI-Gold' || $pageURIB === 'Complete-Purchase') {
 // $userExchangeInfo				= $this->mymiuser->get_user_exchange_info($cuID);
 $allSessionData					= array(
     'userAccount'				=> $userAccount,
-<<<<<<< HEAD
     'userAssessment'            => $userAssessment,
     'userBudget'                => $userBudget,
     'userInvestments'           => $userInvestments,
     'userReferrals'             => $userReferrals,
     'userWallets'               => $userWallets,
-=======
-    'userBudget'                => $userBudget,
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     // 'userInfo'					=> $userInfo,
     'userCoinData'				=> $userCoinData,
     'userGoldData'				=> $userGoldData,

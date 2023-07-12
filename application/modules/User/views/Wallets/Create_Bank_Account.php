@@ -2,7 +2,6 @@
 <?php
 $errorClass   = empty($errorClass) ? ' error' : $errorClass;
 $controlClass = empty($controlClass) ? 'span6' : $controlClass;
-<<<<<<< HEAD
 $beta                           = $this->config->item('beta');
 $userAccount                    = $_SESSION['allSessionData']['userAccount'];
 $cuID                           = $userAccount['cuID'];
@@ -25,16 +24,6 @@ $fieldData = array(
     'cuID'					    => $cuID,
     'cuEmail'				    => $cuEmail,
     'walletID'				    => $walletID,
-=======
-$userAccount                = $_SESSION['allSessionData']['userAccount'];
-$fieldData = array(
-    'errorClass'   		 	=> $errorClass,
-    'controlClass' 		 	=> $controlClass,
-    'redirectURL'			=> $this->uri->uri_string(),
-    'cuID'					=> $userAccount['cuID'],
-    'cuEmail'				=> $userAccount['cuEmail'],
-    'walletID'				=> $userAccount['walletID'],
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 );
 ?>  
 <?php echo form_open('Wallets/Connect-Bank-Account', array('class' => "form-horizontal", 'id' => "deposit-funds-form", 'autocomplete' => 'off')); ?>  

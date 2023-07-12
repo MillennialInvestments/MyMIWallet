@@ -16,12 +16,9 @@ if ($redirect_url === 'Purchase-Wallet/Fiat') {
     $redirect_url           = '/Wallets'; 
     $redirectURLText        = 'View Wallets';
 }
-<<<<<<< HEAD
 $detailData                 = array(
     'total'                 => $total,
 );
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ?>
 <style>
 	@media (max-width: 375px) {
@@ -35,22 +32,13 @@ $detailData                 = array(
 </style>
 <div class="nk-block"> 
 	<div class="row gy-gs">
-<<<<<<< HEAD
 		<div class="col-12 mb-3">  
-=======
-		<div class="col-md-4"></div>
-		<div class="col-12 col-md-4 mb-3">  
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 			<div class="nk-block"> 
 				<div class="nk-block-head">
 					<?php echo theme_view('navigation_breadcrumbs'); ?>
 					<div class="nk-block-between-md g-4">
 						<div class="nk-block-head-content">
-<<<<<<< HEAD
 							<h2 class="nk-block-title fw-bold">Purchase Complete!</h2>
-=======
-							<h2 class="nk-block-title fw-bold">MYMI GOLD - PURCHASE COMPLETE</h2>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 							<div class="nk-block-des"><p>You Have Successfully Purchase Your MyMI Gold!</p></div>
 						</div>
 					</div>
@@ -58,7 +46,6 @@ $detailData                 = array(
 				</div>
 			</div>
 		</div>
-<<<<<<< HEAD
 		<div class="col-12 col-md-4">  
             <div class="row">
                 <div class="col-12">
@@ -130,56 +117,6 @@ $detailData                 = array(
                 </div>
             </div>
         </div>
-=======
-		<div class="col-md-4"></div>
-		<div class="col-md-4"></div>
-		<div class="col-12 col-md-4">  
-			<div class="nk-block nk-block-lg">        
-				<p class="card-text blog-text text-center">
-					<strong>MYMI ORDER INFORMATION</strong>
-					<br> 
-					<a class="btn btn-primary btn-sm text-center text-white"  id="nextActionBtn" data-toggle="modal" data-target="#nextActionModal"><?php echo $redirectURLText; ?></a> 
-				</p>                   
-				<table class="table table-borderless mb-3">
-					<?php
-                    echo '
-					<tr>
-						<th>WALLET ID:</th>
-						<td class="text-right">' . $wallet_id . '</td> 										
-					</tr> 
-					<tr>
-						<th>ORDER ID:</th>
-						<td class="text-right">' . $orderID . '</td> 										
-					</tr> 
-					<tr>
-						<th>TOTAL COINS:</th>
-						<td class="text-right">' . number_format($total, 0). ' MyMI Gold</td>
-					</tr>
-					<tr>
-						<th>PURCHASE AMOUNT:</th>
-						<td class="text-right">$' . number_format($amount, 2) . '</td>
-					</tr>
-					<tr>
-						<th>TRANSACTION FEES:</th>
-						<td class="text-right">$' . number_format($user_trans_fee + $user_trans_percent, 2) . '</td>
-					</tr>
-					<tr>
-						<th>COST:</th>
-						<td class="text-right">$' . number_format($amount + $user_trans_fee + $user_trans_percent, 2) . '</td>
-					</tr>
-					';
-                    ?>
-				</table>
-				<hr>
-				<h4 class="card-title display-7">Need Support?</h4>
-				<p class="card-text">
-					If you need further assistance with completing your purchase of MyMI Coins, please contact us via email:
-				</p>                                                                                     
-				<a class="btn btn-primary btn-sm" href="mailto:invest@mymillennialinvestments.com">Email Support</a>
-			</div>
-		</div>
-		<div class="col-md-2"></div>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	</div>
 </div>
 <div class="modal fade" id="nextActionModal" tabindex="-1" aria-labelledby="trackDepositsModal" aria-hidden="true">

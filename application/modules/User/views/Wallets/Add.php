@@ -1,6 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php
-<<<<<<< HEAD
 $errorClass                 = empty($errorClass) ? ' error' : $errorClass;
 $controlClass               = empty($controlClass) ? 'span6' : $controlClass;
 $beta                       = $this->config->item('beta');
@@ -65,19 +64,6 @@ if ($accountType === 'Bank-Account') {
         'user_gas_fee'      => $user_gas_fee,
     );
 }
-=======
-$errorClass   = empty($errorClass) ? ' error' : $errorClass;
-$controlClass = empty($controlClass) ? 'span6' : $controlClass;
-$purchaseType       = $this->uri->segment(2);
-$walletType         = $this->uri->segment(3);
-$addModalTitle      = 'Manually Add ' . $walletType . ' Wallet';
-$fieldData = array(
-    'errorClass'    => $errorClass,
-    'controlClass'  => $controlClass,
-    'purchaseType'	=> $purchaseType,
-    'walletType'	=> $walletType,
-);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ?>
 <div class="modal-header">
 	<h3 class="modal-title" id="useCoinModalLabel"><?= $addModalTitle; ?></h3>
@@ -89,11 +75,7 @@ $fieldData = array(
 	<form class="form-horizontal" id="add_user_wallet">
 		<fieldset>
 			<?php
-<<<<<<< HEAD
             Template::block($pageView, $pageView, $fieldData);
-=======
-            Template::block('User/Wallets/Add/user_fields', 'User/Wallets/Add/user_fields', $fieldData);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             ?>
 		</fieldset>
 		<fieldset>

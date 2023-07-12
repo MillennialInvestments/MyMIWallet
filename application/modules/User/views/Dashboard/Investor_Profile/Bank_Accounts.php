@@ -17,11 +17,7 @@
 <div class="nk-block mb-3">
     <div class="row">
         <div class="col">
-<<<<<<< HEAD
             <a class="btn btn-primary text-white" data-toggle="modal" data-target="#createBankAccountModal"><span><i class="icon ni ni-plus"></i> Add</span></a>	
-=======
-            <a class="btn btn-primary btn-sm text-white" data-toggle="modal" data-target="#createBankAccountModal"><span><i class="icon ni ni-plus"></i> Add</span></a>	
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         </div>
     </div>
 </div>
@@ -37,7 +33,6 @@
         </thead>
         <tbody>
             <?php 
-<<<<<<< HEAD
             $getUserACHBankAccounts            = $this->accounts_model->get_user_ach_bank_accounts($cuID); 
             if (!empty($getUserACHBankAccounts)) {
                 foreach ($getUserACHBankAccounts->result_array() as $userBank) {
@@ -60,18 +55,6 @@
                 <td class="tb-col-os"></td>
                 <td class="tb-col-os"></td>
                 <td class="tb-col-os text-center">
-=======
-            $getUserBankAccounts            = $this->investor_model->get_user_bank_accounts($cuID); 
-            foreach ($getUserBankAccounts->result_array() as $userBank) {
-                echo '
-            <tr>
-                <td class="tb-col-os">' . $userBank['bank_name'] . '</td>
-                <td class="tb-col-os">' . $userBank['account_type'] . '</td>
-                <td class="tb-col-os">' . substr($userBank['account_number'], 0, 0) . 'xxxxx' . substr($userBank['account_number'], -4) . '</td>
-                <td class="tb-col-os text-center">
-                    <span><i class="icon ni ni-setting-alt"></i></span>
-                    <span class="statusRed"><i class="icon ni ni-cross-circle"></i></span>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 </td>
             </tr>
                 ';

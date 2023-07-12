@@ -262,11 +262,7 @@ $darker_contrast: rgb(152, 152, 152);
 	transform: translate(-50%, -50%);
 	box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.21);
 
-<<<<<<< HEAD
 	z-index: 6;
-=======
-	z-index: 4;
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 	.close-button {
 		@include close-button;
@@ -274,46 +270,25 @@ $darker_contrast: rgb(152, 152, 152);
 }
 
 .tt-edit-user-preferences {
-<<<<<<< HEAD
 	display: grid;
 
-=======
-	&.hidden {
-		display: none;
-	}
-
-	&.visible {
-		display: grid;
-	}
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 	position: fixed;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 5;
-<<<<<<< HEAD
 	;
 	background: $table_background;
 	box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.21);
 	width: min(750px, 100vw);
 	max-height: 60vh;
-=======
-
-	grid-template-columns: 1fr 8fr;
-
-	background: $table_background;
-	box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.21);
-	width: 40vw;
-	height: 60vh;
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 	.close-button {
 		@include close-button;
 	}
 
 	.menu-bar {
-<<<<<<< HEAD
 		height: 60vh;
 		grid-column: 1/2;
 		overflow-y: auto;
@@ -323,21 +298,10 @@ $darker_contrast: rgb(152, 152, 152);
 
 	.page-section {
 		height: 60vh;
-=======
-		height: 100%;
-		grid-column: 1/2;
-
-		background: $one_darker_background;
-	}
-
-	.page-section {
-		height: 100%;
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 		grid-column: 2 /3;
 
 		.page {
 			@include viewSys;
-<<<<<<< HEAD
 			overflow-y: auto;
 			height: 90%;
 		}
@@ -350,9 +314,6 @@ $darker_contrast: rgb(152, 152, 152);
 	h7 {
 		color: grey;
 		font-size: 1rem;
-=======
-		}
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	}
 }
 

@@ -1,6 +1,5 @@
 <?php
 // Get URI Information
-<<<<<<< HEAD
 $pageURIA 						        = $this->uri->segment(1);
 $pageURIB 						        = $this->uri->segment(2);
 $pageURIC 						        = $this->uri->segment(3);
@@ -21,27 +20,11 @@ if (!empty(str_replace(array('/', '-'), array('_', '_'), $thisURL))) {
 // Default Values
 $siteLogo  	                            = 'https://www.mymiwallet.com/assets/images/MyMI-Wallet-Logo-1024x1024.png';
 $defaultImage 	                        = base_url('/assets/images/Company/MyMI-Wallet-White.png');
-=======
-$pageURIA 						= $this->uri->segment(1);
-$pageURIB 						    = $this->uri->segment(2);
-$pageURIC 						    = $this->uri->segment(3);
-$pageURID 						    = $this->uri->segment(4);
-// Get Page Info
-$pageType 						    = Template::get('pageType');
-$pageName 						    = Template::get('pageName');
-
-// Default Values
-$defaultImage 	= 'https://www.mymiwallet.com/assets/images/MyMI-Wallet-Logo-1024x1024.png';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 // Get Marketing Page SEO from Database
 // $pageSEOData                        = $_SESSION['allSessionData']['pageSEOData']->result_array(); 
 $this->load->model('Management/Marketing_model'); 
 $pageSEOData                        = $this->marketing_model->get_marketing_page_seo_by_name($pageName); 
-<<<<<<< HEAD
-
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 if ($pageType === 'Standard') {
     foreach($pageSEOData->result_array() as $pageData) {
         $page_title 			    = $pageData['page_title'];
@@ -60,11 +43,7 @@ if ($pageType === 'Standard') {
         <link rel="canonical" href="'        . $page_url . '"/>
         <meta property="og:title" content="' . $page_title . '" >
         <meta name="twitter:title" content="' . $page_title . '" >
-<<<<<<< HEAD
         <meta name="image" property="og:image" content="' . $page_image . '" >
-=======
-        <meta property="og:image" content="' . $page_image . '" >
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         <meta name="twitter:image:" content="' . $page_image . '" >
         <meta property="og:description" content="' . $page_description . '">
         <meta name="twitter:description" content="' . $page_description . '">      
@@ -72,7 +51,6 @@ if ($pageType === 'Standard') {
         ';
         }
 }
-<<<<<<< HEAD
 // Get Marketing Page SEO from Database
 if ($pageType === 'Automated') {
     $this->db->from('bf_marketing_page_seo'); 
@@ -174,7 +152,5 @@ if ($pageType === 'Automated') {
         }
     }
 }
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 ?> 
     

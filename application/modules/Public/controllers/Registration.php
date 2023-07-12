@@ -38,11 +38,7 @@ class Registration extends Front_Controller
         parent::__construct();
 
         $this->load->helper(array('directory', 'form', 'file', 'url'));
-<<<<<<< HEAD
         $this->load->library(array('form_validation', 'upload'));
-=======
-        $this->load->library(array('form_validation', 'upload', 'user_agent'));
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->load->model('Public/registration_model');
         //$this->load->module('ContactUs');
 
@@ -60,11 +56,7 @@ class Registration extends Front_Controller
 
     public function index()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Home';
         
         $this->set_current_user();
@@ -76,11 +68,7 @@ class Registration extends Front_Controller
 
     public function Account_Information()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Account_Information';
         
         $this->set_current_user();

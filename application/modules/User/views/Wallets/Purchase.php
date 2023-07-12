@@ -1,6 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php
-<<<<<<< HEAD
 $beta                           = $this->config->item('beta'); 
 $errorClass                     = empty($errorClass) ? ' error' : $errorClass;
 $controlClass                   = empty($controlClass) ? 'span6' : $controlClass;
@@ -36,45 +35,6 @@ $fieldData = array(
     'featureType'	            => $featureType,
     'walletType'	            => $walletType,
     'redirect_url'              => $featureRedirectURL,
-=======
-$client                 = new \GuzzleHttp\Client(); 
-$errorClass             = empty($errorClass) ? ' error' : $errorClass;
-$controlClass           = empty($controlClass) ? 'span6' : $controlClass;
-$featureType            = $this->uri->segment(1); 
-$walletType			    = $this->uri->segment(2);
-$cuUserType             = $_SESSION['allSessionData']['userAccount']['cuUserType'];
-$cuID           		= $_SESSION['allSessionData']['userAccount']['cuID'];
-$cuRealizeID    		= $_SESSION['allSessionData']['userAccount']['cuRealizeID'];
-if ($featureType        === 'Purchase-Wallet' && $walletType === 'Fiat') {
-    $featureRedirectURL = 'Wallets/Link-Account/Brokerage/Fiat';
-} elseif ($featureType  === 'Purchase-Wallet' && $walletType === 'Digital') {
-    $featureRedirectURL = 'Wallets/Link-Account/Brokerage/Digital';
-}
-if ($cuUserType === 'Beta') {
-    // $bearer             = 'sk_test_whXrPvWLNuzLTqzwsbF0wQUwlRQS1c9v5YqpDSUMwcVhwD4m7FZuO0Z1jbyJxBXVj1eOYTyQq5F5JWiC6CK8TnWlHPcd5hmHLbTONbsu4HTrB29gG8Dp2GcjGVodTnQk';
-    $bearer             = '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';
-} else {
-    $bearer             = 'sk_test_whXrPvWLNuzLTqzwsbF0wQUwlRQS1c9v5YqpDSUMwcVhwD4m7FZuO0Z1jbyJxBXVj1eOYTyQq5F5JWiC6CK8TnWlHPcd5hmHLbTONbsu4HTrB29gG8Dp2GcjGVodTnQk';
-    // $bearer             = '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';
-}
-$response = $client->request('POST', 'https://www.realizefi.com/api/users/' . $cuRealizeID . '/auth_portals', [
-    'body' => '{"scopes":["institution_link:read_and_trade"],"redirects":{"success":"http://localhost/MillennialInvest/Site-v7/v1.5/public/index.php/Wallets/Link-Account/Details","failure":"http://localhost/MillennialInvest/Site-v7/v1.5/public/index.php/Wallets/Link-Account/Details"}}',
-    'headers' => [
-      'Accept' => 'application/json',
-      'Authorization' => 'Bearer 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',
-      'Content-Type' => 'application/json',
-    ],
-]);
-  
-$clientAuth             = json_decode($response->getBody(), true); 
-$redirect_url           = $clientAuth['url']; 
-$fieldData = array(
-    'errorClass'        => $errorClass,
-    'controlClass'      => $controlClass,
-    'featureType'	    => $featureType,
-    'walletType'	    => $walletType,
-    'redirect_url'      => $redirect_url,
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 );
 ?>
 <!-- User/views/Wallets/Purchase Form -->

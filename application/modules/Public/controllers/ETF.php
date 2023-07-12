@@ -38,11 +38,7 @@ class ETF extends Front_Controller
         parent::__construct();
 
         $this->load->helper(array('directory', 'form', 'file', 'url'));
-<<<<<<< HEAD
         $this->load->library(array('form_validation', 'upload', 'users/auth'));
-=======
-        $this->load->library(array('form_validation', 'upload', 'user_agent', 'users/auth'));
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->load->model('user_model');
         $this->load->model('Public/stock_model');
         //$this->load->module('ContactUs');
@@ -61,11 +57,7 @@ class ETF extends Front_Controller
 
     public function index()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Home';
         
         $this->set_current_user();
@@ -90,11 +82,7 @@ class ETF extends Front_Controller
     
     public function Search()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Stock_Search';
         
         $this->set_current_user();
@@ -106,11 +94,7 @@ class ETF extends Front_Controller
 
     public function Screener()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'ETF_Screener';
         
         $this->set_current_user();
@@ -122,11 +106,7 @@ class ETF extends Front_Controller
 
     public function Weekly_Performance_Report()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Stock_Search';
         
         $this->set_current_user();
@@ -138,11 +118,7 @@ class ETF extends Front_Controller
 
     public function Front_Page_Template()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Front_Page_Template';
         
         $this->set_current_user();
@@ -154,11 +130,7 @@ class ETF extends Front_Controller
 
     public function Back_Page_Template()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Back_Page_Template';
         
         $this->set_current_user();

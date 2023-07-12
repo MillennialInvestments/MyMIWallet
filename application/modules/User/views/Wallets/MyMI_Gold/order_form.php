@@ -23,11 +23,7 @@ $fieldData = array(
                     </div>
                 </div>
                 <div class="row">
-<<<<<<< HEAD
                     <form class="form-horizontal" id="purchase_mymi_gold_b">
-=======
-                    <form class="form-horizontal" id="purchase_mymi_gold">
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         <fieldset>
                             <?php
                             Template::block('Purchase_Gold/user_fields', 'Purchase_Gold/user_fields', $fieldData);
@@ -50,26 +46,15 @@ $fieldData = array(
     </div>
 </div>
 <script type="text/javascript">
-<<<<<<< HEAD
 const purchaseGoldFormB		= document.querySelector("#purchase_mymi_gold_b");
 const purchaseGoldSubmit		= {};
 if (purchaseGoldFormB) {
     purchaseGoldFormB.addEventListener("submit", async (e) => {
-=======
-const purchaseGoldForm		= document.querySelector("#purchase_mymi_gold");
-const purchaseGoldSubmit		= {};
-if (purchaseGoldForm) {
-    purchaseGoldForm.addEventListener("submit", async (e) => {
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         //Do no refresh
         e.preventDefault();
 		const formData 		= new FormData(); 
         //Get Form data in object OR
-<<<<<<< HEAD
 		purchaseGoldFormB.querySelectorAll("input").forEach((inputField) => {
-=======
-		purchaseGoldForm.querySelectorAll("input").forEach((inputField) => {
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             formData.append(inputField.name,inputField.value);
             purchaseGoldSubmit[inputField.name] = inputField.value;
         });

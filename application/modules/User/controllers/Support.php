@@ -44,11 +44,7 @@ class Support extends Admin_Controller
 
     public function index()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -60,11 +56,7 @@ class Support extends Admin_Controller
 
     public function Communication_Manager()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -72,7 +64,6 @@ class Support extends Admin_Controller
         $this->load->view('User/Support/Communication_Manager');
     }
 
-<<<<<<< HEAD
     public function Feedback()
     {
         $pageType = 'Automated';
@@ -88,11 +79,6 @@ class Support extends Admin_Controller
     public function Knowledge_Base()
     {
         $pageType = 'Automated';
-=======
-    public function Knowledge_Base()
-    {
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -104,11 +90,7 @@ class Support extends Admin_Controller
 
     public function My_Request()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();
@@ -120,11 +102,7 @@ class Support extends Admin_Controller
 
     public function Request()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Dashboard';
         
         $this->set_current_user();

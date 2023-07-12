@@ -45,10 +45,7 @@ $formCustomText			= $this->config->item('form_custom_text');
                     <h4 class="card-title text-black">Service Request Information</h4>
                     <p class="card-description text-black"> Please fill out information below </p>
                     <input type="hidden" class="<?php echo $formControl; ?>" name="redirect_url" id="redirect_url" placeholder="Enter Your First/Last Name" value="<?php echo set_value('redirect_url', isset($user) ? $user->redirect_url : $cuRedirectURL); ?>">
-<<<<<<< HEAD
                     <input type="hidden" class="<?php echo $formControl; ?>" name="comm_type" id="comm_type" placeholder="Enter Your First/Last Name" value="<?php echo set_value('comm_type', isset($user) ? $user->comm_type : 'Request'); ?>">
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                     <input type="hidden" class="<?php echo $formControl; ?>" name="user_id" id="user_id" placeholder="Enter Your First/Last Name" value="<?php echo set_value('user_id', isset($user) ? $user->user_id : $cuID); ?>">
 
 

@@ -26,11 +26,7 @@ $totalApprovedAssets    = $_SESSION['reporting']['totalApprovedAssets'];
     }
 }
 </style>
-<<<<<<< HEAD
 <div class="intro-section intro-purchase bg-white">
-=======
-<div class="intro-section intro-purchase bg-lighter">
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-9 col-xl-7">

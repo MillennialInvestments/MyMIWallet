@@ -6,11 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
-<<<<<<< HEAD
  * Copyright (c) 2019 - 2022, CodeIgniter Foundation
-=======
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,20 +30,13 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
-<<<<<<< HEAD
  * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
  * @filesource
  */
-<<<<<<< HEAD
 defined('BASEPATH') OR exit('No direct script access allowed');
-=======
-defined('BASEPATH') or exit('No direct script access allowed');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /**
  * CodeIgniter Array Helpers
@@ -56,16 +45,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @subpackage	Helpers
  * @category	Helpers
  * @author		EllisLab Dev Team
-<<<<<<< HEAD
  * @link		https://codeigniter.com/userguide3/helpers/array_helper.html
-=======
- * @link		https://codeigniter.com/user_guide/helpers/array_helper.html
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  */
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
 if ( ! function_exists('element'))
 {
 	/**
@@ -83,29 +67,10 @@ if ( ! function_exists('element'))
 	{
 		return array_key_exists($item, $array) ? $array[$item] : $default;
 	}
-=======
-if (! function_exists('element')) {
-    /**
-     * Element
-     *
-     * Lets you determine whether an array index is set and whether it has a value.
-     * If the element is empty it returns NULL (or whatever you specify as the default value.)
-     *
-     * @param	string
-     * @param	array
-     * @param	mixed
-     * @return	mixed	depends on what the array contains
-     */
-    function element($item, array $array, $default = null)
-    {
-        return array_key_exists($item, $array) ? $array[$item] : $default;
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 
 // ------------------------------------------------------------------------
 
-<<<<<<< HEAD
 if ( ! function_exists('random_element'))
 {
 	/**
@@ -118,24 +83,10 @@ if ( ! function_exists('random_element'))
 	{
 		return is_array($array) ? $array[array_rand($array)] : $array;
 	}
-=======
-if (! function_exists('random_element')) {
-    /**
-     * Random Element - Takes an array as input and returns a random element
-     *
-     * @param	array
-     * @return	mixed	depends on what the array contains
-     */
-    function random_element($array)
-    {
-        return is_array($array) ? $array[array_rand($array)] : $array;
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }
 
 // --------------------------------------------------------------------
 
-<<<<<<< HEAD
 if ( ! function_exists('elements'))
 {
 	/**
@@ -162,30 +113,4 @@ if ( ! function_exists('elements'))
 
 		return $return;
 	}
-=======
-if (! function_exists('elements')) {
-    /**
-     * Elements
-     *
-     * Returns only the array items specified. Will return a default value if
-     * it is not set.
-     *
-     * @param	array
-     * @param	array
-     * @param	mixed
-     * @return	mixed	depends on what the array contains
-     */
-    function elements($items, array $array, $default = null)
-    {
-        $return = array();
-
-        is_array($items) or $items = array($items);
-
-        foreach ($items as $item) {
-            $return[$item] = array_key_exists($item, $array) ? $array[$item] : $default;
-        }
-
-        return $return;
-    }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

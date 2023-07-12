@@ -4,7 +4,6 @@ $pageURIB 		= $this->uri->segment(2);
 $pageURIC 		= $this->uri->segment(3);
 $pageURID 		= $this->uri->segment(4);
 $pageType		= Template::get('pageType');
-<<<<<<< HEAD
 ?>
 <script>
 $(document).ready(function() {
@@ -16,20 +15,6 @@ $(document).ready(function() {
 } );
 </script>
 <?php
-=======
-if ($pageURIA === 'admin') {
-    ?>
-<script>
-$(document).ready(function() {
-	$('#dashboardTasksDatatable').DataTable( {
-		"order": [[ 0, "desc" ]],     
-	}	
-	);
-} );
-</script>
-<?php
-}
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 if ($pageURIA === 'Management') {
     ?>
 	<script>
@@ -41,27 +26,15 @@ if ($pageURIA === 'Management') {
 		);
 	} );
 	</script>
-<<<<<<< HEAD
 	<script>
 	$(document).ready(function() {
 		$('#userActivityLoggerDatatable').DataTable( {
 			"order": [[ 0, "desc" ]],     
-=======
-<?php
-}
-if ($pageURIA === 'Budget') {
-    ?>
-	<script>
-	$(document).ready(function() {
-		$('#userBudgetingIncomeDatatable').DataTable( {
-			"order": [[ 0, "asc" ]],     
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
 		}	
 		);
 	} );
 	</script>
-<<<<<<< HEAD
 <?php
 }
 if ($pageURIA === 'Content-Creator') {
@@ -71,18 +44,10 @@ if ($pageURIA === 'Content-Creator') {
 		$('.contentCreator').DataTable( {
 			"order": [[ 0, "desc" ]],     
 			"lengthMenu": [[10, 25, 50, 100, 250, 500, 1000, -1], ["All", 10, 25, 50, 100, 250, 500, 1000]]
-=======
-	<script>
-	$(document).ready(function() {
-		$('#userBudgetingExpenseDatatable').DataTable( {
-			"order": [[ 0, "asc" ]],     
-			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 		}	
 		);
 	} );
 	</script>
-<<<<<<< HEAD
 <?php
 }
 if ($pageURIA === 'Bank-Account') {
@@ -117,16 +82,6 @@ if ($pageURIA === 'Budget' || $pageURIA === 'Dashboard') {
         }	
         );
     } );
-=======
-	<script>
-	$(document).ready(function() {
-		$('#budgetRecurringTable').DataTable( {
-			"order": [[ 0, "asc" ]],     
-			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-		}	
-		);
-	} );
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 	</script>
 <?php
 }
@@ -178,11 +133,7 @@ if ($pageURIA === 'Trade-Tracker') {
 	</script>    
 <?php
 }
-<<<<<<< HEAD
 if ($pageURIB === 'Details') {
-=======
-if ($pageURIA === 'Wallet-Details') {
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     ?>
 	<script>
 	$(document).ready(function() {
@@ -363,7 +314,6 @@ $(document).ready(function() {
 <?php
     }
 ?>
-<<<<<<< HEAD
 <script>
 $(document).ready(function() {
 	$('#dashboardTasksDatatable').DataTable( {
@@ -372,5 +322,3 @@ $(document).ready(function() {
 	);
 } );
 </script>
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
