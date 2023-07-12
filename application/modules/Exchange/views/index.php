@@ -1,6 +1,33 @@
 <?php
-$client = new Codenixsv\BittrexApi\BittrexClient;
-$client->setCredential('82122111507946599fe903f058758e92', '466bfcbc6ba0425e8b429bde2eaecf13');
+// use GuzzleHttp\Client;
+
+// $client                                         = new Client([
+//     'base_uri'                                  => 'https://api.kucoin.com',
+//     'timeout'                                   => 30.0,
+// ]);
+
+// $symbols                                        = 'DGB-USDT';
+// $apiKey                                         = $this->config->item('kucoin_key'); // Replace with your KuCoin API key
+
+// try {
+//     $response                                   = $client->request('GET', "/v1/marketdata/quotes?apikey={$apiKey}&symbol={$symbols}&interval=1min", [
+//         'headers'                               => [
+//             'cache-control'                     => 'no-cache',
+//             // Add any other headers required by the KuCoin API
+//         ],
+//     ]);
+
+//     $body                                       = $response->getBody();
+//     $content                                    = $body->getContents();
+
+//     $data                                       = json_decode($content, true);
+
+//     // Now $data contains your decoded JSON response, you can process it as needed
+// } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+//     // Handle exception
+//     echo $e->getMessage();
+// }
+
 $cuID					 						= isset($current_user->id) && ! empty($current_user->id) ? $current_user->id : '';
 $cuEmail				 						= isset($current_user->email) && ! empty($current_user->email) ? $current_user->email : '';
 $total_coins									= 23000000;

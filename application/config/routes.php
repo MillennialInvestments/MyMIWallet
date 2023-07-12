@@ -53,7 +53,6 @@ defined('BASEPATH') || exit('No direct script access allowed');
 $route['default_controller'] = 'home';
 $route['404_override'] = 'Custom404';
 $route['translate_uri_dashes'] = false;
-<<<<<<< HEAD
 // $route['sitemap\.xml'] = 'sitemap/index';
 Route::any('sitemap\.xml', 'Public/Sitemap/index'); 
 Route::any('blog-sitemap\.xml', 'Public/Sitemap/index'); 
@@ -61,16 +60,12 @@ Route::any('crypto-sitemap\.xml', 'Public/Sitemap/index');
 Route::any('etf-sitemap\.xml', 'Public/Sitemap/index'); 
 Route::any('news-sitemap\.xml', 'Public/Sitemap/index'); 
 Route::any('stocks-sitemap\.xml', 'Public/Sitemap/index'); 
-=======
-
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 // Authentication
 Route::any(LOGIN_URL, 'users/login', array('as' => 'login'));
 Route::any(REGISTER_URL, 'users/register', array('as' => 'register'));
 Route::block('users/login');
 Route::block('users/register');
 Route::any('Free/register', 'users/register'); // Completed
-<<<<<<< HEAD
 Route::any('Free/register/(:any)', 'users/register'); // Completed
 Route::any('free/register', 'users/register'); // Completed
 Route::any('Beta/register', 'users/register'); // Completed
@@ -81,12 +76,6 @@ Route::any('Investor/register/(:any)', 'users/register'); // Completed
 Route::any('investor/register', 'users/register'); // Completed
 Route::any('Partner/register', 'users/register'); // Completed
 Route::any('Partner/register/(:any)', 'users/register'); // Completed
-=======
-Route::any('free/register', 'users/register'); // Completed
-Route::any('Beta/register', 'users/register'); // Completed
-Route::any('beta/register', 'users/register'); // Completed
-Route::any('Partner/register', 'users/register'); // Completed
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 Route::any('partner/register', 'users/register'); // Completed
 Route::any('Verify-Email/(:any)', 'users/Verify_Email/$1'); // Completed
 Route::any('Account-Information/(:any)', 'users/Account_Information'); // Completed
@@ -101,7 +90,6 @@ Route::any('activate/(:any)/(:any)', 'users/activate/$1/$2');
 Route::any('resend-activation', 'users/resend_activation');
 Route::any('resend-activation/(:any)', 'users/resend_activation/$1');
 Route::any('forgot-password', 'users/forgot_password');
-<<<<<<< HEAD
 Route::any('Reset-Password', 'users/reset_password');
 Route::any('Reset-Password/(:any)/(:any)', 'users/reset_password/$1/$2');
 Route::any('Reset-Password/(:any)/(:any)', 'users/reset_password/$1/$2');
@@ -118,10 +106,6 @@ Route::any('Blog/Personal-Budgeting/The-Importance-of-Personal-Financial-Budgeti
 
 // Public Pages - Email Subscription Management
 Route::any('Blog/Email/Subscription/Account-Manager', 'Blog/Subscribe/Account_Manager');
-=======
-Route::any('reset-password', 'users/reset_password');
-Route::any('reset-password/(:any)/(:any)', 'users/reset_password/$1/$2');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 // Public Pages - Customer Support
 Route::any('Customer-Support', 'Public/Support/index');
@@ -133,15 +117,12 @@ Route::any('Customer-Support/Close-Request/(:any)/(:any)', 'Public/Support/Close
 Route::any('Customer-Support/Member-Request/(:any)', 'User/Support/Member_Customer_Support_Request');
 Route::any('Customer-Support/Manager/(:any)', 'User/Support/Customer_Support_Manager');
 
-<<<<<<< HEAD
 // Public Pages - How It Works
 Route::any('How-It-Works', 'Public/How_It_Works/index');
 Route::any('How-It-Works/Determining-Your-Financial-Goals', 'Public/How_It_Works/Determining_Your_Financial_Goals');
 Route::any('How-It-Works/Personal-Budgeting', 'Public/How_It_Works/Personal_Budgeting');
 Route::any('How-It-Works/Registering-An-Account', 'Public/How_It_Works/Registering_An_Account');
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 // Public Pages - Investment
 Route::any('Invest', 'Public/Invest');
 Route::any('Invest/(:any)', 'Public/Invest');
@@ -153,16 +134,12 @@ Route::any('Investor/Verify-Email/(:any)', 'users/Verify_Email/$1');
 Route::any('Investor/register/(:any)', 'users/investor_register');
 Route::any('Investor/Activate/(:any)', 'Public/Invest/Activate');
 
-<<<<<<< HEAD
 // Public Page
 Route::any('Legal/Privacy-Policy', 'Public/Legal/Privacy_Policy');
 Route::any('Legal/Terms-And-Conditions', 'Public/Legal/Terms_And_Conditions');
 
 // Public Pages - Marketing
 Route::any('Our-Story', 'Public/Marketing/Our_Story');
-=======
-// Public Pages - Marketing
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 Route::any('Why-MyMI-Wallet', 'Public/Marketing/Why_MyMI_Wallet'); 
 
 // Public Pages - Rel
@@ -178,7 +155,6 @@ Route::any('Announcements', 'Management/Announcements');
 Route::any('Announcements/Post', 'Management/Announcements/Post');
 
 // User - Dashboard
-<<<<<<< HEAD
 // Route::any('Dashboard', 'User/Dashboard/index');
 Route::any('Dashboard', 'User/Budget/index');
 Route::any('Markets/(:any)', 'User/Dashboard/Markets');
@@ -208,45 +184,15 @@ Route::any('Budget/Delete/(:any)', 'User/Budget/Delete/$1');
 Route::any('Budget/Details/(:any)', 'User/Budget/Details/$1');
 Route::any('Budget/Status/Paid/(:any)', 'User/Budget/Paid/$1');
 Route::any('Budget/Status/Unpaid/(:any)', 'User/Budget/Unpaid/$1');
-=======
-Route::any('Dashboard', 'User/Dashboard/index');
-Route::any('Markets/(:any)', 'User/Dashboard/Markets');
-Route::any('Budget', 'User/Budget/index');
-Route::any('Budget/Add/(:any)', 'User/Budget/Add');
-Route::any('Budget/Edit/(:any)', 'User/Budget/Add');
-Route::any('Budget/Delete/(:any)', 'User/Budget/Delete/$1');
-Route::any('Budget/Paid/(:any)', 'User/Budget/Paid/$1');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 Route::any('Budget/Income', 'User/Budget/Account_Overview');
 Route::any('Budget/Expenses', 'User/Budget/Account_Overview');
 Route::any('Budget/Recurring-Account/Schedule', 'User/Budget/Recurring_Account_Schedule');
 Route::any('Budget/Recurring-Account/Schedule/(:any)', 'User/Budget/Recurring_Account_Schedule');
-<<<<<<< HEAD
 Route::any('Budget/Recurring-Account/Edit/(:any)', 'User/Budget/Edit');
 Route::any('Budget/Approve-Recurring-Schedule/(:any)', 'User/Budget/Approve_Recurring_Schedule/$1');
 Route::any('Budget/Cancel-Account/(:any)', 'User/Budget/Cancel_Account/$1');
 Route::any('Budget/Delete-Account/(:any)', 'User/Budget/Delete_Account/$1');
 Route::any('Budget/Forecast', 'User/Budget/Forecast');
-=======
-Route::any('Budget/Approve-Recurring-Schedule/(:any)', 'User/Budget/Approve_Recurring_Schedule/$1');
-Route::any('Budget/Cancel-Account/(:any)', 'User/Budget/Cancel_Account/$1');
-Route::any('Budget/Delete-Account/(:any)', 'User/Budget/Delete_Account/$1');
-// Route::any('Budget/(:any)/Overview/(:any)', 'User/Budget/Account_Overview');
-
-// User - Accounts
-Route::any('Investor-Profile', 'User/Dashboard/Investor_Profile'); 
-Route::any('Profile-Manager', 'User/Dashboard/Profile_Manager');
-
-// User - Assets
-Route::any('Assets', 'User/Asset_Management/index');
-
-// User - Budget
-// Route::any('Budget', 'User/Budget');
-// Route::any('Budget/Income', 'User/Budget/Type_Overview');
-// Route::any('Budget/Income/Add', 'User/Budget/Add_Account');
-// Route::any('Budget/Expense', 'User/Budget/Type_Overview');
-// Route::any('Budget/Expense/Add', 'User/Budget/Add_Account');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 // User - Exchange
 Route::any('Exchange', 'Exchange/index');
@@ -266,7 +212,6 @@ Route::any('Exchange/Coin-Listing/Request-Complete', 'Exchange/Coin_Listing_Requ
 Route::any('Exchange/Account-Information/(:any)', 'Exchange/Account_Information');
 Route::any('Exchange/KYC-Registration-Reward/(:any)', 'Exchange/KYC_Reward/$1');
 
-<<<<<<< HEAD
 // User - Institutional
 Route::any('Institutions/Integrations/Create-Link-Token/(:any)', 'Institutions/Integrations/createLinkToken/$1'); 
 Route::any('Institutions/Integrations/Save-Public-Token', 'Institutions/Integrations/savePublicToken'); 
@@ -275,8 +220,6 @@ Route::any('Institutions/Integrations/Handle-Error', 'Institutions/Integrations/
 // User - Investments
 Route::any('My-Trades', 'User/Investments/index');
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 // User - Referral Program
 Route::any('Referral-Program', 'User/Referral_Program/index');
 Route::any('Referral-Program/Apply', 'User/Referral_Program/Apply');
@@ -288,34 +231,11 @@ Route::any('Referral-Program/Activate-Affiliate/(:any)', 'User/Referral_Program/
 Route::any('Referral-Program/Affiliates', 'User/Referral_Program/Users');
 Route::any('Referral-Program/Marketing-Affiliate-Program-Agreement', 'User/Referral_Program/Marketing_Affiliate_Program_Agreement');
 Route::any('My-Referrals', 'User/Referral_Program/My_Referrals'); 
-<<<<<<< HEAD
 
 // User - Trade Tracker
 Route::any('Trade-Tracker', 'User/Trade_Tracker/Overview');
 Route::any('Trade-Tracker/Trade-Manager', 'User/Trade_Tracker/Trade_Manager');
 Route::any('Trade-Tracker/Layout-Manager', 'User/Trade_Tracker/Layout_Manager');
-=======
-// User - Trade Tracker
-Route::any('Trade-Tracker', 'User/Trade_Tracker/Overview');
-Route::any('Trade-Tracker/Trade-Manager', 'User/Trade_Tracker/Trade_Manager');
-
-
-// User - Wallets
-Route::any('Wallets', 'User/Wallets/index');
-Route::any('Wallets/Connect-Bank-Account', 'User/Wallets/Create_Bank_Account');
-Route::any('Wallets/Connect-Bank-Account/Modal', 'User/Wallets/Create_Bank_Account');
-Route::any('MyMI-Wallet', 'User/Wallets/MyMI_Wallet');
-Route::any('Link-Account/TD-Ameritrade/(:any)', 'User/Brokerages/TD_Ameritrade/$1');
-Route::any('Wallets/Link-Account', 'User/Wallets/Link_Account');
-Route::any('Wallets/Link-Account/(:any)', 'User/Wallets/Link_Account/$1');
-Route::any('Wallets/Link-Account/(:any)/(:any)', 'User/Wallets/Link_Account/$1');
-/* Link Account Pages
-- Wallets/Link-Account/Confirm                      - Confirm Account Information (provided by User)
-- Wallets/Link-Account/Upload-Trades                - Upload Trades to Manually Added Accounts
-- Wallets/Link-Account/TD-Ameritrade                - Automatically Import Account and Account Trades utilizing TDA API Integration
-*/
-// Route::any('Wallets/Link-Account-Successful', 'User/Wallets/Link_Account_Success');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 // User - Transactional Modal
 Route::any('Add-Wallet', 'User/Wallets/Add');
@@ -323,22 +243,15 @@ Route::any('Add-Wallet/Free/Fiat', 'User/Wallets/Add');
 Route::any('Add-Wallet/Free/Digital', 'User/Wallets/Add');
 Route::any('Add-Wallet/Premium/Fiat', 'User/Wallets/Add');
 Route::any('Add-Wallet/Premium/Digital', 'User/Wallets/Add');
-<<<<<<< HEAD
 Route::any('Wallet-Selection', 'User/Wallets/Wallet_Selection');
 Route::any('Wallet-Selection/(:any)', 'User/Wallets/Wallet_Selection');
 Route::any('Edit/Wallet/(:any)', 'User/Wallets/Purchase');
 Route::any('Purchase-Wallet/(:any)/(:any)', 'User/Wallets/Purchase');
 Route::any('Wallets/Delete/(:any)', 'User/Wallets/Delete');
-=======
-Route::any('Wallet-Selection/(:any)', 'User/Wallets/Wallet_Selection');
-Route::any('Purchase-Wallet/(:any)', 'User/Wallets/Purchase');
-Route::any('Purchase-Wallet/(:any)/(:any)', 'User/Wallets/Purchase');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 Route::any('Deposit-Funds', 'User/Wallets/Deposit_Funds');
 Route::any('Deposit-Funds/(:any)', 'User/Wallets/Deposit_Funds');
 Route::any('Wallets/Confirm-Deposit/(:any)', 'User/Wallets/Confirm_Deposit');
 Route::any('Wallets/Deposit-Complete/(:any)', 'User/Wallets/Deposit_Complete/$1');
-<<<<<<< HEAD
 Route::any('Wallets/Track-Deposit/(:any)', 'User/Wallets/Add_Deposit_Fetch'); 
 Route::any('Add-Wallet-Deposit-Fetch/(:any)', 'User/Wallets/Add_Deposit_Fetch');
 Route::any('Withdraw-Funds', 'User/Wallets/Withdraw_Funds');
@@ -346,23 +259,13 @@ Route::any('Withdraw-Funds/(:any)', 'User/Wallets/Withdraw_Funds');
 Route::any('Wallets/Confirm-Withdraw/(:any)', 'User/Wallets/Confirm_Withdraw');
 Route::any('Wallets/Withdraw-Complete/(:any)', 'User/Wallets/Withdraw_Complete/$1');
 Route::any('Wallets/Track-Withdraw/(:any)', 'User/Wallets/Add_Withdraw_Fetch'); 
-=======
-Route::any('Wallets/Track-Deposit/(:any)', 'User/Wallets/Track_Deposit'); 
-Route::any('Add-Wallet-Deposit-Fetch/(:any)', 'User/Wallets/Add_Deposit_Fetch');
-Route::any('Withdraw-Funds', 'User/Wallets/Withdraw_Funds');
-Route::any('Withdraw-Funds/(:any)', 'User/Wallets/Withdraw_Funds');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 Route::any('Add-Wallet-Withdraw-Fetch/(:any)', 'User/Wallets/Add_Withdraw_Fetch');
 Route::any('MyMI-Gold/Purchase/(:any)', 'User/Wallets/Purchase_Gold');
 Route::any('Purchase-MyMI-Gold', 'User/Wallets/Purchase_MyMI_Gold');
 Route::any('Wallets/Address-Generator', 'User/Wallets/Generate_Wallet');
-<<<<<<< HEAD
 Route::any('Bank-Account/Details/(:any)', 'User/Wallets/Details');
 Route::any('Wallet-Details/(:any)', 'User/Wallets/Details');
 Route::any('Wallet/Details/(:any)', 'User/Wallets/Details');
-=======
-Route::any('Wallet-Details/(:any)', 'User/Wallets/Details');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 Route::any('MyMI-Gold/Purchase/(:any)', 'User/Wallets/Purchase_Gold/$1');
 // Route::any('MyMI-Gold/Complete-Purchase', 'User/Dashboard/Purchase');
 // Route::any('MyMI-Gold/Complete-Purchase/(:any)', 'User/Dashboard/Purchase');
@@ -377,15 +280,11 @@ Route::any('Wallets/Purchase-Coins-Transaction', 'User/Wallets/Purchase_Coins_Tr
 // User - Support
 Route::any('Support', 'User/Support'); 
 Route::any('Support/Communication-Manager', 'User/Support/Communication_Manager');
-<<<<<<< HEAD
 Route::any('Support/Feedback', 'User/Support/Feedback');
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 Route::any('Support/My-Requests', 'User/Support/My_Requests');
 Route::any('Support/Requests/(:any)', 'User/Support/Requests'); 
 
 // User - Support Knowledgebase
-<<<<<<< HEAD
 Route::any('Knowledgebase', 'User/Knowledgebase/index'); 
 Route::any('Knowledgebase/Account-And-Billing', 'User/Knowledgebase/Account_Billing');
 Route::any('Knowledgebase/Assets', 'User/Knowledgebase/Assets');
@@ -399,8 +298,6 @@ Route::any('Knowledgebase/Trade-Tracker', 'User/Knowledgebase/Trade_Tracker');
 Route::any('Knowledgebase/Types-Of-Accounts', 'User/Knowledgebase/Types_Of_Accounts');
 
 // User - Support Knowledgebase (OLD)
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 Route::any('Knowledge-Base', 'User/Knowledgebase/index'); 
 Route::any('Knowledge-Base/Account-And-Billing', 'User/Knowledgebase/Account_Billing');
 Route::any('Knowledge-Base/Assets', 'User/Knowledgebase/Assets');
@@ -413,7 +310,6 @@ Route::any('Knowledge-Base/Technical-Support', 'User/Knowledgebase/Technical_Sup
 Route::any('Knowledge-Base/Trade-Tracker', 'User/Knowledgebase/Trade_Tracker');
 Route::any('Knowledge-Base/Types-Of-Accounts', 'User/Knowledgebase/Types_Of_Accounts');
 
-<<<<<<< HEAD
 // User - Wallets
 Route::any('Wallets', 'User/Wallets/index');
 Route::any('Wallets/(:any)', 'User/Wallets/index');
@@ -443,8 +339,6 @@ Route::any('Wallets/Link-Account/(:any)/(:any)', 'User/Wallets/Link_Account/$1')
 // CFA - Analysis
 Route::any('CFA-Analysis/(:any)/Application', 'CFA/Analysis/Application'); 
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 // Management - Assets
 Route::any('Management/Assets/Application', 'Management/Assets/Applications'); 
 Route::any('Management/Assets/Application/Approve/(:any)', 'Management/Assets/Approval/$1');
@@ -453,7 +347,6 @@ Route::any('Management/Assets/Application/Details/(:any)', 'Management/Assets/Ap
 Route::any('Management/Assets/Application/Details/(:any)/(:any)', 'Management/Assets/Application_Details'); 
 Route::any('Management/Assets/Distribute', 'Management/Assets/Distribute'); 
 
-<<<<<<< HEAD
 // Management - API
 Route::any('API/Sophtron-Widget', 'Management/API/Sophtron_Widget'); 
 
@@ -466,8 +359,6 @@ Route::any('Management/Debt-Collector/Clean-Up', 'Management/Budgeting/Debt_Coll
 // Management - Services 
 Route::any('Management/Services', 'Management/Services/index'); 
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 // Management - Support 
 Route::any('Management/Support', 'Management/Support/Reporting'); 
 Route::any('Management/Support/Logs', 'Management/Support/Logs'); 
@@ -482,13 +373,10 @@ Route::any('Management/Users/Distribute/(:any)', 'Management/Assets/Distribute')
 Route::any('Management/Users/Force-Reset/(:any)', 'Management/Users/Force_Reset'); 
 Route::any('Management/Users/Orders/(:any)', 'Management/Users/Orders'); 
 
-<<<<<<< HEAD
 // Management - Wallets
 Route::any('Management/Wallets', 'Management/Wallets/index');
 Route::any('Management/Wallets/Generate-Wallets', 'Management/Wallets/Generate_Wallets');
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 // Management - Web Design
 Route::any('Admin/Add-External-Site', 'Management/Admin/Add_External_Site');
 Route::any('Content-Creator', 'Management/Web_Design/Content_Creator');

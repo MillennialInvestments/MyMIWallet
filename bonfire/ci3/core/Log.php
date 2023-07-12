@@ -103,11 +103,7 @@ class CI_Log
      *
      * @var array
      */
-<<<<<<< HEAD
     protected $_levels = array('CUSTOM' => 1, 'ERROR' => 2, 'DEBUG' => 3, 'INFO' => 4, 'ALL' => 5);
-=======
-    protected $_levels = array('ERROR' => 1, 'DEBUG' => 2, 'INFO' => 3, 'ALL' => 4);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
     /**
      * mbstring.func_overload flag

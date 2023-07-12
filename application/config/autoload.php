@@ -61,11 +61,7 @@ $autoload['packages'] = array(
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-<<<<<<< HEAD
 $autoload['libraries'] = array('users/Auth', 'database', 'email', 'emailer/emailer', 'encryption', 'form_validation', 'http', 'MyMIAnalytics', 'MyMIBudget', 'MyMICoin', 'MyMIExchange', 'MyMIGold', 'MyMIInvestments', 'MyMILogger', 'MyMIMarketing', 'MyMIPlaid', 'MyMIReferrals', 'MyMIWallet', 'MyMIWallets', 'MyMIUser', 'session', 'upload', 'Users/auth');
-=======
-$autoload['libraries'] = array('users/Auth', 'database', 'email', 'emailer/emailer', 'form_validation', 'MyMIAnalytics', 'MyMIBudget', 'MyMICoin', 'MyMIExchange', 'MyMIGold', 'MyMILogger', 'MyMIMarketing', 'MyMIWallet', 'MyMIUser', 'user_agent');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 
 /*
@@ -97,11 +93,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-<<<<<<< HEAD
 $autoload['helper'] = array('date', 'directory', 'form', 'file', 'language', 'recaptcha', 'url');
-=======
-$autoload['helper'] = array('recaptcha', 'url', 'language');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
 | -------------------------------------------------------------------
@@ -144,11 +136,7 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-<<<<<<< HEAD
 $autoload['model'] = array('Management/Analytical_model', 'CFA/Advisor_model', 'User/accounts_model', 'User/api_model', 'User/exchange_model', 'User/investment_model', 'User/investor_model','User/tracker_model', 'User/public_model', 'User/mymigold_model', 'User/mymicoin_model', 'User/wallet_model');
 
 
 $autoload['core'] = array('MY_Exceptions');
-=======
-$autoload['model'] = array('User/api_model', 'User/exchange_model', 'User/investment_model', 'User/investor_model','User/tracker_model', 'User/public_model', 'User/mymigold_model', 'User/mymicoin_model', 'User/wallet_model');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

@@ -8,11 +8,8 @@ $myMIWalletSummary                              = $allSessionData['myMIWalletSum
 $cuID									        = $userAccount['cuID'];
 $cuRole									        = $userAccount['cuRole'];
 $cuEmail								        = $userAccount['cuEmail'];
-<<<<<<< HEAD
 $cuFirstName                                    = $userAccount['cuFirstName']; 
 $cuLastName                                     = $userAccount['cuLastName']; 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $cuWalletID								        = $userAccount['cuWalletID'];
 $cuWalletCount							        = $userAccount['cuWalletCount'];
 $cuTotalWalletCount						        = $userAccount['cuTotalWalletCount'];
@@ -114,11 +111,6 @@ $activeTotalTrades                              = '0';
 $activeInvestmentProfits                        = '0.00';
 $activeMonthlyInvestments                       = '0.00';
 $activeMonthyTrades                             = '0';
-<<<<<<< HEAD
-=======
-
-<<<<<<< HEAD
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $emergencyFundTarget                            = $thisMonthExpenses * 6; 
 $emergencyFundPercentage                        = '0.00'; 
 $totalDebt                                      = $userBudget['debtAccountSummary']['totalDebt'];
@@ -127,11 +119,8 @@ $dashboardData							        = array(
     'getWallets'						        => $getWallets,
     'cuID'								        => $cuID,
     'cuEmail'							        => $cuEmail,
-<<<<<<< HEAD
     'cuFirstName'						        => $cuFirstName,
     'cuLastName'							    => $cuLastName,
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     'cuWalletCount'						        => $cuWalletCount,
     'cuTotalWalletCount'				        => $cuTotalWalletCount,
     'walletID'							        => $walletID,
@@ -180,58 +169,14 @@ $dashboardData							        = array(
     'totalDebt'                                 => $totalDebt,
     // 'debtTotalPercentage'                       => $debtTotalPercentage,
 );
-<<<<<<< HEAD
 // print_r($dashboardData);
 ?>   
 
-=======
-print_r($dashboardData);
-?>   
-=======
-$walletCost								= $this->config->item('wallet_cost');  			 		// $5
-$gas_fee								= $this->config->item('gas_fee');
-$trans_fee								= $this->config->item('trans_fee');
-$trans_percent							= $this->config->item('trans_percent');
-$expenses								= ($walletCost * $trans_percent) + $trans_fee;			// Total Fees
-$total_fees								= number_format($expenses, 2);
-$fee_coins								= round(($MyMICoinValue), 8);
-$walletCoins							= ($walletCost / $MyMICoinValue) + $fee_coins;
-$remainingCoins							= $MyMICCoinSum - $walletCoins;
-$dashboardData							= array(
-	'getWallets'						=> $getWallets,
-	'cuID'								=> $cuID,
-	'cuWalletCount'						=> $cuWalletCount,
-	'cuTotalWalletCount'				=> $cuTotalWalletCount,
-	'walletID'							=> $walletID,
-	'walletTitle'						=> $walletTitle,
-	'walletAmount'						=> $walletAmount,
-	'walletFunds'						=> $walletFunds,
-	'walletGains'						=> $walletGains,
-	'MyMICCoinSum'						=> $MyMICCoinSum,
-	'MyMICCurrentValue'					=> $MyMICCurrentValue,
-	'MyMIGCoinSum'						=> $MyMIGCoinSum,
-	'MyMIGCurrentValue'					=> $MyMIGCurrentValue,
-	'lastTradeActivity'					=> $lastTradeActivity,
-	'walletCost'						=> $walletCost,
-	'walletCoins'						=> $walletCoins,
-	'walletSum'                         => $walletSum,
-	'assetNetValue'                     => $assetNetValue,
-	'assetTotalCount'                   => $assetTotalCount,
-	'assetTotalGains'                   => $assetTotalGains,
-);
-?>
->>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 <style>
 	.tranx-amount .number {
 		font-size: 0.87em;
 	}
 </style>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 <div class="nk-block-head nk-block-head-sm">
     <div class="nk-block-between">
         <div class="nk-block-head-content">
@@ -245,21 +190,13 @@ $dashboardData							= array(
                 <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
                 <div class="toggle-expand-content" data-content="pageMenu">
                     <ul class="nk-block-tools g-3">
-<<<<<<< HEAD
                         <!-- <li><a href="#" class="btn btn-white btn-dim btn-outline-primary"><em class="icon ni ni-download-cloud"></em><span>Export</span></a></li> -->
-=======
-                        <li><a href="#" class="btn btn-white btn-dim btn-outline-primary"><em class="icon ni ni-download-cloud"></em><span>Export</span></a></li>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         <li><a href="#" class="btn btn-white btn-dim btn-outline-primary"><em class="icon ni ni-reports"></em><span>Reports</span></a></li>
                         <li class="nk-block-tools-opt">
                             <div class="drodown">
                                 <a href="#" class="dropdown-toggle btn btn-icon btn-primary" data-bs-toggle="dropdown"><em class="icon ni ni-plus"></em></a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <ul class="link-list-opt no-bdr">
-<<<<<<< HEAD
-                                        <li><a href="<?php echo site_url('Budget/Add/Income'); ?>"><em class="icon ni ni-plus-c"></em><span>Add Bank Account</span></a></li>
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                                         <li><a href="<?php echo site_url('Budget/Add/Income'); ?>"><em class="icon ni ni-plus-c"></em><span>Add Income Account</span></a></li>
                                         <li><a href="<?php echo site_url('Budget/Add/Expense'); ?>"><em class="icon ni ni-minus-c"></em><span>Add Expense Account</span></a></li>
                                         <!-- <li><a href="#"><em class="icon ni ni-note-add-fill-c"></em><span>Add Page</span></a></li> -->
@@ -275,54 +212,6 @@ $dashboardData							= array(
 </div><!-- .nk-block-head -->
 <div class="nk-block">
     <div class="row g-gs">
-<<<<<<< HEAD
-        <div class="col-12 col-md-4">
-            <?php $this->load->view('User/Dashboard/index/total_finances', $dashboardData); ?>
-        </div>
-        <!-- <div class="col-12 col-md-4">
-            <?php //$this->load->view('User/Dashboard/index-new/total_income', $dashboardData); ?>
-        </div>
-        <div class="col-12 col-md-4">
-            <?php //$this->load->view('User/Dashboard/index-new/total_expenses', $dashboardData); ?>
-        </div>
-        <div class="col-12 col-md-4">
-            <?php //$this->load->view('User/Dashboard/index-new/investment_overview', $dashboardData); ?>
-        </div>
-        <div class="col-12 col-md-4">
-            <?php //$this->load->view('User/Dashboard/index-new/investment_plan', $dashboardData); ?>
-        </div>
-      
-        <div class="col-12 col-md-4">
-            <?php //$this->load->view('User/Dashboard/index-new/recent_activities', $dashboardData); ?>
-        </div>
-        <div class="col-12 col-md-4">
-            <?php //$this->load->view('User/Dashboard/index-new/notifications', $dashboardData); ?>
-        </div>     
-        <div class="col-12 col-md-4">
-            <?php //$this->load->view('User/Dashboard/index-new/support_requests', $dashboardData); ?>
-        </div>   
-        <div class="col-12">
-            <hr>
-        </div>
-		<div class="col-md-12 pt-5">  
-			<?php //$this->load->view('User/Dashboard/index/market-header', $dashboardData); ?>
-		</div>
-		<div class="col-12 col-md-3">
-			<?php //$this->load->view('User/Dashboard/index/US_Market_Overview'); ?>
-		</div>
-		<div class="col-12 col-md-3">
-			<?php //$this->load->view('User/Dashboard/index/US_Additional_Overview'); ?>
-		</div>
-		<div class="col-12 col-md-3">
-			<?php //$this->load->view('User/Dashboard/index/International_Market_Overview'); ?>
-		</div>
-		<div class="col-12 col-md-3">
-			<?php //$this->load->view('User/Dashboard/index/Crypto_Market_Overview'); ?>
-		</div> -->
-    </div>
-</div>
-
-=======
         <div class="col-md-4">
             <?php $this->load->view('User/Dashboard/index-new/total_finances', $dashboardData); ?>
         </div><!-- .col -->
@@ -346,10 +235,9 @@ $dashboardData							= array(
         </div><!-- .col -->
         <div class="col-md-6 col-xxl-4">
             <?php $this->load->view('User/Dashboard/index-new/notifications', $dashboardData); ?>
-        </div><!-- .col -->        
-		<div class="col-md-12 mb-3">  
-=======
-<div>TESTTESTETSETTEST TEST</div>
+        </div><!-- .col --> 
+    </div>
+</div>
 <div class="nk-block">
 	<div class="row gy-gs">
 		<div class="col-md-12 mb-3">
@@ -374,7 +262,6 @@ $dashboardData							= array(
 <div class="nk-block">
 	<div class="row gy-gs">
 		<div class="col-md-12 mb-3">
->>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
 			<?php $this->load->view('User/Dashboard/index/market-header', $dashboardData); ?>
 		</div>
 		<div class="col-12 col-md-3">
@@ -389,13 +276,5 @@ $dashboardData							= array(
 		<div class="col-12 col-md-3">
 			<?php $this->load->view('User/Dashboard/index/Crypto_Market_Overview'); ?>
 		</div>
-<<<<<<< HEAD
     </div>
 </div>
-
-
-=======
-	</div>
-</div>
->>>>>>> 0602759db180cc3e843f37d0f6b332b2d117db5c
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

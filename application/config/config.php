@@ -1,9 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-<<<<<<< HEAD
-=======
-
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -221,11 +217,7 @@ $config['directory_trigger']    = 'd';
 | your log files will fill up very fast.
 |
  */
-<<<<<<< HEAD
 $config['log_threshold'] = 2;
-=======
-$config['log_threshold'] = 1;
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
 |--------------------------------------------------------------------------
@@ -384,7 +376,6 @@ $config['encryption_key'] = "58f62e7a5c072527eb00fad7ccb6f547";
 |
 */
 
-<<<<<<< HEAD
 // $config['sess_driver'] = 'database';
 $config['sess_driver']              = 'files';
 $config['sess_cookie_name']		    = 'ci_session';
@@ -395,17 +386,6 @@ $config['sess_save_path']           = APPPATH .'cache/';
 $config['sess_match_ip']            = false;
 $config['sess_time_to_update']      = 3600;
 $config['sess_regenerate_destroy']  = true;
-=======
-$config['sess_driver'] = 'database';
-//~ $config['sess_driver'] = 'files';
-$config['sess_cookie_name']		= 'ci_session';
-$config['sess_expiration']		= 0;
-//~ $config['sess_save_path'] = sys_get_temp_dir();
-$config['sess_save_path'] = 'ci3_sessions';
-$config['sess_match_ip'] = false;
-$config['sess_time_to_update'] = 360000;
-$config['sess_regenerate_destroy'] = true;
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 /*
 |--------------------------------------------------------------------------
 | Cookie Related Variables
@@ -426,13 +406,8 @@ $config['cookie_prefix']	    = '';
 $config['cookie_domain']	    = '';
 $config['cookie_path']		    = '';
 // $config['cookie_path']		= 'assets/Cookies';
-<<<<<<< HEAD
 $config['cookie_secure']        = true;
 $config['cookie_httponly']      = true;
-=======
-$config['cookie_secure']        = false;
-$config['cookie_httponly']      = false;
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /*
 |--------------------------------------------------------------------------
@@ -549,7 +524,6 @@ $config['rewrite_short_tags'] = false;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
  */
 $config['proxy_ips'] = '';
-<<<<<<< HEAD
 
 // Email Settings
 $config['protocol'] = 'smtp'; // Set the email protocol to SMTP
@@ -564,5 +538,3 @@ $config['newline'] = "\r\n"; // Email newline character
 $config['wordwrap'] = true; // Enable word wrapping in emails
 $config['crlf'] = "\r\n"; // Email CRLF character
 $config['wrapchars'] = 80; // Number of characters to wrap at
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

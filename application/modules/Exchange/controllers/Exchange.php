@@ -38,11 +38,7 @@ class Exchange extends Admin_Controller
         parent::__construct();
 
         $this->load->helper(array('directory', 'form', 'file', 'url'));
-<<<<<<< HEAD
         $this->load->library(array('form_validation', 'upload'));
-=======
-        $this->load->library(array('form_validation', 'upload', 'user_agent'));
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->load->model('User/exchange_model');
         //~ $this->load->model('API/api_model');
         //$this->load->module('ContactUs');
@@ -59,61 +55,33 @@ class Exchange extends Admin_Controller
     // Main Blog Post Page
     // -------------------------------------------------------------------------
 
-<<<<<<< HEAD
-    public function index() {
-        $pageType = 'Automated';
-        $pageName = 'Home';
-        $this->set_current_user();
-=======
     public function index()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         
         $this->set_current_user();
         
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
         Template::render();
     }
 
-<<<<<<< HEAD
-    public function Dashboard() {
-        $pageType = 'Automated';
-        $pageName = 'Home';
-        $this->set_current_user();
-=======
     public function Dashboard()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         
         $this->set_current_user();
         
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
         Template::render();
     }
-<<<<<<< HEAD
-
-    public function Application_Manager() {
-        $pageType = 'Automated';
-        $pageName = 'Home';
-        $this->set_current_user();
-        $this->load->view('Exchange/Application_Manager');
-    }
-
-    public function Coin_Listing_Request() {
-        $pageType = 'Automated';
-        $pageName = 'Home';
-        $this->set_current_user();
-=======
     
     public function Application_Manager()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         
         $this->set_current_user();
@@ -123,103 +91,55 @@ class Exchange extends Admin_Controller
 
     public function Coin_Listing_Request()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         
         $this->set_current_user();
         
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
         Template::render();
     }
-<<<<<<< HEAD
-
-    public function Coin_Listing_Asset_Information() {
-        $pageType = 'Automated';
-        $pageName = 'Home';
-        $this->set_current_user();
-=======
     
     public function Coin_Listing_Asset_Information()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         
         $this->set_current_user();
         
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
         Template::render();
     }
 
-<<<<<<< HEAD
-    public function Coin_Listing_Asset_Information_Modal() {
-        $pageType = 'Automated';
-        $pageName = 'Home';
-        $this->set_current_user();
-=======
     public function Coin_Listing_Asset_Information_Modal()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         
         $this->set_current_user();
         
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
         Template::render();
     }
 
-<<<<<<< HEAD
-    public function Coin_Listing_Request_Complete() {
-        $pageType = 'Automated';
-        $pageName = 'Home';
-        $this->set_current_user();
-=======
     public function Coin_Listing_Request_Complete()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         
         $this->set_current_user();
         
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
         Template::render();
     }
 
-<<<<<<< HEAD
-    public function Order_Event_Manager($market_pair, $market, $lastOrderID) {
-        $pageType = 'Automated';
-        $pageName = 'Home';
-        $this->set_current_user();
-        $this->load->view('Exchange/Order_Event_Manager');
-    }
-
-    public function Order_Buy_Manager() {
-        $pageType = 'Automated';
-        $pageName = 'Home';
-        $this->set_current_user();
-        $this->load->view('Exchange/Order_Buy_Manager');
-    }
-
-    public function Order_Sell_Manager() {
-        $pageType = 'Automated';
-        $pageName = 'Home';
-        $this->set_current_user();
-        $this->load->view('Exchange/Order_Sell_Manager');
-    }
-
-    public function Order_Event_Manager_Working($market_pair, $market, $lastOrderID) {
-        $pageType = 'Automated';
-=======
     public function Order_Event_Manager($market_pair, $market, $lastOrderID)
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         
         $this->set_current_user();
@@ -229,7 +149,7 @@ class Exchange extends Admin_Controller
     
     public function Order_Buy_Manager()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         
         $this->set_current_user();
@@ -239,7 +159,7 @@ class Exchange extends Admin_Controller
     
     public function Order_Sell_Manager()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         
         $this->set_current_user();
@@ -249,189 +169,22 @@ class Exchange extends Admin_Controller
 
     public function Order_Event_Manager_Working($market_pair, $market, $lastOrderID)
     {
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
+        $pageType = 'Automated';
         $pageName = 'Home';
         $this->load->view('Exchange/Order_Event_Manager');
     }
     
-<<<<<<< HEAD
-    public function Overview($market_pair, $market) {
-        $pageType = 'Automated';
-        $pageName = 'Home';
-        $this->set_current_user();
-=======
     public function Overview($market_pair, $market)
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Home';
         
         $this->set_current_user();
         
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         Template::set('pageType', $pageType);
         Template::set('pageName', $pageName);
         Template::render();
     }
-<<<<<<< HEAD
-
-    public function Update_Account_Information() {
-        // Code for updating account information
-    
-        // Assuming you want to update the user's account information
-        // Retrieve the user's ID
-        $userID = $this->session->userdata('user_id');
-    
-        // Retrieve the updated account information from the form
-        $newAccountInfo = array(
-            'name' => $this->input->post('name'),
-            'email' => $this->input->post('email'),
-            // Add more fields as needed
-        );
-    
-        // Update the user's account information in the database
-        $this->db->where('id', $userID);
-        $this->db->update('users', $newAccountInfo);
-    
-        // Redirect or display a success message to the user
-        redirect('account');
-    }
-
-    public function Coin_Sell($market_pair, $market) {
-        // Code for selling a coin
-    
-        // Assuming you want to sell a specific coin based on the market pair and market
-    
-        // Retrieve the user's ID
-        $userID = $this->session->userdata('user_id');
-    
-        // Retrieve the coin's information from the database based on the market pair and market
-        $coinInfo = $this->db->get_where('coins', array('market_pair' => $market_pair, 'market' => $market))->row_array();
-    
-        // Perform the necessary calculations and operations for selling the coin
-    
-        // Update the user's balance or transaction history in the database
-    
-        // Redirect or display a success message to the user
-        redirect('portfolio');
-    }
-
-    public function Update_User_Preferences() {
-        // Code for updating user preferences
-    
-        // Assuming you want to update the user's preferences based on the form input
-    
-        // Retrieve the user's ID
-        $userID = $this->session->userdata('user_id');
-    
-        // Retrieve the updated preferences from the form
-        $newPreferences = array(
-            'theme' => $this->input->post('theme'),
-            'notification' => $this->input->post('notification'),
-            // Add more fields as needed
-        );
-    
-        // Update the user's preferences in the database
-        $this->db->where('id', $userID);
-        $this->db->update('users', $newPreferences);
-    
-        // Redirect or display a success message to the user
-        redirect('preferences');
-    }
-    
-    public function Update_Broker_Listing_Request() {
-        // Code for updating broker listing request
-    
-        // Assuming you want to update the broker listing request based on the form input
-    
-        // Retrieve the request ID from the form or URL parameter
-        $requestID = $this->input->post('request_id');
-    
-        // Retrieve the updated request information from the form
-        $updatedRequest = array(
-            'name' => $this->input->post('name'),
-            'email' => $this->input->post('email'),
-            // Add more fields as needed
-        );
-    
-        // Update the broker listing request in the database
-        $this->db->where('id', $requestID);
-        $this->db->update('broker_requests', $updatedRequest);
-    
-        // Redirect or display a success message to the user
-        redirect('broker-requests');
-    }
-
-    public function get_user_info($cuID) {
-        // Code for retrieving user information
-    
-        // Assuming you want to retrieve the user's information based on their ID
-    
-        // Retrieve the user's information from the database
-        $userInfo = $this->db->get_where('users', array('id' => $cuID))->row_array();
-    
-        // Return the user's information
-        return $userInfo;
-    }
-    
-    public function User_Reward($cuID) {
-        // Code for user rewards
-    
-        // Assuming you want to process the user's rewards based on their ID
-    
-        // Perform the necessary calculations and operations for processing the rewards
-    
-        // Update the user's balance or transaction history in the database
-    
-        // Redirect or display a success message to the user
-        redirect('rewards');
-    }
-    
-    public function Get_Coin_History($market_pair) {
-        // Code for getting coin history
-    
-        // Assuming you want to retrieve the historical data for a specific coin based on the market pair
-    
-        // Retrieve the coin's history from an API or database
-        $coinHistory = ''; // Retrieve the coin's history data
-    
-        // Process the coin's history and perform any necessary calculations
-    
-        // Return the coin's history data
-        return $coinHistory;
-    }
-    
-    public function Exchange_Controller() {
-        // Code for exchange controller
-    
-        // Assuming you have a controller logic for handling exchange operations
-    
-        // Perform the necessary exchange operations, such as buying/selling coins, managing orders, etc.
-    
-        // Redirect or display relevant information to the user
-        redirect('exchange');
-    }
-    
-    public function Coin_Purchase($market_pair, $market) {
-        // Code for purchasing a coin
-    
-        // Assuming you want to purchase a specific coin based on the market pair and market
-    
-        // Retrieve the user's ID
-        $userID = $this->session->userdata('user_id');
-    
-        // Retrieve the coin's information from the database based on the market pair and market
-        $coinInfo = $this->db->get_where('coins', array('market_pair' => $market_pair, 'market' => $market))->row_array();
-    
-        // Perform the necessary calculations and operations for purchasing the coin
-    
-        // Update the user's balance or transaction history in the database
-    
-        // Redirect or display a success message to the user
-        redirect('portfolio');
-    }    
-
-=======
     
     public function Order_Fetch()
     {
@@ -520,7 +273,7 @@ class Exchange extends Admin_Controller
 
     public function Buy()
     {
-        //~ $pageType = 'Standard';
+        //~ $pageType = 'Automated';
         //~ $pageName = 'Investment_Request_Coins';
         
         $this->set_current_user();
@@ -612,7 +365,7 @@ class Exchange extends Admin_Controller
         
     public function Sell()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Investment_Request_Coins';
         
         $this->set_current_user();
@@ -679,7 +432,7 @@ class Exchange extends Admin_Controller
 
     public function Account_Information()
     {
-        $pageType = 'Standard';
+        $pageType = 'Automated';
         $pageName = 'Account_Information';
         
         $this->set_current_user();
@@ -818,8 +571,100 @@ class Exchange extends Admin_Controller
         echo 1;
         exit;
     }
+
+    // User Profile Management
+    public function verify_user() {
+        $user_id = $this->session->userdata('user_id');
+        $this->exchange_model->verify_user($user_id);
+    }
+
+    // Asset Management
+    public function create_asset() {
+        $data = array(
+            'user_id' => $this->session->userdata('user_id'),
+            'asset_name' => $this->input->post('asset_name'),
+            'asset_description' => $this->input->post('asset_description'),
+            'asset_price' => $this->input->post('asset_price')
+        );
+        $this->exchange_model->create_asset($data);
+    }
+
+    public function update_asset() {
+        $asset_id = $this->input->post('asset_id');
+        $data = array(
+            'asset_name' => $this->input->post('asset_name'),
+            'asset_description' => $this->input->post('asset_description'),
+            'asset_price' => $this->input->post('asset_price')
+        );
+        $this->exchange_model->update_asset($asset_id, $data);
+    }
+
+    public function delete_asset() {
+        $asset_id = $this->input->post('asset_id');
+        $this->exchange_model->delete_asset($asset_id);
+    }
+
+    // Order Management
+    public function create_order() {
+        $data = array(
+            'user_id' => $this->session->userdata('user_id'),
+            'asset_id' => $this->input->post('asset_id'),
+            'order_type' => $this->input->post('order_type'),
+            'order_price' => $this->input->post('order_price'),
+            'order_quantity' => $this->input->post('order_quantity')
+        );
+        $this->exchange_model->create_order($data);
+    }
+
+    public function update_order_news() {
+        $order_id = $this->input->post('order_id');
+        $data = array(
+            'order_type' => $this->input->post('order_type'),
+            'order_price' => $this->input->post('order_price'),
+            'order_quantity' => $this->input->post('order_quantity')
+        );
+        $this->exchange_model->update_order($order_id, $data);
+    }
+
+    public function delete_order() {
+        $order_id = $this->input->post('order_id');
+        $this->exchange_model->delete_order($order_id);
+    }
+
+    // Trade Execution
+    public function execute_trade() {
+        $order_id = $this->input->post('order_id');
+        $this->exchange_model->execute_trade($order_id);
+    }
+
+    // Reporting
+    public function report_transactions() {
+        $transactions = $this->exchange_model->get_all_transactions();
+        // Here you can generate a report based on the $transactions data
+    }
+
+    public function view_user_trades() {
+        $user_id = $this->session->userdata('user_id');
+        $trades = $this->exchange_model->get_trades_for_user($user_id);
+        // Here you can generate a report based on the $trades data
+    }
+
+    // Security
+    public function enable_2fa() {
+        $user_id = $this->session->userdata('user_id');
+        $this->exchange_model->enable_2fa($user_id);
+    }
+
+    public function disable_2fa() {
+        $user_id = $this->session->userdata('user_id');
+        $this->exchange_model->disable_2fa($user_id);
+    }
+
+    public function alert_suspicious_activity() {
+        $user_id = $this->session->userdata('user_id');
+        $this->exchange_model->alert_suspicious_activity($user_id);
+    }
     
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     private function saveData($type = 'insert', $id = 0)
     {
         if ($type != 'insert') {
