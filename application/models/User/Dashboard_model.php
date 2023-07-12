@@ -124,7 +124,6 @@ class Dashboard_model extends BF_Model
         $getWallets				= $this->db->get()->result_array();
         return $getWallets;
     }
-<<<<<<< HEAD
 
     public function get_announcements() {
         $this->db->from('bf_announcements'); 
@@ -134,6 +133,4 @@ class Dashboard_model extends BF_Model
         $getAnnouncements       = $this->db->get(); 
         return $getAnouncements;
     }
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

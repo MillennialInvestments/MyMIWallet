@@ -82,11 +82,7 @@ $db['default'] = array(
     'dbdriver'     => 'mysqli',
     'dbprefix'     => 'bf_',
     'pconnect'     => false, // not supported with the database session driver
-<<<<<<< HEAD
-    'db_debug'     => false,
-=======
     'db_debug'     => true,
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     'cache_on'     => false,
     'cachedir'     => 'application/cache/database',
     'char_set'     => 'utf8',

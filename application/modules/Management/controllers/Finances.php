@@ -38,11 +38,7 @@ class Web_Design extends Admin_Controller
     {
         parent::__construct();
         $this->load->helper(array('directory', 'form', 'file', 'url'));
-<<<<<<< HEAD
         $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'Users/auth'));
-=======
-        $this->load->library(array('auth', 'form_validation', 'upload', 'Services/auth', 'user_agent', 'Users/auth'));
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->load->model('Management/announcements_model');
         $this->load->model('Management/design_model');
         $this->load->model(array('API/api_model', 'User/exchange_model', 'User/mymigold_model', 'User/tracker_model'));
@@ -65,11 +61,7 @@ class Web_Design extends Admin_Controller
 
     public function index()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -81,11 +73,7 @@ class Web_Design extends Admin_Controller
 
     public function Content_Creator()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -97,11 +85,7 @@ class Web_Design extends Admin_Controller
 
     public function Curl_Generator()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Dashboard';
         
         $this->set_current_user();
@@ -113,11 +97,7 @@ class Web_Design extends Admin_Controller
 
     public function Pages()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Pages';
         
         $this->set_current_user();
@@ -129,11 +109,7 @@ class Web_Design extends Admin_Controller
 
     public function Page_Template()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Page_Template';
         
         $this->set_current_user();
@@ -145,11 +121,7 @@ class Web_Design extends Admin_Controller
 
     public function Test_Page()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Test_Page';
         
         $this->set_current_user();
@@ -162,11 +134,7 @@ class Web_Design extends Admin_Controller
 
     public function Test_Page_Email()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Test_Page_Email';
         
         $this->set_current_user();
@@ -178,11 +146,7 @@ class Web_Design extends Admin_Controller
 
     public function Test_Page_CB()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Web_Design_Test_Page_CB';
         
         $this->set_current_user();
@@ -194,11 +158,7 @@ class Web_Design extends Admin_Controller
 
     public function Sitemap_Generator()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Sitemap_Generator';
         
         $this->set_current_user();
@@ -212,11 +172,7 @@ class Web_Design extends Admin_Controller
 
     public function Basic_UI()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Basic_UI';
         
         $this->set_current_user();
@@ -228,11 +184,7 @@ class Web_Design extends Admin_Controller
     
     public function Icons()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Icons';
         
         $this->set_current_user();
@@ -244,11 +196,7 @@ class Web_Design extends Admin_Controller
     
     public function Forms()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Forms';
         
         $this->set_current_user();
@@ -260,11 +208,7 @@ class Web_Design extends Admin_Controller
     
     public function Charts()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Charts';
         
         $this->set_current_user();
@@ -276,11 +220,7 @@ class Web_Design extends Admin_Controller
     
     public function Tables()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'Tables';
         
         $this->set_current_user();
@@ -292,11 +232,7 @@ class Web_Design extends Admin_Controller
     
     public function UI_Elements()
     {
-<<<<<<< HEAD
         $pageType = 'Automated';
-=======
-        $pageType = 'Standard';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $pageName = 'UI_Elements';
         
         $this->set_current_user();

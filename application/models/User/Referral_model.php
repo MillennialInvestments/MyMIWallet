@@ -175,17 +175,12 @@ class Referral_model extends BF_Model
     public function activate_affiliate($id)
     {
         $user = array(
-<<<<<<< HEAD
             'active'   				        => 1,
-=======
-            'active'   				=> 1,
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         );
         
         $this->db->where('id', $id);
         return $this->db->update('bf_users_referral_program', $user);
     }
-<<<<<<< HEAD
 
     public function get_total_referrals($cuID, $cuReferrerCode) {
         $this->db->select('COUNT(*) as count, signup_date');
@@ -221,6 +216,4 @@ class Referral_model extends BF_Model
         );
         return $commissionsData;
     }
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

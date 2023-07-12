@@ -10,3 +10,8 @@ ERROR - 2023-07-12 04:17:34 --> Severity: error --> Exception: syntax error, une
 ERROR - 2023-07-12 04:18:01 --> Severity: error --> Exception: syntax error, unexpected '<<' (T_SL), expecting end of file /home/mymiteam/mymiwallet/site/current/public/dev/application/config/application.php 125
 ERROR - 2023-07-12 04:18:17 --> Severity: error --> Exception: syntax error, unexpected '<<' (T_SL), expecting end of file /home/mymiteam/mymiwallet/site/current/public/dev/application/config/routes.php 56
 ERROR - 2023-07-12 04:19:23 --> Severity: error --> Exception: syntax error, unexpected '<<' (T_SL), expecting end of file /home/mymiteam/mymiwallet/site/current/public/dev/bonfire/ci3/core/Controller.php 48
+ERROR - 2023-07-12 04:21:49 --> Severity: error --> Exception: syntax error, unexpected '<<' (T_SL), expecting end of file /home/mymiteam/mymiwallet/site/current/public/dev/bonfire/ci3/core/Controller.php 48
+ERROR - 2023-07-12 04:30:30 --> Severity: error --> Exception: syntax error, unexpected '<<' (T_SL), expecting end of file /home/mymiteam/mymiwallet/site/current/public/dev/bonfire/ci3/core/Controller.php 48
+ERROR - 2023-07-12 08:34:57 --> Severity: error --> Exception: syntax error, unexpected '<<' (T_SL), expecting end of file /home/mymiteam/mymiwallet/site/current/public/dev/bonfire/ci3/core/Controller.php 48
+ERROR - 2023-07-12 10:05:27 --> Severity: error --> Exception: syntax error, unexpected '<<' (T_SL), expecting end of file /home/mymiteam/mymiwallet/site/current/public/dev/bonfire/ci3/core/Controller.php 48
+ERROR - 2023-07-12 10:05:39 --> Severity: error --> Exception: syntax error, unexpected '<<' (T_SL), expecting end of file /home/mymiteam/mymiwallet/site/current/public/dev/bonfire/ci3/core/Controller.php 48

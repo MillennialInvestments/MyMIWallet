@@ -5,17 +5,10 @@ class MyMIGold
     public function __construct()
     {
         $this->ci =& get_instance();
-<<<<<<< HEAD
         $this->ci->load->library('users/Auth');
         $this->ci->load->model('User/Mymigold_model');
         //~ $this->ci->load->library(array('Auth', 'MyMIWallets'));
         $cuID                                       = $this->ci->auth->user_id();
-=======
-        $this->ci->load->library('Auth');
-        $this->ci->load->model('User/Mymigold_model');
-        //~ $this->ci->load->library(array('Auth', 'MyMIWallets'));
-        $cuID = $this->ci->auth->user_id();
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
     
     public function get_order_information($orderID)

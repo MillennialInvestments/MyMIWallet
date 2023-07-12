@@ -171,9 +171,5 @@ if ($_SERVER['SERVER_ADDR'] == $this->input->ip_address()) {
     // replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
 } else {
     log_message('error', 'Server IP Address is incorrect.');
-<<<<<<< HEAD
     redirect("https://mymiwallet.com/Dashboard");
-=======
-    redirect("https://mymiwallet.com/");
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

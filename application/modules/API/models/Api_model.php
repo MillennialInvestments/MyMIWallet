@@ -135,7 +135,6 @@ class Api_model extends BF_Model
         return $getExchangeOrders;
     }
     
-<<<<<<< HEAD
     public function plaid_save_api_key($beta, $status, $unix_timestamp, $date, $time, $month, $day, $year, $accessToken) {
         $financialData                  = array(
             'beta'                      => $beta, 
@@ -151,8 +150,6 @@ class Api_model extends BF_Model
 
         return $this->db->insert('bf_users_account_connections', $financialData); 
     }
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     //~ public function get_all_open_orders($market_pair, $market) {
     //~ $this->db->from('bf_exchanges_orders');
     //~ $this->db->where('market_pair', $market_pair);

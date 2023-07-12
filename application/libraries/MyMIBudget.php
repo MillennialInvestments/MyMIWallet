@@ -7,18 +7,11 @@ class MyMIBudget
     public function __construct()
     {
         $this->CI =& get_instance();
-<<<<<<< HEAD
         $this->CI->load->library(array('Auth', 'MyMICoin', 'MyMIGold', 'MyMIUser', 'MyMIWallet', 'session', 'settings/settings_lib', 'Template'));
         $this->CI->load->model(array('Management/mgmt_budget_model'));
         $this->CI->load->model(array('User/budget_model', 'User/wallet_model'));
         $this->CI->load->library('users/auth');
         $cuID                                   = $this->CI->session->userdata('user_id');
-=======
-        $this->CI->load->library(array('Auth', 'MyMICoin', 'MyMIGold', 'MyMIWallet', 'session', 'settings/settings_lib', 'Template'));
-        $this->CI->load->model(array('User/budget_model'));
-        $this->CI->load->library('users/auth');
-        $cuID 								= $this->CI->auth->user_id();
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         //~ $this->CI->load->library(array('Auth', 'MyMIWallets'));
     }
     /**
@@ -30,14 +23,12 @@ class MyMIBudget
      * User Information                         = $this->get_user_information($cuID);
      * User Default Wallet                      = $this->get_user_default_wallet($cuID);
      */
-<<<<<<< HEAD
     public function all_user_budget_info($cuID) {
         $incomeAccountSummary                   = $this->get_income_account_summary($cuID);
         $expenseAccountSummary                  = $this->get_expense_account_summary($cuID);
         // $userBudgetRecords                      = $this->get_all_user_budget_records($cuID);
         $userAccount                            = $this->CI->mymiuser->user_account_info($cuID); 
         // New Configuration
-        $monthlySavingsPercentage               = 0.3;
         $monthlySavingsPercentageFMT            = number_format($monthlySavingsPercentage * 100,0) . '%';
         $userBudgetRecords                      = $this->CI->budget_model->get_user_budget_records($cuID);
         $getThisMonthsIncome                    = $this->CI->budget_model->get_this_months_income($cuID);
@@ -288,79 +279,11 @@ class MyMIBudget
             'accountSurplus'                    => $accountSurplus,
             'accountTotalSurplus'               => number_format($accountSurplus,2),
             'userBudgetRecords'                 => $userBudgetRecords,
-=======
-    public function user_budget_info($cuID)
-    {
-        $financialAccountSummary            = $this->get_financial_account_summary($cuID); 
-        $incomeAccountSummary               = $this->get_income_account_summary($cuID);
-        $expenseAccountSummary              = $this->get_expense_account_summary($cuID);
-        $debtAccountSummary                 = $this->get_debt_account_summary($cuID); 
-        $accountSurplus                     = $incomeAccountSummary['income'] - $expenseAccountSummary['expenses']; 
-        $userBudget                         = array(
-            'cuID'                       	=> $cuID,
-            'incomeAccountSummary'          => $incomeAccountSummary,
-            'debtAccountSummary'            => $debtAccountSummary,
-            'expenseAccountSummary'         => $expenseAccountSummary,
-            'accountSurplus'                => $accountSurplus,
-            'accountTotalSurplus'           => number_format($accountSurplus,2),
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
-        );
-        
-        return $userBudget;
-    }
-    
-<<<<<<< HEAD
-    public function get_all_user_budget_records($cuID) {
-        $getUserBudgetRecords                   = $this->CI->budget_model->get_accounts($cuID); 
-        $userBudgetRecords                      = $getUserBudgetRecords->result_array(); 
-        return $userBudgetRecords; 
-
-    }
-
-    public function get_user_budget_record($cuID, $recordID) {
-        $getUserBudgetRecord                    = $this->CI->budget_model->get_user_budget_record($cuID, $recordID); 
-        foreach($getUserBudgetRecord as $userRecord) {
-            $accountName                        = $userRecord['name']; 
-        }
-        $getBudgetAccountRelatedRecords         = $this->get_budget_account_related_records($cuID, $accountName);
-        $userBudgetRecord                       = array(
-            'getUserBudgetRecord'               => $getUserBudgetRecord,
-            'getBudgetAccountRelatedRecords'    => $getBudgetAccountRelatedRecords,
-        );
-        return $userBudgetRecord; 
-    }
-
-    public function get_budget_account_related_records($cuID, $accountName) {
-        $getBudgetAccountRelatedRecords         = $this->CI->budget_model->get_budget_account_related_records($cuID, $accountName); 
-        return $getBudgetAccountRelatedRecords; 
-    }
-
-    public function get_financial_account_summary($cuID) {
-        $incomeAccountSummary    		        = $this->get_income_account_summary($cuID);
-        $expenseAccountSummary    		        = $this->get_expense_account_summary($cuID);
-        $budgetIncome                           = $incomeAccountSummary['income'];
-        $budgetExpenses                         = $expenseAccountSummary['expenses'];
-        $budgetFinancialTotals                  = $budgetIncome - $budgetExpenses;
-
-        $financialAccountSummary                = array(
-            'budgetFinancialTotals'             => $budgetFinancialTotals,
-=======
-    public function get_financial_account_summary($cuID) {
-        $incomeAccountSummary    		    = $this->get_income_account_summary($cuID);
-        $expenseAccountSummary    		    = $this->get_expense_account_summary($cuID);
-        $budgetIncome                       = $incomeAccountSummary['income'];
-        $budgetExpenses                     = $expenseAccountSummary['expenses'];
-        $budgetFinancialTotals              = $budgetIncome - $budgetExpenses;
-
-        $financialAccountSummary            = array(
-            'budgetFinancialTotals'         => $budgetFinancialTotals,
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         );
         return $financialAccountSummary;
     }
         
     public function get_income_account_summary($cuID) {
-<<<<<<< HEAD
         $getIncomeAccountSummary                = $this->CI->budget_model->get_income_accounts_summary($cuID);
         foreach($getIncomeAccountSummary->result_array() as $incomeAccount) {
             if ($incomeAccount['net_amount'] > 0) {
@@ -395,48 +318,11 @@ class MyMIBudget
             'thisMonthIncome'                   => $thisMonthIncome,
             'lastMonthIncome'                   => $lastMonthIncome,
             'momIncomeAverages'                 => $momIncomeAverages,
-=======
-        $getIncomeAccountSummary            = $this->CI->budget_model->get_income_account_summary($cuID);
-        foreach($getIncomeAccountSummary->result_array() as $incomeAccount) {
-            if ($incomeAccount['net_amount'] > 0) {
-                $income                     = $incomeAccount['net_amount'];
-            } else {
-                $income                     = 0.00;
-            }
-        }
-        $getTMIncomeAccountSummary          = $this->CI->budget_model->get_this_month_income_account_summary($cuID);
-        foreach($getTMIncomeAccountSummary->result_array() as $thisIncomeAccount) {
-            if ($thisIncomeAccount['net_amount'] > 0) {
-                $thisMonthIncome            = $thisIncomeAccount['net_amount'];
-            } else {
-                $thisMonthIncome            = 0.00;
-            }
-        }
-        $getLMIncomeAccountSummary          = $this->CI->budget_model->get_last_month_income_account_summary($cuID);
-        foreach($getLMIncomeAccountSummary->result_array() as $lastIncomeAccount) {
-            if ($lastIncomeAccount['net_amount'] > 0) {
-                $lastMonthIncome            = $lastIncomeAccount['net_amount'];
-            } else {
-                $lastMonthIncome            = 0.00;
-            }
-        }
-        if (!empty($lastMonthIncome)) {
-            $momIncomeAverages              = ($thisMonthIncome - $lastMonthIncome)/$lastMonthIncome * 100;  
-        } else {
-            $momIncomeAverages              = 0.00;
-        }
-        $incomeAccountSummary               = array(
-            'income'                        => $income,
-            'thisMonthIncome'               => $thisMonthIncome,
-            'lastMonthIncome'               => $lastMonthIncome,
-            'momIncomeAverages'             => $momIncomeAverages,
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         );
         return $incomeAccountSummary;
     }
 
     public function get_expense_account_summary($cuID) {
-<<<<<<< HEAD
         $getExpenseAccountSummary               = $this->CI->budget_model->get_expense_account_summary($cuID);
         // print_r($getExpenseAccountSummary->result_array());
         foreach($getExpenseAccountSummary->result_array() as $expenseAccount) {
@@ -474,51 +360,11 @@ class MyMIBudget
             'thisMonthExpenses'                 => $thisMonthExpenses,
             'lastMonthExpenses'                 => $lastMonthExpenses,
             'momExpenseAverages'                => $momExpenseAverages,
-=======
-        $getExpenseAccountSummary           = $this->CI->budget_model->get_expense_account_summary($cuID);
-        // print_r($getExpenseAccountSummary->result_array());
-        foreach($getExpenseAccountSummary->result_array() as $expenseAccount) {
-            if ($expenseAccount['net_amount'] > 0) {
-                $expenses                   = $expenseAccount['net_amount'];
-            } else {    
-                $expenses                   = 0.00;
-            }
-        }
-        $getTMExpenseAccountSummary         = $this->CI->budget_model->get_this_month_expense_account_summary($cuID);
-        // print_r($getExpenseAccountSummary->result_array());
-        foreach($getTMExpenseAccountSummary->result_array() as $thisExpenseAccount) {
-            if ($thisExpenseAccount['net_amount'] > 0) {
-                $thisMonthExpenses          = $thisExpenseAccount['net_amount'];
-            } else {    
-                $thisMonthExpenses          = 0.00;
-            }
-        }
-        $getLMExpenseAccountSummary         = $this->CI->budget_model->get_last_month_expense_account_summary($cuID);
-        // print_r($getExpenseAccountSummary->result_array());
-        foreach($getLMExpenseAccountSummary->result_array() as $lastExpenseAccount) {
-            if ($lastExpenseAccount['net_amount'] > 0) {
-                $lastMonthExpenses          = $lastExpenseAccount['net_amount'];
-            } else {    
-                $lastMonthExpenses          = 0.00;
-            }
-        }
-        if (!empty($lastMonthExpenses)) {
-            $momExpenseAverages             = ($thisMonthExpenses - $lastMonthExpenses)/$lastMonthExpenses * 100;  
-        } else {
-            $momExpenseAverages             = 0.00;
-        }
-        $expenseAccountSummary              = array(
-            'expenses'                      => $expenses,
-            'thisMonthExpenses'             => $thisMonthExpenses,
-            'lastMonthExpenses'             => $lastMonthExpenses,
-            'momExpenseAverages'            => $momExpenseAverages,
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         );
         return $expenseAccountSummary;
     }
 
     public function get_debt_account_summary($cuID) {
-<<<<<<< HEAD
         $getDebtAccounts                        = $this->CI->budget_model->get_debt_accounts($cuID); 
         foreach($getDebtAccounts->result_array() as $thisDebtAccount) {
             if ($thisDebtAccount['net_amount'] > 0) {
@@ -530,24 +376,10 @@ class MyMIBudget
 
         $debtAccountSummary                     = array(
             'totalDebt'                         => $totalDebt,
-=======
-        $getDebtAccounts                    = $this->CI->budget_model->get_debt_accounts($cuID); 
-        foreach($getDebtAccounts->result_array() as $thisDebtAccount) {
-            if ($thisDebtAccount['net_amount'] > 0) {
-                $totalDebt                  = $thisDebtAccount['net_amount'];
-            } else {    
-                $totalDebt                  = 0.00;
-            }
-        }
-
-        $debtAccountSummary                 = array(
-            'totalDebt'                     => $totalDebt,
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         );
 
         return $debtAccountSummary; 
     }
-<<<<<<< HEAD
 
     // public function get_user_budget_account($accountID) {
     //     $getUserBudgetAccount               = $this->CI->budget_model->get_account_information($accountID);
@@ -627,10 +459,6 @@ class MyMIBudget
         );
         return $firstBudgetAccount;
     }
-=======
-    
-
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     // public function get_last_account() {
     //     $getLastAccount                         = $this->investor_model->get_last_account(); 
     //     foreach ($getLastAccount->result_array() as $lastAccount) {

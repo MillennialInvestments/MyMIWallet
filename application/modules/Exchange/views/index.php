@@ -1,32 +1,32 @@
 <?php
-// use GuzzleHttp\Client;
+use GuzzleHttp\Client;
 
-// $client                                         = new Client([
-//     'base_uri'                                  => 'https://api.kucoin.com',
-//     'timeout'                                   => 30.0,
-// ]);
+$client                                         = new Client([
+    'base_uri'                                  => 'https://api.kucoin.com',
+    'timeout'                                   => 30.0,
+]);
 
-// $symbols                                        = 'DGB-USDT';
-// $apiKey                                         = $this->config->item('kucoin_key'); // Replace with your KuCoin API key
+$symbols                                        = 'DGB-USDT';
+$apiKey                                         = $this->config->item('kucoin_key'); // Replace with your KuCoin API key
 
-// try {
-//     $response                                   = $client->request('GET', "/v1/marketdata/quotes?apikey={$apiKey}&symbol={$symbols}&interval=1min", [
-//         'headers'                               => [
-//             'cache-control'                     => 'no-cache',
-//             // Add any other headers required by the KuCoin API
-//         ],
-//     ]);
+try {
+    $response                                   = $client->request('GET', "/v1/marketdata/quotes?apikey={$apiKey}&symbol={$symbols}&interval=1min", [
+        'headers'                               => [
+            'cache-control'                     => 'no-cache',
+            // Add any other headers required by the KuCoin API
+        ],
+    ]);
 
-//     $body                                       = $response->getBody();
-//     $content                                    = $body->getContents();
+    $body                                       = $response->getBody();
+    $content                                    = $body->getContents();
 
-//     $data                                       = json_decode($content, true);
+    $data                                       = json_decode($content, true);
 
-//     // Now $data contains your decoded JSON response, you can process it as needed
-// } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-//     // Handle exception
-//     echo $e->getMessage();
-// }
+    // Now $data contains your decoded JSON response, you can process it as needed
+} catch (\GuzzleHttp\Exception\GuzzleException $e) {
+    // Handle exception
+    echo $e->getMessage();
+}
 
 $cuID					 						= isset($current_user->id) && ! empty($current_user->id) ? $current_user->id : '';
 $cuEmail				 						= isset($current_user->email) && ! empty($current_user->email) ? $current_user->email : '';
@@ -212,11 +212,7 @@ $applicationData								= array(
 						<th class="text-center">Market Cap</th>    
 						<th class="text-center">Total Growth</th>  
 						<th class="text-center">Total Volume</th>  
-<<<<<<< HEAD
 						<th class="d-none d-md-block text-center full-width">Circulating Coins</th>
-=======
-						<th class="d-none d-md-block text-center">Circulating Coins</th>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 					</tr>
 				</thead>
 				<tbody>
@@ -291,15 +287,9 @@ $applicationData								= array(
 						<th class="text-center pt-3 pl-5">
 							<a href="' . site_url('Exchange/Market/' . $market_pair . '/' . $market). '">
 								<div class="row">
-<<<<<<< HEAD
 									<span class="d-none d-md-block col-2 col-md-2 px-0" style="max-width: 50px;"><img src="' . base_url('assets/images/Exchanges/Icons/' . $icon) . '" alt="" /><br> </span> 
 									<span class="col-2 col-md-8 pl-1 text-left d-none d-md-block">' . $market. ' <span class="badge badge-light">' . $market_pair . '</span><br><small>' . $description . '</small></span>
 									<span class="col-2 col-md-2 text-left d-block d-md-none pl-0">' . $market. ' <span class="badge badge-light ">' . $market_pair . '</span><br><small class="d-none d-md-block">' . $description . '</small></span>
-=======
-									<span class="d-none d-md-block col-md-2 px-0" style="max-width: 50px;"><img src="' . base_url('assets/images/Exchanges/Icons/' . $icon) . '" alt="" /><br> </span> 
-									<span class="col-2 pl-1 text-left d-none d-md-block">' . $market. ' <span class="badge badge-light">' . $market_pair . '</span><br><small>' . $description . '</small></span>
-									<span class="col-2 text-left d-block d-md-none pl-0">' . $market. ' <span class="badge badge-light ">' . $market_pair . '</span><br><small class="d-none d-md-block">' . $description . '</small></span>
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 								</div>
 							</a>
 						</th>                
