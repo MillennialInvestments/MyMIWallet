@@ -108,6 +108,8 @@ class MyMIUser
             'cuDOB'                 		=> $userInfo['cuDOB'],
             'cuSSN'                         => $userInfo['cuSSN'], 
             'cuPhone'                 		=> $userInfo['cuPhone'],
+            'cuAddress'                		=> $userInfo['cuAddress'],
+            'cuCity'                		=> $userInfo['cuCity'],
             'cuState'                 		=> $userInfo['cuState'],
             'cuCountry'                 	=> $userInfo['cuCountry'],
             'cuZipCode'                 	=> $userInfo['cuZipCode'],

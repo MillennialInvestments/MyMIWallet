@@ -1952,6 +1952,8 @@ $cuFullAddress          = $cuAddress . ', ' . $cuCity . ', ' . $cuState . ', ' .
                         <div id="debt-integration" class="tab-pane fade">
                         Debt Integration
                         </div>
+
+                        <?php if ($investmentOperations === 1) { ?>
                         <div id="investment-summary" class="tab-pane fade">
                             <?php //$this->load->view('User/Budget/index/Investor_Assessment/personal_information'); ?>
                             <div class="nk-block-head nk-block-head-lg">
@@ -2035,6 +2037,7 @@ $cuFullAddress          = $cuAddress . ', ' . $cuCity . ', ' . $cuState . ', ' .
                         <div id="investment-availability" class="tab-pane fade">
                         Investment Availability 
                         </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

@@ -29,6 +29,7 @@ class MyMIBudget
         // $userBudgetRecords                      = $this->get_all_user_budget_records($cuID);
         $userAccount                            = $this->CI->mymiuser->user_account_info($cuID); 
         // New Configuration
+        $monthlySavingsPercentage               = 0.2;
         $monthlySavingsPercentageFMT            = number_format($monthlySavingsPercentage * 100,0) . '%';
         $userBudgetRecords                      = $this->CI->budget_model->get_user_budget_records($cuID);
         $getThisMonthsIncome                    = $this->CI->budget_model->get_this_months_income($cuID);
