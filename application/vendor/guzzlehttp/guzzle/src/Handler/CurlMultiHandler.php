@@ -19,10 +19,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * @final
  */
-<<<<<<< HEAD
 #[\AllowDynamicProperties]
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 class CurlMultiHandler
 {
     /**
@@ -167,12 +164,8 @@ class CurlMultiHandler
             \usleep(250);
         }
 
-<<<<<<< HEAD
         while (\curl_multi_exec($this->_mh, $this->active) === \CURLM_CALL_MULTI_PERFORM) {
         }
-=======
-        while (\curl_multi_exec($this->_mh, $this->active) === \CURLM_CALL_MULTI_PERFORM);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         $this->processMessages();
     }

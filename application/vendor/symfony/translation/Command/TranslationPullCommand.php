@@ -142,11 +142,7 @@ EOF
 
         switch ($format) {
             case 'xlf20': $xliffVersion = '2.0';
-<<<<<<< HEAD
                 // no break
-=======
-            // no break
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             case 'xlf12': $format = 'xlf';
         }
 
@@ -164,11 +160,7 @@ EOF
 
         if ($force) {
             foreach ($providerTranslations->getCatalogues() as $catalogue) {
-<<<<<<< HEAD
                 $operation = new TargetOperation(new MessageCatalogue($catalogue->getLocale()), $catalogue);
-=======
-                $operation = new TargetOperation((new MessageCatalogue($catalogue->getLocale())), $catalogue);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 if ($intlIcu) {
                     $operation->moveMessagesToIntlDomainsIfPossible();
                 }

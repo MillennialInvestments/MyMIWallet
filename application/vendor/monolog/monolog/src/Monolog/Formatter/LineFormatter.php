@@ -153,15 +153,12 @@ class LineFormatter extends NormalizerFormatter
 
         if ($previous = $e->getPrevious()) {
             do {
-<<<<<<< HEAD
                 $depth++;
                 if ($depth > $this->maxNormalizeDepth) {
                     $str .= '\n[previous exception] Over ' . $this->maxNormalizeDepth . ' levels deep, aborting normalization';
                     break;
                 }
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 $str .= "\n[previous exception] " . $this->formatException($previous);
             } while ($previous = $previous->getPrevious());
         }
@@ -189,15 +186,11 @@ class LineFormatter extends NormalizerFormatter
     {
         if ($this->allowInlineLineBreaks) {
             if (0 === strpos($str, '{')) {
-<<<<<<< HEAD
                 $str = preg_replace('/(?<!\\\\)\\\\[rn]/', "\n", $str);
                 if (null === $str) {
                     $pcreErrorCode = preg_last_error();
                     throw new \RuntimeException('Failed to run preg_replace: ' . $pcreErrorCode . ' / ' . Utils::pcreLastErrorMessage($pcreErrorCode));
                 }
-=======
-                return str_replace(array('\r', '\n'), array("\r", "\n"), $str);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             }
 
             return $str;

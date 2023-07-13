@@ -1,7 +1,6 @@
 CHANGELOG
 =========
 
-<<<<<<< HEAD
 5.4.21
 ------
 
@@ -9,8 +8,6 @@ CHANGELOG
    `supportsProvider()`, `createProvider()`, `unsupportedSchemeProvider()`and `incompleteDsnProvider()`
  * [BC BREAK] `ProviderTestCase::toStringProvider()` is now static
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 5.4
 ---
 

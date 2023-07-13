@@ -67,10 +67,7 @@ final class Message
             return null;
         }
 
-<<<<<<< HEAD
         $body->rewind();
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $summary = $body->read($truncateAt);
         $body->rewind();
 
@@ -80,11 +77,7 @@ final class Message
 
         // Matches any printable character, including unicode characters:
         // letters, marks, numbers, punctuation, spacing, and separators.
-<<<<<<< HEAD
         if (preg_match('/[^\pL\pM\pN\pP\pS\pZ\n\r\t]/u', $summary) !== 0) {
-=======
-        if (preg_match('/[^\pL\pM\pN\pP\pS\pZ\n\r\t]/u', $summary)) {
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return null;
         }
 

@@ -48,7 +48,6 @@ abstract class Handler implements HandlerInterface
     {
         $this->close();
 
-<<<<<<< HEAD
         $reflClass = new \ReflectionClass($this);
 
         $keys = [];
@@ -59,8 +58,5 @@ abstract class Handler implements HandlerInterface
         }
 
         return $keys;
-=======
-        return array_keys(get_object_vars($this));
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 }

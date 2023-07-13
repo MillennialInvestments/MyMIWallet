@@ -1,10 +1,7 @@
 <?php
 
-<<<<<<< HEAD
 declare(strict_types=1);
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 namespace GuzzleHttp\Promise;
 
 /**
@@ -15,28 +12,18 @@ namespace GuzzleHttp\Promise;
  * by calling the `run()` function of the global task queue in an event loop.
  *
  *     GuzzleHttp\Promise\Utils::queue()->run();
-<<<<<<< HEAD
  *
  * @final
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
  */
 class TaskQueue implements TaskQueueInterface
 {
     private $enableShutdown = true;
     private $queue = [];
 
-<<<<<<< HEAD
     public function __construct(bool $withShutdown = true)
     {
         if ($withShutdown) {
             register_shutdown_function(function (): void {
-=======
-    public function __construct($withShutdown = true)
-    {
-        if ($withShutdown) {
-            register_shutdown_function(function () {
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 if ($this->enableShutdown) {
                     // Only run the tasks if an E_ERROR didn't occur.
                     $err = error_get_last();
@@ -48,29 +35,17 @@ class TaskQueue implements TaskQueueInterface
         }
     }
 
-<<<<<<< HEAD
     public function isEmpty(): bool
-=======
-    public function isEmpty()
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         return !$this->queue;
     }
 
-<<<<<<< HEAD
     public function add(callable $task): void
-=======
-    public function add(callable $task)
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         $this->queue[] = $task;
     }
 
-<<<<<<< HEAD
     public function run(): void
-=======
-    public function run()
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         while ($task = array_shift($this->queue)) {
             /** @var callable $task */
@@ -89,11 +64,7 @@ class TaskQueue implements TaskQueueInterface
      *
      * Note: This shutdown will occur before any destructors are triggered.
      */
-<<<<<<< HEAD
     public function disableShutdown(): void
-=======
-    public function disableShutdown()
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         $this->enableShutdown = false;
     }

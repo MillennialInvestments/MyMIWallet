@@ -112,7 +112,6 @@ class Logger implements LoggerInterface, ResettableInterface
     ];
 
     /**
-<<<<<<< HEAD
      * Mapping between levels numbers defined in RFC 5424 and Monolog ones
      *
      * @phpstan-var array<int, Level> $rfc_5424_levels
@@ -129,8 +128,6 @@ class Logger implements LoggerInterface, ResettableInterface
     ];
 
     /**
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * @var string
      */
     protected $name;
@@ -172,14 +169,11 @@ class Logger implements LoggerInterface, ResettableInterface
     private $logDepth = 0;
 
     /**
-<<<<<<< HEAD
      * @var \WeakMap<\Fiber, int>|null Keeps track of depth inside fibers to prevent infinite logging loops
      */
     private $fiberLogDepth;
 
     /**
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * @var bool Whether to detect infinite logging loops
      *
      * This can be disabled via {@see useLoggingLoopDetection} if you have async handlers that do not play well with this
@@ -200,7 +194,6 @@ class Logger implements LoggerInterface, ResettableInterface
         $this->setHandlers($handlers);
         $this->processors = $processors;
         $this->timezone = $timezone ?: new DateTimeZone(date_default_timezone_get() ?: 'UTC');
-<<<<<<< HEAD
 
         if (\PHP_VERSION_ID >= 80100) {
             // Local variable for phpstan, see https://github.com/phpstan/phpstan/issues/6732#issuecomment-1111118412
@@ -208,8 +201,6 @@ class Logger implements LoggerInterface, ResettableInterface
             $fiberLogDepth = new \WeakMap();
             $this->fiberLogDepth = $fiberLogDepth;
         }
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     public function getName(): string
@@ -338,11 +329,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record.
      *
-<<<<<<< HEAD
      * @param  int               $level    The logging level (a Monolog or RFC 5424 level)
-=======
-     * @param  int               $level    The logging level
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * @param  string            $message  The log message
      * @param  mixed[]           $context  The log context
      * @param  DateTimeImmutable $datetime Optional log date to log into the past or future
@@ -352,7 +339,6 @@ class Logger implements LoggerInterface, ResettableInterface
      */
     public function addRecord(int $level, string $message, array $context = [], DateTimeImmutable $datetime = null): bool
     {
-<<<<<<< HEAD
         if (isset(self::RFC_5424_LEVELS[$level])) {
             $level = self::RFC_5424_LEVELS[$level];
         }
@@ -372,15 +358,6 @@ class Logger implements LoggerInterface, ResettableInterface
             $this->warning('A possible infinite logging loop was detected and aborted. It appears some of your handler code is triggering logging, see the previous log record for a hint as to what may be the cause.');
             return false;
         } elseif ($logDepth >= 5) { // log depth 4 is let through, so we can log the warning above
-=======
-        if ($this->detectCycles) {
-            $this->logDepth += 1;
-        }
-        if ($this->logDepth === 3) {
-            $this->warning('A possible infinite logging loop was detected and aborted. It appears some of your handler code is triggering logging, see the previous log record for a hint as to what may be the cause.');
-            return false;
-        } elseif ($this->logDepth >= 5) { // log depth 4 is let through so we can log the warning above
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return false;
         }
 
@@ -430,15 +407,11 @@ class Logger implements LoggerInterface, ResettableInterface
             }
         } finally {
             if ($this->detectCycles) {
-<<<<<<< HEAD
                 if (isset($fiber)) {
                     $this->fiberLogDepth[$fiber]--;
                 } else {
                     $this->logDepth--;
                 }
-=======
-                $this->logDepth--;
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             }
         }
 
@@ -591,11 +564,7 @@ class Logger implements LoggerInterface, ResettableInterface
      *
      * This method allows for compatibility with common interfaces.
      *
-<<<<<<< HEAD
      * @param mixed             $level   The log level (a Monolog, PSR-3 or RFC 5424 level)
-=======
-     * @param mixed             $level   The log level
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * @param string|Stringable $message The log message
      * @param mixed[]           $context The log context
      *
@@ -607,13 +576,10 @@ class Logger implements LoggerInterface, ResettableInterface
             throw new \InvalidArgumentException('$level is expected to be a string or int');
         }
 
-<<<<<<< HEAD
         if (isset(self::RFC_5424_LEVELS[$level])) {
             $level = self::RFC_5424_LEVELS[$level];
         }
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $level = static::toMonologLevel($level);
 
         $this->addRecord($level, (string) $message, $context);
@@ -756,7 +722,6 @@ class Logger implements LoggerInterface, ResettableInterface
 
         ($this->exceptionHandler)($e, $record);
     }
-<<<<<<< HEAD
 
     /**
      * @return array<string, mixed>
@@ -793,6 +758,4 @@ class Logger implements LoggerInterface, ResettableInterface
             $this->fiberLogDepth = $fiberLogDepth;
         }
     }
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

@@ -16,10 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ServiceLocator;
-<<<<<<< HEAD
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver\TraceableValueResolver;
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
 /**
  * @author Yonel Ceruto <yonelceruto@gmail.com>
@@ -140,7 +137,6 @@ class TranslatorPathsPass extends AbstractRecursivePass
 
     private function findControllerArguments(ContainerBuilder $container): array
     {
-<<<<<<< HEAD
         if (!$container->has($this->resolverServiceId)) {
             return [];
         }
@@ -156,30 +152,5 @@ class TranslatorPathsPass extends AbstractRecursivePass
         }
 
         return $argument->getArgument(0);
-=======
-        if ($container->hasDefinition($this->resolverServiceId)) {
-            $argument = $container->getDefinition($this->resolverServiceId)->getArgument(0);
-            if ($argument instanceof Reference) {
-                $argument = $container->getDefinition($argument);
-            }
-
-            return $argument->getArgument(0);
-        }
-
-        if ($container->hasDefinition('debug.'.$this->resolverServiceId)) {
-            $argument = $container->getDefinition('debug.'.$this->resolverServiceId)->getArgument(0);
-            if ($argument instanceof Reference) {
-                $argument = $container->getDefinition($argument);
-            }
-            $argument = $argument->getArgument(0);
-            if ($argument instanceof Reference) {
-                $argument = $container->getDefinition($argument);
-            }
-
-            return $argument->getArgument(0);
-        }
-
-        return [];
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 }

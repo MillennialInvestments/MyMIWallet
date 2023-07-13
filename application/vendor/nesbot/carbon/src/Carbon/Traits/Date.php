@@ -532,10 +532,7 @@ trait Date
     use Creator;
     use Difference;
     use Macro;
-<<<<<<< HEAD
     use MagicParameter;
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     use Modifiers;
     use Mutability;
     use ObjectInitialisation;
@@ -645,11 +642,8 @@ trait Date
     /**
      * List of minimum and maximums for each unit.
      *
-<<<<<<< HEAD
      * @param int $daysInMonth
      *
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * @return array
      */
     protected static function getRangesByUnit(int $daysInMonth = 31): array
@@ -1363,7 +1357,6 @@ trait Date
      */
     public function weekday($value = null)
     {
-<<<<<<< HEAD
         if ($value === null) {
             return $this->dayOfWeek;
         }
@@ -1372,11 +1365,6 @@ trait Date
         $dayOfWeek = ($this->dayOfWeek + 7 - $firstDay) % 7;
 
         return $this->addDays((($value + 7 - $firstDay) % 7) - $dayOfWeek);
-=======
-        $dayOfWeek = ($this->dayOfWeek + 7 - (int) ($this->getTranslationMessage('first_day_of_week') ?? 0)) % 7;
-
-        return $value === null ? $dayOfWeek : $this->addDays($value - $dayOfWeek);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -1394,7 +1382,6 @@ trait Date
     }
 
     /**
-<<<<<<< HEAD
      * Return the number of days since the start of the week (using the current locale or the first parameter
      * if explicitly given).
      *
@@ -1428,8 +1415,6 @@ trait Date
     }
 
     /**
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * Set any unit to a new value without overflowing current other unit given.
      *
      * @param string $valueUnit    unit name to modify
@@ -1934,13 +1919,10 @@ trait Date
             'LL' => $this->getTranslationMessage('formats.LL', $locale, 'MMMM D, YYYY'),
             'LLL' => $this->getTranslationMessage('formats.LLL', $locale, 'MMMM D, YYYY h:mm A'),
             'LLLL' => $this->getTranslationMessage('formats.LLLL', $locale, 'dddd, MMMM D, YYYY h:mm A'),
-<<<<<<< HEAD
             'l' => $this->getTranslationMessage('formats.l', $locale),
             'll' => $this->getTranslationMessage('formats.ll', $locale),
             'lll' => $this->getTranslationMessage('formats.lll', $locale),
             'llll' => $this->getTranslationMessage('formats.llll', $locale),
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         ];
     }
 
@@ -2224,11 +2206,7 @@ trait Date
 
             $input = mb_substr($format, $i);
 
-<<<<<<< HEAD
             if (preg_match('/^(LTS|LT|l{1,4}|L{1,4})/', $input, $match)) {
-=======
-            if (preg_match('/^(LTS|LT|[Ll]{1,4})/', $input, $match)) {
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 if ($formats === null) {
                     $formats = $this->getIsoFormats();
                 }
@@ -2692,11 +2670,7 @@ trait Date
         }
 
         if (static::isModifiableUnit($unit)) {
-<<<<<<< HEAD
             return $this->{"{$action}Unit"}($unit, $this->getMagicParameter($parameters, 0, 'value', 1), $overflow);
-=======
-            return $this->{"{$action}Unit"}($unit, $parameters[0] ?? 1, $overflow);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         $sixFirstLetters = substr($unit, 0, 6);
@@ -2735,15 +2709,11 @@ trait Date
             try {
                 $unit = static::singularUnit(substr($method, 0, -5));
 
-<<<<<<< HEAD
                 return $this->range(
                     $this->getMagicParameter($parameters, 0, 'endDate', $this),
                     $this->getMagicParameter($parameters, 1, 'factor', 1),
                     $unit
                 );
-=======
-                return $this->range($parameters[0] ?? $this, $parameters[1] ?? 1, $unit);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             } catch (InvalidArgumentException $exception) {
                 // Try macros
             }

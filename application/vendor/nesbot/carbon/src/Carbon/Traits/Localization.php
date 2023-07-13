@@ -357,7 +357,6 @@ trait Localization
             $weekdays = $messages['weekdays'] ?? [];
             $meridiem = $messages['meridiem'] ?? ['AM', 'PM'];
 
-<<<<<<< HEAD
             if (isset($messages['ordinal_words'])) {
                 $timeString = self::replaceOrdinalWords(
                     $timeString,
@@ -365,8 +364,6 @@ trait Localization
                 );
             }
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             if ($key === 'from') {
                 foreach (['months', 'weekdays'] as $variable) {
                     $list = $messages[$variable.'_standalone'] ?? null;
@@ -742,11 +739,7 @@ trait Localization
         }
 
         if ($translator && !($translator instanceof LocaleAwareInterface || method_exists($translator, 'getLocale'))) {
-<<<<<<< HEAD
             throw new NotLocaleAwareException($translator); // @codeCoverageIgnore
-=======
-            throw new NotLocaleAwareException($translator);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         return $translator;
@@ -835,7 +828,6 @@ trait Localization
 
         return $list;
     }
-<<<<<<< HEAD
 
     private static function replaceOrdinalWords(string $timeString, array $ordinalWords): string
     {
@@ -843,6 +835,4 @@ trait Localization
             return $ordinalWords[mb_strtolower($match[0])] ?? $match[0];
         }, $timeString);
     }
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 }

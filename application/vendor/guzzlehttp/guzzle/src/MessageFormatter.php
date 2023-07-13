@@ -40,19 +40,11 @@ class MessageFormatter implements MessageFormatterInterface
     /**
      * Apache Common Log Format.
      *
-<<<<<<< HEAD
      * @see https://httpd.apache.org/docs/2.4/logs.html#common
      *
      * @var string
      */
     public const CLF = '{hostname} {req_header_User-Agent} - [{date_common_log}] "{method} {target} HTTP/{version}" {code} {res_header_Content-Length}';
-=======
-     * @link https://httpd.apache.org/docs/2.4/logs.html#common
-     *
-     * @var string
-     */
-    public const CLF = "{hostname} {req_header_User-Agent} - [{date_common_log}] \"{method} {target} HTTP/{version}\" {code} {res_header_Content-Length}";
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public const DEBUG = ">>>>>>>>\n{request}\n<<<<<<<<\n{response}\n--------\n{error}";
     public const SHORT = '[{ts}] "{method} {target} HTTP/{version}" {code}';
 
@@ -98,15 +90,9 @@ class MessageFormatter implements MessageFormatterInterface
                         break;
                     case 'req_headers':
                         $result = \trim($request->getMethod()
-<<<<<<< HEAD
                                 .' '.$request->getRequestTarget())
                             .' HTTP/'.$request->getProtocolVersion()."\r\n"
                             .$this->headers($request);
-=======
-                                . ' ' . $request->getRequestTarget())
-                            . ' HTTP/' . $request->getProtocolVersion() . "\r\n"
-                            . $this->headers($request);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                         break;
                     case 'res_headers':
                         $result = $response ?
@@ -115,11 +101,7 @@ class MessageFormatter implements MessageFormatterInterface
                                 $response->getProtocolVersion(),
                                 $response->getStatusCode(),
                                 $response->getReasonPhrase()
-<<<<<<< HEAD
                             )."\r\n".$this->headers($response)
-=======
-                            ) . "\r\n" . $this->headers($response)
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                             : 'NULL';
                         break;
                     case 'req_body':
@@ -195,10 +177,6 @@ class MessageFormatter implements MessageFormatterInterface
                 }
 
                 $cache[$matches[1]] = $result;
-<<<<<<< HEAD
-
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 return $result;
             },
             $this->template
@@ -212,11 +190,7 @@ class MessageFormatter implements MessageFormatterInterface
     {
         $result = '';
         foreach ($message->getHeaders() as $name => $values) {
-<<<<<<< HEAD
             $result .= $name.': '.\implode(', ', $values)."\r\n";
-=======
-            $result .= $name . ': ' . \implode(', ', $values) . "\r\n";
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         }
 
         return \trim($result);

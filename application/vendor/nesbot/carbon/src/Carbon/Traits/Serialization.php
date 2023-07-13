@@ -120,11 +120,8 @@ trait Serialization
     /**
      * Returns the list of properties to dump on serialize() called on.
      *
-<<<<<<< HEAD
      * Only used by PHP < 7.4.
      *
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * @return array
      */
     public function __sleep()
@@ -140,7 +137,6 @@ trait Serialization
     }
 
     /**
-<<<<<<< HEAD
      * Returns the values to dump on serialize() called on.
      *
      * Only used by PHP >= 7.4.
@@ -187,10 +183,6 @@ trait Serialization
      *
      * Only used by PHP < 7.4.
      *
-=======
-     * Set locale if specified on unserialize() called.
-     *
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * @return void
      */
     #[ReturnTypeWillChange]
@@ -201,7 +193,6 @@ trait Serialization
             try {
                 parent::__wakeup();
             } catch (Throwable $exception) {
-<<<<<<< HEAD
                 try {
                     // FatalError occurs when calling msgpack_unpack() in PHP 7.4 or later.
                     ['date' => $date, 'timezone' => $timezone] = $this->dumpDateProperties;
@@ -209,11 +200,6 @@ trait Serialization
                 } catch (Throwable $ignoredException) {
                     throw $exception;
                 }
-=======
-                // FatalError occurs when calling msgpack_unpack() in PHP 7.4 or later.
-                ['date' => $date, 'timezone' => $timezone] = $this->dumpDateProperties;
-                parent::__construct($date, unserialize($timezone));
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             }
             // @codeCoverageIgnoreEnd
         }
@@ -229,7 +215,6 @@ trait Serialization
     }
 
     /**
-<<<<<<< HEAD
      * Set locale if specified on unserialize() called.
      *
      * Only used by PHP >= 7.4.
@@ -262,8 +247,6 @@ trait Serialization
     }
 
     /**
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * Prepare the object for JSON serialization.
      *
      * @return array|string
@@ -306,7 +289,6 @@ trait Serialization
      */
     public function cleanupDumpProperties()
     {
-<<<<<<< HEAD
         // @codeCoverageIgnoreStart
         if (PHP_VERSION < 8.2) {
             foreach ($this->dumpProperties as $property) {
@@ -316,13 +298,6 @@ trait Serialization
             }
         }
         // @codeCoverageIgnoreEnd
-=======
-        foreach ($this->dumpProperties as $property) {
-            if (isset($this->$property)) {
-                unset($this->$property);
-            }
-        }
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         return $this;
     }

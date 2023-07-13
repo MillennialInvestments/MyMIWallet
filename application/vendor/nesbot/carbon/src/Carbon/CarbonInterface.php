@@ -703,7 +703,6 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
     public function __isset($name);
 
     /**
-<<<<<<< HEAD
      * Returns the values to dump on serialize() called on.
      *
      * Only used by PHP >= 7.4.
@@ -713,8 +712,6 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
     public function __serialize(): array;
 
     /**
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * Set a part of the Carbon object
      *
      * @param string                  $name
@@ -739,11 +736,8 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
     /**
      * Returns the list of properties to dump on serialize() called on.
      *
-<<<<<<< HEAD
      * Only used by PHP < 7.4.
      *
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * @return array
      */
     public function __sleep();
@@ -753,11 +747,7 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
      *
      * @example
      * ```
-<<<<<<< HEAD
      * echo Carbon::now(); // Carbon instances can be cast to string
-=======
-     * echo Carbon::now(); // Carbon instances can be casted to string
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * ```
      *
      * @return string
@@ -765,7 +755,6 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
     public function __toString();
 
     /**
-<<<<<<< HEAD
      * Set locale if specified on unserialize() called.
      *
      * Only used by PHP >= 7.4.
@@ -775,8 +764,6 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
     public function __unserialize(array $data): void;
 
     /**
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * Add given units or interval to the current instance.
      *
      * @example $date->add('hour', 3)
@@ -1021,11 +1008,7 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
      *
      * @param string $modifier
      *
-<<<<<<< HEAD
      * @return static|false
-=======
-     * @return static
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public function change($modifier);
 
@@ -1314,11 +1297,7 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
      *
      * @return CarbonInterval
      */
-<<<<<<< HEAD
     public function diffAsCarbonInterval($date = null, $absolute = true, array $skip = []);
-=======
-    public function diffAsCarbonInterval($date = null, $absolute = true);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
     /**
      * Get the difference by the given interval using a filter closure.
@@ -2159,7 +2138,6 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
     public static function getDays();
 
     /**
-<<<<<<< HEAD
      * Return the number of days since the start of the week (using the current locale or the first parameter
      * if explicitly given).
      *
@@ -2172,8 +2150,6 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
     public function getDaysFromStartOfWeek(?int $weekStartsAt = null): int;
 
     /**
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * Get the fallback locale.
      *
      * @see https://symfony.com/doc/current/components/translation.html#fallback-locales
@@ -3439,11 +3415,7 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
      *
      * @param string|int|null $modifier
      *
-<<<<<<< HEAD
      * @return static|false
-=======
-     * @return static
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public function next($modifier = null);
 
@@ -3589,11 +3561,7 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
      *
      * @param string|int|null $modifier
      *
-<<<<<<< HEAD
      * @return static|false
-=======
-     * @return static
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public function previous($modifier = null);
 
@@ -3839,7 +3807,6 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
     public function setDateTimeFrom($date = null);
 
     /**
-<<<<<<< HEAD
      * Set the day (keeping the current time) to the start of the week + the number of days passed as the first
      * parameter. First day of week is driven by the locale unless explicitly set with the second parameter.
      *
@@ -3853,8 +3820,6 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
     public function setDaysFromStartOfWeek(int $numberOfDays, ?int $weekStartsAt = null);
 
     /**
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * Set the fallback locale.
      *
      * @see https://symfony.com/doc/current/components/translation.html#fallback-locales
@@ -3941,11 +3906,7 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
      *
      * /!\ Use this method for unit tests only.
      *
-<<<<<<< HEAD
      * @param DateTimeInterface|Closure|static|string|false|null $testNow real or mock Carbon instance
-=======
-     * @param Closure|static|string|false|null $testNow real or mock Carbon instance
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public static function setTestNow($testNow = null);
 
@@ -3966,11 +3927,7 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
      *
      * /!\ Use this method for unit tests only.
      *
-<<<<<<< HEAD
      * @param DateTimeInterface|Closure|static|string|false|null $testNow real or mock Carbon instance
-=======
-     * @param Closure|static|string|false|null $testNow real or mock Carbon instance
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public static function setTestNowAndTimezone($testNow = null, $tz = null);
 
@@ -4031,19 +3988,11 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
 
     /**
      * @deprecated To avoid conflict between different third-party libraries, static setters should not be used.
-<<<<<<< HEAD
      *             You should rather let Carbon object being cast to string with DEFAULT_TO_STRING_FORMAT, and
      *             use other method or custom format passed to format() method if you need to dump another string
      *             format.
      *
      * Set the default format used when type juggling a Carbon instance to a string.
-=======
-     *             You should rather let Carbon object being casted to string with DEFAULT_TO_STRING_FORMAT, and
-     *             use other method or custom format passed to format() method if you need to dump an other string
-     *             format.
-     *
-     * Set the default format used when type juggling a Carbon instance to a string
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      *
      * @param string|Closure|null $format
      *
@@ -4635,7 +4584,6 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
     public function toFormattedDateString();
 
     /**
-<<<<<<< HEAD
      * Format the instance with the day, and a readable date
      *
      * @example
@@ -4648,8 +4596,6 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
     public function toFormattedDayDateString(): string;
 
     /**
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * Return the ISO-8601 string (ex: 1977-04-22T06:00:00Z, if $keepOffset truthy, offset will be kept:
      * 1977-04-22T01:00:00-05:00).
      *
@@ -5169,13 +5115,8 @@ interface CarbonInterface extends DateTimeInterface, JsonSerializable
      *
      * /!\ Use this method for unit tests only.
      *
-<<<<<<< HEAD
      * @param DateTimeInterface|Closure|static|string|false|null $testNow  real or mock Carbon instance
      * @param Closure|null                                       $callback
-=======
-     * @param Closure|static|string|false|null $testNow  real or mock Carbon instance
-     * @param Closure|null                     $callback
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      *
      * @return mixed
      */

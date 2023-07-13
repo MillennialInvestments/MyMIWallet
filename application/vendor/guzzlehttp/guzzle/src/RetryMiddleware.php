@@ -44,11 +44,7 @@ class RetryMiddleware
     {
         $this->decider = $decider;
         $this->nextHandler = $nextHandler;
-<<<<<<< HEAD
         $this->delay = $delay ?: __CLASS__.'::exponentialDelay';
-=======
-        $this->delay = $delay ?: __CLASS__ . '::exponentialDelay';
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -58,11 +54,7 @@ class RetryMiddleware
      */
     public static function exponentialDelay(int $retries): int
     {
-<<<<<<< HEAD
         return (int) 2 ** ($retries - 1) * 1000;
-=======
-        return (int) \pow(2, $retries - 1) * 1000;
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     public function __invoke(RequestInterface $request, array $options): PromiseInterface
@@ -72,10 +64,6 @@ class RetryMiddleware
         }
 
         $fn = $this->nextHandler;
-<<<<<<< HEAD
-
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         return $fn($request, $options)
             ->then(
                 $this->onFulfilled($request, $options),
@@ -97,10 +85,6 @@ class RetryMiddleware
             )) {
                 return $value;
             }
-<<<<<<< HEAD
-
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return $this->doRetry($request, $options, $value);
         };
     }
@@ -119,21 +103,13 @@ class RetryMiddleware
             )) {
                 return P\Create::rejectionFor($reason);
             }
-<<<<<<< HEAD
-
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return $this->doRetry($req, $options);
         };
     }
 
     private function doRetry(RequestInterface $request, array $options, ResponseInterface $response = null): PromiseInterface
     {
-<<<<<<< HEAD
         $options['delay'] = ($this->delay)(++$options['retries'], $response, $request);
-=======
-        $options['delay'] = ($this->delay)(++$options['retries'], $response);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         return $this($request, $options);
     }

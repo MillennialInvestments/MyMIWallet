@@ -48,3 +48,4 @@ ERROR - 2023-07-12 18:16:06 --> Severity: error --> Exception: syntax error, une
 ERROR - 2023-07-12 18:16:09 --> Severity: error --> Exception: syntax error, unexpected '<<' (T_SL) /home/mymiteam/mymiwallet/site/current/public/dev/application/vendor/guzzlehttp/guzzle/src/Client.php 123
 ERROR - 2023-07-12 18:23:10 --> Severity: error --> Exception: syntax error, unexpected '<<' (T_SL) /home/mymiteam/mymiwallet/site/current/public/dev/application/vendor/guzzlehttp/guzzle/src/Client.php 123
 ERROR - 2023-07-12 18:26:56 --> Severity: error --> Exception: syntax error, unexpected '<<' (T_SL) /home/mymiteam/mymiwallet/site/current/public/dev/application/vendor/guzzlehttp/guzzle/src/Client.php 123
+ERROR - 2023-07-12 19:41:27 --> Severity: error --> Exception: Magic request methods require a URI and optional options array /home/mymiteam/mymiwallet/site/current/public/dev/application/vendor/guzzlehttp/guzzle/src/Client.php 84

@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace Carbon\PHPStan;
 
-<<<<<<< HEAD
 use PHPStan\BetterReflection\Reflection;
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 use ReflectionMethod;
 
 if (!class_exists(AbstractReflectionMacro::class, false)) {
@@ -27,13 +24,10 @@ if (!class_exists(AbstractReflectionMacro::class, false)) {
          */
         public function getReflection(): ?ReflectionMethod
         {
-<<<<<<< HEAD
             if ($this->reflectionFunction instanceof Reflection\ReflectionMethod) {
                 return new Reflection\Adapter\ReflectionMethod($this->reflectionFunction);
             }
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             return $this->reflectionFunction instanceof ReflectionMethod
                 ? $this->reflectionFunction
                 : null;

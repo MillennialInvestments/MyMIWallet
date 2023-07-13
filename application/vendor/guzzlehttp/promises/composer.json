@@ -26,35 +26,22 @@
         }
     ],
     "require": {
-<<<<<<< HEAD
         "php": "^7.2.5 || ^8.0"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.8.1",
         "phpunit/phpunit": "^8.5.29 || ^9.5.23"
-=======
-        "php": ">=5.5"
-    },
-    "require-dev": {
-        "symfony/phpunit-bridge": "^4.4 || ^5.1"
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     },
     "autoload": {
         "psr-4": {
             "GuzzleHttp\\Promise\\": "src/"
-<<<<<<< HEAD
         }
-=======
-        },
-        "files": ["src/functions_include.php"]
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     },
     "autoload-dev": {
         "psr-4": {
             "GuzzleHttp\\Promise\\Tests\\": "tests/"
         }
     },
-<<<<<<< HEAD
     "extra": {
         "bamarni-bin": {
             "bin-links": true,
@@ -65,18 +52,6 @@
         "allow-plugins": {
             "bamarni/composer-bin-plugin": true
         },
-=======
-    "scripts": {
-        "test": "vendor/bin/simple-phpunit",
-        "test-ci": "vendor/bin/simple-phpunit --coverage-text"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.5-dev"
-        }
-    },
-    "config": {
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         "preferred-install": "dist",
         "sort-packages": true
     }

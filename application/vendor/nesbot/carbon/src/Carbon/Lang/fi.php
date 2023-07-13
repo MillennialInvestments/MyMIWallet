@@ -74,15 +74,10 @@ return [
         'LTS' => 'HH.mm:ss',
         'L' => 'D.M.YYYY',
         'LL' => 'dddd D. MMMM[ta] YYYY',
-<<<<<<< HEAD
         'll' => 'ddd D. MMM YYYY',
         'LLL' => 'D.MM. HH.mm',
         'LLLL' => 'D. MMMM[ta] YYYY HH.mm',
         'llll' => 'D. MMM YY HH.mm',
-=======
-        'LLL' => 'D.MM. HH.mm',
-        'LLLL' => 'D. MMMM[ta] YYYY HH.mm',
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     ],
     'weekdays' => ['sunnuntai', 'maanantai', 'tiistai', 'keskiviikko', 'torstai', 'perjantai', 'lauantai'],
     'weekdays_short' => ['su', 'ma', 'ti', 'ke', 'to', 'pe', 'la'],

@@ -10,11 +10,7 @@ interface that describes a HTTP message. See the specification for more details.
 Usage
 -----
 
-<<<<<<< HEAD
 Before reading the usage guide we recommend reading the PSR-7 interfaces method list:
 
 * [`PSR-7 Interfaces Method List`](docs/PSR7-Interfaces.md)
 * [`PSR-7 Usage Guide`](docs/PSR7-Usage.md)
-=======
-We'll certainly need some stuff in here.
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283

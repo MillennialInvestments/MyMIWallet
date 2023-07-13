@@ -12,24 +12,16 @@ class Dom extends Node
     public function __construct(Page $page)
     {
         $message = new Message('DOM.getDocument');
-<<<<<<< HEAD
         $response = $page->getSession()->sendMessageSync($message);
-=======
-        $stream = $page->getSession()->sendMessage($message);
-        $response = $stream->waitForResponse(1000);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         $rootNodeId = $response->getResultData('root')['nodeId'];
 
         parent::__construct($page, $rootNodeId);
     }
 
-<<<<<<< HEAD
     /**
      * @return Node[]
      */
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public function search(string $selector): array
     {
         $message = new Message('DOM.performSearch', [

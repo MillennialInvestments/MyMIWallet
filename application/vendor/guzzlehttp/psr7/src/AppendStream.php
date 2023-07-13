@@ -191,10 +191,6 @@ final class AppendStream implements StreamInterface
         $progressToNext = false;
 
         while ($remaining > 0) {
-<<<<<<< HEAD
-=======
-
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
             // Progress to the next stream if needed.
             if ($progressToNext || $this->streams[$this->current]->eof()) {
                 $progressToNext = false;

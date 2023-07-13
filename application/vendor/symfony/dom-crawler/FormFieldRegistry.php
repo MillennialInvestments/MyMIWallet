@@ -47,11 +47,7 @@ class FormFieldRegistry
     }
 
     /**
-<<<<<<< HEAD
      * Removes a field based on the fully qualified name and its children from the registry.
-=======
-     * Removes a field based on the fully qualifed name and its children from the registry.
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public function remove(string $name)
     {
@@ -68,11 +64,7 @@ class FormFieldRegistry
     }
 
     /**
-<<<<<<< HEAD
      * Returns the value of the field based on the fully qualified name and its children.
-=======
-     * Returns the value of the field based on the fully qualifed name and its children.
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      *
      * @return FormField|FormField[]|FormField[][]
      *

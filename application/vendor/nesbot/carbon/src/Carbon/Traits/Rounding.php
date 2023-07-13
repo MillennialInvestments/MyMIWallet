@@ -77,23 +77,15 @@ trait Rounding
         $found = false;
         $fraction = 0;
         $arguments = null;
-<<<<<<< HEAD
         $initialValue = null;
         $factor = $this->year < 0 ? -1 : 1;
         $changes = [];
         $minimumInc = null;
-=======
-        $factor = $this->year < 0 ? -1 : 1;
-        $changes = [];
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         foreach ($ranges as $unit => [$minimum, $maximum]) {
             if ($normalizedUnit === $unit) {
                 $arguments = [$this->$unit, $minimum];
-<<<<<<< HEAD
                 $initialValue = $this->$unit;
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 $fraction = $precision - floor($precision);
                 $found = true;
 
@@ -104,7 +96,6 @@ trait Rounding
                 $delta = $maximum + 1 - $minimum;
                 $factor /= $delta;
                 $fraction *= $delta;
-<<<<<<< HEAD
                 $inc = ($this->$unit - $minimum) * $factor;
 
                 if ($inc !== 0.0) {
@@ -122,9 +113,6 @@ trait Rounding
                     }
                 }
 
-=======
-                $arguments[0] += ($this->$unit - $minimum) * $factor;
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 $changes[$unit] = round(
                     $minimum + ($fraction ? $fraction * $function(($this->$unit - $minimum) / $fraction) : 0)
                 );

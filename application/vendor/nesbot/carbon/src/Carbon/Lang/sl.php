@@ -49,13 +49,8 @@ return [
     'a_second' => '{1}nekaj sekund|:count sekunda|:count sekundi|:count sekunde|:count sekund',
     's' => ':count s',
 
-<<<<<<< HEAD
     'year_ago' => ':count letom|:count letoma|:count leti|:count leti',
     'y_ago' => ':count letom|:count letoma|:count leti|:count leti',
-=======
-    'year_ago' => ':count letom|:count leti|:count leti|:count leti',
-    'y_ago' => ':count letom|:count leti|:count leti|:count leti',
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     'month_ago' => ':count mesecem|:count meseci|:count meseci|:count meseci',
     'week_ago' => ':count tednom|:count tednoma|:count tedni|:count tedni',
     'day_ago' => ':count dnem|:count dnevoma|:count dnevi|:count dnevi',

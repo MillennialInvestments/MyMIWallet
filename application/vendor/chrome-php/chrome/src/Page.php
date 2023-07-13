@@ -36,15 +36,12 @@ use HeadlessChromium\PageUtils\ResponseWaiter;
 class Page
 {
     public const DOM_CONTENT_LOADED = 'DOMContentLoaded';
-<<<<<<< HEAD
     public const FIRST_CONTENTFUL_PAINT = 'firstContentfulPaint';
     public const FIRST_IMAGE_PAINT = 'firstImagePaint';
     public const FIRST_MEANINGFUL_PAINT = 'firstMeaningfulPaint';
     public const FIRST_PAINT = 'firstPaint';
     public const INIT = 'init';
     public const INTERACTIVE_TIME = 'InteractiveTime';
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     public const LOAD = 'load';
     public const NETWORK_IDLE = 'networkIdle';
 
@@ -185,7 +182,6 @@ class Page
      * @see https://chromedevtools.github.io/devtools-protocol/1-2/Network/#method-setExtraHTTPHeaders
      *
      * @param array<string, string> $headers
-<<<<<<< HEAD
      *
      * @throws CommunicationException
      */
@@ -199,15 +195,6 @@ class Page
         if (false === $response->isSuccessful()) {
             throw new CommunicationException($response->getErrorMessage());
         }
-=======
-     */
-    public function setExtraHTTPHeaders(array $headers = []): void
-    {
-        $this->getSession()->sendMessage(new Message(
-            'Network.setExtraHTTPHeaders',
-            $headers
-        ));
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -215,11 +202,7 @@ class Page
      * @param array  $options
      *                        - strict: make waitForNAvigation to fail if a new navigation is initiated. Default: false
      *
-<<<<<<< HEAD
      * @throws CommunicationException
-=======
-     * @throws Exception\CommunicationException
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      *
      * @return PageNavigation
      */
@@ -242,11 +225,7 @@ class Page
      *
      * @param string $expression
      *
-<<<<<<< HEAD
      * @throws CommunicationException
-=======
-     * @throws Exception\CommunicationException
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      *
      * @return PageEvaluation
      */
@@ -429,11 +408,7 @@ class Page
      *
      * @return $this
      */
-<<<<<<< HEAD
     public function waitForReload($eventName = self::LOAD, $timeout = 30000, $loaderId = null)
-=======
-    public function waitForReload($eventName = self::LOAD, $timeout = 30000000000, $loaderId = null)
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         $this->assertNotClosed();
 
@@ -886,19 +861,12 @@ class Page
     /**
      * Sets the raw html of the current page.
      *
-<<<<<<< HEAD
      * @throws CommunicationException
      */
     public function setHtml(string $html, int $timeout = 3000, string $eventName = self::LOAD): void
     {
         $time = \hrtime(true) / 1000 / 1000;
 
-=======
-     * @throws Exception\CommunicationException
-     */
-    public function setHtml(string $html, int $timeout = 3000): void
-    {
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $this->getSession()->sendMessageSync(
             new Message(
                 'Page.setDocumentContent',
@@ -906,7 +874,6 @@ class Page
                     'frameId' => $this->getFrameManager()->getMainFrame()->getFrameId(),
                     'html' => $html,
                 ]
-<<<<<<< HEAD
             ),
             $timeout
         );
@@ -914,22 +881,12 @@ class Page
         $timeout -= (int) \floor((\hrtime(true) / 1000 / 1000) - $time);
 
         $this->waitForReload($eventName, \max(0, $timeout), '');
-=======
-            )
-        );
-
-        $this->waitForReload(self::LOAD, $timeout, '');
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
      * Gets the raw html of the current page.
      *
-<<<<<<< HEAD
      * @throws CommunicationException
-=======
-     * @throws Exception\CommunicationException
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      */
     public function getHtml(?int $timeout = null): string
     {

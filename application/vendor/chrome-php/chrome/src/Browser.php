@@ -82,13 +82,6 @@ class Browser
 
         // enable target discovery
         $connection->sendMessageSync(new Message('Target.setDiscoverTargets', ['discover' => true]));
-<<<<<<< HEAD
-=======
-
-        // set up http headers
-        $headers = $connection->getConnectionHttpHeaders();
-        $connection->sendMessageSync(new Message('Network.setExtraHTTPHeaders', $headers));
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -127,24 +120,18 @@ class Browser
      */
     final public function sendCloseMessage(): void
     {
-<<<<<<< HEAD
         if (!$this->connection->isConnected()) {
             $this->connection->getLogger()->debug('process: chrome already stopped, ignoring');
 
             return;
         }
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         $r = $this->connection->sendMessageSync(new Message('Browser.close'));
         if (!$r->isSuccessful()) {
             // log
             $this->connection->getLogger()->debug('process: ✗ could not close gracefully');
             throw new \Exception('cannot close, Browser.close not supported');
         }
-<<<<<<< HEAD
         $this->connection->disconnect();
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     }
 
     /**
@@ -201,7 +188,6 @@ class Browser
     }
 
     /**
-<<<<<<< HEAD
      * Find a target matching the type and title.
      *
      * @param string $type
@@ -223,10 +209,6 @@ class Browser
      *
      * @throws CommunicationException
      *
-=======
-     * @param string $targetId
-     *
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
      * @return Page|null
      */
     public function getPage($targetId)
@@ -264,7 +246,6 @@ class Browser
         // Page.setLifecycleEventsEnabled
         $page->getSession()->sendMessageSync(new Message('Page.setLifecycleEventsEnabled', ['enabled' => true]));
 
-<<<<<<< HEAD
         // set up http headers
         $headers = $this->connection->getConnectionHttpHeaders();
 
@@ -272,8 +253,6 @@ class Browser
             $page->setExtraHTTPHeaders($headers);
         }
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         // add prescript
         if ($this->pagePreScript) {
             $page->addPreScript($this->pagePreScript);

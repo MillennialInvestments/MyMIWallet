@@ -62,11 +62,7 @@ class MoFileDumper extends FileDumper
                .$targetOffsets
                .$sources
                .$targets
-<<<<<<< HEAD
         ;
-=======
-                ;
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
         return $output;
     }

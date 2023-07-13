@@ -198,13 +198,10 @@ class NormalizerFormatter implements FormatterInterface
      */
     protected function normalizeException(Throwable $e, int $depth = 0)
     {
-<<<<<<< HEAD
         if ($depth > $this->maxNormalizeDepth) {
             return ['Over ' . $this->maxNormalizeDepth . ' levels deep, aborting normalization'];
         }
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
         if ($e instanceof \JsonSerializable) {
             return (array) $e->jsonSerialize();
         }

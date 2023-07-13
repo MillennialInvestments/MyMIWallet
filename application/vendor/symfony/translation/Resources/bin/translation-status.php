@@ -9,13 +9,10 @@
  * file that was distributed with this source code.
  */
 
-<<<<<<< HEAD
 if ('cli' !== \PHP_SAPI) {
     throw new Exception('This script must be run from the command line.');
 }
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 $usageInstructions = <<<END
 
   Usage instructions

@@ -211,11 +211,7 @@ final class Utils
             $data = preg_replace_callback(
                 '/[\x80-\xFF]+/',
                 function ($m) {
-<<<<<<< HEAD
                     return function_exists('mb_convert_encoding') ? mb_convert_encoding($m[0], 'UTF-8', 'ISO-8859-1') : utf8_encode($m[0]);
-=======
-                    return utf8_encode($m[0]);
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
                 },
                 $data
             );

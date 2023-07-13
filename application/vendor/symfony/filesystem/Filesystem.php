@@ -170,11 +170,7 @@ class Filesystem
                 }
             } elseif (is_dir($file)) {
                 if (!$isRecursive) {
-<<<<<<< HEAD
                     $tmpName = \dirname(realpath($file)).'/.'.strrev(strtr(base64_encode(random_bytes(2)), '/=', '-_'));
-=======
-                    $tmpName = \dirname(realpath($file)).'/.'.strrev(strtr(base64_encode(random_bytes(2)), '/=', '-.'));
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 
                     if (file_exists($tmpName)) {
                         try {
@@ -619,11 +615,7 @@ class Filesystem
      *
      * @return string The new temporary filename (with path), or throw an exception on failure
      */
-<<<<<<< HEAD
     public function tempnam(string $dir, string $prefix/* , string $suffix = '' */)
-=======
-    public function tempnam(string $dir, string $prefix/*, string $suffix = ''*/)
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         $suffix = \func_num_args() > 2 ? func_get_arg(2) : '';
         [$scheme, $hierarchy] = $this->getSchemeAndHierarchy($dir);
@@ -708,11 +700,7 @@ class Filesystem
      *
      * @throws IOException If the file is not writable
      */
-<<<<<<< HEAD
     public function appendToFile(string $filename, $content/* , bool $lock = false */)
-=======
-    public function appendToFile(string $filename, $content/*, bool $lock = false*/)
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
     {
         if (\is_array($content)) {
             throw new \TypeError(sprintf('Argument 2 passed to "%s()" must be string or resource, array given.', __METHOD__));

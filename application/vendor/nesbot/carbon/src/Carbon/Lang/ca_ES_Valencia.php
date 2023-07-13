@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-<<<<<<< HEAD
 use Symfony\Component\Translation\PluralizationRules;
 
 // @codeCoverageIgnoreStart
@@ -20,7 +19,5 @@ if (class_exists(PluralizationRules::class)) {
 }
 // @codeCoverageIgnoreEnd
 
-=======
->>>>>>> 76bba32f875dbfd8e00d213db849802fb5378283
 return array_replace_recursive(require __DIR__.'/ca.php', [
 ]);
