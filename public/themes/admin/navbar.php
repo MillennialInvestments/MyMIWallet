@@ -14,12 +14,12 @@ $MyMICCoinSum			= $MyMICoinData['current_value'] / $MyMICoinData['mymic_coin_val
 $MyMIGCurrentValue		= $userGoldData['totalValue'];
 $MyMIGCoinSum			= $userGoldData['coinSum'];
 $myMIGPerChange			= $userGoldData['myMIGPerChange'];
-
+// print_r($userCoinData['totalValue']);
 // New Configuration for User Coin Data
 if ($userCoinData['totalValue'] > 0) {
-    $totalMyMICValue    = '$' . number_format($userCoinData['totalValue'],2);
+    $totalMyMICValue    = $userCoinData['totalValue'];
 } elseif ($userCoinData['totalValue'] < 0) {
-    $totalMyMICValue    = '-$' . number_format($userCoinData['totalValue'],2); 
+    $totalMyMICValue    = $userCoinData['totalValue']; 
 } else {
     $totalMyMICValue    = '$0.00';
 }

@@ -170,14 +170,18 @@ class App_hooks
         if (!isset($this->ci->router)) {
             return false;
         }
-
-        // Output of uri->ruri_string() is considerably different in CI 3 when using
-        // the BF_Router, so the following normalizes the output for the comparison
-        // with $this->ignore_pages.
-        $ruriString = '/' . ltrim(
-            str_replace($this->ci->router->directory, '', $this->ci->uri->ruri_string()),
-            '/'
-        );
+    
+        $directory = $this->ci->router->directory;
+        if ($directory !== null) {
+            $ruriString = '/' . ltrim(
+                str_replace($directory, '', $this->ci->uri->ruri_string()),
+                '/'
+            );
+        } else {
+            // Handle the case where directory is null
+            $ruriString = '/' . ltrim($this->ci->uri->ruri_string(), '/');
+        }
         return in_array($ruriString, $ruriArray);
     }
+    
 }

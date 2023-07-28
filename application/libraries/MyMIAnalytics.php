@@ -31,9 +31,11 @@ class MyMIAnalytics
         $inactiveUsers                                  = $this->get_inactive_users(); 
         $inactivePartners                               = $this->get_inactive_partners(); 
         $activeServices                                 = $this->get_active_services(); 
+        $pendingPartners                                = $this->get_pending_partners(); 
         $activePartners                                 = $this->get_active_partners(); 
         $pendingPartnerAssets                           = $this->get_pending_partner_assets();
         $approvedPartnerAssets                          = $this->get_approved_partner_assets();
+        $activeWallets                                  = $this->get_total_active_wallets(); 
 
         // User Activity & Reporting
         $getUserActivity                                = $this->get_user_activity($cuID);
@@ -268,8 +270,8 @@ class MyMIAnalytics
         $targetTransFees                                = 10000;
         $targetTrades                                   = 25000;
         $targetWallets                                  = 1000; 
-        $targetPartnerAssets                            = 10;
         $targetPartners                                 = 100;
+        $targetPartnerAssets                            = 10;
         $targetPartnerTransactions                      = 10000;
         $targetPartnerTransAmount                       = 1000000;
         $targetPartnerTransFees                         = 100000;
@@ -277,7 +279,10 @@ class MyMIAnalytics
         $target                                         = array(
             'targetAssets'                              => $targetAssets,
             'targetSubscriptions'                       => $targetSubscriptions,
+            'targetTransactions'                        => $targetTransactions, 
             'targetTransAmount'                         => $targetTransAmount,
+            'targetTransFees'                           => $targetTransFees,
+            'targetTrades'                              => $targetTrades,
             'targetUsers'                               => $targetUsers,
             'targetWallets'                             => $targetWallets,
             'targetPartners'                            => $targetPartners,
@@ -419,16 +424,25 @@ class MyMIAnalytics
                 } elseif ($partnerAssets['fees'] < 0) {
                     $totalPartnerTransFees              = '<span class="statusRed">-$' . number_format($partnerAssets['fees'], 2) . '</span>';
                     $totalPartnerTransFeesPlain         = '0.00';
+                } else {
+                    $totalPartnerTransFees                  = '$0.00';
+                    $totalPartnerTransFeesPlain             = '0.00';
                 }
                 if ($partnerAssets['amount'] > 0) {
                     $totalPartnerTransTotals            = '<span>$' . number_format($partnerAssets['amount'], 2) . '</span>';
-                    $totalPartnerTransTotalsPlain       = '0.00';
+                    $totalPartnerTransTotalsPlain       = $partnerAssets['amount'];
                 } elseif ($partnerAssets['amount'] < 0) {
                     $totalPartnerTransTotals            = '<span class="statusRed">-$' . number_format($partnerAssets['amount'], 2) . '</span>';
+                    $totalPartnerTransTotalsPlain       = $partnerAssets['amount'];
+                } else {
+                    $totalPartnerTransTotals            = '$0.00';
                     $totalPartnerTransTotalsPlain       = '0.00';
                 }
             }
+        } else {
+            $totalPartnerTransFees                      = '$0.00';
             $totalPartnerTransFeesPlain                 = '0.00';
+            $totalPartnerTransTotals                    = '$0.00';
             $totalPartnerTransTotalsPlain               = '0.00';
         }
         $totalAmounts                                   = array(

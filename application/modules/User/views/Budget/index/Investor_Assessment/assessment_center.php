@@ -96,7 +96,7 @@
                 <!-- <a href="#budgeting-monthly-financial-overview" class="btn btn-icon btn-trigger me-n2"><em class="icon ni ni-forward-ios"></em></a> -->
             </div>
         </div><!-- .card-inner -->
-        <?php echo 'InvestmentOperations: ' . $investmentOperations;  if ($investmentOperations === 1) { ?>
+        <?php if ($investmentOperations === 1) { ?>
         <div class="card-inner">
             <div class="nk-wg-action">
                 <div class="nk-wg-action-content">

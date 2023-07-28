@@ -145,7 +145,7 @@ class Analytical_model extends BF_Model
     }
 
     public function get_active_services_subscriptions() {
-        $this->db->from('bf_user_services_purchases'); 
+        $this->db->from('bf_users_services_purchases'); 
         $this->db->where('status', 'Active'); 
         $getActiveSubscriptions                 = $this->db->get(); 
         return $getActiveSubscriptions; 

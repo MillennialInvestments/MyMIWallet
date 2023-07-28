@@ -523,7 +523,8 @@ class CI_Input
                 break;
         }
 
-        return (bool) filter_var($ip, FILTER_VALIDATE_IP, $which);
+        return $which !== null ? (bool) filter_var($ip, FILTER_VALIDATE_IP, $which) : (bool) filter_var($ip, FILTER_VALIDATE_IP);
+
     }
 
     // --------------------------------------------------------------------

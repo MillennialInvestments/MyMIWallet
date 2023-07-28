@@ -70,7 +70,19 @@ class API extends Admin_Controller
         Template::set('pageName', $pageName);
         Template::render();
     }
-
+    public function BitcoinJS() {
+        // $sophtronJSLink                              = base_url('assets/js/Sophtron_Widget/script.js');
+        $pageType = 'Automated';
+        $pageName = 'Web_Design_Dashboard';
+        
+        $this->set_current_user();
+        
+        Template::set('pageType', $pageType);
+        Template::set('pageName', $pageName);
+        // Template::set('sophtronJSLink', $sophtronJSLink);
+        Template::render();
+    }
+    
     public function Sophtron()
     {
         // $sophtronJSLink                              = base_url('assets/js/Sophtron_Widget/script.js');

@@ -19,6 +19,7 @@ $config['hostTime']                     = date("g:i A");
 $config['time']                         = date("g:i A", strtotime($config['hostTime']) - 60 * 60 * 5);
 
 // Finance APIs
+$config['alpha_vantage_free_key']       = '70BOHXX3E6JX9H88';                               // Alpha Vantage Free API Key 
 $config['fred_api']                     = 'fca45608ff16f51703621abcd773a598';               // Federal Reserve API
 $config['gemini_auditing_key']          = 'master-VdHVHsmKw17PWryuzuwz';                    // Gemini Master Auditing API Key
 $config['gemini_auditing_secret']       = '2a8XaAoeqRFSREy1eTae2RA5jTJB';                   // Gemini Master Auditing API Secret
@@ -26,8 +27,12 @@ $config['gemini_management_secret']     = '2a8XaAoeqRFSREy1eTae2RA5jTJB';       
 $config['gemini_management_secret']     = '2a8XaAoeqRFSREy1eTae2RA5jTJB';                   // Gemini Master Management API Secret
 $config['kucoin_key']                   = '64ae0076aa802200010116ae';                       // Kucoin Key
 $config['kucoin_secret']                = '8f575ebb-d208-4d97-9117-acf39a245c8a';           // Kucoin Secret
+
+// Management - API / Integrations
+
 // Management - Dashboard Configurations
 $config['managementActionItems']        = 'col-xxl-2 col-lg-4 pb-4';
+$config['gitlabAccessToken']            = 'glpat-449hxNmKadc2QdP1D5ib';
 $config['googleRecaptchaSiteKey']       = '6Ld-35olAAAAAKfXFhwLJ6RYLZuYcuVN5NLUqBTF';
 $config['googleRecaptchaSecretKey']     = '6Ld-35olAAAAAHprc31OgPQCTx6N4acPz_e5i8hG';
 $config['recaptcha_site_key']           = '6Ld-35olAAAAAKfXFhwLJ6RYLZuYcuVN5NLUqBTF';

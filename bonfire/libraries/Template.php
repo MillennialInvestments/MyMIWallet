@@ -651,7 +651,7 @@ EOF;
      *
      * @return void
      */
-    public static function load_view($view = null, $data = null, $override = '', $is_themed = true, &$output)
+    public static function load_view($view = null, $data = null, $override = '', $is_themed = true, &$output = null)
     {
         if (empty($view)) {
             return '';

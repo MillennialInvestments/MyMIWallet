@@ -704,7 +704,7 @@ class Assets
         // Get the context name from the uri segments
         $classKey = array_search($className, $uriSegments);
         if ($classKey !== false) {
-            $classKey = $classKey + 1;
+            $classKey = $classKey;
             if (isset($uriSegments[$classKey])) {
                 $moduleName = $uriSegments[$classKey];
             }
@@ -1022,7 +1022,7 @@ class Assets
      * @return boolean True if file generated successfully, false if there were
      * errors.
      */
-    private static function generate_file($files = array(), $fileName, $fileType = 'css')
+    private static function generate_file($files = array(), $fileName = '', $fileType = 'css')
     {
         if (count($files) == 0) {
             // While the file wasn't actually created, there were no errors

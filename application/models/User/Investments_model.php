@@ -125,4 +125,41 @@ class Investments_model extends BF_Model
         $getUserInvestments                 = $this->db->get(); 
         return $getUserInvestments;
     }
+
+    public function getInvestmentPerformance($userId) {
+        // Fetch all transactions for the user
+        $this->db->select('investment_id, price, quantity');
+        $this->db->where('user_id', $userId);
+        $query = $this->db->get('transactions');
+    
+        $transactions = $query->result();
+    
+        // Calculate the total cost and value of each investment
+        $investments = array();
+        foreach ($transactions as $transaction) {
+            if (!isset($investments[$transaction->investment_id])) {
+                $investments[$transaction->investment_id] = array(
+                    'cost' => 0,
+                    'value' => 0,
+                );
+            }
+    
+            $investments[$transaction->investment_id]['cost'] += $transaction->price * $transaction->quantity;
+    
+            // Assume the current value of the investment can be fetched from an API
+            // This is a simplification and you would need to replace this with actual code to fetch the current price
+            $currentPrice = $this->investment_api->getCurrentPrice($transaction->investment_id);
+    
+            $investments[$transaction->investment_id]['value'] += $currentPrice * $transaction->quantity;
+        }
+    
+        // Calculate the performance of each investment
+        $performanceData = array();
+        foreach ($investments as $investmentId => $investment) {
+            $performanceData[$investmentId] = ($investment['value'] - $investment['cost']) / $investment['cost'];
+        }
+    
+        return $performanceData;
+    }
+    
 }

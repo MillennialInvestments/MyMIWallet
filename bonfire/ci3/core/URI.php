@@ -599,6 +599,12 @@ class CI_URI
      */
     public function ruri_string()
     {
-        return ltrim(load_class('Router', 'core')->directory, '/').implode('/', $this->rsegments);
+        $directory = load_class('Router', 'core')->directory;
+        if ($directory !== null) {
+            return ltrim($directory, '/').implode('/', $this->rsegments);
+        } else {
+            // Handle the case where directory is null
+            return implode('/', $this->rsegments);
+        }
     }
 }

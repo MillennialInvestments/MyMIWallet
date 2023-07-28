@@ -1,5 +1,18 @@
 <?php
 use GuzzleHttp\Client;
+$timestamp = time() * 1000; // timestamp in milliseconds
+$method = 'GET';
+$path = '/api/v1/accounts';
+$secret = 'your_api_secret'; // replace with your API secret
+$preHash = $timestamp . $method . $path;
+$sign = hash_hmac('sha256', $preHash, $secret);
+
+$headers = [
+    'KC-API-KEY' => $this->config->item('kucoin_key'), // replace with your API key
+    'KC-API-SIGN' => $sign,
+    'KC-API-TIMESTAMP' => $timestamp,
+    'KC-API-PASSPHRASE' => 'Dawg@239223.dawg', // replace with your API passphrase
+];
 
 $client                                         = new Client([
     'base_uri'                                  => 'https://api.kucoin.com',
@@ -10,18 +23,15 @@ $symbols                                        = 'DGB-USDT';
 $apiKey                                         = $this->config->item('kucoin_key'); // Replace with your KuCoin API key
 
 try {
-    $response                                   = $client->request('GET', "/v1/marketdata/quotes?apikey={$apiKey}&symbol={$symbols}&interval=1min", [
-        'headers'                               => [
-            'cache-control'                     => 'no-cache',
-            // Add any other headers required by the KuCoin API
-        ],
+    $response                                   = $client->request('GET', "/api/v1/market/orderbook/level1?symbol=DGB-USDT", [
+        'headers'                               => $headers
     ]);
 
     $body                                       = $response->getBody();
     $content                                    = $body->getContents();
 
     $data                                       = json_decode($content, true);
-
+    print_r($data);
     // Now $data contains your decoded JSON response, you can process it as needed
 } catch (\GuzzleHttp\Exception\GuzzleException $e) {
     // Handle exception
@@ -30,7 +40,7 @@ try {
 
 $cuID					 						= isset($current_user->id) && ! empty($current_user->id) ? $current_user->id : '';
 $cuEmail				 						= isset($current_user->email) && ! empty($current_user->email) ? $current_user->email : '';
-$total_coins									= 23000000;
+$total_coins									= 115000000;
 $coins_exchanged								= $_SESSION['allSessionData']['userAccount']['coinsExchanged'];
 $open_listing_app								= $_SESSION['allSessionData']['userAccount']['open_listing_app'];
 $applicationData								= array(
