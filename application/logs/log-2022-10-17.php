@@ -1,0 +1,3 @@
+ERROR - 2022-10-17 15:10:21 --> Severity: error --> Exception: Call to undefined method CI_URI::string() /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Wallets/Create_Bank_Account.php 17
+ERROR - 2022-10-17 18:29:42 --> Severity: error --> Exception: syntax error, unexpected ']' /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Wallets/Create_Bank_Account.php 17
+ERROR - 2022-10-17 18:29:54 --> Severity: error --> Exception: syntax error, unexpected ']' /home/mymiteam/mymiwallet/site/current/public/dev/application/modules/User/views/Wallets/Create_Bank_Account.php 17
